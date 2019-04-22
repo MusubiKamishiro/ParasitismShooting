@@ -6,7 +6,7 @@
 //#include "resource.h"
 
 
-Game::Game() : ScreenSize(600, 800)
+Game::Game() : ScreenSize(800, 500)
 {
 
 }

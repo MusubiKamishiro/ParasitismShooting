@@ -125,8 +125,10 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Geometry.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Peripheral.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene\GamePlayingScene.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\TitleScene.cpp" />
@@ -134,7 +136,9 @@
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="Geometry.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="Peripheral.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Scene\GamePlayingScene.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\TitleScene.h" />

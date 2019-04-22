@@ -5,8 +5,8 @@
 #include "../Game.h"
 #include "TitleScene.h"
 
-//#include "../TitleLogo.h"
-//#include "../Player.h"
+#include "../HUD.h"
+#include "../Player.h"
 
 
 void GamePlayingScene::FadeinUpdate(const Peripheral & p)
@@ -46,8 +46,9 @@ GamePlayingScene::GamePlayingScene()
 
 	GetJoypadInputState(DX_INPUT_KEY_PAD1);		// パッドもしくはキーボードで動かせる
 
-	//player.reset(new Player());
-	//tLogo.reset(new TitleLogo());
+	player.reset(new Player());
+	hud.reset(new HUD());
+	
 
 	ssize = Game::Instance().GetScreenSize();
 
@@ -63,13 +64,10 @@ void GamePlayingScene::Update(const Peripheral& p)
 {
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
-	
-	//DxLib::DrawExtendGraph(figure->left, figure->up, figure->right, figure->down, img, true);	// 凛世ちゃんすこ
 	DrawExtendGraph(0, 0, ssize.x, ssize.y, img, true);
-
-	//tLogo->LogoDraw();
-
-	//player->Update(p);
+	hud->Draw();
+	
+	player->Update(p);
 
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
