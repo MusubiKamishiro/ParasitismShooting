@@ -4,7 +4,7 @@
 #include "../Peripheral.h"
 #include "../Game.h"
 #include "TitleScene.h"
-
+#include "../GameScreen.h"
 #include "../HUD.h"
 #include "../Player.h"
 
@@ -35,7 +35,6 @@ void GamePlayingScene::FadeoutUpdate(const Peripheral & p)
 	}
 	else
 	{
-		//pal -= 5;
 		pal -= 20;
 	}
 }
@@ -48,10 +47,9 @@ GamePlayingScene::GamePlayingScene()
 
 	player.reset(new Player());
 	hud.reset(new HUD());
+	gameScreen.reset(new GameScreen());
 	
-
 	ssize = Game::Instance().GetScreenSize();
-
 	updater = &GamePlayingScene::FadeinUpdate;
 }
 
@@ -64,13 +62,16 @@ void GamePlayingScene::Update(const Peripheral& p)
 {
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
-	DrawExtendGraph(0, 0, ssize.x, ssize.y, img, true);
 	hud->Draw();
+	
+	gameScreen->SetAndClearScreen();
 	
 	player->Update(p);
 
+	gameScreen->DrawAndChangeScreen();
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, ssize.x, ssize.y, 0x000000, true);
 	(this->*updater)(p);
 }
+

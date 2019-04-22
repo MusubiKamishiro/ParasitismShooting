@@ -5,6 +5,7 @@
 
 class Player;
 class HUD;
+class GameScreen;
 
 
 class GamePlayingScene : public Scene
@@ -20,6 +21,7 @@ private:
 
 	std::shared_ptr<Player> player;
 	std::shared_ptr<HUD> hud;
+	std::shared_ptr<GameScreen> gameScreen;
 
 
 public:
@@ -27,5 +29,4 @@ public:
 	~GamePlayingScene();
 
 	void Update(const Peripheral& p);
-
 };

@@ -23,21 +23,20 @@ private:
 	// 状態遷移のためのメンバ関数ポインタ
 	void (Player::*updater)(const Peripheral &p);
 	void Move(const Peripheral &p);
-	void Die(const Peripheral &p);						// 敵機に当たって死んだ
+	void Shot(const Peripheral &p);			// 攻撃
+	void Die(const Peripheral &p);			// 敵機に当たって死んだ
 
-	void Draw(Vector2& pos);							// プレイヤーの描画
+	void Draw(Vector2& pos);				// プレイヤーの描画
 
 	void DebugDraw();
 	
-	bool NotOutOfRange();
+	void NotOutOfRange();
 
 	Vector2 startPos;			// 開始座標
 	Vector2 pos;				// 現在座標
 	Vector2 vel;				// 移動速度
 	int moveVel;				// 移動量
-	int moveDir;				// 移動方向
-	int oldMoveDir;				// 1つ前の移動方向
-
+	
 	// 移動範囲内
 	int up;
 	int right;
