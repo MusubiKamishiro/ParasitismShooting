@@ -1,7 +1,7 @@
 #pragma once
 #include "Geometry.h"
 //#include "CharacterObject.h"
-//#include <memory>
+#include <memory>
 //#include <vector>
 
 enum Dir
@@ -15,6 +15,7 @@ enum Dir
 
 class Peripheral;
 //class GamePlayingScene;
+class Shot;
 
 class Player// : public CharacterObject
 {
@@ -23,7 +24,7 @@ private:
 	// ó‘Ô‘JˆÚ‚Ì‚½‚ß‚Ìƒƒ“ƒoŠÖ”ƒ|ƒCƒ“ƒ^
 	void (Player::*updater)(const Peripheral &p);
 	void Move(const Peripheral &p);
-	void Shot(const Peripheral &p);			// UŒ‚
+	void ShotBullet(const Peripheral &p);			// UŒ‚
 	void Die(const Peripheral &p);			// “G‹@‚É“–‚½‚Á‚Ä€‚ñ‚¾
 
 	
@@ -44,6 +45,10 @@ private:
 	int down;
 
 	int img;
+
+	int cnt;
+
+	std::shared_ptr<Shot> shot;
 	
 public:
 	Player();
