@@ -1,7 +1,7 @@
 #pragma once
 #include "Geometry.h"
 //#include "CharacterObject.h"
-//#include <memory>
+#include <memory>
 //#include <vector>
 
 enum Dir
@@ -15,6 +15,7 @@ enum Dir
 
 class Peripheral;
 //class GamePlayingScene;
+class Shot;
 
 class Player// : public CharacterObject
 {
@@ -23,7 +24,7 @@ private:
 	// 状態遷移のためのメンバ関数ポインタ
 	void (Player::*updater)(const Peripheral &p);
 	void Move(const Peripheral &p);
-	void Shot(const Peripheral &p);			// 攻撃
+	void ShotBullet(const Peripheral &p);			// 攻撃
 	void Die(const Peripheral &p);			// 敵機に当たって死んだ
 
 	void Draw(Vector2& pos);				// プレイヤーの描画
@@ -44,6 +45,9 @@ private:
 	int down;
 
 	int img;
+	int cnt;
+
+	std::shared_ptr<Shot> shot;
 	
 public:
 	Player();

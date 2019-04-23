@@ -1,6 +1,7 @@
 #pragma once
 #include "Geometry.h"
 #include <memory>
+#include <vector>
 
 const int SHOT_MAX = 2000;
 
@@ -21,7 +22,7 @@ enum SHOT_PTN
 
 typedef struct ShotST
 {
-	bool flag;
+	int flag;
 	Vector2 pos;
 	Vector2 vel;
 	Vector2 Dir;
@@ -37,6 +38,7 @@ private:
 	Vector2 Dir;
 
 	int img[8];
+	int cnt;
 
 	std::shared_ptr<Player> player;
 
@@ -50,9 +52,9 @@ public:
 
 	void Update();
 	void cSHOT(Vector2 pos);
+private:
 	void setBullet(Vector2 pos,	Vector2 vel,Vector2 Dir,int level,int ptn);
 	void Draw(void);
-private:
-	bool SearchBullet(void);
+	int SearchBullet(void);
 };
 
