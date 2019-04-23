@@ -2,7 +2,7 @@
 #include <DxLib.h>
 #include "../Peripheral.h"
 #include "../Game.h"
-#include "GamePlayingScene.h"
+#include "SelectScene.h"
 
 void TitleScene::FadeinUpdate(const Peripheral & p)
 {
@@ -26,7 +26,7 @@ void TitleScene::FadeoutUpdate(const Peripheral & p)
 {
 	if (pal <= 0)
 	{
-		Game::Instance().ChangeScene(new GamePlayingScene());
+		Game::Instance().ChangeScene(new SelectScene());
 	}
 	else
 	{

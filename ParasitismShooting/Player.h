@@ -26,7 +26,7 @@ private:
 	void Shot(const Peripheral &p);			// 攻撃
 	void Die(const Peripheral &p);			// 敵機に当たって死んだ
 
-	void Draw(Vector2& pos);				// プレイヤーの描画
+	
 
 	void DebugDraw();
 	
@@ -37,7 +37,7 @@ private:
 	Vector2 vel;				// 移動速度
 	float moveVel;				// 移動量
 	
-	// 移動範囲内
+	// 移動範囲限界値
 	int up;
 	int right;
 	int left;
@@ -52,5 +52,6 @@ public:
 	void Update(const Peripheral &p);
 
 	Vector2 GetPos()const;
+	void Draw(Vector2& pos);
 };
 
