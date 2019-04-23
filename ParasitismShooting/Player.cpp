@@ -44,13 +44,6 @@ void Player::Update(const Peripheral &p)
 	pos += vel;
 	NotOutOfRange();
 	ShotBullet(p);
-//	Draw(pos);
-
-
-#ifdef _DEBUG
-	DebugDraw();
-
-#endif // _DEBUG
 }
 
 Vector2 Player::GetPos() const
@@ -118,10 +111,6 @@ void Player::Draw(Vector2& pos)
 	shot->Draw();
 }
 
-
-void Player::DebugDraw()
-{
-}
 
 void Player::NotOutOfRange()
 {

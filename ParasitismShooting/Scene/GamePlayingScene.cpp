@@ -14,7 +14,7 @@
 
 void GamePlayingScene::FadeinUpdate(const Peripheral & p)
 {
-	if (p.IsTrigger(PAD_INPUT_7))
+	if (p.IsTrigger(PAD_INPUT_7) && (!pauseFlag))
 	{
 		pal = 255;
 		updater = &GamePlayingScene::FadeoutUpdate;
