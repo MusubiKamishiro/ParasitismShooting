@@ -13,13 +13,13 @@ Player::Player()
 
 	Vector2 screenSize = gscreen.GetGSSize();
 
-	up = 0;
-	right = screenSize.x;
-	left = 0;
-	down = screenSize.y;
+	up = 15;
+	right = screenSize.x - 15;
+	left = 15;
+	down = screenSize.y - 15;
 
 	vel = Vector2(0, 0);
-	moveVel = 5;
+	moveVel = 3.0;
 	startPos = Vector2(screenSize.x / 2, screenSize.y - 20);
 	pos = startPos;
 	
@@ -56,23 +56,35 @@ Vector2 Player::GetPos() const
 void Player::Move(const Peripheral & p)
 {
 	vel = Vector2();
+	float mvel = moveVel;
 
-	// ボタンを押したら移動
+	if (p.IsPressing(PAD_INPUT_1))
+	{
+		mvel = moveVel / 2;
+	}
+
+	// ボタンを押したら移動(今回は8方向)
 	if (p.IsPressing(PAD_INPUT_UP))
 	{
-		vel += Vector2(0, -moveVel);
+		vel += Vector2(0, -mvel);
 	}
 	if (p.IsPressing(PAD_INPUT_DOWN))
 	{
-		vel += Vector2(0, moveVel);
+		vel += Vector2(0, mvel);
 	}
 	if (p.IsPressing(PAD_INPUT_RIGHT))
 	{
-		vel += Vector2(moveVel, 0);
+		vel += Vector2(mvel, 0);
 	}
 	if (p.IsPressing(PAD_INPUT_LEFT))
 	{
-		vel += Vector2(-moveVel, 0);
+		vel += Vector2(-mvel, 0);
+	}
+
+	// 斜め移動の際はスピード調整
+	if ((vel.x != 0) && (vel.y != 0))
+	{
+		vel /= 1.4142136;
 	}
 }
 

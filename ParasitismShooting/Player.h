@@ -35,7 +35,7 @@ private:
 	Vector2 startPos;			// 開始座標
 	Vector2 pos;				// 現在座標
 	Vector2 vel;				// 移動速度
-	int moveVel;				// 移動量
+	float moveVel;				// 移動量
 	
 	// 移動範囲内
 	int up;

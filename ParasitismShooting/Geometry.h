@@ -3,9 +3,9 @@
 struct Vector2
 {
 	Vector2() : x(0), y(0) {}
-	Vector2(int inx, int iny) : x(inx), y(iny) {}
-	int x;
-	int y;
+	Vector2(float inx, float iny) : x(inx), y(iny) {}
+	float x;
+	float y;
 
 	Vector2 operator+(const Vector2& in)
 	{
@@ -20,6 +20,11 @@ struct Vector2
 	{
 		x -= in.x;
 		y -= in.y;
+	}
+	void operator/=(const float& in)
+	{
+		x /= in;
+		y /= in;
 	}
 	bool operator==(const Vector2& in)const
 	{
@@ -56,10 +61,11 @@ struct Circle
 	Circle() : pos(0, 0), radius(0) {};
 	Circle(Vector2 invec, int inr) : pos(invec), radius(inr) {};
 
-
 	Vector2 pos;	// À•W
 	int radius;		// ”¼Œa
 
+	// ‘¼‚Ì‰~‚Æ‚Ì“–‚½‚è”»’è
+	// @param True...“–‚½‚Á‚Ä‚é, False...“–‚½‚Á‚Ä‚È‚¢
 	bool HitCircle(Circle& c);
 	
 };
