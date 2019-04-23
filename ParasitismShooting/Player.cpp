@@ -3,6 +3,7 @@
 #include "Peripheral.h"
 #include "GameScreen.h"
 #include <algorithm>
+#include "Shot.h"
 #include <string>
 
 Player::Player()
@@ -21,8 +22,13 @@ Player::Player()
 	moveVel = 3.0;
 	startPos = Vector2(gssize.x / 2, gssize.y - 20);
 	pos = startPos;
+
+	shot.reset(new Shot());
+
 	
 	updater = &Player::Move;
+
+	cnt = 0;
 }
 
 Player::~Player()
@@ -33,10 +39,18 @@ void Player::Update(const Peripheral &p)
 {
 	// ˆÚ“®•ûŒü‚ªŒˆ‚Ü‚é
 	(this->*updater)(p);
-	
-	pos += vel;
 
+	shot->Update();
+	pos += vel;
 	NotOutOfRange();
+	ShotBullet(p);
+//	Draw(pos);
+
+
+#ifdef _DEBUG
+	DebugDraw();
+
+#endif // _DEBUG
 }
 
 Vector2 Player::GetPos() const
@@ -78,18 +92,19 @@ void Player::Move(const Peripheral & p)
 	{
 		vel /= 1.4142136;
 	}
+}
 
-	if (p.IsPressing(PAD_INPUT_2))
+void Player::ShotBullet(const Peripheral & p)
+{
+	cnt++;
+	if (cnt % 3 == 0)
 	{
-		Shot(p);
+		if (p.IsPressing(PAD_INPUT_2))
+		{
+			shot->cSHOT(pos);
+		}
 	}
 }
-
-void Player::Shot(const Peripheral & p)
-{
-
-}
-
 
 void Player::Die(const Peripheral &p)
 {
@@ -99,11 +114,18 @@ void Player::Die(const Peripheral &p)
 void Player::Draw(Vector2& pos)
 {
 	DxLib::DrawExtendGraph(pos.x - 15, pos.y - 15, (pos.x + 15), (pos.y + 15), img, true);
+
+	shot->Draw();
 }
 
 
+void Player::DebugDraw()
+{
+}
+
 void Player::NotOutOfRange()
 {
+	// ”ÍˆÍŠO‚É‚Í‚¢‚©‚¹‚È‚¢‚º
 	if (pos.x <= left)
 	{
 		pos.x = left;
