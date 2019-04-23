@@ -33,7 +33,7 @@ void Shot::Update()
 		{
 			cShot[j].pos.x += cos(cShot[j].Dir.x) * cShot[j].vel.x;
 			cShot[j].pos.y += cos(cShot[j].Dir.y) * cShot[j].vel.y;
-			Draw();
+		//	Draw();
 		}
 	}
 	

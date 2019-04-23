@@ -40,10 +40,8 @@ void Player::Update(const Peripheral &p)
 	// ˆÚ“®•ûŒü‚ªŒˆ‚Ü‚é
 	(this->*updater)(p);
 
-	pos += vel;
-
 	shot->Update();
-
+	pos += vel;
 	NotOutOfRange();
 	ShotBullet(p);
 //	Draw(pos);
@@ -101,7 +99,7 @@ void Player::ShotBullet(const Peripheral & p)
 	cnt++;
 	if (cnt % 3 == 0)
 	{
-		if (p.IsPressing(PAD_INPUT_1))
+		if (p.IsPressing(PAD_INPUT_2))
 		{
 			shot->cSHOT(pos);
 		}
@@ -116,6 +114,8 @@ void Player::Die(const Peripheral &p)
 void Player::Draw(Vector2& pos)
 {
 	DxLib::DrawExtendGraph(pos.x - 15, pos.y - 15, (pos.x + 15), (pos.y + 15), img, true);
+
+	shot->Draw();
 }
 
 
