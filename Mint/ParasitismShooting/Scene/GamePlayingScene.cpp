@@ -69,7 +69,6 @@ void GamePlayingScene::Update(const Peripheral& p)
 	gameScreen->SetAndClearScreen();
 	
 	player->Update(p);
-	shot->Update();
 
 	gameScreen->DrawAndChangeScreen();
 
