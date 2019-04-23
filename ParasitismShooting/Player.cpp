@@ -11,16 +11,16 @@ Player::Player()
 	img = DxLib::LoadGraph("img/title.png");
 	GameScreen gscreen;
 
-	Vector2 screenSize = gscreen.GetGSSize();
+	Vector2 gssize = gscreen.GetGSSize();
 
 	up = 15;
-	right = screenSize.x - 15;
+	right = gssize.x - 15;
 	left = 15;
-	down = screenSize.y - 15;
+	down = gssize.y - 15;
 
 	vel = Vector2(0, 0);
 	moveVel = 3.0;
-	startPos = Vector2(screenSize.x / 2, screenSize.y - 20);
+	startPos = Vector2(gssize.x / 2, gssize.y - 20);
 	pos = startPos;
 	
 	updater = &Player::Move;
@@ -38,7 +38,7 @@ void Player::Update(const Peripheral &p)
 	pos += vel;
 
 	NotOutOfRange();
-	Draw(pos);
+//	Draw(pos);
 
 
 #ifdef _DEBUG
