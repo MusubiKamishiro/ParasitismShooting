@@ -3,7 +3,7 @@
 #include "Peripheral.h"
 
 #include "Scene/TitleScene.h"
-//#include "resource.h"
+#include "resource.h"
 
 
 Game::Game() : ScreenSize(800, 500)
@@ -20,9 +20,17 @@ Game::~Game()
 {
 }
 
-void Game::Initialize()
+void Game::Initialize(int ins)
 {
-	DxLib::ChangeWindowMode(true);
+	if (ins == IDYES)
+	{
+		DxLib::ChangeWindowMode(false);
+	}
+	else
+	{
+		DxLib::ChangeWindowMode(true);
+	}
+
 	DxLib::SetGraphMode(ScreenSize.x, ScreenSize.y, 32);
 
 	if (DxLib::DxLib_Init() == -1)
@@ -30,9 +38,9 @@ void Game::Initialize()
 		return;
 	}
 
-	DxLib::SetMainWindowText("Parasitism Shooting");		// タイトル
-	//DxLib::SetWindowIconID(IDI_ICON1);	// アイコン
-	DxLib::SetDrawScreen(DX_SCREEN_BACK);	// 裏画面に描画
+	DxLib::SetMainWindowText("Parasitism Shooting");	// タイトル
+	DxLib::SetWindowIconID(IDI_ICON1);					// アイコン
+	DxLib::SetDrawScreen(DX_SCREEN_BACK);				// 裏画面に描画
 
 	ChangeScene(new TitleScene());
 }

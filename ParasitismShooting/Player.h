@@ -26,11 +26,7 @@ private:
 	void Shot(const Peripheral &p);			// 攻撃
 	void Die(const Peripheral &p);			// 敵機に当たって死んだ
 
-	
-
-	void DebugDraw();
-	
-	void NotOutOfRange();
+	void NotOutOfRange();		// 範囲外に行かせない
 
 	Vector2 startPos;			// 開始座標
 	Vector2 pos;				// 現在座標

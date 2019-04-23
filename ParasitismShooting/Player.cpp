@@ -3,7 +3,6 @@
 #include "Peripheral.h"
 #include "GameScreen.h"
 #include <algorithm>
-
 #include <string>
 
 Player::Player()
@@ -34,17 +33,10 @@ void Player::Update(const Peripheral &p)
 {
 	// ˆÚ“®•ûŒü‚ªŒˆ‚Ü‚é
 	(this->*updater)(p);
-
+	
 	pos += vel;
 
 	NotOutOfRange();
-//	Draw(pos);
-
-
-#ifdef _DEBUG
-	DebugDraw();
-
-#endif // _DEBUG
 }
 
 Vector2 Player::GetPos() const
@@ -86,6 +78,11 @@ void Player::Move(const Peripheral & p)
 	{
 		vel /= 1.4142136;
 	}
+
+	if (p.IsPressing(PAD_INPUT_2))
+	{
+		Shot(p);
+	}
 }
 
 void Player::Shot(const Peripheral & p)
@@ -105,13 +102,8 @@ void Player::Draw(Vector2& pos)
 }
 
 
-void Player::DebugDraw()
-{
-}
-
 void Player::NotOutOfRange()
 {
-	// ”ÍˆÍŠO‚É‚Í‚¢‚©‚¹‚È‚¢‚º
 	if (pos.x <= left)
 	{
 		pos.x = left;

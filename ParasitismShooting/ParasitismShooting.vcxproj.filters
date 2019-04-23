@@ -22,6 +22,15 @@
     <Filter Include="シーンファイル\ソースファイル">
       <UniqueIdentifier>{4ffb348c-f93e-4371-9d1f-3ef74c5aeb51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="キャラクターファイル">
+      <UniqueIdentifier>{795929b9-281e-4ec6-9749-747242c2a8b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="キャラクターファイル\ヘッダーファイル">
+      <UniqueIdentifier>{cc181d14-084d-43fb-b12d-d57e29622f1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="キャラクターファイル\ソースファイル">
+      <UniqueIdentifier>{68bc8330-9bfe-4369-bde5-1dd51bf17602}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -113,5 +122,18 @@
     <ClInclude Include="PauseMenu.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ParasitismShooting.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="img\icon.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
   </ItemGroup>
 </Project>
