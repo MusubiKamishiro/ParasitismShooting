@@ -86,7 +86,7 @@ void Player::Move(const Peripheral & p)
 void Player::ShotBullet(const Peripheral & p)
 {
 	cnt++;
-	if (cnt % 3 == 0)
+	if (cnt % 6 == 0)
 	{
 		if (p.IsPressing(PAD_INPUT_1))
 		{

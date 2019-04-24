@@ -18,6 +18,12 @@ Shot::Shot()
 	}
 	cnt = 0;
 	GameScreen gscreen;
+	Vector2 screenSize = gscreen.GetGSSize();
+
+	up = 0;
+	right = screenSize.x;
+	left = 0;
+	down = screenSize.y;
 }
 
 
@@ -36,12 +42,13 @@ void Shot::Update()
 		//	Draw();
 		}
 	}
+	OutofScreen();
 	
 }
 
 void Shot::cSHOT(Vector2 pos)
 {
-	setBullet(pos, { 0,-1 }, { 0,0 }, 1, 1);
+	setBullet(pos, { 0,-30 }, { 0,0 }, 1, 1);
 }
 
 void Shot::setBullet(Vector2 pos, Vector2 vel, Vector2 Dir, int level, int ptn)
@@ -82,4 +89,30 @@ int Shot::SearchBullet(void)
 		}
 	}
 	return -1;
+}
+
+void Shot::OutofScreen(void)
+{
+	for (int j = 0; j < SHOT_MAX; j++)
+	{
+		if (cShot[j].flag == 1)
+		{
+			if (cShot[j].pos.x < left)
+			{
+				cShot[j].flag = 0;
+			}
+			else if (cShot[j].pos.x > right)
+			{
+				cShot[j].flag = 0;
+			}
+			if (cShot[j].pos.y < up)
+			{
+				cShot[j].flag = 0;
+			}
+			else if (cShot[j].pos.y > down)
+			{
+				cShot[j].flag = 0;
+			}
+		}
+	}
 }

@@ -8,7 +8,7 @@ const int SHOT_MAX = 2000;
 class Player;
 class Peripheral;
 
-enum SHOT_PTN
+enum class SHOT_PTN
 {
 	NON,
 	NORMAL,
@@ -17,7 +17,6 @@ enum SHOT_PTN
 	RADIATION,
 	LASER,
 	PTN_MAX
-
 };
 
 typedef struct ShotST
@@ -40,6 +39,11 @@ private:
 	int img[8];
 	int cnt;
 
+	int up;
+	int right;
+	int left;
+	int down;
+
 	std::shared_ptr<Player> player;
 
 	bool sFlag[10];
@@ -56,5 +60,6 @@ private:
 	void setBullet(Vector2 pos,	Vector2 vel,Vector2 Dir,int level,int ptn);
 	void Draw(void);
 	int SearchBullet(void);
+	void OutofScreen(void);
 };
 
