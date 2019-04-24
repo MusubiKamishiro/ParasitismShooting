@@ -1,6 +1,6 @@
 #include "Shot.h"
 #include <DxLib.h>
-#include "Player.h"
+#include "Character/Player.h"
 #include "Peripheral.h"
 #include "GameScreen.h"
 
@@ -10,12 +10,13 @@ Shot::Shot()
 	for (int j = 0; j < SHOT_MAX; j++)
 	{
 		cShot[j].flag = 0;
-		cShot[j].pos	 = { 0,0 };
-		cShot[j].vel	 = { 0,0 };
-		cShot[j].Dir	 = { 0,0 };
+		cShot[j].pos = { 0,0 };
+		cShot[j].vel = { 0,0 };
+		cShot[j].Dir = { 0,0 };
+		cShot[j].level = 0; 
 		cShot[j].movePtn = 0;
-		cShot[j].level	 = 0;
-		cShot[j].shotPtn	 = 0;
+		cShot[j].level = 0;
+		cShot[j].shotPtn = 0;
 	}
 	cnt = 0;
 	GameScreen gscreen;
@@ -46,12 +47,12 @@ void Shot::Update()
 	
 }
 
-void Shot::cSHOT(Vector2 pos, int shotPtn)
+void Shot::cSHOT(Vector2f pos, int shotPtn)
 {
-	setBullet(pos, { 1,-10}, { 0,0 },1, 4, shotPtn);
+	setBullet(pos, { 0,-10 }, { 0,0 }, 1, 4, shotPtn);
 }
 
-void Shot::setBullet(Vector2 pos, Vector2 vel, Vector2 Dir, int movePtn, int level, int shotPtn)
+void Shot::setBullet(Vector2f pos, Vector2f vel, Vector2f Dir, int movePtn, int level, int shotPtn)
 {
 	int k = 0;
 	for (int j = 0; j < level; j++)
@@ -65,7 +66,7 @@ void Shot::setBullet(Vector2 pos, Vector2 vel, Vector2 Dir, int movePtn, int lev
 			else if (shotPtn == SHOT_PTN::NORMAL)
 			{
 				cShot[k].flag = 1;
-				cShot[k].pos = { pos.x - 10 + NormalPosPtnX[j],pos.y  + NormalPosPtnY[j] };
+				cShot[k].pos = { pos.x - 10 + NormalPosPtnX[j],pos.y + NormalPosPtnY[j] };
 				cShot[k].vel = vel;
 				cShot[k].Dir = Dir;
 				cShot[k].movePtn = movePtn;

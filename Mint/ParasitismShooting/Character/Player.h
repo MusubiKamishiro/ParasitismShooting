@@ -1,6 +1,6 @@
 #pragma once
-#include "Geometry.h"
-//#include "CharacterObject.h"
+#include "../Geometry.h"
+#include "CharacterObject.h"
 #include <memory>
 //#include <vector>
 
@@ -17,7 +17,7 @@ class Peripheral;
 class GamePlayingScene;
 class Shot;
 
-class Player// : public CharacterObject
+class Player : public CharacterObject
 {
 	friend GamePlayingScene;
 private:
@@ -31,11 +31,8 @@ private:
 
 	void NotOutOfRange();		// 範囲外に行かせない
 
-	Vector2 startPos;			// 開始座標
-	Vector2 pos;				// 現在座標
-	Vector2 vel;				// 移動速度
+	Vector2f startPos;			// 開始座標
 	float moveVel;				// 移動量
-	int life;					// 体力
 	int count;
 
 	// 移動範囲限界値
@@ -46,7 +43,7 @@ private:
 
 	int img;
 
-	int cnt;
+	int interval;
 
 	std::shared_ptr<Shot> shot;
 	
@@ -56,7 +53,7 @@ public:
 
 	void Update(const Peripheral &p);
 
-	Vector2 GetPos()const;
-	void Draw(Vector2& pos, int time);
+	Vector2f GetPos()const;
+	void Draw(Vector2f& pos, const int& time);
 };
 

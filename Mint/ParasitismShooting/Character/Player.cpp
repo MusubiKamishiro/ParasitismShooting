@@ -1,9 +1,9 @@
 #include "Player.h"
 #include <DxLib.h>
-#include "Peripheral.h"
-#include "GameScreen.h"
+#include "../Peripheral.h"
+#include "../GameScreen.h"
 #include <algorithm>
-#include "Shot.h"
+#include "../Shot.h"
 #include <string>
 
 Player::Player()
@@ -18,19 +18,18 @@ Player::Player()
 	left = 15;
 	down = gssize.y - 15;
 
-	vel = Vector2(0, 0);
+	vel = Vector2f(0, 0);
 	moveVel = 3.0;
-	startPos = Vector2(gssize.x / 2, gssize.y - 20);
+	startPos = Vector2f(gssize.x / 2, gssize.y - 20);
 	pos = startPos;
-	life = 3;
+	HP = 3;
 	count = 0;
 
 	shot.reset(new Shot());
-
 	
 	updater = &Player::Move;
 
-	cnt = 0;
+	interval = 0;
 }
 
 Player::~Player()
@@ -48,7 +47,7 @@ void Player::Update(const Peripheral &p)
 	ShotBullet(p);
 }
 
-Vector2 Player::GetPos() const
+Vector2f Player::GetPos() const
 {
 	return pos;
 }
@@ -56,7 +55,7 @@ Vector2 Player::GetPos() const
 
 void Player::Move(const Peripheral & p)
 {
-	vel = Vector2();
+	vel = Vector2f();
 	float mvel = moveVel;
 
 	if (p.IsPressing(PAD_INPUT_1))
@@ -67,19 +66,19 @@ void Player::Move(const Peripheral & p)
 	// ボタンを押したら移動(今回は8方向)
 	if (p.IsPressing(PAD_INPUT_UP))
 	{
-		vel += Vector2(0, -mvel);
+		vel += Vector2f(0, -mvel);
 	}
 	if (p.IsPressing(PAD_INPUT_DOWN))
 	{
-		vel += Vector2(0, mvel);
+		vel += Vector2f(0, mvel);
 	}
 	if (p.IsPressing(PAD_INPUT_RIGHT))
 	{
-		vel += Vector2(mvel, 0);
+		vel += Vector2f(mvel, 0);
 	}
 	if (p.IsPressing(PAD_INPUT_LEFT))
 	{
-		vel += Vector2(-mvel, 0);
+		vel += Vector2f(-mvel, 0);
 	}
 
 	// 斜め移動の際はスピード調整
@@ -91,20 +90,20 @@ void Player::Move(const Peripheral & p)
 
 void Player::ShotBullet(const Peripheral & p)
 {
-	cnt++;
-	if (cnt % 3 == 0)
+	if (interval % 3 == 0)
 	{
 		if (p.IsPressing(PAD_INPUT_2))
 		{
-			shot->cSHOT(pos, SHOT_PTN::NORMAL);
+			shot->cSHOT(pos,SHOT_PTN::NORMAL);
 		}
 	}
+	interval++;
 }
 
 void Player::Damage(const Peripheral & p)
 {
-	life--;
-	if (life == 0)
+	HP--;
+	if (HP <= 0)
 	{
 		updater = &Player::Die;
 	}
@@ -135,7 +134,7 @@ void Player::Die(const Peripheral &p)
 }
 
 
-void Player::Draw(Vector2& pos, int time)
+void Player::Draw(Vector2f& pos, const int& time)
 {
 	if (updater != &Player::Invincible)
 	{

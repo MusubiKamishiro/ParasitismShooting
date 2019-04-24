@@ -20,16 +20,22 @@ Game::~Game()
 {
 }
 
-void Game::Initialize(int ins)
+void Game::Initialize()
 {
-	/*if (ins == IDYES)
+#ifdef _DEBUG
+	DxLib::ChangeWindowMode(true);
+#else
+	int ans = MessageBox(nullptr, "フルスクリーンで表示しますか？", "画面の大きさどうしようか", MB_YESNO | MB_ICONQUESTION);
+
+	if (ans == IDYES)
 	{
 		DxLib::ChangeWindowMode(false);
 	}
 	else
 	{
-		*/DxLib::ChangeWindowMode(true);
-	//}
+		DxLib::ChangeWindowMode(true);
+	}
+#endif // DEBUG
 
 	DxLib::SetGraphMode(ScreenSize.x, ScreenSize.y, 32);
 

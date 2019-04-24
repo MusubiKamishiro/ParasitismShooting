@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-const int SHOT_MAX = 20000;
+const int SHOT_MAX = 2000;
 
 class Player;
 class Peripheral;
@@ -20,19 +20,12 @@ enum SHOT_PTN
 
 };
 
-enum MOVE_PTN
-{
-	FAST,
-	SLOW,
-	MAX
-};
-
 typedef struct ShotST
 {
 	int flag;
-	Vector2 pos;
-	Vector2 vel;
-	Vector2 Dir;
+	Vector2f pos;
+	Vector2f vel;
+	Vector2f Dir;
 	int movePtn;
 	int level;
 	int shotPtn;
@@ -41,9 +34,9 @@ typedef struct ShotST
 class Shot
 {
 private:
-	Vector2 pos;
-	Vector2 vel;
-	Vector2 Dir;
+	Vector2f pos;
+	Vector2f vel;
+	Vector2f Dir;
 
 	int img[8];
 	int cnt;
@@ -75,10 +68,10 @@ public:
 	~Shot();
 
 	void Update();
-	void cSHOT(Vector2 pos,int shotPtn);
+	void cSHOT(Vector2f pos, int shotPtn);
 	void Draw(void);
 private:
-	void setBullet(Vector2 pos,	Vector2 vel,Vector2 Dir,int movePtn,int level,int shotPtn);
+	void setBullet(Vector2f pos, Vector2f vel, Vector2f Dir, int movePtn, int level, int shotPtn);
 	int SearchBullet(void);
 	void OutofScreen(void);
 };
