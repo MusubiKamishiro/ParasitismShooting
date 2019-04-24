@@ -31,9 +31,9 @@ private:
 
 	void NotOutOfRange();		// 範囲外に行かせない
 
-	Vector2 startPos;			// 開始座標
-	Vector2 pos;				// 現在座標
-	Vector2 vel;				// 移動速度
+	Vector2f startPos;			// 開始座標
+	Vector2f pos;				// 現在座標
+	Vector2f vel;				// 移動速度
 	float moveVel;				// 移動量
 	int life;					// 体力
 	int count;
@@ -56,7 +56,7 @@ public:
 
 	void Update(const Peripheral &p);
 
-	Vector2 GetPos()const;
-	void Draw(Vector2& pos, int time);
+	Vector2f GetPos()const;
+	void Draw(Vector2f& pos, int time);
 };
 

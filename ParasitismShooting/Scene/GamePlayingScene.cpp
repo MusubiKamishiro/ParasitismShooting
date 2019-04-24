@@ -89,7 +89,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 	gameScreen->SetAndClearScreen();
 	
 	bg->Draw(time);
-	Vector2 pos = player->GetPos();
+	Vector2f pos = player->GetPos();
 	player->Draw(pos, time);
 
 	gameScreen->DrawAndChangeScreen();

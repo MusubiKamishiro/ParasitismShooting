@@ -46,12 +46,12 @@ void Shot::Update()
 	
 }
 
-void Shot::cSHOT(Vector2 pos)
+void Shot::cSHOT(Vector2f pos)
 {
 	setBullet(pos, { 0,-30 }, { 0,0 }, 1, 1);
 }
 
-void Shot::setBullet(Vector2 pos, Vector2 vel, Vector2 Dir, int level, int ptn)
+void Shot::setBullet(Vector2f pos, Vector2f vel, Vector2f Dir, int level, int ptn)
 {
 	int k = 0;
 	for (int j = 0; j < 2; j++)

@@ -23,9 +23,9 @@ enum SHOT_PTN
 typedef struct ShotST
 {
 	int flag;
-	Vector2 pos;
-	Vector2 vel;
-	Vector2 Dir;
+	Vector2f pos;
+	Vector2f vel;
+	Vector2f Dir;
 	int level;
 	int ptn;
 }shot_st;
@@ -33,9 +33,9 @@ typedef struct ShotST
 class Shot
 {
 private:
-	Vector2 pos;
-	Vector2 vel;
-	Vector2 Dir;
+	Vector2f pos;
+	Vector2f vel;
+	Vector2f Dir;
 
 	int img[8];
 	int cnt;
@@ -56,10 +56,10 @@ public:
 	~Shot();
 
 	void Update();
-	void cSHOT(Vector2 pos);
+	void cSHOT(Vector2f pos);
 	void Draw(void);
 private:
-	void setBullet(Vector2 pos,	Vector2 vel,Vector2 Dir,int level,int ptn);
+	void setBullet(Vector2f pos,Vector2f vel,Vector2f Dir,int level,int ptn);
 	int SearchBullet(void);
 	void OutofScreen(void);
 };

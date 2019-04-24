@@ -12,7 +12,7 @@ Geometry::~Geometry()
 }
 
 
-Box::Box(Vector2 invecA, Vector2 invecB)
+Box::Box(Vector2f invecA, Vector2f invecB)
 {
 	if (invecA.x < invecB.x)
 	{
@@ -23,16 +23,16 @@ Box::Box(Vector2 invecA, Vector2 invecB)
 		}
 		else
 		{
-			dotA = Vector2(invecA.x, invecB.y);
-			dotB = Vector2(invecB.x, invecA.y);
+			dotA = Vector2f(invecA.x, invecB.y);
+			dotB = Vector2f(invecB.x, invecA.y);
 		}
 	}
 	else
 	{
 		if (invecA.y < invecB.y)
 		{
-			dotA = Vector2(invecB.x, invecA.y);
-			dotB = Vector2(invecA.x, invecB.y);
+			dotA = Vector2f(invecB.x, invecA.y);
+			dotB = Vector2f(invecA.x, invecB.y);
 		}
 		else
 		{
@@ -48,26 +48,26 @@ Box::Box(int ax, int ay, int bx, int by)
 	{
 		if (by < by)
 		{
-			dotA = Vector2(ax, ay);
-			dotB = Vector2(bx, by);
+			dotA = Vector2f(ax, ay);
+			dotB = Vector2f(bx, by);
 		}
 		else
 		{
-			dotA = Vector2(ax, by);
-			dotB = Vector2(bx, ay);
+			dotA = Vector2f(ax, by);
+			dotB = Vector2f(bx, ay);
 		}
 	}
 	else
 	{
 		if (by < by)
 		{
-			dotA = Vector2(bx, ay);
-			dotB = Vector2(ax, by);
+			dotA = Vector2f(bx, ay);
+			dotB = Vector2f(ax, by);
 		}
 		else
 		{
-			dotA = Vector2(bx, by);
-			dotB = Vector2(ax, ay);
+			dotA = Vector2f(bx, by);
+			dotB = Vector2f(ax, ay);
 		}
 
 	}
@@ -76,7 +76,7 @@ Box::Box(int ax, int ay, int bx, int by)
 
 bool Circle::HitCircle(Circle& c)
 {
-	Vector2 line = Vector2(std::abs(c.pos.x - pos.x), std::abs(c.pos.y - pos.y));
+	Vector2f line = Vector2f(std::abs(c.pos.x - pos.x), std::abs(c.pos.y - pos.y));
 
 	float distance = std::pow(line.x, 2.0) + std::pow(line.y, 2.0);
 	distance = std::sqrt(distance);
