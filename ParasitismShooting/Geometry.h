@@ -49,6 +49,51 @@ typedef Vector2D<int> Vector2;
 // 実数型ﾍﾞｸﾄﾙ
 typedef Vector2D<float> Vector2f;
 
+/// ｻｲｽﾞを表す構造体
+struct Size {
+	Size() : width(0), height(0) {}
+	Size(int inw, int inh) : width(inw), height(inh) {}
+	int width;	// 幅
+	int height;	// 高さ
+};
+
+/// 矩形を表現する構造体
+struct Rect {
+	Rect() : center(0, 0), size(0, 0) {}
+	Rect(float x, float y, int inw, int inh) : center(x, y), size(inw, inh) {}
+	Rect(const Vector2f& inc, const Size& ins) : center(inc), size(ins) {}
+
+	Vector2f center;	// 中心
+	Size size;			// 幅と高さ
+
+
+	const int Left()const
+	{
+		return center.x - (size.width / 2);
+	}
+	const int Top()const
+	{
+		return center.y - (size.height / 2);
+	}
+	const int Right()const
+	{
+		return center.x + (size.width / 2);
+	}
+	const int Bottom()const
+	{
+		return center.y + (size.height / 2);
+	}
+	const int Width()const
+	{
+		return size.width;
+	}
+	const int Height()const
+	{
+		return size.height;
+	}
+};
+
+
 
 struct Box
 {

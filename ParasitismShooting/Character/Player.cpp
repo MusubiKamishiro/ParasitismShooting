@@ -4,19 +4,18 @@
 #include "../GameScreen.h"
 #include <algorithm>
 #include "../Shot.h"
-#include <string>
+
 
 Player::Player()
 {
 	img = DxLib::LoadGraph("img/title.png");
 	GameScreen gscreen;
-
 	Vector2 gssize = gscreen.GetGSSize();
 
-	up = 15;
-	right = gssize.x - 15;
-	left = 15;
-	down = gssize.y - 15;
+	up = 0;
+	right = gssize.x;
+	left = 0;
+	down = gssize.y;
 
 	vel = Vector2f(0, 0);
 	moveVel = 3.0;
@@ -24,12 +23,12 @@ Player::Player()
 	pos = startPos;
 	HP = 3;
 	count = 0;
+	interval = 0;
+	rect = Rect(15, 15, 30, 30);
 
 	shot.reset(new Shot());
 	
 	updater = &Player::Move;
-
-	interval = 0;
 }
 
 Player::~Player()
@@ -45,11 +44,6 @@ void Player::Update(const Peripheral &p)
 	pos += vel;
 	NotOutOfRange();
 	ShotBullet(p);
-}
-
-Vector2f Player::GetPos() const
-{
-	return pos;
 }
 
 
@@ -136,15 +130,16 @@ void Player::Die(const Peripheral &p)
 
 void Player::Draw(Vector2f& pos, const int& time)
 {
+	rect.center = pos;
 	if (updater != &Player::Invincible)
 	{
-		DxLib::DrawExtendGraph(pos.x - 15, pos.y - 15, (pos.x + 15), (pos.y + 15), img, true);
+		DxLib::DrawExtendGraph(rect.Left(), rect.Top(), rect.Right(), rect.Bottom(), img, true);
 	}
 	else
 	{
 		if ((time / 5) % 2)
 		{
-			DxLib::DrawExtendGraph(pos.x - 15, pos.y - 15, (pos.x + 15), (pos.y + 15), img, true);
+			DxLib::DrawExtendGraph(rect.Left(), rect.Top(), rect.Right(), rect.Bottom(), img, true);
 		}
 	}
 

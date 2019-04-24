@@ -9,12 +9,12 @@
 class CharacterObject
 {
 protected:
-	int HP;				// 体力
-	int SP;				// スタミナ
+	int HP;			// 体力
+	int SP;			// スタミナ
 
-	Vector2f pos;		// 自分の座標
-	Vector2f vel;		// 自分の速度
-	//Rect _rect;		// 中心、幅と高さ
+	Vector2f pos;	// 座標
+	Vector2f vel;	// 移動速度
+	Rect rect;		// 中心、幅と高さ
 
 	//shottype
 	//bombtype
@@ -51,5 +51,7 @@ public:
 
 	CharacterObject();
 	virtual ~CharacterObject();
+
+	Vector2f GetPos()const;
 };
 

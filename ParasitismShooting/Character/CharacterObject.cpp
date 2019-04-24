@@ -180,3 +180,8 @@ CharacterObject::CharacterObject() //: _nowCutIdx(0), _pos(150, 340), _flame(0),
 CharacterObject::~CharacterObject()
 {
 }
+
+Vector2f CharacterObject::GetPos() const
+{
+	return pos;
+}

@@ -6,8 +6,9 @@
 GameScreen::GameScreen()
 {
 	Vector2 ssize = Game::Instance().GetScreenSize();
-	screen = DxLib::MakeScreen((ssize.x - (300+20)), (ssize.y - 40));
 	gssize = Vector2((ssize.x - (300 + 20)), (ssize.y - 40));
+
+	screen = DxLib::MakeScreen(gssize.x, gssize.y);
 }
 
 

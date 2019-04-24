@@ -2,7 +2,7 @@
 #include "../Geometry.h"
 #include "CharacterObject.h"
 #include <memory>
-//#include <vector>
+
 
 enum Dir
 {
@@ -53,7 +53,6 @@ public:
 
 	void Update(const Peripheral &p);
 
-	Vector2f GetPos()const;
 	void Draw(Vector2f& pos, const int& time);
 };
 
