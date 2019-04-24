@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "../Peripheral.h"
 #include "../Game.h"
-#include "TitleScene.h"
+#include "ResultScene.h"
 
 #include "../GameScreen.h"
 #include "../HUD.h"
@@ -34,7 +34,7 @@ void GamePlayingScene::FadeoutUpdate(const Peripheral & p)
 {
 	if (pal <= 0)
 	{
-		Game::Instance().ChangeScene(new TitleScene());
+		Game::Instance().ChangeScene(new ResultScene());
 	}
 	else
 	{
@@ -77,6 +77,10 @@ void GamePlayingScene::Update(const Peripheral& p)
 		player->Update(p);
 		time++;
 	}
+	if (p.IsTrigger(PAD_INPUT_3))
+	{
+		player->Damage(p);
+	}
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
@@ -86,7 +90,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 	
 	bg->Draw(time);
 	Vector2 pos = player->GetPos();
-	player->Draw(pos);
+	player->Draw(pos, time);
 
 	gameScreen->DrawAndChangeScreen();
 

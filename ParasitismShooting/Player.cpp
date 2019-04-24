@@ -22,6 +22,8 @@ Player::Player()
 	moveVel = 3.0;
 	startPos = Vector2(gssize.x / 2, gssize.y - 20);
 	pos = startPos;
+	life = 3;
+	count = 0;
 
 	shot.reset(new Shot());
 
@@ -99,14 +101,53 @@ void Player::ShotBullet(const Peripheral & p)
 	}
 }
 
+void Player::Damage(const Peripheral & p)
+{
+	life--;
+	if (life == 0)
+	{
+		updater = &Player::Die;
+	}
+	else
+	{
+		updater = &Player::Invincible;
+	}
+}
+
+void Player::Invincible(const Peripheral & p)
+{
+	if (count >= 300)
+	{
+		count = 0;
+		updater = &Player::Move;
+	}
+	else
+	{
+		count++;
+	}
+	Move(p);
+	
+}
+
 void Player::Die(const Peripheral &p)
 {
+	
 }
 
 
-void Player::Draw(Vector2& pos)
+void Player::Draw(Vector2& pos, int time)
 {
-	DxLib::DrawExtendGraph(pos.x - 15, pos.y - 15, (pos.x + 15), (pos.y + 15), img, true);
+	if (updater != &Player::Invincible)
+	{
+		DxLib::DrawExtendGraph(pos.x - 15, pos.y - 15, (pos.x + 15), (pos.y + 15), img, true);
+	}
+	else
+	{
+		if ((time / 5) % 2)
+		{
+			DxLib::DrawExtendGraph(pos.x - 15, pos.y - 15, (pos.x + 15), (pos.y + 15), img, true);
+		}
+	}
 
 	shot->Draw();
 }

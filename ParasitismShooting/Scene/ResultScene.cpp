@@ -47,6 +47,6 @@ ResultScene::~ResultScene()
 void ResultScene::Update(const Peripheral& p)
 {
 	(this->*updater)(p);
-
+	DxLib::DrawString(50, 50, "ResultScene", 0xffffff);
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
 }
