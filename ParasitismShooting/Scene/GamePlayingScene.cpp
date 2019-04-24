@@ -7,7 +7,7 @@
 
 #include "../GameScreen.h"
 #include "../HUD.h"
-#include "../Player.h"
+#include "../Character/Player.h"
 #include "../BackGround.h"
 #include "../PauseMenu.h"
 

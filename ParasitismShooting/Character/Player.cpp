@@ -1,9 +1,9 @@
 #include "Player.h"
 #include <DxLib.h>
-#include "Peripheral.h"
-#include "GameScreen.h"
+#include "../Peripheral.h"
+#include "../GameScreen.h"
 #include <algorithm>
-#include "Shot.h"
+#include "../Shot.h"
 #include <string>
 
 Player::Player()
