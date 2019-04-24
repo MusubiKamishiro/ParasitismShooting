@@ -40,6 +40,11 @@ private:
 	int img[8];
 	int cnt;
 
+	int up;
+	int right;
+	int left;
+	int down;
+
 	std::shared_ptr<Player> player;
 
 	bool sFlag[10];
@@ -56,5 +61,6 @@ public:
 private:
 	void setBullet(Vector2 pos,	Vector2 vel,Vector2 Dir,int level,int ptn);
 	int SearchBullet(void);
+	void OutofScreen(void);
 };
 
