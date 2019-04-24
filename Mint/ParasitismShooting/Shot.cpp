@@ -39,17 +39,15 @@ void Shot::Update()
 		{
 			cShot[j].pos.x += cos(cShot[j].Dir.x) * cShot[j].vel.x;
 			cShot[j].pos.y += cos(cShot[j].Dir.y) * cShot[j].vel.y;
-			Draw();
 		}
 	}
 	OutofScreen();
-	
 	
 }
 
 void Shot::cSHOT(Vector2 pos)
 {
-	setBullet(pos, { 0, -25 }, { 0,0 }, 1, 1);
+	setBullet(pos, { 0,-30 }, { 0,0 }, 1, 1);
 }
 
 void Shot::setBullet(Vector2 pos, Vector2 vel, Vector2 Dir, int level, int ptn)

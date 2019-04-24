@@ -8,7 +8,7 @@ const int SHOT_MAX = 2000;
 class Player;
 class Peripheral;
 
-enum class SHOT_PTN
+enum SHOT_PTN
 {
 	NON,
 	NORMAL,
@@ -17,6 +17,7 @@ enum class SHOT_PTN
 	RADIATION,
 	LASER,
 	PTN_MAX
+
 };
 
 typedef struct ShotST
@@ -56,9 +57,9 @@ public:
 
 	void Update();
 	void cSHOT(Vector2 pos);
+	void Draw(void);
 private:
 	void setBullet(Vector2 pos,	Vector2 vel,Vector2 Dir,int level,int ptn);
-	void Draw(void);
 	int SearchBullet(void);
 	void OutofScreen(void);
 };

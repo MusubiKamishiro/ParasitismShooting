@@ -4,7 +4,7 @@
 
 HUD::HUD() : ssize(Game::Instance().GetScreenSize()), hudPos(Vector2(ssize.x - 300, 0))
 {
-	img = DxLib::LoadGraph("img/283rogo.png");
+	img = DxLib::LoadGraph("img/283logo.png");
 }
 
 

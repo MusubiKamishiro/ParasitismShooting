@@ -3,16 +3,18 @@
 #include <stdlib.h>
 #include "../Peripheral.h"
 #include "../Game.h"
-#include "TitleScene.h"
+#include "ResultScene.h"
+
 #include "../GameScreen.h"
 #include "../HUD.h"
 #include "../Player.h"
-#include "../Shot.h"
+#include "../BackGround.h"
+#include "../PauseMenu.h"
 
 
 void GamePlayingScene::FadeinUpdate(const Peripheral & p)
 {
-	if (p.IsTrigger(PAD_INPUT_8))
+	if (p.IsTrigger(PAD_INPUT_7) && (!pauseFlag))
 	{
 		pal = 255;
 		updater = &GamePlayingScene::FadeoutUpdate;
@@ -32,7 +34,7 @@ void GamePlayingScene::FadeoutUpdate(const Peripheral & p)
 {
 	if (pal <= 0)
 	{
-		Game::Instance().ChangeScene(new TitleScene());
+		Game::Instance().ChangeScene(new ResultScene());
 	}
 	else
 	{
@@ -42,14 +44,16 @@ void GamePlayingScene::FadeoutUpdate(const Peripheral & p)
 
 GamePlayingScene::GamePlayingScene()
 {
-	img = DxLib::LoadGraph("img/bg.png");
+	time = 0;
+	pauseFlag = false;
 
 	GetJoypadInputState(DX_INPUT_KEY_PAD1);		// パッドもしくはキーボードで動かせる
 
 	player.reset(new Player());
-	shot.reset(new Shot());
 	hud.reset(new HUD());
+	bg.reset(new BackGround());
 	gameScreen.reset(new GameScreen());
+	pmenu.reset(new PauseMenu());
 	
 	ssize = Game::Instance().GetScreenSize();
 	updater = &GamePlayingScene::FadeinUpdate;
@@ -62,16 +66,40 @@ GamePlayingScene::~GamePlayingScene()
 
 void GamePlayingScene::Update(const Peripheral& p)
 {
+	if (p.IsTrigger(PAD_INPUT_8))
+	{
+		pauseFlag = !pauseFlag;
+	}
+
+	// ポーズしてたら通らないよ
+	if (!pauseFlag)
+	{
+		player->Update(p);
+		time++;
+	}
+	if (p.IsTrigger(PAD_INPUT_3))
+	{
+		player->Damage(p);
+	}
+
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
 	hud->Draw();
 	
 	gameScreen->SetAndClearScreen();
 	
-	player->Update(p);
-	//shot->Update();
+	bg->Draw(time);
+	Vector2 pos = player->GetPos();
+	player->Draw(pos, time);
 
 	gameScreen->DrawAndChangeScreen();
+
+
+	if (pauseFlag)
+	{
+		pmenu->Update();
+		pmenu->Draw();
+	}
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, ssize.x, ssize.y, 0x000000, true);
