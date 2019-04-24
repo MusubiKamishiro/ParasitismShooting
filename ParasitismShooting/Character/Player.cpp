@@ -22,15 +22,14 @@ Player::Player()
 	moveVel = 3.0;
 	startPos = Vector2f(gssize.x / 2, gssize.y - 20);
 	pos = startPos;
-	life = 3;
+	HP = 3;
 	count = 0;
 
 	shot.reset(new Shot());
-
 	
 	updater = &Player::Move;
 
-	cnt = 0;
+	interval = 0;
 }
 
 Player::~Player()
@@ -91,20 +90,20 @@ void Player::Move(const Peripheral & p)
 
 void Player::ShotBullet(const Peripheral & p)
 {
-	cnt++;
-	if (cnt % 3 == 0)
+	if (interval % 3 == 0)
 	{
 		if (p.IsPressing(PAD_INPUT_2))
 		{
 			shot->cSHOT(pos);
 		}
 	}
+	interval++;
 }
 
 void Player::Damage(const Peripheral & p)
 {
-	life--;
-	if (life == 0)
+	HP--;
+	if (HP <= 0)
 	{
 		updater = &Player::Die;
 	}
@@ -135,7 +134,7 @@ void Player::Die(const Peripheral &p)
 }
 
 
-void Player::Draw(Vector2f& pos, int time)
+void Player::Draw(Vector2f& pos, const int& time)
 {
 	if (updater != &Player::Invincible)
 	{
