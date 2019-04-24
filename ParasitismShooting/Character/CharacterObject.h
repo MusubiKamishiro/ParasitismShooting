@@ -4,15 +4,14 @@
 //#include <map>
 #include "../Geometry.h"
 
-class Camera;
-
 
 // ｷｬﾗｸﾀｰ基底ｸﾗｽ
 class CharacterObject
 {
 protected:
-	//Vector2f _vel;		// 自分の速度
-	//Rect _rect;			// 中心、幅と高さ
+	Vector2f pos;		// 自分の座標
+	Vector2f vel;		// 自分の速度
+	//Rect _rect;		// 中心、幅と高さ
 
 	//std::string _nowActionName;	// 現在再生中のｱｸｼｮﾝ名
 	//int _nowCutIdx;				// 現在表示中のｶｯﾄ番号
@@ -27,14 +26,8 @@ protected:
 	//void ReadActionFile(const char* actionPath);
 
 	//bool _isTurn;		// 反転ﾌﾗｸﾞ
-	//Position2f _pos;	// 自分の座標
-
-	//const Camera& _camera;
 
 public:
-	//const float g = 0.5f;	// 間に合わせ
-
-
 	//bool _isAerial;			// 空中ﾌﾗｸﾞ
 
 

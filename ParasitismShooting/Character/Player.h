@@ -1,6 +1,6 @@
 #pragma once
 #include "../Geometry.h"
-//#include "CharacterObject.h"
+#include "CharacterObject.h"
 #include <memory>
 //#include <vector>
 
@@ -17,7 +17,7 @@ class Peripheral;
 class GamePlayingScene;
 class Shot;
 
-class Player// : public CharacterObject
+class Player : public CharacterObject
 {
 	friend GamePlayingScene;
 private:
@@ -32,8 +32,8 @@ private:
 	void NotOutOfRange();		// 範囲外に行かせない
 
 	Vector2f startPos;			// 開始座標
-	Vector2f pos;				// 現在座標
-	Vector2f vel;				// 移動速度
+	//Vector2f pos;				// 現在座標
+	//Vector2f vel;				// 移動速度
 	float moveVel;				// 移動量
 	int life;					// 体力
 	int count;

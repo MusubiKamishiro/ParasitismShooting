@@ -1,7 +1,5 @@
 #include "CharacterObject.h"
 #include <DxLib.h>
-//#include <cassert>
-//#include "Camera.h"
 
 
 //void CharacterObject::ChangeAction(const char * name)

@@ -37,9 +37,6 @@ void Game::Initialize()
 	}
 #endif // DEBUG
 
-
-	
-
 	DxLib::SetGraphMode(ScreenSize.x, ScreenSize.y, 32);
 
 	if (DxLib::DxLib_Init() == -1)

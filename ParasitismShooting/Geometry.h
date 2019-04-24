@@ -1,71 +1,53 @@
 #pragma once
 
-struct Vector2
-{
-	Vector2() : x(0), y(0) {}
-	Vector2(int inx, int iny) : x(inx), y(iny) {}
-	int x;
-	int y;
 
-	void operator+=(const Vector2& in)
+// Œ^‚ª–¢Šm’è‚Ì‚Ü‚Üg‚¦‚é(g‚¤‚Æ‚«‚ÉŒ^‚ªŒˆ’è‚·‚é)
+template<typename T>
+struct Vector2D
+{
+	Vector2D() : x(0), y(0) {}
+	Vector2D(T inx, T iny) : x(inx), y(iny) {}
+	T x;
+	T y;
+
+	Vector2D<T> operator+(const Vector2D<T>& in)
+	{
+		return Vector2D<T>(in.x + x, in.y + y);
+	}
+	void operator+=(const Vector2D<T>& in)
 	{
 		x += in.x;
 		y += in.y;
 	}
-	void operator-=(const Vector2& in)
+	void operator-=(const Vector2D<T>& in)
 	{
 		x -= in.x;
 		y -= in.y;
 	}
-	bool operator==(const Vector2& in)const
-	{
-		return ((x == in.x) && (y == in.y));
-	}
-	bool operator!=(const Vector2& in)const
-	{
-		return ((x != in.x) || (y != in.y));
-	}
-};
-
-struct Vector2f
-{
-	Vector2f() : x(0), y(0) {}
-	Vector2f(float inx, float iny) : x(inx), y(iny) {}
-	float x;
-	float y;
-
-	Vector2f operator+(const Vector2f& in)
-	{
-		return Vector2f(in.x + x, in.y + y);
-	}
-	void operator+=(const Vector2f& in)
-	{
-		x += in.x;
-		y += in.y;
-	}
-	void operator-=(const Vector2f& in)
-	{
-		x -= in.x;
-		y -= in.y;
-	}
-	void operator/=(const float& in)
+	void operator/=(const T& in)
 	{
 		x /= in;
 		y /= in;
 	}
-	bool operator==(const Vector2f& in)const
+	bool operator==(const Vector2D<T>& in)const
 	{
 		return ((x == in.x) && (y == in.y));
 	}
-	bool operator!=(const Vector2f& in)const
+	bool operator!=(const Vector2D<T>& in)const
 	{
 		return ((x != in.x) || (y != in.y));
 	}
-	bool operator|=(const Vector2f& in)const
+	bool operator|=(const Vector2D<T>& in)const
 	{
 		return ((x == in.x) || (y == in.y));
 	}
 };
+
+// ®”Œ^ÍŞ¸ÄÙ
+typedef Vector2D<int> Vector2;
+
+// À”Œ^ÍŞ¸ÄÙ
+typedef Vector2D<float> Vector2f;
 
 
 struct Box
