@@ -10,7 +10,7 @@ class Peripheral;
 
 enum SHOT_PTN
 {
-	NON,
+	WEAK,
 	NORMAL,
 	SHOTGUN,
 	TRACKING,
@@ -26,8 +26,9 @@ typedef struct ShotST
 	Vector2f pos;
 	Vector2f vel;
 	Vector2f Dir;
+	int movePtn;
 	int level;
-	int ptn;
+	int shotPtn;
 }shot_st;
 
 class Shot
@@ -51,15 +52,26 @@ private:
 
 	shot_st cShot[SHOT_MAX];
 
+	int NormalPosPtnX[4] = { -10, 10,-30, 30 };
+	int NormalPosPtnY[4] = { -30,-30,-10,-10 };
+	int ShotGunPosPtnX[4];
+	int ShotGunPosPtnY[4];
+	int TrackingPosPtnX[4];
+	int TrackingPosPtnY[4];
+	int RadiationPosPtnX[4];
+	int RadiationPosPtnY[4];
+	int LaserPosPtnX[4];
+	int LaserPosPtnY[4];
+
 public:
 	Shot();
 	~Shot();
 
 	void Update();
-	void cSHOT(Vector2f pos);
+	void cSHOT(Vector2f pos, int shotPtn);
 	void Draw(void);
 private:
-	void setBullet(Vector2f pos,Vector2f vel,Vector2f Dir,int level,int ptn);
+	void setBullet(Vector2f pos, Vector2f vel, Vector2f Dir, int movePtn, int level, int shotPtn);
 	int SearchBullet(void);
 	void OutofScreen(void);
 };

@@ -26,7 +26,7 @@ public:
 
 	// ‰Šú‰»Œn
 	// Šî–{‘fŞ‚ÌÛ°ÄŞ‚Æ‚©‰Šúˆ—‚ğs‚¤
-	void Initialize(int ans);
+	void Initialize();
 
 	// ’†‚ÉÙ°Ìß‚ ‚è
 	// ‚±‚ê‚ğŒÄ‚Ô‚Æ¹Ş°Ñ‚ªn‚Ü‚é

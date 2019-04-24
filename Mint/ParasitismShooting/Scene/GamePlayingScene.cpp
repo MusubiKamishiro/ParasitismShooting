@@ -7,7 +7,7 @@
 
 #include "../GameScreen.h"
 #include "../HUD.h"
-#include "../Player.h"
+#include "../Character/Player.h"
 #include "../BackGround.h"
 #include "../PauseMenu.h"
 
@@ -77,7 +77,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 		player->Update(p);
 		time++;
 	}
-	if (p.IsTrigger(PAD_INPUT_3))
+	if (p.IsTrigger(PAD_INPUT_3) && (player->updater != &Player::Invincible))
 	{
 		player->Damage(p);
 	}
@@ -88,9 +88,9 @@ void GamePlayingScene::Update(const Peripheral& p)
 	
 	gameScreen->SetAndClearScreen();
 	
-	bg->Draw(time);
-	Vector2 pos = player->GetPos();
-	player->Draw(pos, time);
+	bg->Draw((int)time);
+	Vector2f pos = player->GetPos();
+	player->Draw(pos, (int)time);
 
 	gameScreen->DrawAndChangeScreen();
 

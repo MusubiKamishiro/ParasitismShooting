@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-const int SHOT_MAX = 20000;
+const int SHOT_MAX = 2000;
 
 class Player;
 class Peripheral;
@@ -20,19 +20,12 @@ enum SHOT_PTN
 
 };
 
-enum MOVE_PTN
-{
-	FAST,
-	SLOW,
-	MAX
-};
-
 typedef struct ShotST
 {
 	int flag;
-	Vector2 pos;
-	Vector2 vel;
-	Vector2 Dir;
+	Vector2f pos;
+	double angle;
+	int Speed;
 	int movePtn;
 	int level;
 	int shotPtn;
@@ -41,10 +34,6 @@ typedef struct ShotST
 class Shot
 {
 private:
-	Vector2 pos;
-	Vector2 vel;
-	Vector2 Dir;
-
 	int img[8];
 	int cnt;
 
@@ -59,9 +48,9 @@ private:
 
 	shot_st cShot[SHOT_MAX];
 
-	int NormalPosPtnX[4];
-	int NormalPosPtnY[4];
-	int ShotGunPosPtnX[4];
+	int NormalPosPtnX[4] = { -10, 10,-30, 30 };
+	int NormalPosPtnY[4] = { -30,-30,-10,-10 };
+	int ShotGunPosPtnX[3] = { 10, 80, 0};
 	int ShotGunPosPtnY[4];
 	int TrackingPosPtnX[4];
 	int TrackingPosPtnY[4];
@@ -75,10 +64,10 @@ public:
 	~Shot();
 
 	void Update();
-	void cSHOT(Vector2 pos,int shotPtn);
+	void cSHOT(Vector2f pos, int level, int shotPtn);
 	void Draw(void);
 private:
-	void setBullet(Vector2 pos,	Vector2 vel,Vector2 Dir,int movePtn,int level,int shotPtn);
+	void setBullet(Vector2f pos, double angle, int Speed, int movePtn, int level, int shotPtn);
 	int SearchBullet(void);
 	void OutofScreen(void);
 };
