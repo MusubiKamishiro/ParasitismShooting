@@ -1,5 +1,7 @@
 #include "Shot.h"
 #include <DxLib.h>
+#define _USE_MATH_DEFINES
+#include <math.h>
 #include "Character/Player.h"
 #include "Peripheral.h"
 #include "GameScreen.h"
@@ -11,8 +13,8 @@ Shot::Shot()
 	{
 		cShot[j].flag = 0;
 		cShot[j].pos = { 0,0 };
-		cShot[j].vel = { 0,0 };
-		cShot[j].Dir = { 0,0 };
+		cShot[j].Speed = 0;
+		cShot[j].angle = 0;
 		cShot[j].level = 0; 
 		cShot[j].movePtn = 0;
 		cShot[j].level = 0;
@@ -39,20 +41,20 @@ void Shot::Update()
 	{
 		if (cShot[j].flag == 1)
 		{
-			cShot[j].pos.x += cos(cShot[j].Dir.x) * cShot[j].vel.x;
-			cShot[j].pos.y += cos(cShot[j].Dir.y) * cShot[j].vel.y;
+			cShot[j].pos.x += cos(cShot[j].angle) * cShot[j].Speed;
+			cShot[j].pos.y += cos(cShot[j].angle) * cShot[j].Speed;
 		}
 	}
 	OutofScreen();
 	
 }
 
-void Shot::cSHOT(Vector2f pos, int shotPtn)
+void Shot::cSHOT(Vector2f pos, int level, int shotPtn)
 {
-	setBullet(pos, { 0,-10 }, { 0,0 }, 1, 4, shotPtn);
+	setBullet(pos,  0,-5, 1, 3, shotPtn);
 }
 
-void Shot::setBullet(Vector2f pos, Vector2f vel, Vector2f Dir, int movePtn, int level, int shotPtn)
+void Shot::setBullet(Vector2f pos, double angle, int Speed, int movePtn, int level, int shotPtn)
 {
 	int k = 0;
 	for (int j = 0; j < level; j++)
@@ -67,15 +69,21 @@ void Shot::setBullet(Vector2f pos, Vector2f vel, Vector2f Dir, int movePtn, int 
 			{
 				cShot[k].flag = 1;
 				cShot[k].pos = { pos.x - 10 + NormalPosPtnX[j],pos.y + NormalPosPtnY[j] };
-				cShot[k].vel = vel;
-				cShot[k].Dir = Dir;
+				cShot[k].angle = M_PI / 2;
+				cShot[k].Speed = Speed;
 				cShot[k].movePtn = movePtn;
 				cShot[k].level = level;
 				cShot[k].shotPtn = shotPtn;
 			}
 			else if (shotPtn == SHOT_PTN::SHOTGUN)
 			{
-
+				cShot[k].flag = 1;
+				cShot[k].pos = pos;
+				cShot[k].angle = ShotGunPosPtnX[j];
+				cShot[k].Speed = Speed;
+				cShot[k].movePtn = movePtn;
+				cShot[k].level = level;
+				cShot[k].shotPtn = shotPtn;
 			}
 			else if (shotPtn == SHOT_PTN::TRACKING)
 			{
@@ -122,19 +130,7 @@ void Shot::OutofScreen(void)
 	{
 		if (cShot[j].flag == 1)
 		{
-			if (cShot[j].pos.x < left - 30)
-			{
-				cShot[j].flag = 0;
-			}
-			else if (cShot[j].pos.x > right + 30)
-			{
-				cShot[j].flag = 0;
-			}
-			if (cShot[j].pos.y < up - 30)
-			{
-				cShot[j].flag = 0;
-			}
-			else if (cShot[j].pos.y > down + 30)
+			if (cShot[j].pos.x < left - 30 || cShot[j].pos.x > right + 30 || cShot[j].pos.y < up - 30 || cShot[j].pos.y > down + 30)
 			{
 				cShot[j].flag = 0;
 			}

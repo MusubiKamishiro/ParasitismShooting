@@ -24,8 +24,8 @@ typedef struct ShotST
 {
 	int flag;
 	Vector2f pos;
-	Vector2f vel;
-	Vector2f Dir;
+	double angle;
+	int Speed;
 	int movePtn;
 	int level;
 	int shotPtn;
@@ -34,10 +34,6 @@ typedef struct ShotST
 class Shot
 {
 private:
-	Vector2f pos;
-	Vector2f vel;
-	Vector2f Dir;
-
 	int img[8];
 	int cnt;
 
@@ -54,7 +50,7 @@ private:
 
 	int NormalPosPtnX[4] = { -10, 10,-30, 30 };
 	int NormalPosPtnY[4] = { -30,-30,-10,-10 };
-	int ShotGunPosPtnX[4];
+	int ShotGunPosPtnX[3] = { 10, 80, 0};
 	int ShotGunPosPtnY[4];
 	int TrackingPosPtnX[4];
 	int TrackingPosPtnY[4];
@@ -68,10 +64,10 @@ public:
 	~Shot();
 
 	void Update();
-	void cSHOT(Vector2f pos, int shotPtn);
+	void cSHOT(Vector2f pos, int level, int shotPtn);
 	void Draw(void);
 private:
-	void setBullet(Vector2f pos, Vector2f vel, Vector2f Dir, int movePtn, int level, int shotPtn);
+	void setBullet(Vector2f pos, double angle, int Speed, int movePtn, int level, int shotPtn);
 	int SearchBullet(void);
 	void OutofScreen(void);
 };
