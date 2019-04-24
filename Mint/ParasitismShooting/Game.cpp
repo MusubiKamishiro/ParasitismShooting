@@ -22,14 +22,14 @@ Game::~Game()
 
 void Game::Initialize(int ins)
 {
-	if (ins == IDYES)
+	/*if (ins == IDYES)
 	{
 		DxLib::ChangeWindowMode(false);
 	}
 	else
 	{
-		DxLib::ChangeWindowMode(true);
-	}
+		*/DxLib::ChangeWindowMode(true);
+	//}
 
 	DxLib::SetGraphMode(ScreenSize.x, ScreenSize.y, 32);
 

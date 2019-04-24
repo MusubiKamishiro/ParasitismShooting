@@ -10,11 +10,12 @@ Shot::Shot()
 	for (int j = 0; j < SHOT_MAX; j++)
 	{
 		cShot[j].flag = 0;
-		cShot[j].pos = { 0,0 };
-		cShot[j].vel = { 0,0 };
-		cShot[j].Dir = { 0,0 };
-		cShot[j].level = 0;
-		cShot[j].ptn = 0;
+		cShot[j].pos	 = { 0,0 };
+		cShot[j].vel	 = { 0,0 };
+		cShot[j].Dir	 = { 0,0 };
+		cShot[j].movePtn = 0;
+		cShot[j].level	 = 0;
+		cShot[j].shotPtn	 = 0;
 	}
 	cnt = 0;
 	GameScreen gscreen;
@@ -45,24 +46,50 @@ void Shot::Update()
 	
 }
 
-void Shot::cSHOT(Vector2 pos)
+void Shot::cSHOT(Vector2 pos, int shotPtn)
 {
-	setBullet(pos, { 0,-30 }, { 0,0 }, 1, 1);
+	setBullet(pos, { 0,-30}, { 0,0 },1, 4, shotPtn);
 }
 
-void Shot::setBullet(Vector2 pos, Vector2 vel, Vector2 Dir, int level, int ptn)
+void Shot::setBullet(Vector2 pos, Vector2 vel, Vector2 Dir, int movePtn, int level, int shotPtn)
 {
+	int cshot0pos_x[4] = { -10, 10,-30, 30 };
+	int cshot0pos_y[4] = { -30,-30,-10,-10 };
 	int k = 0;
-	for (int j = 0; j < 2; j++)
+	for (int j = 0; j < level; j++)
 	{
 		if ( (k = SearchBullet()) != -1)
 		{
-			cShot[k].flag	 = 1;
-			cShot[k].pos	 = pos;
-			cShot[k].vel	 = vel;
-			cShot[k].Dir	 = Dir;
-			cShot[k].level	 = level;
-			cShot[k].ptn	 = ptn;
+			if (shotPtn == SHOT_PTN::WEAK)
+			{
+
+			}
+			else if (shotPtn == SHOT_PTN::NORMAL)
+			{
+				cShot[k].flag = 1;
+				cShot[k].pos = { pos.x - 10 + cshot0pos_x[j],pos.y  + cshot0pos_y[j] };
+				cShot[k].vel = vel;
+				cShot[k].Dir = Dir;
+				cShot[k].movePtn = movePtn;
+				cShot[k].level = level;
+				cShot[k].shotPtn = shotPtn;
+			}
+			else if (shotPtn == SHOT_PTN::SHOTGUN)
+			{
+
+			}
+			else if (shotPtn == SHOT_PTN::TRACKING)
+			{
+
+			}
+			else if (shotPtn == SHOT_PTN::RADIATION)
+			{
+
+			}
+			else if (shotPtn == SHOT_PTN::LASER)
+			{
+
+			}
 		}
 	}
 }
@@ -96,19 +123,19 @@ void Shot::OutofScreen(void)
 	{
 		if (cShot[j].flag == 1)
 		{
-			if (cShot[j].pos.x < left)
+			if (cShot[j].pos.x < left - 30)
 			{
 				cShot[j].flag = 0;
 			}
-			else if (cShot[j].pos.x > right)
+			else if (cShot[j].pos.x > right + 30)
 			{
 				cShot[j].flag = 0;
 			}
-			if (cShot[j].pos.y < up)
+			if (cShot[j].pos.y < up - 30)
 			{
 				cShot[j].flag = 0;
 			}
-			else if (cShot[j].pos.y > down)
+			else if (cShot[j].pos.y > down + 30)
 			{
 				cShot[j].flag = 0;
 			}
