@@ -4,7 +4,6 @@
 #include "GameScreen.h"
 #include <algorithm>
 #include "Shot.h"
-
 #include <string>
 
 Player::Player()
@@ -12,22 +11,25 @@ Player::Player()
 	img = DxLib::LoadGraph("img/title.png");
 	GameScreen gscreen;
 
-	Vector2 screenSize = gscreen.GetGSSize();
+	Vector2 gssize = gscreen.GetGSSize();
 
-	up = 0;
-	right = screenSize.x;
-	left = 0;
-	down = screenSize.y;
+	up = 15;
+	right = gssize.x - 15;
+	left = 15;
+	down = gssize.y - 15;
 
 	vel = Vector2(0, 0);
-
-	moveVel = 5;
-	startPos = Vector2(screenSize.x / 2, screenSize.y - 20);
+	moveVel = 3.0;
+	startPos = Vector2(gssize.x / 2, gssize.y - 20);
 	pos = startPos;
+	life = 3;
+	count = 0;
 
 	shot.reset(new Shot());
+
 	
 	updater = &Player::Move;
+
 	cnt = 0;
 }
 
@@ -40,18 +42,10 @@ void Player::Update(const Peripheral &p)
 	// 移動方向が決まる
 	(this->*updater)(p);
 
-	pos += vel;
 	shot->Update();
-
+	pos += vel;
 	NotOutOfRange();
 	ShotBullet(p);
-	Draw(pos);
-
-
-#ifdef _DEBUG
-	DebugDraw();
-
-#endif // _DEBUG
 }
 
 Vector2 Player::GetPos() const
@@ -63,53 +57,101 @@ Vector2 Player::GetPos() const
 void Player::Move(const Peripheral & p)
 {
 	vel = Vector2();
+	float mvel = moveVel;
 
-	// ボタンを押したら移動
+	if (p.IsPressing(PAD_INPUT_1))
+	{
+		mvel = moveVel / 2;
+	}
+
+	// ボタンを押したら移動(今回は8方向)
 	if (p.IsPressing(PAD_INPUT_UP))
 	{
-		vel += Vector2(0, -moveVel);
+		vel += Vector2(0, -mvel);
 	}
 	if (p.IsPressing(PAD_INPUT_DOWN))
 	{
-		vel += Vector2(0, moveVel);
+		vel += Vector2(0, mvel);
 	}
 	if (p.IsPressing(PAD_INPUT_RIGHT))
 	{
-		vel += Vector2(moveVel, 0);
+		vel += Vector2(mvel, 0);
 	}
 	if (p.IsPressing(PAD_INPUT_LEFT))
 	{
-		vel += Vector2(-moveVel, 0);
+		vel += Vector2(-mvel, 0);
+	}
+
+	// 斜め移動の際はスピード調整
+	if ((vel.x != 0) && (vel.y != 0))
+	{
+		vel /= 1.4142136;
 	}
 }
 
 void Player::ShotBullet(const Peripheral & p)
 {
 	cnt++;
-	if (cnt % 6 == 0)
+	if (cnt % 3 == 0)
 	{
-		if (p.IsPressing(PAD_INPUT_1))
+		if (p.IsPressing(PAD_INPUT_2))
 		{
 			shot->cSHOT(pos);
 		}
 	}
 }
 
+void Player::Damage(const Peripheral & p)
+{
+	life--;
+	if (life == 0)
+	{
+		updater = &Player::Die;
+	}
+	else
+	{
+		updater = &Player::Invincible;
+	}
+}
+
+void Player::Invincible(const Peripheral & p)
+{
+	if (count >= 300)
+	{
+		count = 0;
+		updater = &Player::Move;
+	}
+	else
+	{
+		count++;
+	}
+	Move(p);
+	
+}
 
 void Player::Die(const Peripheral &p)
 {
+	
 }
 
 
-void Player::Draw(Vector2& pos)
+void Player::Draw(Vector2& pos, int time)
 {
-	DxLib::DrawExtendGraph(pos.x - 15, pos.y - 15, (pos.x + 15), (pos.y + 15), img, true);
+	if (updater != &Player::Invincible)
+	{
+		DxLib::DrawExtendGraph(pos.x - 15, pos.y - 15, (pos.x + 15), (pos.y + 15), img, true);
+	}
+	else
+	{
+		if ((time / 5) % 2)
+		{
+			DxLib::DrawExtendGraph(pos.x - 15, pos.y - 15, (pos.x + 15), (pos.y + 15), img, true);
+		}
+	}
+
+	shot->Draw();
 }
 
-
-void Player::DebugDraw()
-{
-}
 
 void Player::NotOutOfRange()
 {
