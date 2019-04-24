@@ -48,13 +48,11 @@ void Shot::Update()
 
 void Shot::cSHOT(Vector2 pos, int shotPtn)
 {
-	setBullet(pos, { 0,-30}, { 0,0 },1, 4, shotPtn);
+	setBullet(pos, { 1,-10}, { 0,0 },1, 4, shotPtn);
 }
 
 void Shot::setBullet(Vector2 pos, Vector2 vel, Vector2 Dir, int movePtn, int level, int shotPtn)
 {
-	int cshot0pos_x[4] = { -10, 10,-30, 30 };
-	int cshot0pos_y[4] = { -30,-30,-10,-10 };
 	int k = 0;
 	for (int j = 0; j < level; j++)
 	{
@@ -67,7 +65,7 @@ void Shot::setBullet(Vector2 pos, Vector2 vel, Vector2 Dir, int movePtn, int lev
 			else if (shotPtn == SHOT_PTN::NORMAL)
 			{
 				cShot[k].flag = 1;
-				cShot[k].pos = { pos.x - 10 + cshot0pos_x[j],pos.y  + cshot0pos_y[j] };
+				cShot[k].pos = { pos.x - 10 + NormalPosPtnX[j],pos.y  + NormalPosPtnY[j] };
 				cShot[k].vel = vel;
 				cShot[k].Dir = Dir;
 				cShot[k].movePtn = movePtn;

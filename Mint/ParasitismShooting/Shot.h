@@ -59,8 +59,8 @@ private:
 
 	shot_st cShot[SHOT_MAX];
 
-	int NormalPosPtnX[4];
-	int NormalPosPtnY[4];
+	int NormalPosPtnX[4] = { -10, 10,-30, 30 };
+	int NormalPosPtnY[4] = { -30,-30,-10,-10 };
 	int ShotGunPosPtnX[4];
 	int ShotGunPosPtnY[4];
 	int TrackingPosPtnX[4];
