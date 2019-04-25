@@ -94,11 +94,23 @@ void Player::ShotBullet(const Peripheral & p)
 	{
 		if (p.IsPressing(PAD_INPUT_2))
 		{
-			shot->cSHOT(pos,4,SHOT_PTN::NORMAL);
+			shot->setBullet(pos, 0, 5, 0, 4, SHOT_PTN::NORMAL);
 		}
 		if (p.IsPressing(PAD_INPUT_4))
 		{
-			shot->cSHOT(pos,3, SHOT_PTN::SHOTGUN);
+			shot->setBullet(pos, 0, 5, 0, 3, SHOT_PTN::SHOTGUN);
+		}
+		if (p.IsPressing(PAD_INPUT_5))
+		{
+			shot->setBullet(pos, 0, 5, 0, 1, SHOT_PTN::TRACKING);
+		}
+		if (p.IsPressing(PAD_INPUT_6))
+		{
+			shot->setBullet(pos, 0, 5, 0, 100, SHOT_PTN::RADIATION);
+		}
+		if (p.IsPressing(PAD_INPUT_10))
+		{
+			shot->setBullet(pos, 0, 5, 0, 100, SHOT_PTN::RANDOM);
 		}
 	}
 	interval++;
