@@ -2,127 +2,6 @@
 #include <DxLib.h>
 
 
-//void CharacterObject::ChangeAction(const char * name)
-//{
-//	_flame = 0;
-//	_nowCutIdx = 0;
-//	_nowActionName = name;
-//}
-//
-//bool CharacterObject::ProceedAnimationFile()
-//{
-//	if (_flame < _actionData.animInfo[_nowActionName].cuts[_nowCutIdx].duration)
-//	{
-//		_flame++;
-//	}
-//	else
-//	{
-//		_flame = 0;
-//		if (_nowCutIdx < _actionData.animInfo[_nowActionName].cuts.size() - 1)
-//		{
-//			_nowCutIdx++;
-//		}
-//		else
-//		{
-//			if (_actionData.animInfo[_nowActionName].isLoop)
-//			{
-//				_nowCutIdx = 0;
-//			}
-//			else
-//			{
-//				return true;
-//			}
-//		}
-//	}
-//	return false;
-//}
-//
-//void CharacterObject::ReadActionFile(const char * actionPath)
-//{
-//	int h = DxLib::FileRead_open(actionPath, false);
-//	int hData;		// äiî[Ç∑Ç◊Ç´ïœêîÇçÏÇÈ
-//
-//	float version = 0.0f;
-//	DxLib::FileRead_read(&version, sizeof(version), h);
-//	assert(version == 1.01f);
-//
-//	// DxLib::FileRead_read(ì«Ç›çûÇﬁ ﬁØÃßÇÃêÊì™±ƒﬁ⁄Ω, ª≤Ωﬁ( ﬁ≤ƒêî), Ãß≤Ÿ ›ƒﬁŸ);
-//	DxLib::FileRead_read(&hData, sizeof(hData), h);
-//
-//	std::string FilePath = "";	// èâä˙âª
-//
-//	// ÿª≤ΩﬁÇµÇƒì«Çﬁ
-//	FilePath.resize(hData);
-//	DxLib::FileRead_read(&FilePath[0], hData, h);
-//
-//	std::string actPath = actionPath;
-//	// éwíËÇµÇΩîÕàÕÇå„ÇÎÇ©ÇÁíTçıÇµéwíËÇµÇΩï∂éöóÒÇ…ä‹Ç‹ÇÍÇÈï∂éöÇ™ç≈èâÇ…èoåªÇ∑ÇÈà íuÇï‘Ç∑
-//	// +1ÇµÇ»Ç¢Ç∆'/'Ç™ì¸ÇÁÇ»Ç¢
-//	int ipos = actPath.find_last_of('/') + 1;
-//
-//	// substr(a, b)	aï∂éöñ⁄Ç©ÇÁbï∂éöñ⁄ÇÃïîï™ï∂éöÇê∂ê¨
-//	// ç°âÒÇÃèÍçáÅAêÊì™Ç©ÇÁfind_last_ofÇ≈å©Ç¬ÇØÇΩí∑Ç≥Ç‹Ç≈ + Ç∑ÇÈ
-//	_actionData.imgFilePath = actPath.substr(0, ipos) + FilePath;
-//
-//	int actionCnt = 0;
-//	DxLib::FileRead_read(&actionCnt, sizeof(actionCnt), h);
-//
-//	for (int i = 0; i < actionCnt; i++)
-//	{
-//		int actionNameSize;
-//		DxLib::FileRead_read(&actionNameSize, sizeof(actionNameSize), h);
-//
-//		// ±∏ºÆ›ñºÇÇ∆Ç¡ÇƒÇ≠ÇÈ
-//		std::string actionName;
-//		actionName.resize(actionNameSize);
-//		DxLib::FileRead_read(&actionName[0], actionName.size(), h);
-//
-//		// Ÿ∞ÃﬂÇæÇØ1 ﬁ≤ƒÿ∞ƒﬁ
-//		ActionInfo actInfo;
-//		DxLib::FileRead_read(&actInfo.isLoop, sizeof(actInfo.isLoop), h);
-//
-//		// ∂Øƒ√ﬁ∞¿Ç™Ç¢Ç≠Ç¬Ç©éÊìæ
-//		int cutCount = 0;
-//		DxLib::FileRead_read(&cutCount, sizeof(cutCount), h);
-//		actInfo.cuts.resize(cutCount);
-//
-//		// ∂Øƒ√ﬁ∞¿ì«Ç›çûÇ›
-//		for (int a = 0; a < cutCount; a++)
-//		{
-//			DxLib::FileRead_read(&actInfo.cuts[a], (sizeof(actInfo.cuts[a]) - sizeof(actInfo.cuts[a].actrects)), h);
-//
-//			// çUåÇãÈå`ìôÇÃ√ﬁ∞¿Ç™Ç¢Ç≠Ç¬Ç©éÊìæ
-//			int actrccnt = 0;
-//			DxLib::FileRead_read(&actrccnt, sizeof(actrccnt), h);
-//
-//			// Ÿ∞ÃﬂÇ∑ÇÈçUåÇãÈå`ìôÇ™Ç»ÇØÇÍÇŒÅAÇ±ÇÍà»ç~ÇÃŸ∞ÃﬂÇÃì‡óeÇΩ∑ØÃﬂÇ∑ÇÈ
-//			if (actrccnt == 0)
-//			{
-//				continue;
-//			}
-//			actInfo.cuts[a].actrects.resize(actrccnt);
-//			DxLib::FileRead_read(&actInfo.cuts[a].actrects[0], (sizeof(ActRect) * actrccnt), h);
-//		}
-//		// forŸ∞ÃﬂÇégÇÌÇ»Ç¢Ç‚ÇËï˚Å´
-//		// DxLib::FileRead_read(&actInfo.cuts[0], sizeof(actInfo.cuts[0]) * cutCount, h);
-//
-//		// ±∏ºÆ›œØÃﬂÇ…ìoò^
-//		_actionData.animInfo[actionName] = actInfo;
-//	}
-//	DxLib::FileRead_close(h);
-//}
-//
-//Position2f CharacterObject::GetPos()const
-//{
-//	return Position2f(_pos);
-//}
-//
-//std::vector<ActRect> CharacterObject::GetAcutRect()const
-//{
-//	// .at	ì«Ç›çûÇ›êÍópÇ…Ç»ÇÈÇ‚Ç¬
-//	return _actionData.animInfo.at(_nowActionName).cuts[_nowCutIdx].actrects;
-//}
-//
 //void CharacterObject::Draw(int _img)
 //{
 //	auto cPos = _camera.CalculatePos(_pos);
@@ -135,7 +14,7 @@
 //
 //	DxLib::DrawRectRotaGraph2(_pos.x + cPos.x, cPos.y, rc.Left(), rc.Top(), rc.Width(), rc.Height(), centerX, cut.center.y, 2.0f, 0.0, _img, true, _isTurn);
 //}
-//
+
 //void CharacterObject::DebugDraw()
 //{
 //	auto cPos = _camera.CalculatePos(_pos);
@@ -154,29 +33,18 @@
 //		DxLib::DrawBox(rc.Left() * 2 + _pos.x + cPos.x, rc.Top() * 2 + _pos.y, rc.Right() * 2 + _pos.x + cPos.x, rc.Bottom() * 2 + _pos.y, 0xff0000, false);
 //	}
 //}
-//
-//// ïùÅAçÇÇ≥ÅAç¿ïWÇï‘Ç∑
-//Rect CharacterObject::GetActionRects(Rect& rc)const
-//{
-//	Rect rect = rc;
-//
-//	rect.center.x = _isTurn ? -rect.center.x : rect.center.x;
-//	
-//	rect.center.x += _pos.x;
-//	rect.center.y += _pos.y;
-//	rect.size.height *= 2;
-//	rect.size.width *= 2;
-//
-//
-//
-//	return rect;
-//}
 
-CharacterObject::CharacterObject() //: _nowCutIdx(0), _pos(150, 340), _flame(0), _isTurn(false), _camera(camera)
+
+CharacterObject::CharacterObject()
 {
 }
 
 
 CharacterObject::~CharacterObject()
 {
+}
+
+Vector2f CharacterObject::GetPos() const
+{
+	return pos;
 }

@@ -1,7 +1,5 @@
 #include "Shot.h"
 #include <DxLib.h>
-#define _USE_MATH_DEFINES
-#include <math.h>
 #include "Character/Player.h"
 #include "Peripheral.h"
 #include "GameScreen.h"
@@ -9,16 +7,16 @@
 Shot::Shot()
 {
 	DxLib::LoadDivGraph("img/lightbullet.png", 8, 8, 1, 60, 60, img, true);
+	
+	cnt = 0;
 	GameScreen gscreen;
 	Vector2 screenSize = gscreen.GetGSSize();
-
 
 	up = 0;
 	right = screenSize.x;
 	left = 0;
 	down = screenSize.y;
 
-	cnt = 0;
 
 	a = right / 4;
 	b = down / 4;
@@ -44,6 +42,7 @@ void Shot::Update()
 	OutofScreen();
 	
 }
+
 
 void Shot::setBullet(Vector2f pos, float angle, int Speed, int movePtn, int level, int shotPtn)
 {
@@ -107,7 +106,7 @@ void Shot::setBullet(Vector2f pos, float angle, int Speed, int movePtn, int leve
 			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn });
 			cShot[cnt].flag = 1;
 			cShot[cnt].pos = pos;
-			cShot[cnt].angle = ShotAngle(pos) + (rand() * M_PI_4 );
+			cShot[cnt].angle = ShotAngle(pos) + (rand() * M_PI_4);
 			cShot[cnt].Speed = Speed;
 			cShot[cnt].movePtn = movePtn;
 			cShot[cnt].level = level;
@@ -154,8 +153,9 @@ void Shot::Draw(void)
 			}
 		}
 	}
-	DrawBox(a,b,c,d, 0xffffff, true);
+	DrawBox(a, b, c, d, 0xffffff, true);
 }
+
 
 void Shot::OutofScreen(void)
 {
@@ -176,5 +176,5 @@ double Shot::ShotAngle(Vector2f pos)
 {
 	//Vector2f pPos = player->GetPos();
 	//return atan2(pPos.y - pos.y,pPos.x - pos.x);
-	return atan2(b - pos.y,a  - pos.x);
+	return atan2(b - pos.y, a - pos.x);
 }

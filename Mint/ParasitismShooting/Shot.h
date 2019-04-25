@@ -35,8 +35,11 @@ typedef struct ShotST
 class Shot
 {
 private:
-	int img[8];
+	Vector2f pos;
+	Vector2f vel;
+	Vector2f Dir;
 
+	int img[8];
 	int cnt;
 
 	int up;
@@ -44,6 +47,7 @@ private:
 	int left;
 	int down;
 
+	std::shared_ptr<Player> player;
 
 	bool sFlag[10];
 
@@ -51,10 +55,9 @@ private:
 
 	int NormalPosPtnX[4] = { -10, 10,-30, 30 };
 	int NormalPosPtnY[4] = { -30,-30,-10,-10 };
-	double ShotGunAngle[3] = {M_PI / 1.5,M_PI / 2,M_PI / 3};
-	
-	int a, b, c, d;
+	double ShotGunAngle[3] = { M_PI / 1.5,M_PI / 2,M_PI / 3 };
 
+	int a, b, c, d;
 public:
 	Shot();
 	~Shot();
