@@ -10,6 +10,8 @@
 #include "../Character/Player.h"
 #include "../BackGround.h"
 #include "../PauseMenu.h"
+#include "../Character/EnemyFactory.h"
+#include "../Character/Enemy.h"
 
 
 void GamePlayingScene::FadeinUpdate(const Peripheral & p)
@@ -54,6 +56,7 @@ GamePlayingScene::GamePlayingScene()
 	hud.reset(new HUD());
 	bg.reset(new BackGround());
 	pmenu.reset(new PauseMenu());
+	efactory.reset(new EnemyFactory(*player));
 	
 	ssize = Game::Instance().GetScreenSize();
 	updater = &GamePlayingScene::FadeinUpdate;
@@ -72,9 +75,20 @@ void GamePlayingScene::Update(const Peripheral& p)
 	}
 
 	// ポーズしてたら通らないよ
+	// アップデート関連
 	if (!pauseFlag)
 	{
+		if (time == 0)
+		{
+			efactory->Create("fish", Vector2f(100, 100));
+		}
+
 		player->Update(p);
+		for (auto& enemy : efactory->GetLegion())
+		{
+			enemy->Update();
+		}
+
 		time++;
 	}
 	if (p.IsTrigger(PAD_INPUT_3) && (player->updater != &Player::Invincible))
@@ -91,6 +105,12 @@ void GamePlayingScene::Update(const Peripheral& p)
 	bg->Draw((int)time);
 	Vector2f pos = player->GetPos();
 	player->Draw(pos, (int)time);
+	for (auto& enemy : efactory->GetLegion())
+	{
+		enemy->Draw();
+	}
+
+
 
 	gameScreen->DrawAndChangeScreen();
 

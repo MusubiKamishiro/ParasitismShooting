@@ -84,6 +84,15 @@
     <ClCompile Include="Character\CharacterObject.cpp">
       <Filter>キャラクターファイル\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Character\Enemy.cpp">
+      <Filter>キャラクターファイル\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\EnemyFactory.cpp">
+      <Filter>キャラクターファイル\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Fish.cpp">
+      <Filter>キャラクターファイル\ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -135,6 +144,15 @@
       <Filter>キャラクターファイル\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\CharacterObject.h">
+      <Filter>キャラクターファイル\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Enemy.h">
+      <Filter>キャラクターファイル\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\EnemyFactory.h">
+      <Filter>キャラクターファイル\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Fish.h">
       <Filter>キャラクターファイル\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>

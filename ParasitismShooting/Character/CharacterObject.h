@@ -24,8 +24,8 @@ protected:
 	//unsigned int _flame;		// そのｶｯﾄ番号における経過時間
 
 public:
-	///// ｷｬﾗｸﾀｰを表示
-	//void Draw(int _img);
+	// ｷｬﾗｸﾀｰを表示
+	void Draw(int img);
 	///// 当たり矩形を表示
 	//void DebugDraw();
 

@@ -2,18 +2,6 @@
 #include <DxLib.h>
 
 
-//void CharacterObject::Draw(int _img)
-//{
-//	auto cPos = _camera.CalculatePos(_pos);
-//
-//	auto& actInfo = _actionData.animInfo[_nowActionName];
-//	auto& cut = actInfo.cuts[_nowCutIdx];
-//	auto& rc = cut.rect;
-//	// íÜêSÇïœÇ¶Ç»Ç¢ÇÊÇ§Ç…
-//	int centerX = _isTurn ? rc.Width() - cut.center.x : cut.center.x;
-//
-//	DxLib::DrawRectRotaGraph2(_pos.x + cPos.x, cPos.y, rc.Left(), rc.Top(), rc.Width(), rc.Height(), centerX, cut.center.y, 2.0f, 0.0, _img, true, _isTurn);
-//}
 
 //void CharacterObject::DebugDraw()
 //{
@@ -34,6 +22,36 @@
 //	}
 //}
 
+
+void CharacterObject::Draw(int img)
+{
+	//auto& actInfo = _actionData.animInfo[_nowActionName];
+	//auto& cut = actInfo.cuts[_nowCutIdx];
+	//auto& rc = cut.rect;
+	//// íÜêSÇïœÇ¶Ç»Ç¢ÇÊÇ§Ç…
+	//int centerX = _isTurn ? rc.Width() - cut.center.x : cut.center.x;
+
+	//DxLib::DrawRectRotaGraph2(pos.x + cPos.x, cPos.y, rc.Left(), rc.Top(), rc.Width(), rc.Height(), centerX, cut.center.y, 2.0f, 0.0, img, true, _isTurn);
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////
+	rect.center = pos;
+	//if (updater != &Player::Invincible)
+	{
+		DxLib::DrawExtendGraph(rect.Left(), rect.Top(), rect.Right(), rect.Bottom(), img, true);
+	}
+	//else
+	//{
+	//	if ((time / 5) % 2)
+	//	{
+	//		DxLib::DrawExtendGraph(rect.Left(), rect.Top(), rect.Right(), rect.Bottom(), img, true);
+	//	}
+	//}
+
+#ifdef _DEBUG
+	DxLib::DrawBox(pos.x - 2, pos.y - 2, pos.x + 2, pos.y + 2, 0x0000ff, true);
+#endif // DEBUG
+
+}
 
 CharacterObject::CharacterObject()
 {

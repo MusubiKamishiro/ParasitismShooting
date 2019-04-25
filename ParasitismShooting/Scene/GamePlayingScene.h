@@ -8,6 +8,7 @@ class Player;
 class HUD;
 class BackGround;
 class PauseMenu;
+class EnemyFactory;
 
 
 class GamePlayingScene : public Scene
@@ -27,6 +28,7 @@ private:
 	std::shared_ptr<HUD> hud;
 	std::shared_ptr<BackGround> bg;
 	std::shared_ptr<PauseMenu> pmenu;
+	std::shared_ptr<EnemyFactory> efactory;
 
 
 public:
