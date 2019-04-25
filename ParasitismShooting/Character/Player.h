@@ -16,6 +16,8 @@ enum Dir
 class Peripheral;
 class GamePlayingScene;
 class Shot;
+class GameScreen;
+
 
 class Player : public CharacterObject
 {
@@ -42,10 +44,10 @@ private:
 	int down;
 
 	int img;
-
 	int interval;
 
 	std::shared_ptr<Shot> shot;
+	std::shared_ptr<GameScreen> gs;
 	
 public:
 	Player();

@@ -69,19 +69,19 @@ struct Rect {
 
 	const int Left()const
 	{
-		return center.x - (size.width / 2);
+		return center.x - size.width / 2;
 	}
 	const int Top()const
 	{
-		return center.y - (size.height / 2);
+		return center.y - size.height / 2;
 	}
 	const int Right()const
 	{
-		return center.x + (size.width / 2);
+		return center.x + size.width / 2;
 	}
 	const int Bottom()const
 	{
-		return center.y + (size.height / 2);
+		return center.y + size.height / 2;
 	}
 	const int Width()const
 	{

@@ -1,20 +1,20 @@
 #include "Player.h"
 #include <DxLib.h>
+#include <algorithm>
 #include "../Peripheral.h"
 #include "../GameScreen.h"
-#include <algorithm>
 #include "../Shot.h"
 
 
 Player::Player()
 {
 	img = DxLib::LoadGraph("img/title.png");
-	GameScreen gscreen;
-	Vector2 gssize = gscreen.GetGSSize();
+	gs.reset(new GameScreen());
+	Vector2 gssize = gs->GetGSSize();
 
-	up = 0;
+	up = gs->outscreen;
 	right = gssize.x;
-	left = 0;
+	left = gs->outscreen;
 	down = gssize.y;
 
 	vel = Vector2f(0, 0);
@@ -143,6 +143,10 @@ void Player::Draw(Vector2f& pos, const int& time)
 		}
 	}
 
+#ifdef _DEBUG
+	DxLib::DrawBox(pos.x - 2, pos.y - 2, pos.x + 2, pos.y + 2, 0x0000ff, true);
+#endif // DEBUG
+		
 	shot->Draw();
 }
 
@@ -150,21 +154,21 @@ void Player::Draw(Vector2f& pos, const int& time)
 void Player::NotOutOfRange()
 {
 	// ”ÍˆÍŠO‚É‚Í‚¢‚©‚¹‚È‚¢‚º
-	if (pos.x <= left)
+	if (pos.x <= (left + rect.Width() / 2))
 	{
-		pos.x = left;
+		pos.x = (left + rect.Width() / 2);
 	}
-	else if (pos.x >= right)
+	else if (pos.x >= (right - rect.Width() / 2))
 	{
-		pos.x = right;
+		pos.x = (right - rect.Width() / 2);
 	}
 
-	if (pos.y <= up)
+	if (pos.y <= (up + rect.Height() / 2))
 	{
-		pos.y = up;
+		pos.y = (up + rect.Height() / 2);
 	}
-	else if (pos.y >= down)
+	else if (pos.y >= (down - rect.Height() / 2))
 	{
-		pos.y = down;
+		pos.y = (down - rect.Height() / 2);
 	}
 }

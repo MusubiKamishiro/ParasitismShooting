@@ -49,10 +49,10 @@ GamePlayingScene::GamePlayingScene()
 
 	GetJoypadInputState(DX_INPUT_KEY_PAD1);		// パッドもしくはキーボードで動かせる
 
+	gameScreen.reset(new GameScreen());
 	player.reset(new Player());
 	hud.reset(new HUD());
 	bg.reset(new BackGround());
-	gameScreen.reset(new GameScreen());
 	pmenu.reset(new PauseMenu());
 	
 	ssize = Game::Instance().GetScreenSize();
