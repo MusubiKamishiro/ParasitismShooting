@@ -18,7 +18,6 @@ enum SHOT_PTN
 	RANDOM,
 	LASER,
 	PTN_MAX
-
 };
 
 typedef struct ShotST
@@ -68,5 +67,6 @@ public:
 private:
 	void OutofScreen(void);
 	double ShotAngle(Vector2f pos);
+	void CurveLaser_Update(void);
 };
 
