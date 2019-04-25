@@ -106,6 +106,10 @@ void Player::ShotBullet(const Peripheral & p)
 		{
 			shot->setBullet(pos, 0, 5, 0, 100, SHOT_PTN::RANDOM);
 		}
+		if (p.IsPressing(PAD_INPUT_9))
+		{
+			shot->setBullet(pos, 0, 5, 0, 5, SHOT_PTN::LASER);
+		}
 	}
 	interval++;
 }
