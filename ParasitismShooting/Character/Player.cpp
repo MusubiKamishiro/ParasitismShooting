@@ -1,22 +1,21 @@
 #include "Player.h"
 #include <DxLib.h>
+#include <algorithm>
 #include "../Peripheral.h"
 #include "../GameScreen.h"
-#include <algorithm>
 #include "../Shot.h"
-#include <string>
+
 
 Player::Player()
 {
 	img = DxLib::LoadGraph("img/title.png");
-	GameScreen gscreen;
+	gs.reset(new GameScreen());
+	Vector2 gssize = gs->GetGSSize();
 
-	Vector2 gssize = gscreen.GetGSSize();
-
-	up = 15;
-	right = gssize.x - 15;
-	left = 15;
-	down = gssize.y - 15;
+	up = gs->outscreen;
+	right = gssize.x;
+	left = gs->outscreen;
+	down = gssize.y;
 
 	vel = Vector2f(0, 0);
 	moveVel = 3.0;
@@ -24,12 +23,12 @@ Player::Player()
 	pos = startPos;
 	HP = 3;
 	count = 0;
+	interval = 0;
+	rect = Rect(15, 15, 30, 30);
 
 	shot.reset(new Shot());
 	
 	updater = &Player::Move;
-
-	interval = 0;
 }
 
 Player::~Player()
@@ -45,11 +44,6 @@ void Player::Update(const Peripheral &p)
 	pos += vel;
 	NotOutOfRange();
 	ShotBullet(p);
-}
-
-Vector2f Player::GetPos() const
-{
-	return pos;
 }
 
 
@@ -136,18 +130,23 @@ void Player::Die(const Peripheral &p)
 
 void Player::Draw(Vector2f& pos, const int& time)
 {
+	rect.center = pos;
 	if (updater != &Player::Invincible)
 	{
-		DxLib::DrawExtendGraph(pos.x - 15, pos.y - 15, (pos.x + 15), (pos.y + 15), img, true);
+		DxLib::DrawExtendGraph(rect.Left(), rect.Top(), rect.Right(), rect.Bottom(), img, true);
 	}
 	else
 	{
 		if ((time / 5) % 2)
 		{
-			DxLib::DrawExtendGraph(pos.x - 15, pos.y - 15, (pos.x + 15), (pos.y + 15), img, true);
+			DxLib::DrawExtendGraph(rect.Left(), rect.Top(), rect.Right(), rect.Bottom(), img, true);
 		}
 	}
 
+#ifdef _DEBUG
+	DxLib::DrawBox(pos.x - 2, pos.y - 2, pos.x + 2, pos.y + 2, 0x0000ff, true);
+#endif // DEBUG
+		
 	shot->Draw();
 }
 
@@ -155,21 +154,21 @@ void Player::Draw(Vector2f& pos, const int& time)
 void Player::NotOutOfRange()
 {
 	// ”ÍˆÍŠO‚É‚Í‚¢‚©‚¹‚È‚¢‚º
-	if (pos.x <= left)
+	if (pos.x <= (left + rect.Width() / 2))
 	{
-		pos.x = left;
+		pos.x = (left + rect.Width() / 2);
 	}
-	else if (pos.x >= right)
+	else if (pos.x >= (right - rect.Width() / 2))
 	{
-		pos.x = right;
+		pos.x = (right - rect.Width() / 2);
 	}
 
-	if (pos.y <= up)
+	if (pos.y <= (up + rect.Height() / 2))
 	{
-		pos.y = up;
+		pos.y = (up + rect.Height() / 2);
 	}
-	else if (pos.y >= down)
+	else if (pos.y >= (down - rect.Height() / 2))
 	{
-		pos.y = down;
+		pos.y = (down - rect.Height() / 2);
 	}
 }

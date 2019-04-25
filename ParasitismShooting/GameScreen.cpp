@@ -3,11 +3,13 @@
 #include "Game.h"
 
 
-GameScreen::GameScreen()
+GameScreen::GameScreen() : outscreen(60)
 {
 	Vector2 ssize = Game::Instance().GetScreenSize();
-	screen = DxLib::MakeScreen((ssize.x - (300+20)), (ssize.y - 40));
-	gssize = Vector2((ssize.x - (300 + 20)), (ssize.y - 40));
+	//outscreen = 60;
+	gssize = Vector2((ssize.x - (300 + 20) + outscreen * 2), (ssize.y - 40 + outscreen * 2));
+
+	screen = DxLib::MakeScreen(gssize.x, gssize.y);
 }
 
 
@@ -25,10 +27,10 @@ void GameScreen::DrawAndChangeScreen()
 {
 	DxLib::SetDrawScreen(DX_SCREEN_BACK);		// ï`âÊêÊÇñﬂÇ∑
 
-	DxLib::DrawGraph(20, 20, screen, true);
+	DxLib::DrawRectGraph(20, 20, outscreen, outscreen, gssize.x - outscreen * 2, gssize.y - outscreen * 2, screen, true, false);
 }
 
 const Vector2 GameScreen::GetGSSize() const
 {
-	return gssize;
+	return Vector2(gssize.x - outscreen, gssize.y - outscreen);
 }
