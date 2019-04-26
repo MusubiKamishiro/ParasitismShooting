@@ -2,7 +2,7 @@
 
 
 
-Enemy::Enemy(const Player& player) : CharacterObject()
+Enemy::Enemy(const Player& player)
 {
 }
 

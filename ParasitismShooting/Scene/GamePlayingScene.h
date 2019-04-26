@@ -9,6 +9,7 @@ class HUD;
 class BackGround;
 class PauseMenu;
 class EnemyFactory;
+class CollisionDetector;
 
 
 class GamePlayingScene : public Scene
@@ -23,12 +24,13 @@ private:
 	Vector2 ssize;
 	bool pauseFlag;
 
-	std::shared_ptr<GameScreen> gameScreen;
+	std::shared_ptr<GameScreen> gs;
 	std::shared_ptr<Player> player;
 	std::shared_ptr<HUD> hud;
 	std::shared_ptr<BackGround> bg;
 	std::shared_ptr<PauseMenu> pmenu;
-	std::shared_ptr<EnemyFactory> efactory;
+	std::shared_ptr<EnemyFactory> ef;
+	std::shared_ptr<CollisionDetector> cd;
 
 
 public:

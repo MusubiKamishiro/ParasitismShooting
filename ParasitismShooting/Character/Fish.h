@@ -22,7 +22,6 @@ private:
 	
 	void (Fish::*updater)();
 
-	int img;
 	const Player& player;
 
 	int wait;

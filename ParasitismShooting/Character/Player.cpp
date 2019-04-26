@@ -24,7 +24,7 @@ Player::Player()
 	HP = 3;
 	count = 0;
 	interval = 0;
-	rect = Rect(15, 15, 30, 30);
+	rect = Rect(pos.x, pos.y, 30, 30);
 
 	shot.reset(new Shot());
 	
@@ -144,18 +144,17 @@ void Player::Die(const Peripheral &p)
 }
 
 
-void Player::Draw(Vector2f& pos, const int& time)
+void Player::Draw(const int& time)
 {
-	rect.center = pos;
 	if (updater != &Player::Invincible)
 	{
-		DxLib::DrawExtendGraph(rect.Left(), rect.Top(), rect.Right(), rect.Bottom(), img, true);
+		CharacterObject::Draw(img);
 	}
 	else
 	{
 		if ((time / 5) % 2)
 		{
-			DxLib::DrawExtendGraph(rect.Left(), rect.Top(), rect.Right(), rect.Bottom(), img, true);
+			CharacterObject::Draw(img);
 		}
 	}
 

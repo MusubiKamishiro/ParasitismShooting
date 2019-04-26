@@ -12,6 +12,7 @@
 #include "../PauseMenu.h"
 #include "../Character/EnemyFactory.h"
 #include "../Character/Enemy.h"
+#include "../CollisionDetector.h"
 
 
 void GamePlayingScene::FadeinUpdate(const Peripheral & p)
@@ -51,12 +52,13 @@ GamePlayingScene::GamePlayingScene()
 
 	GetJoypadInputState(DX_INPUT_KEY_PAD1);		// パッドもしくはキーボードで動かせる
 
-	gameScreen.reset(new GameScreen());
+	gs.reset(new GameScreen());
 	player.reset(new Player());
 	hud.reset(new HUD());
 	bg.reset(new BackGround());
 	pmenu.reset(new PauseMenu());
-	efactory.reset(new EnemyFactory(*player));
+	ef.reset(new EnemyFactory(*player));
+	cd.reset(new CollisionDetector());
 	
 	ssize = Game::Instance().GetScreenSize();
 	updater = &GamePlayingScene::FadeinUpdate;
@@ -80,39 +82,46 @@ void GamePlayingScene::Update(const Peripheral& p)
 	{
 		if (time == 0)
 		{
-			efactory->Create("fish", Vector2f(100, 100));
+			ef->Create("fish", Vector2f(gs->outscreen + 45, gs->outscreen + 45));
 		}
 
 		player->Update(p);
-		for (auto& enemy : efactory->GetLegion())
+		for (auto& enemy : ef->GetLegion())
 		{
 			enemy->Update();
 		}
 
+		// 当たり判定
+		for (auto& enemy : ef->GetLegion())
+		{
+			if (cd->IsCollision(enemy->GetRects(), player->GetRects()))
+			{
+				if (player->updater != &Player::Invincible)
+				{
+					player->Damage(p);
+				}
+			}
+		}
+		
 		time++;
-	}
-	if (p.IsTrigger(PAD_INPUT_3) && (player->updater != &Player::Invincible))
-	{
-		player->Damage(p);
 	}
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
 	hud->Draw();
 	
-	gameScreen->SetAndClearScreen();
+	// ゲーム画面の描画準備
+	gs->SetAndClearScreen();
 	
 	bg->Draw((int)time);
-	Vector2f pos = player->GetPos();
-	player->Draw(pos, (int)time);
-	for (auto& enemy : efactory->GetLegion())
+	player->Draw((int)time);
+	for (auto& enemy : ef->GetLegion())
 	{
 		enemy->Draw();
 	}
 
-
-
-	gameScreen->DrawAndChangeScreen();
+	// ゲーム画面の描画
+	gs->DrawAndChangeScreen();
 
 
 	if (pauseFlag)
