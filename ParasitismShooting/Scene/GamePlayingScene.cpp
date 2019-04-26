@@ -82,7 +82,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 	{
 		if (time == 0)
 		{
-			ef->Create("fish", Vector2f(gs->outscreen + 45, gs->outscreen + 45));
+			ef->Create("fish", Vector2f(gs->outscreen + 250, gs->outscreen + 345));
 		}
 
 		player->Update(p);
@@ -108,7 +108,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
-	hud->Draw();
+	hud->Draw(player->GetHP());
 	
 	// ƒQ[ƒ€‰æ–Ê‚Ì•`‰æ€”õ
 	gs->SetAndClearScreen();

@@ -9,6 +9,9 @@
 class CharacterObject
 {
 protected:
+	// ﾌｧｲﾙの読み込み
+	void ReadActionFile(const char* actionPath);
+
 	int HP;			// 体力
 	int SP;			// スタミナ
 

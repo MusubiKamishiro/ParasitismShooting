@@ -165,6 +165,11 @@ void Player::Draw(const int& time)
 	shot->Draw();
 }
 
+int& Player::GetHP()
+{
+	return HP;
+}
+
 
 void Player::NotOutOfRange()
 {
