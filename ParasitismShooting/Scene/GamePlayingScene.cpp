@@ -51,7 +51,7 @@ GamePlayingScene::GamePlayingScene()
 
 	GetJoypadInputState(DX_INPUT_KEY_PAD1);		// パッドもしくはキーボードで動かせる
 
-	gameScreen.reset(new GameScreen());
+	gs.reset(new GameScreen());
 	player.reset(new Player());
 	hud.reset(new HUD());
 	bg.reset(new BackGround());
@@ -80,7 +80,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 	{
 		if (time == 0)
 		{
-			efactory->Create("fish", Vector2f(100, 100));
+			efactory->Create("fish", Vector2f(gs->outscreen + 45, gs->outscreen + 45));
 		}
 
 		player->Update(p);
@@ -100,19 +100,18 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 	hud->Draw();
 	
-	gameScreen->SetAndClearScreen();
+	// ゲーム画面の描画準備
+	gs->SetAndClearScreen();
 	
 	bg->Draw((int)time);
-	Vector2f pos = player->GetPos();
-	player->Draw(pos, (int)time);
+	player->Draw((int)time);
 	for (auto& enemy : efactory->GetLegion())
 	{
 		enemy->Draw();
 	}
 
-
-
-	gameScreen->DrawAndChangeScreen();
+	// ゲーム画面の描画
+	gs->DrawAndChangeScreen();
 
 
 	if (pauseFlag)

@@ -16,12 +16,13 @@ protected:
 	Vector2f vel;	// 移動速度
 	Rect rect;		// 中心、幅と高さ
 
+	int img;		// 画像
 	//shottype
 	//bombtype
 
-	//std::string _nowActionName;	// 現在再生中のｱｸｼｮﾝ名
-	//int _nowCutIdx;				// 現在表示中のｶｯﾄ番号
-	//unsigned int _flame;		// そのｶｯﾄ番号における経過時間
+	//std::string nowActionName;	// 現在再生中のｱｸｼｮﾝ名
+	//unsigned int nowCutIdx;		// 現在表示中のｶｯﾄ番号
+	//unsigned int flame;			// そのｶｯﾄ番号における経過時間
 
 public:
 	// ｷｬﾗｸﾀｰを表示

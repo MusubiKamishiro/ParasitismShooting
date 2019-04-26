@@ -144,18 +144,17 @@ void Player::Die(const Peripheral &p)
 }
 
 
-void Player::Draw(Vector2f& pos, const int& time)
+void Player::Draw(const int& time)
 {
-	rect.center = pos;
 	if (updater != &Player::Invincible)
 	{
-		DxLib::DrawExtendGraph(rect.Left(), rect.Top(), rect.Right(), rect.Bottom(), img, true);
+		CharacterObject::Draw(img);
 	}
 	else
 	{
 		if ((time / 5) % 2)
 		{
-			DxLib::DrawExtendGraph(rect.Left(), rect.Top(), rect.Right(), rect.Bottom(), img, true);
+			CharacterObject::Draw(img);
 		}
 	}
 
