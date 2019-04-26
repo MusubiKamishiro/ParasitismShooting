@@ -9,6 +9,7 @@ class HUD;
 class BackGround;
 class PauseMenu;
 class EnemyFactory;
+class CollisionDetector;
 
 
 class GamePlayingScene : public Scene
@@ -28,7 +29,8 @@ private:
 	std::shared_ptr<HUD> hud;
 	std::shared_ptr<BackGround> bg;
 	std::shared_ptr<PauseMenu> pmenu;
-	std::shared_ptr<EnemyFactory> efactory;
+	std::shared_ptr<EnemyFactory> ef;
+	std::shared_ptr<CollisionDetector> cd;
 
 
 public:

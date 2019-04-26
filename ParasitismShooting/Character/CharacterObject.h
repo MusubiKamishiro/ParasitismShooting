@@ -25,14 +25,16 @@ protected:
 	//unsigned int flame;			// そのｶｯﾄ番号における経過時間
 
 public:
+	CharacterObject();
+	virtual ~CharacterObject();
+
 	// ｷｬﾗｸﾀｰを表示
 	void Draw(int img);
 	///// 当たり矩形を表示
 	//void DebugDraw();
 
-	CharacterObject();
-	virtual ~CharacterObject();
-
+	// 矩形の情報をもらう
+	Rect GetRects()const;
 	Vector2f GetPos()const;
 };
 

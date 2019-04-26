@@ -12,6 +12,7 @@
 #include "../PauseMenu.h"
 #include "../Character/EnemyFactory.h"
 #include "../Character/Enemy.h"
+#include "../CollisionDetector.h"
 
 
 void GamePlayingScene::FadeinUpdate(const Peripheral & p)
@@ -56,7 +57,8 @@ GamePlayingScene::GamePlayingScene()
 	hud.reset(new HUD());
 	bg.reset(new BackGround());
 	pmenu.reset(new PauseMenu());
-	efactory.reset(new EnemyFactory(*player));
+	ef.reset(new EnemyFactory(*player));
+	cd.reset(new CollisionDetector());
 	
 	ssize = Game::Instance().GetScreenSize();
 	updater = &GamePlayingScene::FadeinUpdate;
@@ -80,20 +82,28 @@ void GamePlayingScene::Update(const Peripheral& p)
 	{
 		if (time == 0)
 		{
-			efactory->Create("fish", Vector2f(gs->outscreen + 45, gs->outscreen + 45));
+			ef->Create("fish", Vector2f(gs->outscreen + 45, gs->outscreen + 45));
 		}
 
 		player->Update(p);
-		for (auto& enemy : efactory->GetLegion())
+		for (auto& enemy : ef->GetLegion())
 		{
 			enemy->Update();
 		}
 
+		// “–‚½‚è”»’è
+		for (auto& enemy : ef->GetLegion())
+		{
+			if (cd->IsCollision(enemy->GetRects(), player->GetRects()))
+			{
+				if (player->updater != &Player::Invincible)
+				{
+					player->Damage(p);
+				}
+			}
+		}
+		
 		time++;
-	}
-	if (p.IsTrigger(PAD_INPUT_3) && (player->updater != &Player::Invincible))
-	{
-		player->Damage(p);
 	}
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
@@ -105,7 +115,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 	
 	bg->Draw((int)time);
 	player->Draw((int)time);
-	for (auto& enemy : efactory->GetLegion())
+	for (auto& enemy : ef->GetLegion())
 	{
 		enemy->Draw();
 	}
