@@ -1,5 +1,7 @@
 #include "Shot.h"
 #include <DxLib.h>
+#include <iostream>
+#include <random>
 #include "Character/Player.h"
 #include "Peripheral.h"
 #include "GameScreen.h"
@@ -53,17 +55,33 @@ void Shot::Update()
 	{
 		if (cShot[j].flag == 1)
 		{
-			cShot[j].pos.x += cos(cShot[j].angle) * cShot[j].Speed;
-			cShot[j].pos.y += sin(cShot[j].angle) * cShot[j].Speed;
+			if (cShot[j].shotPtn == SHOT_PTN::NORMAL)
+			{
+				NormalUpdate(j);
+			}
+			if (cShot[j].shotPtn == SHOT_PTN::SHOTGUN)
+			{
+				ShotgunUpdate(j);
+			}
+			if (cShot[j].shotPtn == SHOT_PTN::TRACKING)
+			{
+				TrackingUpdate(j);
+			}
+			if (cShot[j].shotPtn == SHOT_PTN::RADIATION)
+			{
+				RadiationUpdate(j);
+			}
+			if (cShot[j].shotPtn == SHOT_PTN::RANDOM)
+			{
+				RandomUpdate(j);
+			}
 			if (cShot[j].shotPtn == SHOT_PTN::LASER)
 			{
-				CurveLaser_Update();
+				LaserUpdate(j);
 			}
 		}
 	}
 	OutofScreen();
-	
-	
 }
 
 
@@ -81,7 +99,7 @@ void Shot::setBullet(Vector2f pos, float angle, int Speed, int movePtn, int leve
 			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn });
 			cShot[cnt].flag = 1;
 			cShot[cnt].pos = { pos.x - 10 + NormalPosPtnX[j],pos.y + NormalPosPtnY[j] };
-			cShot[cnt].angle = -M_PI / 2;
+			cShot[cnt].angle = -M_PI_2;
 			cShot[cnt].Speed = Speed;
 			cShot[cnt].movePtn = movePtn;
 			cShot[cnt].level = level;
@@ -93,7 +111,7 @@ void Shot::setBullet(Vector2f pos, float angle, int Speed, int movePtn, int leve
 			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn });
 			cShot[cnt].flag = 1;
 			cShot[cnt].pos = pos;
-			cShot[cnt].angle = -ShotGunAngle[j];
+			cShot[cnt].angle = -(((angle + (M_PI / level))  * j) + M_PI / 6);
 			cShot[cnt].Speed = Speed;
 			cShot[cnt].movePtn = movePtn;
 			cShot[cnt].level = level;
@@ -126,10 +144,15 @@ void Shot::setBullet(Vector2f pos, float angle, int Speed, int movePtn, int leve
 		}
 		else if (shotPtn == SHOT_PTN::RANDOM)
 		{
+			std::random_device rd;
+
+			std::mt19937 mt(rd());
+
+			std::uniform_int_distribution<int> rand(1, 10);
 			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn });
 			cShot[cnt].flag = 1;
-			cShot[cnt].pos = pos;
-			cShot[cnt].angle = ShotAngle(pos) + (rand() * M_PI_4);
+			cShot[cnt].pos = { pos.x - (float)(rand(mt) * M_PI * 2) + 10,pos.y - 30 };
+			cShot[cnt].angle = ShotAngle(pos);
 			cShot[cnt].Speed = Speed;
 			cShot[cnt].movePtn = movePtn;
 			cShot[cnt].level = level;
@@ -139,13 +162,7 @@ void Shot::setBullet(Vector2f pos, float angle, int Speed, int movePtn, int leve
 		else if (shotPtn == SHOT_PTN::LASER)
 		{
 			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn });
-			cShot[cnt].flag = 1;
-			cShot[cnt].pos = pos;
-			cShot[cnt].angle = ShotAngle(pos);
-			cShot[cnt].Speed = Speed;
-			cShot[cnt].movePtn = movePtn;
-			cShot[cnt].level = 5;
-			cShot[cnt].shotPtn = shotPtn;
+			
 			cnt++;
 		}
 	}
@@ -179,31 +196,7 @@ void Shot::Draw(void)
 			}
 			if (cShot[j].shotPtn == SHOT_PTN::LASER)
 			{
-				for (int i = 0; i < cShot.size(); i++) {
 
-					Vector2f bc;
-					Vector2f ba;
-
-					Vector2f cf = cShot[j].pos;
-					int ax = cos(cShot[j].angle) * 4;
-					int ay = sin(cShot[j].angle) * 4;
-					if (j == 1) {
-						// 先頭
-						DrawModiGraph(bc.x + ba.y, bc.y - ba.x, cf.x + ay, cf.y - ax, cf.x - ay, cf.y + ax, bc.x - ba.y, bc.y + ba.x, graph_laser[0], TRUE);
-					}
-					else if (j == cShot[j].level - 1) {
-						// 後尾
-						DrawModiGraph(cf.x - ay, cf.y + ax, bc.x - ba.y, bc.y + ba.x, bc.x + ba.y, bc.y - ba.x, cf.x + ay, cf.y - ax, graph_laser[0], TRUE);
-					}
-					else if (j > 0) {
-						// それ以外
-						DrawModiGraph(bc.x + ba.y, bc.y - ba.x, cf.x + ay, cf.y - ax, cf.x - ay, cf.y + ax, bc.x - ba.y, bc.y + ba.x, graph_laser[1], TRUE);
-					}
-					bc = cf;
-					ba.x = ax;
-					ba.y = ay;
-
-				}
 			}
 		}
 	}
@@ -233,30 +226,43 @@ double Shot::ShotAngle(Vector2f pos)
 	return atan2(b - pos.y, a - pos.x);
 }
 
-void Shot::CurveLaser_Update(void)
+void Shot::NormalUpdate(int n)
 {
-
-	for (int j = 0; j < cShot.size(); j++) 
-	{
-		// ターゲットに対する角度を求める
-		Radian angle = atan2(b - cShot[j].pos.y, a - cShot[j].pos.x);
-		Fixed ax = cos(angle);
-		Fixed ay = sin(angle);
-		Fixed bx = cos(cShot[j].angle);
-		Fixed by = sin(cShot[j].angle);
-		if (ax*by - ay * bx < 0) {
-			// 正方向に進行方向を回転
-			cShot[j].angle += M_PI / 24;
-		}
-		else {
-			// 逆方向に進行方向を回転
-			cShot[j].angle -= M_PI / 24;
-		}
-
-		// 進行方向に移動
-		cShot[j].pos.x += cos(cShot[j].angle) * cShot[j].Speed;
-		cShot[j].pos.y += sin(cShot[j].angle) * cShot[j].Speed;
-	}
+	cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
+	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
 }
 
+void Shot::ShotgunUpdate(int n)
+{
+	cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
+	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
+}
+
+void Shot::TrackingUpdate(int n)
+{
+	cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
+	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
+}
+
+void Shot::RadiationUpdate(int n)
+{
+		cShot[n].Speed = 2;
+	
+		cShot[n].Speed -= 1.2 / 240;
+		cShot[n].angle += (M_PI / 10) / 120;
+	cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
+	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
+
+}
+
+void Shot::RandomUpdate(int n)
+{
+	
+	cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
+	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
+}
+
+void Shot::LaserUpdate(int n)
+{
+}
 
