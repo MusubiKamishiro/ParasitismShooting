@@ -100,11 +100,11 @@ void Player::ShotBullet(const Peripheral & p)
 		}
 		if (p.IsPressing(PAD_INPUT_6))
 		{
-			shot->setBullet(pos, 0, 5, 0, 100, SHOT_PTN::RADIATION);
+			shot->setBullet(pos, 0, 5, 0, 60, SHOT_PTN::RADIATION);
 		}
 		if (p.IsPressing(PAD_INPUT_10))
 		{
-			shot->setBullet(pos, 0, 5, 0, 100, SHOT_PTN::RANDOM);
+			shot->setBullet(pos, 0, 5, 0, 1, SHOT_PTN::RANDOM);
 		}
 		if (p.IsPressing(PAD_INPUT_9))
 		{

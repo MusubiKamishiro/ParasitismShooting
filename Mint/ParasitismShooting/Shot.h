@@ -20,6 +20,14 @@ enum SHOT_PTN
 	PTN_MAX
 };
 
+typedef struct LaserST
+{
+	double x1, y1;		// 左上頂点
+	double x2, y2;		// 右上頂点
+	double x3, y3;		// 左下頂点
+	double x4, y4;		// 右下頂点
+}Laser_st;
+
 typedef struct ShotST
 {
 	int flag;
@@ -61,12 +69,19 @@ public:
 	Shot();
 	~Shot();
 
+	std::vector<Laser_st> Laser;
+
 	void Update();
 	void Draw(void);
 	void setBullet(Vector2f pos, float angle, int Speed, int movePtn, int level, int shotPtn);
 private:
 	void OutofScreen(void);
 	double ShotAngle(Vector2f pos);
-	void CurveLaser_Update(void);
+	void NormalUpdate(int n);
+	void ShotgunUpdate(int n);
+	void TrackingUpdate(int n);
+	void RadiationUpdate(int n);
+	void RandomUpdate(int n);
+	void LaserUpdate(int n);
 };
 
