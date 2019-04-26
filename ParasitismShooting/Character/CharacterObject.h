@@ -30,8 +30,8 @@ public:
 
 	// ｷｬﾗｸﾀｰを表示
 	void Draw(int img);
-	///// 当たり矩形を表示
-	//void DebugDraw();
+	// 当たり矩形を表示
+	void DebugDraw();
 
 	// 矩形の情報をもらう
 	Rect GetRects()const;

@@ -24,7 +24,7 @@ Player::Player()
 	HP = 3;
 	count = 0;
 	interval = 0;
-	rect = Rect(15, 15, 30, 30);
+	rect = Rect(pos.x, pos.y, 30, 30);
 
 	shot.reset(new Shot());
 	

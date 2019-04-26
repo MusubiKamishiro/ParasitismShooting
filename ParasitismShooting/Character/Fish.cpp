@@ -7,9 +7,9 @@ Fish::Fish(const Player& player) : Enemy(player), player(player)
 {
 	//_nowActionName = ("Walk");
 
-	pos.x = 0;
-	pos.y = 0;
-	rect = Rect(15, 15, 30, 30);
+	//pos.x = 0;
+	//pos.y = 0;
+	rect = Rect(pos.x, pos.y, 30, 30);
 
 	wait = 60;
 
