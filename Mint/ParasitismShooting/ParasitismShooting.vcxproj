@@ -125,7 +125,11 @@
   <ItemGroup>
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="Character\CharacterObject.cpp" />
+    <ClCompile Include="Character\Enemy.cpp" />
+    <ClCompile Include="Character\EnemyFactory.cpp" />
+    <ClCompile Include="Character\Fish.cpp" />
     <ClCompile Include="Character\Player.cpp" />
+    <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="Geometry.cpp" />
@@ -144,7 +148,11 @@
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="Character\CharacterObject.h" />
+    <ClInclude Include="Character\Enemy.h" />
+    <ClInclude Include="Character\EnemyFactory.h" />
+    <ClInclude Include="Character\Fish.h" />
     <ClInclude Include="Character\Player.h" />
+    <ClInclude Include="CollisionDetector.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="Geometry.h" />

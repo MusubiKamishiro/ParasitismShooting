@@ -24,7 +24,7 @@ Player::Player()
 	HP = 3;
 	count = 0;
 	interval = 0;
-	rect = Rect(15, 15, 30, 30);
+	rect = Rect(pos.x, pos.y, 30, 30);
 
 	shot.reset(new Shot());
 	
@@ -100,15 +100,11 @@ void Player::ShotBullet(const Peripheral & p)
 		}
 		if (p.IsPressing(PAD_INPUT_6))
 		{
-			shot->setBullet(pos, 0, 5, 0, 60, SHOT_PTN::RADIATION);
+			shot->setBullet(pos, 0, 5, 0, 100, SHOT_PTN::RADIATION);
 		}
 		if (p.IsPressing(PAD_INPUT_10))
 		{
-			shot->setBullet(pos, 0, 5, 0, 1, SHOT_PTN::RANDOM);
-		}
-		if (p.IsPressing(PAD_INPUT_9))
-		{
-			shot->setBullet(pos, 0, 5, 0, 5, SHOT_PTN::LASER);
+			shot->setBullet(pos, 0, 5, 0, 100, SHOT_PTN::RANDOM);
 		}
 	}
 	interval++;
@@ -148,18 +144,17 @@ void Player::Die(const Peripheral &p)
 }
 
 
-void Player::Draw(Vector2f& pos, const int& time)
+void Player::Draw(const int& time)
 {
-	rect.center = pos;
 	if (updater != &Player::Invincible)
 	{
-		DxLib::DrawExtendGraph(rect.Left(), rect.Top(), rect.Right(), rect.Bottom(), img, true);
+		CharacterObject::Draw(img);
 	}
 	else
 	{
 		if ((time / 5) % 2)
 		{
-			DxLib::DrawExtendGraph(rect.Left(), rect.Top(), rect.Right(), rect.Bottom(), img, true);
+			CharacterObject::Draw(img);
 		}
 	}
 
@@ -168,6 +163,11 @@ void Player::Draw(Vector2f& pos, const int& time)
 #endif // DEBUG
 		
 	shot->Draw();
+}
+
+int& Player::GetHP()
+{
+	return HP;
 }
 
 

@@ -5,22 +5,6 @@
 #include "Character/Player.h"
 #include "Peripheral.h"
 #include "GameScreen.h"
-#define Fixed  double
-#define Radian double
-struct Node
-{
-	double x, y;
-	double speed;
-	double angle;
-};
-
-static const int NODE_NUM = 8;
-static const int LINK_NUM = 16;
-static struct Node node[NODE_NUM][LINK_NUM];
-
-static int target_x, target_y;
-
-static int graph_laser[2]; // レーザーテクスチャ画像のハンドル
 
 Shot::Shot()
 {
@@ -40,8 +24,6 @@ Shot::Shot()
 	b = down / 4;
 	c = right / 4 + 30;
 	d = down / 4 + 30;
-
-	LoadDivGraph("img/laser.png", 2, 2, 1, 16, 16, graph_laser);
 }
 
 
@@ -82,6 +64,7 @@ void Shot::Update()
 		}
 	}
 	OutofScreen();
+	
 }
 
 
@@ -162,7 +145,7 @@ void Shot::setBullet(Vector2f pos, float angle, int Speed, int movePtn, int leve
 		else if (shotPtn == SHOT_PTN::LASER)
 		{
 			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn });
-			
+
 			cnt++;
 		}
 	}
@@ -246,10 +229,10 @@ void Shot::TrackingUpdate(int n)
 
 void Shot::RadiationUpdate(int n)
 {
-		cShot[n].Speed = 2;
-	
-		cShot[n].Speed -= 1.2 / 240;
-		cShot[n].angle += (M_PI / 10) / 120;
+	cShot[n].Speed = 2;
+
+	cShot[n].Speed -= 1.2 / 240;
+	cShot[n].angle += (M_PI / 10) / 120;
 	cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
 	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
 
@@ -257,7 +240,7 @@ void Shot::RadiationUpdate(int n)
 
 void Shot::RandomUpdate(int n)
 {
-	
+
 	cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
 	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
 }
