@@ -54,7 +54,8 @@ public:
 	~Player();
 
 	void Update(const Peripheral &p);
-
 	void Draw(const int& time);
+
+	int& GetHP();
 };
 

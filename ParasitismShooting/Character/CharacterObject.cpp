@@ -2,6 +2,11 @@
 #include <DxLib.h>
 
 
+void CharacterObject::ReadActionFile(const char * actionPath)
+{
+
+}
+
 CharacterObject::CharacterObject()
 {
 }
