@@ -1,14 +1,47 @@
 #pragma once
 //#include <string>
 #include <vector>
-//#include <map>
+#include <map>
 #include "../Geometry.h"
 
+enum class RectType
+{
+	ancher,		// ｱﾝｶｰ
+	attack,		// 攻撃矩形
+	damege		// やられ矩形
+};
+
+// ｱｸｼｮﾝ矩形定義
+struct ActRect
+{
+	RectType rt;	// 何矩形
+	Rect rc;		// 幅や高さが入ってるやつ
+};
+
+// 切り抜き情報
+struct CutInfo
+{
+	Rect rect;						// 切り抜き矩形
+	Vector2 center;					// 中心点
+	int duration;					// 表示時間		// ここまで28ﾊﾞｲﾄ
+	std::vector<ActRect> actrects;	// ｱｸｼｮﾝ矩形
+};// 44ﾊﾞｲﾄ
+typedef std::vector<CutInfo> CutInfoes_t;
+
+struct ActionInfo {
+	bool isLoop;				// ﾙｰﾌﾟする
+	CutInfoes_t cuts;			// ｶｯﾄ情報配列
+};
+struct ActionData {
+	std::string imgFilePath;					// 画像ﾌｧｲﾙﾊﾟｽ
+	std::map<std::string, ActionInfo> animInfo;	// ｱｸｼｮﾝ情報
+};
 
 // ｷｬﾗｸﾀｰ基底ｸﾗｽ
 class CharacterObject
 {
 protected:
+	ActionData actData;
 	// ﾌｧｲﾙの読み込み
 	void ReadActionFile(const char* actionPath);
 
