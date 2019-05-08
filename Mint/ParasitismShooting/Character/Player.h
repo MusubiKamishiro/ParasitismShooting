@@ -43,7 +43,7 @@ private:
 	int left;
 	int down;
 
-	int img;
+
 	int interval;
 
 	std::shared_ptr<Shot> shot;
@@ -54,7 +54,8 @@ public:
 	~Player();
 
 	void Update(const Peripheral &p);
+	void Draw(const int& time);
 
-	void Draw(Vector2f& pos, const int& time);
+	int& GetHP();
 };
 

@@ -68,5 +68,11 @@ public:
 private:
 	void OutofScreen(void);
 	double ShotAngle(Vector2f pos);
+	void NormalUpdate(int n);
+	void ShotgunUpdate(int n);
+	void TrackingUpdate(int n);
+	void RadiationUpdate(int n);
+	void RandomUpdate(int n);
+	void LaserUpdate(int n);
 };
 

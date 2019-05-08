@@ -25,7 +25,7 @@ void Game::Initialize()
 #ifdef _DEBUG
 	DxLib::ChangeWindowMode(true);
 #else
-	int ans = MessageBox(nullptr, "フルスクリーンで表示しますか？", "画面の大きさどうしようか", MB_YESNO | MB_ICONQUESTION);
+	int ans = MessageBox(DxLib::GetMainWindowHandle(), "フルスクリーンで表示しますか？", "画面の大きさどうしようか", MB_YESNO | MB_ICONQUESTION);
 
 	if (ans == IDYES)
 	{

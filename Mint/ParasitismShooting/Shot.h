@@ -18,15 +18,8 @@ enum SHOT_PTN
 	RANDOM,
 	LASER,
 	PTN_MAX
-};
 
-typedef struct LaserST
-{
-	double x1, y1;		// 左上頂点
-	double x2, y2;		// 右上頂点
-	double x3, y3;		// 左下頂点
-	double x4, y4;		// 右下頂点
-}Laser_st;
+};
 
 typedef struct ShotST
 {
@@ -68,8 +61,6 @@ private:
 public:
 	Shot();
 	~Shot();
-
-	std::vector<Laser_st> Laser;
 
 	void Update();
 	void Draw(void);

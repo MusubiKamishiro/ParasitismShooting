@@ -1,5 +1,7 @@
 #include "Shot.h"
 #include <DxLib.h>
+#include <iostream>
+#include <random>
 #include "Character/Player.h"
 #include "Peripheral.h"
 #include "GameScreen.h"
@@ -35,8 +37,30 @@ void Shot::Update()
 	{
 		if (cShot[j].flag == 1)
 		{
-			cShot[j].pos.x += cos(cShot[j].angle) * cShot[j].Speed;
-			cShot[j].pos.y += sin(cShot[j].angle) * cShot[j].Speed;
+			if (cShot[j].shotPtn == SHOT_PTN::NORMAL)
+			{
+				NormalUpdate(j);
+			}
+			if (cShot[j].shotPtn == SHOT_PTN::SHOTGUN)
+			{
+				ShotgunUpdate(j);
+			}
+			if (cShot[j].shotPtn == SHOT_PTN::TRACKING)
+			{
+				TrackingUpdate(j);
+			}
+			if (cShot[j].shotPtn == SHOT_PTN::RADIATION)
+			{
+				RadiationUpdate(j);
+			}
+			if (cShot[j].shotPtn == SHOT_PTN::RANDOM)
+			{
+				RandomUpdate(j);
+			}
+			if (cShot[j].shotPtn == SHOT_PTN::LASER)
+			{
+				LaserUpdate(j);
+			}
 		}
 	}
 	OutofScreen();
@@ -58,7 +82,7 @@ void Shot::setBullet(Vector2f pos, float angle, int Speed, int movePtn, int leve
 			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn });
 			cShot[cnt].flag = 1;
 			cShot[cnt].pos = { pos.x - 10 + NormalPosPtnX[j],pos.y + NormalPosPtnY[j] };
-			cShot[cnt].angle = -M_PI / 2;
+			cShot[cnt].angle = -M_PI_2;
 			cShot[cnt].Speed = Speed;
 			cShot[cnt].movePtn = movePtn;
 			cShot[cnt].level = level;
@@ -70,7 +94,7 @@ void Shot::setBullet(Vector2f pos, float angle, int Speed, int movePtn, int leve
 			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn });
 			cShot[cnt].flag = 1;
 			cShot[cnt].pos = pos;
-			cShot[cnt].angle = -ShotGunAngle[j];
+			cShot[cnt].angle = -(((angle + (M_PI / level))  * j) + M_PI / 6);
 			cShot[cnt].Speed = Speed;
 			cShot[cnt].movePtn = movePtn;
 			cShot[cnt].level = level;
@@ -103,10 +127,15 @@ void Shot::setBullet(Vector2f pos, float angle, int Speed, int movePtn, int leve
 		}
 		else if (shotPtn == SHOT_PTN::RANDOM)
 		{
+			std::random_device rd;
+
+			std::mt19937 mt(rd());
+
+			std::uniform_int_distribution<int> rand(1, 10);
 			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn });
 			cShot[cnt].flag = 1;
-			cShot[cnt].pos = pos;
-			cShot[cnt].angle = ShotAngle(pos) + (rand() * M_PI_4);
+			cShot[cnt].pos = { pos.x - (float)(rand(mt) * M_PI * 2) + 10,pos.y - 30 };
+			cShot[cnt].angle = ShotAngle(pos);
 			cShot[cnt].Speed = Speed;
 			cShot[cnt].movePtn = movePtn;
 			cShot[cnt].level = level;
@@ -116,6 +145,7 @@ void Shot::setBullet(Vector2f pos, float angle, int Speed, int movePtn, int leve
 		else if (shotPtn == SHOT_PTN::LASER)
 		{
 			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn });
+
 			cnt++;
 		}
 	}
@@ -149,7 +179,7 @@ void Shot::Draw(void)
 			}
 			if (cShot[j].shotPtn == SHOT_PTN::LASER)
 			{
-				DxLib::DrawExtendGraph(cShot[j].pos.x, cShot[j].pos.y, cShot[j].pos.x + 20, cShot[j].pos.y + 20, img[4], true);
+
 			}
 		}
 	}
@@ -178,3 +208,44 @@ double Shot::ShotAngle(Vector2f pos)
 	//return atan2(pPos.y - pos.y,pPos.x - pos.x);
 	return atan2(b - pos.y, a - pos.x);
 }
+
+void Shot::NormalUpdate(int n)
+{
+	cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
+	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
+}
+
+void Shot::ShotgunUpdate(int n)
+{
+	cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
+	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
+}
+
+void Shot::TrackingUpdate(int n)
+{
+	cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
+	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
+}
+
+void Shot::RadiationUpdate(int n)
+{
+	cShot[n].Speed = 2;
+
+	cShot[n].Speed -= 1.2 / 240;
+	cShot[n].angle += (M_PI / 10) / 120;
+	cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
+	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
+
+}
+
+void Shot::RandomUpdate(int n)
+{
+
+	cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
+	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
+}
+
+void Shot::LaserUpdate(int n)
+{
+}
+
