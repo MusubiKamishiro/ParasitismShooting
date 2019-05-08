@@ -61,9 +61,9 @@ struct Size {
 struct Rect {
 	Rect() : center(0, 0), size(0, 0) {}
 	Rect(float x, float y, int inw, int inh) : center(x, y), size(inw, inh) {}
-	Rect(const Vector2f& inc, const Size& ins) : center(inc), size(ins) {}
+	Rect(const Vector2& inc, const Size& ins) : center(inc), size(ins) {}
 
-	Vector2f center;	// ’†S
+	Vector2 center;	// ’†S
 	Size size;			// •‚Æ‚‚³
 
 

@@ -8,7 +8,12 @@
 
 Player::Player()
 {
-	img = DxLib::LoadGraph("img/title.png");
+	ReadActionFile("action/player.act");
+	ChangeAction("Idle");
+	// c_str()	末尾がNULLでなければNULLを足して、文字列の最初の文字を指すポインタを返す
+	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
+
+	//img = DxLib::LoadGraph("img/title.png");
 	gs.reset(new GameScreen());
 	Vector2 gssize = gs->GetGSSize();
 
@@ -24,7 +29,7 @@ Player::Player()
 	HP = 3;
 	count = 0;
 	interval = 0;
-	rect = Rect(pos.x, pos.y, 30, 30);
+	//rect = Rect(pos.x, pos.y, 30, 30);
 
 	shot.reset(new Shot());
 	
@@ -157,10 +162,6 @@ void Player::Draw(const int& time)
 			CharacterObject::Draw(img);
 		}
 	}
-
-#ifdef _DEBUG
-	DxLib::DrawBox(pos.x - 2, pos.y - 2, pos.x + 2, pos.y + 2, 0x0000ff, true);
-#endif // DEBUG
 		
 	shot->Draw();
 }

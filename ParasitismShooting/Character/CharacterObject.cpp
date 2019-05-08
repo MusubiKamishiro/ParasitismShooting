@@ -67,8 +67,6 @@ void CharacterObject::ReadActionFile(const char * actionPath)
 			actInfo.cuts[a].actrects.resize(actrccnt);
 			DxLib::FileRead_read(&actInfo.cuts[a].actrects[0], (sizeof(ActRect) * actrccnt), h);
 		}
-		// forŸ∞ÃﬂÇégÇÌÇ»Ç¢Ç‚ÇËï˚Å´
-		// DxLib::FileRead_read(&actInfo.cuts[0], sizeof(actInfo.cuts[0]) * cutCount, h);
 
 		// ±∏ºÆ›œØÃﬂÇ…ìoò^
 		actData.animInfo[actionName] = actInfo;
@@ -76,8 +74,16 @@ void CharacterObject::ReadActionFile(const char * actionPath)
 	DxLib::FileRead_close(h);
 }
 
+void CharacterObject::ChangeAction(const char * name)
+{
+	flame = 0;
+	nowCutIdx = 0;
+	nowActionName = name;
+}
+
 CharacterObject::CharacterObject()
 {
+	charaSize = 0.1f;
 }
 
 
@@ -88,36 +94,49 @@ CharacterObject::~CharacterObject()
 
 void CharacterObject::Draw(int img)
 {
-	//auto& actInfo = _actionData.animInfo[_nowActionName];
-	//auto& cut = actInfo.cuts[_nowCutIdx];
-	//auto& rc = cut.rect;
-	//// íÜêSÇïœÇ¶Ç»Ç¢ÇÊÇ§Ç…
-	//int centerX = _isTurn ? rc.Width() - cut.center.x : cut.center.x;
-
-	//DxLib::DrawRectRotaGraph2(pos.x + cPos.x, cPos.y, rc.Left(), rc.Top(), rc.Width(), rc.Height(), centerX, cut.center.y, 2.0f, 0.0, img, true, _isTurn);
+	auto& actInfo = actData.animInfo[nowActionName];
+	auto& cut = actInfo.cuts[nowCutIdx];
+	auto& rc = cut.rect;
+	
+	DxLib::DrawRectRotaGraph2F(pos.x, pos.y, rc.Left(), rc.Top(), rc.Width(), rc.Height(), cut.center.x, cut.center.y, charaSize, 0.0, img, true, false);
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
-	rect.center = pos;
-	DxLib::DrawExtendGraph(rect.Left(), rect.Top(), rect.Right(), rect.Bottom(), img, true);
+	//rect.center = pos;
+	//DxLib::DrawExtendGraph(rect.Left(), rect.Top(), rect.Right(), rect.Bottom(), img, true);
 
 
 #ifdef _DEBUG
 	DxLib::DrawBox(pos.x - 2, pos.y - 2, pos.x + 2, pos.y + 2, 0x0000ff, true);
-	DebugDraw();
+
+	for (auto& actrect : cut.actrects)
+	{
+		DebugDraw(actrect);
+	}
 #endif // DEBUG
 }
 
-void CharacterObject::DebugDraw()
+void CharacterObject::DebugDraw(ActRect actrect)
 {
-	rect.center = pos;
-	DxLib::DrawBox(rect.Left(), rect.Top(), rect.Right(), rect.Bottom(), 0x00ff00, false);
+	auto rc = actrect.rc;
+	rc.center.x += pos.x;
+	rc.center.y += pos.y;
+
+	if (actrect.rt == RectType::circle)
+	{
+		DxLib::DrawOval(rc.center.x - rc.Width() / 2, rc.center.y - rc.Height() / 2, (rc.Width() * charaSize) / 2, (rc.Height() * charaSize) / 2, 0x00ff00, false);
+	}
+	else if (actrect.rt == RectType::box)
+	{
+		DxLib::DrawBox(rc.Left() * charaSize, rc.Top() * charaSize, rc.Right() * charaSize, rc.Bottom() * charaSize, 0x00ff00, false);
+	}
 }
 
-Rect CharacterObject::GetRects() const
+Rect CharacterObject::GetRects()const
 {
 	Rect rc = rect;
-	rc.center = pos;
-
+	rc.center.x += pos.x;
+	rc.center.y += pos.y;
+	
 	return rc;
 }
 

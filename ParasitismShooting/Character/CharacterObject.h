@@ -6,16 +6,15 @@
 
 enum class RectType
 {
-	ancher,		// ｱﾝｶｰ
-	attack,		// 攻撃矩形
-	damege		// やられ矩形
+	box,		// □
+	circle,		// 〇
 };
 
 // ｱｸｼｮﾝ矩形定義
 struct ActRect
 {
-	RectType rt;	// 何矩形
-	Rect rc;		// 幅や高さが入ってるやつ
+	RectType rt;	// 矩形の形
+	Rect rc;		// 幅,高さ
 };
 
 // 切り抜き情報
@@ -44,6 +43,8 @@ protected:
 	ActionData actData;
 	// ﾌｧｲﾙの読み込み
 	void ReadActionFile(const char* actionPath);
+	// アニメーション切り替え
+	void ChangeAction(const char* name);
 
 	int HP;			// 体力
 	int SP;			// スタミナ
@@ -56,9 +57,11 @@ protected:
 	//shottype
 	//bombtype
 
-	//std::string nowActionName;	// 現在再生中のｱｸｼｮﾝ名
-	//unsigned int nowCutIdx;		// 現在表示中のｶｯﾄ番号
-	//unsigned int flame;			// そのｶｯﾄ番号における経過時間
+	std::string nowActionName;	// 現在再生中のｱｸｼｮﾝ名
+	unsigned int nowCutIdx;		// 現在表示中のｶｯﾄ番号
+	unsigned int flame;			// そのｶｯﾄ番号における経過時間
+
+	float charaSize;
 
 public:
 	CharacterObject();
@@ -67,7 +70,7 @@ public:
 	// ｷｬﾗｸﾀｰを表示
 	void Draw(int img);
 	// 当たり矩形を表示
-	void DebugDraw();
+	void DebugDraw(ActRect actrect);
 
 	// 矩形の情報をもらう
 	Rect GetRects()const;
