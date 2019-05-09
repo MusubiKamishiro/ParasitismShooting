@@ -15,6 +15,12 @@ protected:
 	int HP;			// 体力
 	int SP;			// スタミナ
 
+	int movePtn;	// 移動パターン
+	int cnt;		// キャラクターごとのカウント
+	int wait;		// キャラクターごとの待機時間
+
+	bool flag;		// 生存フラグ
+
 	Vector2f pos;	// 座標
 	Vector2f vel;	// 移動速度
 	Rect rect;		// 中心、幅と高さ

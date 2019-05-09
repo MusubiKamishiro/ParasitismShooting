@@ -1,6 +1,12 @@
 #include "GamePlayingScene.h"
 #include <DxLib.h>
 #include <stdlib.h>
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+
 #include "../Peripheral.h"
 #include "../Game.h"
 #include "ResultScene.h"
@@ -47,6 +53,49 @@ void GamePlayingScene::FadeoutUpdate(const Peripheral & p)
 
 GamePlayingScene::GamePlayingScene()
 {
+	std::ifstream ifs("stage/stage1.csv");
+
+	if (!ifs)
+	{
+		std::cout << "Error! File can not be opened" << std::endl;
+	}
+	
+	std::string Bank[100][10];
+	std::string str = "";
+	int i = 0;
+	int j = 0;
+
+
+	while (std::getline(ifs, str))
+	{
+		std::string tmp = "";
+		std::istringstream stream(str);
+
+		
+		while (std::getline(stream, tmp, ','))
+		{
+			Bank[i][j] = tmp;
+			j++;
+		}
+
+		/*int time;
+		int movePtn;
+		const char * enemyname;
+		Vector2f pos;
+		int Speed;
+		int HP;
+		int SP;
+		int cnt;*/
+		
+		cBank.push_back({ atoi(Bank[i][0].c_str()),atoi(Bank[i][1].c_str()),
+			Bank[i][2],Vector2f(atof(Bank[i][3].c_str()),atof(Bank[i][4].c_str())),
+			atoi(Bank[i][5].c_str()),atoi(Bank[i][6].c_str()),
+			atoi(Bank[i][7].c_str()),atoi(Bank[i][8].c_str()),atoi(Bank[i][9].c_str()) });
+		j = 0;
+		i++;
+
+	}
+	
 	time = 0;
 	pauseFlag = false;
 
@@ -80,9 +129,25 @@ void GamePlayingScene::Update(const Peripheral& p)
 	// アップデート関連
 	if (!pauseFlag)
 	{
-		if (time == 0)
+		/*if (time == 0)
 		{
-			ef->Create("fish", Vector2f(gs->outscreen + 250, gs->outscreen + 345));
+			ef->Create("fish", Vector2f(gs->outscreen + 250, gs->outscreen + 345),0,0);
+		}
+		if (time == 60)
+		{
+			ef->Create("fish", Vector2f(gs->outscreen + 300, gs->outscreen + 345), 0, 0);
+		}*/
+		if (cBank[bankCnt].time == time)
+		{
+			ef->Create(cBank[bankCnt].enemyname.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y), cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait);
+			if (cBank.size() > bankCnt)
+			{
+				bankCnt++;
+				if (bankCnt == cBank.size())
+				{
+					bankCnt--;
+				}
+			}
 		}
 
 		player->Update(p);
