@@ -8,7 +8,7 @@
 
 Player::Player()
 {
-	ReadActionFile("action/player1.act");
+	ReadActionFile("action/player.act");
 	ChangeAction("Idle");
 	// c_str()	末尾がNULLでなければNULLを足して、文字列の最初の文字を指すポインタを返す
 	img = DxLib::LoadGraph(actData.imgFilePath.c_str());

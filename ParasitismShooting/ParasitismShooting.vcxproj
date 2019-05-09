@@ -126,6 +126,7 @@
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="Character\CharacterObject.cpp" />
     <ClCompile Include="Character\Enemy.cpp" />
+    <ClCompile Include="Character\EnemyActionPattern.cpp" />
     <ClCompile Include="Character\EnemyFactory.cpp" />
     <ClCompile Include="Character\Fish.cpp" />
     <ClCompile Include="Character\Player.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="Character\CharacterObject.h" />
     <ClInclude Include="Character\Enemy.h" />
+    <ClInclude Include="Character\EnemyActionPattern.h" />
     <ClInclude Include="Character\EnemyFactory.h" />
     <ClInclude Include="Character\Fish.h" />
     <ClInclude Include="Character\Player.h" />

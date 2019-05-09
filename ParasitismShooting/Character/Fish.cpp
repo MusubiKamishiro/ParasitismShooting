@@ -1,6 +1,7 @@
 #include "Fish.h"
 #include "../Game.h"
 #include <DxLib.h>
+#include "EnemyActionPattern.h"
 
 
 Fish::Fish(const Player& player) : Enemy(player), player(player)
@@ -36,6 +37,12 @@ Enemy * Fish::Clone()
 
 void Fish::Move()
 {
+	EnemyActionPattern eAction;
+	if (flag == true)
+	{
+		eAction.ActPattern0(pos, 1.0f, cnt, wait);
+		cnt++;
+	}
 }
 
 Fish::~Fish()

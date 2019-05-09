@@ -22,7 +22,7 @@ public:
 
 	// “G‚ğì‚é
 	// enemyname...“G‚Ì–¼‘O
-	Enemy* Create(const char * enemyname, Vector2f pos);
+	Enemy* Create(const char * enemyname, Vector2f pos, int movePtn, int cnt, int wait);
 	
 	// “G‚ÌW‡‘Ì‚ğ•Ô‚·
 	Legion& GetLegion();

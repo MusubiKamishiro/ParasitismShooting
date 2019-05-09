@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "../Geometry.h"
 #include <memory>
+#include <vector>
 
 class GameScreen;
 class Player;
@@ -10,6 +11,19 @@ class BackGround;
 class PauseMenu;
 class EnemyFactory;
 class CollisionDetector;
+
+typedef struct CSV
+{
+	int time;
+	int movePtn;
+	std::string enemyname;
+	Vector2f pos;
+	int Speed;
+	int HP;
+	int SP;
+	int cnt;
+	int wait;
+}CharacterBank;
 
 
 class GamePlayingScene : public Scene
@@ -23,6 +37,10 @@ private:
 	float time;
 	Vector2 ssize;
 	bool pauseFlag;
+
+	std::vector<CharacterBank> cBank;
+
+	int bankCnt = 2;
 
 	std::shared_ptr<GameScreen> gs;
 	std::shared_ptr<Player> player;

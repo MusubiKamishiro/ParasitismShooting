@@ -83,7 +83,7 @@ void CharacterObject::ChangeAction(const char * name)
 
 CharacterObject::CharacterObject()
 {
-	charaSize = 0.4f;
+	charaSize = 0.1f;
 }
 
 
