@@ -13,7 +13,6 @@ Player::Player()
 	// c_str()	末尾がNULLでなければNULLを足して、文字列の最初の文字を指すポインタを返す
 	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
 
-	//img = DxLib::LoadGraph("img/title.png");
 	gs.reset(new GameScreen());
 	Vector2 gssize = gs->GetGSSize();
 
@@ -29,7 +28,7 @@ Player::Player()
 	HP = 3;
 	count = 0;
 	interval = 0;
-	//rect = Rect(pos.x, pos.y, 30, 30);
+	
 
 	shot.reset(new Shot());
 	
@@ -105,7 +104,7 @@ void Player::ShotBullet(const Peripheral & p)
 		}
 		if (p.IsPressing(PAD_INPUT_6))
 		{
-			shot->setBullet(pos, 0, 5, 0, 100, SHOT_PTN::RADIATION);
+			shot->setBullet(pos, 0, 5, 0, 50, SHOT_PTN::RADIATION);
 		}
 		if (p.IsPressing(PAD_INPUT_10))
 		{

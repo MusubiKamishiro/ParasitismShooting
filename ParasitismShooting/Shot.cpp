@@ -1,6 +1,5 @@
 #include "Shot.h"
 #include <DxLib.h>
-#include <iostream>
 #include <random>
 #include "Character/Player.h"
 #include "Peripheral.h"
