@@ -10,7 +10,6 @@ Player::Player()
 {
 	ReadActionFile("action/player.act");
 	ChangeAction("Idle");
-	// c_str()	末尾がNULLでなければNULLを足して、文字列の最初の文字を指すポインタを返す
 	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
 
 	gs.reset(new GameScreen());
@@ -31,7 +30,6 @@ Player::Player()
 	
 
 	shot.reset(new Shot());
-	
 	updater = &Player::Move;
 }
 

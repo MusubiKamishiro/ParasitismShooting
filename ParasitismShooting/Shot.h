@@ -1,4 +1,5 @@
 #pragma once
+#include "Character/CharacterObject.h"
 #include "Geometry.h"
 #include <memory>
 #include <vector>
@@ -23,25 +24,18 @@ enum SHOT_PTN
 
 typedef struct ShotST
 {
-	int flag;
 	Vector2f pos;
 	double angle;
 	int Speed;
 	int movePtn;
 	int level;
 	int shotPtn;
+	std::string shotname;
 }shot_st;
 
-class Shot
+class Shot : public CharacterObject
 {
 private:
-	Vector2f pos;
-	Vector2f vel;
-	Vector2f Dir;
-
-	int img[8];
-	int cnt;
-
 	int up;
 	int right;
 	int left;
@@ -49,14 +43,11 @@ private:
 
 	std::shared_ptr<Player> player;
 
-	bool sFlag[10];
-
 	std::vector<shot_st> cShot;
 
 	int NormalPosPtnX[4] = { -10, 10,-30, 30 };
 	int NormalPosPtnY[4] = { -30,-30,-10,-10 };
-	double ShotGunAngle[3] = { M_PI / 1.5,M_PI / 2,M_PI / 3 };
-
+	
 public:
 	Shot();
 	~Shot();

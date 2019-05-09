@@ -83,7 +83,7 @@ void CharacterObject::ChangeAction(const char * name)
 
 CharacterObject::CharacterObject()
 {
-	charaSize = 0.1f;
+	charaSize = 0.5f;
 }
 
 
@@ -117,7 +117,7 @@ void CharacterObject::DebugDraw(ActRect actrect)
 
 	if (actrect.rt == RectType::circle)
 	{
-		DxLib::DrawOval(rc.center.x * charaSize + pos.x - (rc.Width() * charaSize) / 2, rc.center.y * charaSize + pos.y - (rc.Height() * charaSize) / 2, (rc.Width() * charaSize) / 2, (rc.Height() * charaSize) / 2, 0x00ff00, false);
+		DxLib::DrawCircle(rc.center.x * charaSize + pos.x - (rc.Width() * charaSize) / 2, rc.center.y * charaSize + pos.y - (rc.Height() * charaSize) / 2, (rc.Width() * charaSize) / 2, 0x00ff00, false);
 	}
 	else if (actrect.rt == RectType::box)
 	{

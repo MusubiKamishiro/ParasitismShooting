@@ -143,7 +143,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 			{
 				for (auto& eRect : enemy->GetAcutRect())
 				{
-					if (cd->IsCollision(enemy->GetRects(pRect.rc), player->GetRects(eRect.rc), cd->GetRectCombi(pRect.rt, eRect.rt)))
+					if (cd->IsCollision(player->GetRects(pRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(pRect.rt, eRect.rt)))
 					{
 						if (player->updater != &Player::Invincible)
 						{
