@@ -1,5 +1,13 @@
 #pragma once
 
+// 矩形の形
+enum class RectType
+{
+	non,		// 無効
+	circle,		// 〇
+	box,		// □
+};
+
 
 // 型が未確定のまま使える(使うときに型が決定する)
 template<typename T>
