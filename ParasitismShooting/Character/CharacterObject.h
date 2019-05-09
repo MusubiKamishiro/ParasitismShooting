@@ -4,11 +4,6 @@
 #include <map>
 #include "../Geometry.h"
 
-enum class RectType
-{
-	box,		//  
-	circle,		// Z
-};
 
 // ±¸¼®İ‹éŒ`’è‹`
 struct ActRect
@@ -73,7 +68,9 @@ public:
 	void DebugDraw(ActRect actrect);
 
 	// ‹éŒ`‚Ìî•ñ‚ğ‚à‚ç‚¤
-	Rect GetRects()const;
+	Rect GetRects(Rect& rect)const;
+	std::vector<ActRect> GetAcutRect()const;
+
 	Vector2f GetPos()const;
 };
 

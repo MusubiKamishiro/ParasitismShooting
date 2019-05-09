@@ -1,5 +1,6 @@
 #pragma once
 #include "Geometry.h"
+#include "Character/CharacterObject.h"
 
 // “–‚½‚è”»’è¸×½
 class CollisionDetector

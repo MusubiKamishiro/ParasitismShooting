@@ -94,11 +94,18 @@ void GamePlayingScene::Update(const Peripheral& p)
 		// “–‚½‚è”»’è
 		for (auto& enemy : ef->GetLegion())
 		{
-			if (cd->IsCollision(enemy->GetRects(), player->GetRects()))
+			// “–‚½‚è”»’èÙ°Ìß
+			for (auto& pRect : player->GetAcutRect())
 			{
-				if (player->updater != &Player::Invincible)
+				for (auto& eRect : enemy->GetAcutRect())
 				{
-					player->Damage(p);
+					if (cd->IsCollision(enemy->GetRects(eRect.rc), player->GetRects(pRect.rc)))
+					{
+						if (player->updater != &Player::Invincible)
+						{
+							player->Damage(p);
+						}
+					}
 				}
 			}
 		}

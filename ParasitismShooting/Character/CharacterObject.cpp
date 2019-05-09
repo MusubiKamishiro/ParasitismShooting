@@ -83,7 +83,7 @@ void CharacterObject::ChangeAction(const char * name)
 
 CharacterObject::CharacterObject()
 {
-	charaSize = 0.1f;
+	charaSize = 0.4f;
 }
 
 
@@ -100,10 +100,6 @@ void CharacterObject::Draw(int img)
 	
 	DxLib::DrawRectRotaGraph2F(pos.x, pos.y, rc.Left(), rc.Top(), rc.Width(), rc.Height(), cut.center.x, cut.center.y, charaSize, 0.0, img, true, false);
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//rect.center = pos;
-	//DxLib::DrawExtendGraph(rect.Left(), rect.Top(), rect.Right(), rect.Bottom(), img, true);
-
 
 #ifdef _DEBUG
 	DxLib::DrawBox(pos.x - 2, pos.y - 2, pos.x + 2, pos.y + 2, 0x0000ff, true);
@@ -118,26 +114,31 @@ void CharacterObject::Draw(int img)
 void CharacterObject::DebugDraw(ActRect actrect)
 {
 	auto rc = actrect.rc;
-	rc.center.x += pos.x;
-	rc.center.y += pos.y;
 
 	if (actrect.rt == RectType::circle)
 	{
-		DxLib::DrawOval(rc.center.x - rc.Width() / 2, rc.center.y - rc.Height() / 2, (rc.Width() * charaSize) / 2, (rc.Height() * charaSize) / 2, 0x00ff00, false);
+		DxLib::DrawOval(rc.center.x * charaSize + pos.x - (rc.Width() * charaSize) / 2, rc.center.y * charaSize + pos.y - (rc.Height() * charaSize) / 2, (rc.Width() * charaSize) / 2, (rc.Height() * charaSize) / 2, 0x00ff00, false);
 	}
 	else if (actrect.rt == RectType::box)
 	{
-		DxLib::DrawBox(rc.Left() * charaSize, rc.Top() * charaSize, rc.Right() * charaSize, rc.Bottom() * charaSize, 0x00ff00, false);
+		DxLib::DrawBox(rc.Left() * charaSize + pos.x, rc.Top() * charaSize + pos.y, rc.Right() * charaSize + pos.x, rc.Bottom() * charaSize + pos.y, 0x00ff00, false);
 	}
 }
 
-Rect CharacterObject::GetRects()const
+Rect CharacterObject::GetRects(Rect& rect)const
 {
 	Rect rc = rect;
-	rc.center.x += pos.x;
-	rc.center.y += pos.y;
-	
+	rc.center.x = rc.center.x * charaSize + pos.x;
+	rc.center.y = rc.center.y * charaSize + pos.y;
+	rc.size.height *= charaSize;
+	rc.size.width *= charaSize;
+
 	return rc;
+}
+
+std::vector<ActRect> CharacterObject::GetAcutRect() const
+{
+	return actData.animInfo.at(nowActionName).cuts[nowCutIdx].actrects;
 }
 
 Vector2f CharacterObject::GetPos() const
