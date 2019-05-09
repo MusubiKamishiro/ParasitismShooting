@@ -59,7 +59,7 @@ GamePlayingScene::GamePlayingScene()
 	{
 		std::cout << "Error! File can not be opened" << std::endl;
 	}
-	
+
 	std::string Bank[100][10];
 	std::string str = "";
 	int i = 0;
@@ -71,22 +71,13 @@ GamePlayingScene::GamePlayingScene()
 		std::string tmp = "";
 		std::istringstream stream(str);
 
-		
+
 		while (std::getline(stream, tmp, ','))
 		{
 			Bank[i][j] = tmp;
 			j++;
 		}
 
-		/*int time;
-		int movePtn;
-		const char * enemyname;
-		Vector2f pos;
-		int Speed;
-		int HP;
-		int SP;
-		int cnt;*/
-		
 		cBank.push_back({ atoi(Bank[i][0].c_str()),atoi(Bank[i][1].c_str()),
 			Bank[i][2],Vector2f(atof(Bank[i][3].c_str()),atof(Bank[i][4].c_str())),
 			atoi(Bank[i][5].c_str()),atoi(Bank[i][6].c_str()),
@@ -95,7 +86,6 @@ GamePlayingScene::GamePlayingScene()
 		i++;
 
 	}
-	
 	time = 0;
 	pauseFlag = false;
 
@@ -129,14 +119,6 @@ void GamePlayingScene::Update(const Peripheral& p)
 	// アップデート関連
 	if (!pauseFlag)
 	{
-		/*if (time == 0)
-		{
-			ef->Create("fish", Vector2f(gs->outscreen + 250, gs->outscreen + 345),0,0);
-		}
-		if (time == 60)
-		{
-			ef->Create("fish", Vector2f(gs->outscreen + 300, gs->outscreen + 345), 0, 0);
-		}*/
 		if (cBank[bankCnt].time == time)
 		{
 			ef->Create(cBank[bankCnt].enemyname.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y), cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait);
@@ -159,11 +141,18 @@ void GamePlayingScene::Update(const Peripheral& p)
 		// 当たり判定
 		for (auto& enemy : ef->GetLegion())
 		{
-			if (cd->IsCollision(enemy->GetRects(), player->GetRects()))
+			// 当たり判定ﾙｰﾌﾟ
+			for (auto& pRect : player->GetAcutRect())
 			{
-				if (player->updater != &Player::Invincible)
+				for (auto& eRect : enemy->GetAcutRect())
 				{
-					player->Damage(p);
+					if (cd->IsCollision(enemy->GetRects(pRect.rc), player->GetRects(eRect.rc), cd->GetRectCombi(pRect.rt, eRect.rt)))
+					{
+						if (player->updater != &Player::Invincible)
+						{
+							player->Damage(p);
+						}
+					}
 				}
 			}
 		}

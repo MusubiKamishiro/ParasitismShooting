@@ -6,18 +6,16 @@
 
 Fish::Fish(const Player& player) : Enemy(player), player(player)
 {
-	//_nowActionName = ("Walk");
+	ReadActionFile("action/fish.act");
+	ChangeAction("Idle");
 
 	//pos.x = 0;
 	//pos.y = 0;
-	rect = Rect(pos.x, pos.y, 30, 30);
+	//rect = Rect(pos.x, pos.y, 30, 30);
 
 	wait = 60;
 
-	//ReadActionFile("Action/deadman.act");
-
-	//img = DxLib::LoadGraph(_actionData.imgFilePath.c_str());
-	img = DxLib::LoadGraph("img/fish.png");
+	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
 
 	updater = &Fish::Move;
 }
@@ -42,7 +40,7 @@ void Fish::Move()
 	EnemyActionPattern eAction;
 	if (flag == true)
 	{
-		eAction.ActPattern0(pos, 1.0f, cnt,wait);
+		eAction.ActPattern0(pos, 1.0f, cnt, wait);
 		cnt++;
 	}
 }
@@ -62,7 +60,4 @@ void Fish::Draw()
 {
 	CharacterObject::Draw(img);
 
-#ifdef _DEBUG
-	//DebugDraw();
-#endif
 }

@@ -17,7 +17,7 @@ EnemyFactory::~EnemyFactory()
 {
 }
 
-Enemy * EnemyFactory::Create(const char * enemyname, Vector2f pos,int movePtn, int cnt, int wait)
+Enemy * EnemyFactory::Create(const char * enemyname, Vector2f pos, int movePtn, int cnt, int wait)
 {
 	if(originalEnemy.find(enemyname) != originalEnemy.end())
 	{

@@ -57,7 +57,6 @@ private:
 	int NormalPosPtnY[4] = { -30,-30,-10,-10 };
 	double ShotGunAngle[3] = { M_PI / 1.5,M_PI / 2,M_PI / 3 };
 
-	int a, b, c, d;
 public:
 	Shot();
 	~Shot();

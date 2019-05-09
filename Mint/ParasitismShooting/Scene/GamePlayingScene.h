@@ -50,6 +50,7 @@ private:
 	std::shared_ptr<EnemyFactory> ef;
 	std::shared_ptr<CollisionDetector> cd;
 
+
 public:
 	GamePlayingScene();
 	~GamePlayingScene();

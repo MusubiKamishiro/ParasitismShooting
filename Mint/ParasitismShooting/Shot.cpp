@@ -18,12 +18,6 @@ Shot::Shot()
 	right = screenSize.x;
 	left = 0;
 	down = screenSize.y;
-
-
-	a = right / 4;
-	b = down / 4;
-	c = right / 4 + 30;
-	d = down / 4 + 30;
 }
 
 
@@ -183,7 +177,6 @@ void Shot::Draw(void)
 			}
 		}
 	}
-	DrawBox(a, b, c, d, 0xffffff, true);
 }
 
 
@@ -206,7 +199,7 @@ double Shot::ShotAngle(Vector2f pos)
 {
 	//Vector2f pPos = player->GetPos();
 	//return atan2(pPos.y - pos.y,pPos.x - pos.x);
-	return atan2(b - pos.y, a - pos.x);
+	return 0;
 }
 
 void Shot::NormalUpdate(int n)
