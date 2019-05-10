@@ -200,3 +200,12 @@ void Shot::LaserUpdate(int n)
 {
 }
 
+void Shot::rotation2D(float * xp, float * yp, float x, float y, float xc, float yc, float theta)
+{
+	y = -y;
+	yc = -yc;
+	*xp = (x - xc) * cos(theta) - (y - yc) * sin(theta) + xc;
+	*yp = -1.0 * ((x - xc) * sin(theta) + (y - yc) * cos(theta) + yc);
+}
+
+

@@ -77,5 +77,6 @@ private:
 	void RadiationUpdate(int n);
 	void RandomUpdate(int n);
 	void LaserUpdate(int n);
+	void rotation2D(float * xp, float * yp, float x, float y, float xc, float yc, float theta);
 };
 
