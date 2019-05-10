@@ -41,6 +41,8 @@ private:
 	int left;
 	int down;
 
+	int interval;
+
 	std::shared_ptr<Player> player;
 
 	std::vector<shot_st> cShot;
@@ -55,6 +57,8 @@ public:
 	void Update();
 	void Draw(void);
 	void setBullet(Vector2f pos, float angle, int Speed, int movePtn, int level, int shotPtn);
+
+	void ShotBullet(const Peripheral& p, const Vector2f& pos);
 private:
 	void OutofScreen(void);
 	double ShotAngle(Vector2f pos);

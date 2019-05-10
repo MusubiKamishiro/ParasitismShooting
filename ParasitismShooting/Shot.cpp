@@ -9,7 +9,7 @@ Shot::Shot()
 {
 	ReadActionFile("action/shot.act");
 	ChangeAction("Shot1");
-
+	SetCharaSize(0.5f);
 	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
 	
 	GameScreen gscreen;
@@ -19,6 +19,8 @@ Shot::Shot()
 	right = screenSize.x + gscreen.outscreen;
 	left = 0;
 	down = screenSize.y + gscreen.outscreen;
+
+	interval = 0;
 }
 
 
@@ -97,6 +99,34 @@ void Shot::setBullet(Vector2f pos, float angle, int Speed, int movePtn, int leve
 			cShot.push_back({ pos, angle, Speed, movePtn, level, shotPtn , "Shot1" });
 		}
 	}
+}
+
+void Shot::ShotBullet(const Peripheral & p, const Vector2f& pos)
+{
+	if (interval % 3 == 0)
+	{
+		if (p.IsPressing(PAD_INPUT_2))
+		{
+			setBullet(pos, 0, 5, 0, 4, SHOT_PTN::NORMAL);
+		}
+		if (p.IsPressing(PAD_INPUT_4))
+		{
+			setBullet(pos, 0, 5, 0, 3, SHOT_PTN::SHOTGUN);
+		}
+		if (p.IsPressing(PAD_INPUT_5))
+		{
+			setBullet(pos, 0, 5, 0, 1, SHOT_PTN::TRACKING);
+		}
+		if (p.IsPressing(PAD_INPUT_6))
+		{
+			setBullet(pos, 0, 5, 0, 50, SHOT_PTN::RADIATION);
+		}
+		if (p.IsPressing(PAD_INPUT_10))
+		{
+			setBullet(pos, 0, 5, 0, 100, SHOT_PTN::RANDOM);
+		}
+	}
+	interval++;
 }
 
 void Shot::Draw(void)

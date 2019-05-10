@@ -8,13 +8,7 @@ Fish::Fish(const Player& player) : Enemy(player), player(player)
 {
 	ReadActionFile("action/fish.act");
 	ChangeAction("Idle");
-
-	//pos.x = 0;
-	//pos.y = 0;
-	//rect = Rect(pos.x, pos.y, 30, 30);
-
-	wait = 60;
-
+	SetCharaSize(0.07f);
 	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
 
 	updater = &Fish::Move;
@@ -60,4 +54,9 @@ void Fish::Draw()
 {
 	CharacterObject::Draw(img);
 
+}
+
+void Fish::Damage()
+{
+	HP -= 1;
 }

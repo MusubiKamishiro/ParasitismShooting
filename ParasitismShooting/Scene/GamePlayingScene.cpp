@@ -13,6 +13,7 @@
 #include "../GameScreen.h"
 #include "../HUD.h"
 #include "../Character/Player.h"
+#include "../Shot.h"
 #include "../BackGround.h"
 #include "../PauseMenu.h"
 #include "../Character/EnemyFactory.h"
@@ -22,7 +23,7 @@
 
 void GamePlayingScene::FadeinUpdate(const Peripheral & p)
 {
-	if (p.IsTrigger(PAD_INPUT_7) && (!pauseFlag))
+	if ((player->HP == 0) && (!pauseFlag))
 	{
 		pal = 255;
 		updater = &GamePlayingScene::FadeoutUpdate;
@@ -53,7 +54,6 @@ void GamePlayingScene::FadeoutUpdate(const Peripheral & p)
 GamePlayingScene::GamePlayingScene()
 {
 	std::ifstream ifs("stage/stage1.csv");
-
 	assert(ifs);
 
 
@@ -90,6 +90,7 @@ GamePlayingScene::GamePlayingScene()
 
 	gs.reset(new GameScreen());
 	player.reset(new Player());
+	shot.reset(new Shot());
 	hud.reset(new HUD());
 	bg.reset(new BackGround());
 	pmenu.reset(new PauseMenu());
@@ -129,7 +130,9 @@ void GamePlayingScene::Update(const Peripheral& p)
 			}
 		}
 
+		shot->Update();
 		player->Update(p);
+		shot->ShotBullet(p, player->pos);
 		for (auto& enemy : ef->GetLegion())
 		{
 			enemy->Update();
@@ -139,9 +142,10 @@ void GamePlayingScene::Update(const Peripheral& p)
 		for (auto& enemy : ef->GetLegion())
 		{
 			// “–‚½‚è”»’èÙ°Ìß
-			for (auto& pRect : player->GetAcutRect())
+			for (auto& eRect : enemy->GetActRect())
 			{
-				for (auto& eRect : enemy->GetAcutRect())
+				// “G‚ÆƒvƒŒƒCƒ„[
+				for (auto& pRect : player->GetActRect())
 				{
 					if (cd->IsCollision(player->GetRects(pRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(pRect.rt, eRect.rt)))
 					{
@@ -149,6 +153,15 @@ void GamePlayingScene::Update(const Peripheral& p)
 						{
 							player->Damage(p);
 						}
+					}
+				}
+
+				// “G‚Æ’e
+				for (auto& sRect : shot->GetActRect())
+				{
+					if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
+					{
+						enemy->Damage();
 					}
 				}
 			}
@@ -166,6 +179,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 	
 	bg->Draw((int)time);
 	player->Draw((int)time);
+	shot->Draw();
 	for (auto& enemy : ef->GetLegion())
 	{
 		enemy->Draw();
