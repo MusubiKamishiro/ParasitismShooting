@@ -13,7 +13,8 @@
 #include "../GameScreen.h"
 #include "../HUD.h"
 #include "../Character/Player.h"
-//#include "../Shot.h"
+#include "../Character/Shot/ShotFactory.h"
+#include "../Character/Shot/Shot.h"
 #include "../BackGround.h"
 #include "../PauseMenu.h"
 #include "../Character/EnemyFactory.h"
@@ -90,7 +91,7 @@ GamePlayingScene::GamePlayingScene()
 
 	gs.reset(new GameScreen());
 	player.reset(new Player());
-	//shot.reset(new Shot());
+	sf.reset(new ShotFactory(*player));
 	hud.reset(new HUD());
 	bg.reset(new BackGround());
 	pmenu.reset(new PauseMenu());

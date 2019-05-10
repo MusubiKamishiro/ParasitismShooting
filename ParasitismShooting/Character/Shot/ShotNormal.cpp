@@ -1,13 +1,14 @@
 #include "ShotNormal.h"
 #include "../../Game.h"
+#include "../Enemy.h"
 #include <DxLib.h>
 
-ShotNormal::ShotNormal(const Shot & shot) : Shot(shot),shot(shot)
+ShotNormal::ShotNormal(const Player& player/*, const Enemy& enemy*/) : Shot(player/*, enemy*/),player(player), enemy(enemy)
 {
 	updater = &ShotNormal::Move;
 }
 
-ShotNormal::ShotNormal(const ShotNormal & d) : Shot(d.shot),shot(shot)
+ShotNormal::ShotNormal(const ShotNormal & d) : Shot(d.player/*, d.enemy*/),player(player), enemy(enemy)
 {
 	*this = d;
 }

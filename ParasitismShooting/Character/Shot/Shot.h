@@ -3,6 +3,7 @@
 #include "../../Geometry.h"
 
 class Player;
+class Enemy;
 class ShotFactory;
 
 enum SHOT_PTN
@@ -44,7 +45,7 @@ class Shot : public CharacterObject
 protected:
 	virtual Shot* Clone() = 0;
 
-	Shot(const Player& player);
+	Shot(const Player& player/*, const Enemy& enemy*/);
 
 public:
 	virtual ~Shot();

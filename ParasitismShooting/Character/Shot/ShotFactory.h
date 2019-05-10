@@ -4,19 +4,21 @@
 #include <map>
 
 class Shot;
+class Player;
+class Enemy;
 
-typedef std::list<Shot*> Legion;	// ’e‚ÌW‡‘Ì‚ÌŒ^
+typedef std::list<Shot*> SLegion;	// ’e‚ÌW‡‘Ì‚ÌŒ^
 
 class ShotFactory
 {
 private:
-	const Shot& shot;
+	const Player& player;
 	
 	std::map<std::string, Shot*> originalShot;	// ’e‚ÌŒ³‚Æ‚È‚émap‚Ìì¬
-	Legion legion;
+	SLegion legion;
 
 public:
-	ShotFactory(const Shot& shot);
+	ShotFactory(const Player& player/*, const Enemy& enemy*/);
 	~ShotFactory();
 
 	// ’e‚ğì‚é
@@ -24,6 +26,6 @@ public:
 	Shot* Create(const char* enemyname, Vector2f pos, int movePtn, int cnt, int wait, int hp, int sp, float speed);
 	
 	// ’e‚ÌW‡‘Ì‚ğ•Ô‚·
-	Legion& GetLegion();
+	SLegion& GetLegion();
 };
 

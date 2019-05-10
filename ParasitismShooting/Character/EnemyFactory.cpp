@@ -2,7 +2,7 @@
 #include "Fish.h"
 
 
-Legion & EnemyFactory::GetLegion()
+ELegion & EnemyFactory::GetLegion()
 {
 	return legion;		// W‡‘Ì‚ğ•Ô‚·
 }
