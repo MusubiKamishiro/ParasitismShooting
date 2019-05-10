@@ -114,6 +114,18 @@
     <ClCompile Include="Character\Shot\ShotNormal.cpp">
       <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Character\Shot\ShotRadiation.cpp">
+      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Shot\ShotRandom.cpp">
+      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Shot\ShotShotgun.cpp">
+      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Shot\ShotTracking.cpp">
+      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -186,6 +198,18 @@
       <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\Shot\ShotNormal.h">
+      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Shot\ShotRadiation.h">
+      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Shot\ShotRandom.h">
+      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Shot\ShotShotgun.h">
+      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Shot\ShotTracking.h">
       <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>

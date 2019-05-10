@@ -35,7 +35,7 @@ typedef struct ShotST
 	int movePtn;
 	int level;
 	int shotPtn;
-	int shoter;
+	int shooter;
 	std::string shotname;
 }shot_st;
 
@@ -46,6 +46,15 @@ protected:
 	virtual Shot* Clone() = 0;
 
 	Shot(const Player& player/*, const Enemy& enemy*/);
+
+	Vector2f pos;
+	Vector2f cneterPos;
+	double angle;
+	int Speed;
+	int movePtn;
+	int level;
+	int shotPtn;
+	int shooter;
 
 public:
 	virtual ~Shot();
