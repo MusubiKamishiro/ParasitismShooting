@@ -2,6 +2,9 @@
 #include "../CharacterObject.h"
 #include "../../Geometry.h"
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 class Player;
 class Enemy;
 class ShotFactory;

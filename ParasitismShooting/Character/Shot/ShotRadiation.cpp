@@ -30,6 +30,16 @@ Shot * ShotRadiation::Clone()
 
 void ShotRadiation::Move()
 {
+	// Ç´ÇÍÇ¢Ç»Ç‚Å[Ç¬Åi30î≠Åj
+	angle += (M_PI / 10) / 120;
+	pos.x += cos(angle) * Speed;
+	pos.y += sin(angle) * Speed;
+	rotation2D(&pos.x, &pos.y, pos.x, pos.y, cneterPos.x, cneterPos.y, (5.0f / 180.0f));
+
+	//cShot[n].angle += (M_PI / 10) / 120;
+	//cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
+	//cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
+	//rotation2D(&cShot[n].pos.x, &cShot[n].pos.y, cShot[n].pos.x, cShot[n].pos.y, cShot[n].cneterPos.x, cShot[n].cneterPos.y, (5.0f / 180.0f));
 }
 
 ShotRadiation::~ShotRadiation()
@@ -44,4 +54,12 @@ void ShotRadiation::Update()
 void ShotRadiation::Draw()
 {
 	CharacterObject::Draw(img);
+}
+
+void ShotRadiation::rotation2D(float * xp, float * yp, float x, float y, float xc, float yc, float theta)
+{
+	y = -y;
+	yc = -yc;
+	*xp = (x - xc) * cos(theta) - (y - yc) * sin(theta) + xc;
+	*yp = -1.0 * ((x - xc) * sin(theta) + (y - yc) * cos(theta) + yc);
 }

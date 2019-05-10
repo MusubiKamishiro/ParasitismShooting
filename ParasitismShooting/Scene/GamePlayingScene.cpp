@@ -161,9 +161,26 @@ void GamePlayingScene::Update(const Peripheral& p)
 			}
 
 			player->Update(p);
-			if (p.IsPressing(PAD_INPUT_2) && ((int)time %3 ==0))
+			if (p.IsPressing(PAD_INPUT_2) && ((int)time % 3 ==0))
 			{
-				sf->Create("ShotNormal", player->GetPos(), 0, 5, 1, 1, 1, 1);
+				sf->Create("ShotNormal", player->GetPos(), 0, 5, 0, 4, SHOT_PTN::NORMAL, SHOTER::PLAYER);
+			}
+			if (p.IsPressing(PAD_INPUT_4))
+			{
+				sf->Create("ShotShotgun", player->GetPos(), 0, 5, 0, 3, SHOT_PTN::SHOTGUN, SHOTER::PLAYER);
+			}
+			if (p.IsPressing(PAD_INPUT_5))
+			{
+				sf->Create("ShotTracking", player->GetPos(), 0, 5, 0, 30, SHOT_PTN::TRACKING, SHOTER::PLAYER);
+			}
+			if (p.IsPressing(PAD_INPUT_6))
+			{
+				sf->Create("ShotRadiation", player->GetPos(), 0, 5, 0, 30, SHOT_PTN::RADIATION, SHOTER::PLAYER);
+				//sf->Create("ShotRadiation", player->GetPos(), 0, 5, 0, 50, SHOT_PTN::RADIATION, SHOTER::PLAYER);
+			}
+			if (p.IsPressing(PAD_INPUT_10))
+			{
+				sf->Create("ShotRandom", player->GetPos(), 0, 5, 0, 100, SHOT_PTN::RANDOM, SHOTER::PLAYER);
 			}
 
 			for (auto& enemy : ef->GetLegion())

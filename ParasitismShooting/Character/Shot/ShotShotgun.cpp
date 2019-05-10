@@ -30,6 +30,8 @@ Shot * ShotShotgun::Clone()
 
 void ShotShotgun::Move()
 {
+	pos.x += cos(angle) * Speed;
+	pos.y += sin(angle) * Speed;
 }
 
 ShotShotgun::~ShotShotgun()

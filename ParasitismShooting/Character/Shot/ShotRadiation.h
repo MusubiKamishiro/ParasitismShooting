@@ -21,6 +21,7 @@ private:
 	const Player& player;
 	const Enemy& enemy;
 
+	void rotation2D(float * xp, float * yp, float x, float y, float xc, float yc, float theta);
 
 public:
 	~ShotRadiation();

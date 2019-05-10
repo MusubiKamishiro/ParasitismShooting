@@ -30,6 +30,8 @@ Shot * ShotTracking::Clone()
 
 void ShotTracking::Move()
 {
+	pos.x += cos(angle) * Speed;
+	pos.y += sin(angle) * Speed;
 }
 
 ShotTracking::~ShotTracking()

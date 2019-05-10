@@ -1,6 +1,4 @@
 #include "ShotFactory.h"
-#define _USE_MATH_DEFINES
-#include <math.h>
 #include <random>
 #include "Shot.h"
 #include "../Player.h"
@@ -43,18 +41,24 @@ Shot * ShotFactory::Create(const char * shotname,Vector2f pos, float angle, int 
 		auto shot = originalShot[shotname]->Clone();
 		if (shotname == "ShotNormal")
 		{
-			for (int j = 0; j < level; j++)
-			{
-				shot->pos = { pos.x - 10 + NormalPosPtnX[j],pos.y + NormalPosPtnY[j] };
-			}
+			
+			shot->pos = { pos.x - 10 + NormalPosPtnX[cnt],pos.y + NormalPosPtnY[cnt] };
 			shot->angle = -M_PI_2;
+			cnt++;
+			if (cnt == level)
+			{
+				cnt = 0;
+			}
 		}
 		else if (shotname == "ShotRadiation")
 		{
 			shot->pos = pos;
-			for (int j = 0; j < level; j++)
+
+			shot->angle = -(angle + M_PI_2 / (level / 4)  * cnt);
+			cnt++;
+			if (cnt == level)
 			{
-				shot->angle = -(angle + M_PI_2 / (level / 4)  * j);
+				cnt = 0;
 			}
 		}
 		else if (shotname == "ShotRandom")
@@ -69,9 +73,12 @@ Shot * ShotFactory::Create(const char * shotname,Vector2f pos, float angle, int 
 		else if (shotname == "ShotShotgun")
 		{
 			shot->pos = pos;
-			for (int j = 0; j < level; j++)
+			
+			shot->angle = -(((angle + (M_PI / level))  * cnt) + M_PI / 6);
+			cnt++;
+			if (cnt == level)
 			{
-				shot->angle = -(((angle + (M_PI / level))  * j) + M_PI / 6);
+				cnt = 0;
 			}
 		}
 		else if (shotname == "ShotTracking")

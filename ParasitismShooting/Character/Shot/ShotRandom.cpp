@@ -30,6 +30,8 @@ Shot * ShotRandom::Clone()
 
 void ShotRandom::Move()
 {
+	pos.x += cos(angle) * Speed;
+	pos.y += sin(angle) * Speed;
 }
 
 ShotRandom::~ShotRandom()
