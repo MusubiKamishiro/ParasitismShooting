@@ -81,9 +81,13 @@ void CharacterObject::ChangeAction(const char * name)
 	nowActionName = name;
 }
 
+void CharacterObject::SetCharaSize(const float& size)
+{
+	charaSize = size;
+}
+
 CharacterObject::CharacterObject()
 {
-	charaSize = 0.1f;
 }
 
 
@@ -102,7 +106,7 @@ void CharacterObject::Draw(int img)
 
 
 #ifdef _DEBUG
-	DxLib::DrawBox(pos.x - 2, pos.y - 2, pos.x + 2, pos.y + 2, 0x0000ff, true);
+	//DxLib::DrawBox(pos.x - 2, pos.y - 2, pos.x + 2, pos.y + 2, 0x0000ff, true);
 
 	for (auto& actrect : cut.actrects)
 	{
@@ -117,7 +121,7 @@ void CharacterObject::DebugDraw(ActRect actrect)
 
 	if (actrect.rt == RectType::circle)
 	{
-		DxLib::DrawOval(rc.center.x * charaSize + pos.x - (rc.Width() * charaSize) / 2, rc.center.y * charaSize + pos.y - (rc.Height() * charaSize) / 2, (rc.Width() * charaSize) / 2, (rc.Height() * charaSize) / 2, 0x00ff00, false);
+		DxLib::DrawCircle(rc.center.x * charaSize + pos.x - (rc.Width() * charaSize) / 2, rc.center.y * charaSize + pos.y - (rc.Height() * charaSize) / 2, (rc.Width() * charaSize) / 2, 0x00ff00, false);
 	}
 	else if (actrect.rt == RectType::box)
 	{
@@ -136,7 +140,7 @@ Rect CharacterObject::GetRects(Rect& rect)const
 	return rc;
 }
 
-std::vector<ActRect> CharacterObject::GetAcutRect() const
+std::vector<ActRect> CharacterObject::GetActRect() const
 {
 	return actData.animInfo.at(nowActionName).cuts[nowCutIdx].actrects;
 }

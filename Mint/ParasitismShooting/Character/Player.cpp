@@ -10,10 +10,9 @@ Player::Player()
 {
 	ReadActionFile("action/player.act");
 	ChangeAction("Idle");
-	// c_str()	末尾がNULLでなければNULLを足して、文字列の最初の文字を指すポインタを返す
+	SetCharaSize(0.1f);
 	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
 
-	//img = DxLib::LoadGraph("img/title.png");
 	gs.reset(new GameScreen());
 	Vector2 gssize = gs->GetGSSize();
 
@@ -26,13 +25,10 @@ Player::Player()
 	moveVel = 3.0;
 	startPos = Vector2f(gssize.x / 2, gssize.y - 20);
 	pos = startPos;
-	HP = 3;
+	HP = 1;
 	count = 0;
-	interval = 0;
-	//rect = Rect(pos.x, pos.y, 30, 30);
-
-	shot.reset(new Shot());
 	
+	shot.reset(new Shot());
 	updater = &Player::Move;
 }
 
@@ -45,10 +41,10 @@ void Player::Update(const Peripheral &p)
 	// 移動方向が決まる
 	(this->*updater)(p);
 
-	shot->Update();
+	//shot->Update();
 	pos += vel;
 	NotOutOfRange();
-	ShotBullet(p);
+	//ShotBullet(p);
 }
 
 
@@ -85,34 +81,6 @@ void Player::Move(const Peripheral & p)
 	{
 		vel /= 1.4142136;
 	}
-}
-
-void Player::ShotBullet(const Peripheral & p)
-{
-	if (interval % 3 == 0)
-	{
-		if (p.IsPressing(PAD_INPUT_2))
-		{
-			shot->setBullet(pos, 0, 5, 0, 4, SHOT_PTN::NORMAL, SHOTER::PLAYER);
-		}
-		if (p.IsPressing(PAD_INPUT_4))
-		{
-			shot->setBullet(pos, 0, 5, 0, 3, SHOT_PTN::SHOTGUN, SHOTER::PLAYER);
-		}
-		if (p.IsPressing(PAD_INPUT_5))
-		{
-			shot->setBullet(pos, 0, 5, 0, 1, SHOT_PTN::TRACKING, SHOTER::PLAYER);
-		}
-		if (p.IsPressing(PAD_INPUT_6))
-		{
-			shot->setBullet(pos, 0, 5, 0, 100, SHOT_PTN::RADIATION, SHOTER::PLAYER);
-		}
-		if (p.IsPressing(PAD_INPUT_10))
-		{
-			shot->setBullet(pos, 0, 5, 0, 100, SHOT_PTN::RANDOM, SHOTER::PLAYER);
-		}
-	}
-	interval++;
 }
 
 void Player::Damage(const Peripheral & p)
@@ -163,7 +131,7 @@ void Player::Draw(const int& time)
 		}
 	}
 		
-	shot->Draw();
+	//shot->Draw();
 }
 
 int& Player::GetHP()

@@ -1,4 +1,5 @@
 #pragma once
+#include "Character/CharacterObject.h"
 #include "Geometry.h"
 #include <memory>
 #include <vector>
@@ -28,42 +29,37 @@ enum SHOTER
 	MAX
 };
 
+
 typedef struct ShotST
 {
-	int flag;
 	Vector2f pos;
+	Vector2f cneterPos;
 	double angle;
 	int Speed;
 	int movePtn;
 	int level;
 	int shotPtn;
 	int shoter;
+	std::string shotname;
 }shot_st;
 
-class Shot
+class Shot : public CharacterObject
 {
 private:
-	Vector2f pos;
-	Vector2f vel;
-	Vector2f Dir;
-
-	int img[8];
-	int cnt;
-
 	int up;
 	int right;
 	int left;
 	int down;
 
-	std::shared_ptr<Player> player;
+	int interval;
 
-	bool sFlag[10];
+	std::shared_ptr<Player> player;
 
 	std::vector<shot_st> cShot;
 
 	int NormalPosPtnX[4] = { -10, 10,-30, 30 };
 	int NormalPosPtnY[4] = { -30,-30,-10,-10 };
-
+	
 public:
 	Shot();
 	~Shot();
@@ -71,6 +67,8 @@ public:
 	void Update();
 	void Draw(void);
 	void setBullet(Vector2f pos, float angle, int Speed, int movePtn, int level, int shotPtn,int shoter);
+
+	void ShotBullet(const Peripheral& p, const Vector2f& pos);
 private:
 	void OutofScreen(void);
 	double ShotAngle(Vector2f pos);
@@ -80,7 +78,6 @@ private:
 	void RadiationUpdate(int n);
 	void RandomUpdate(int n);
 	void LaserUpdate(int n);
-
 	void rotation2D(float * xp, float * yp, float x, float y, float xc, float yc, float theta);
 };
 

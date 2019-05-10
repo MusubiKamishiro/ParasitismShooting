@@ -1,6 +1,5 @@
 #include "Shot.h"
 #include <DxLib.h>
-#include <iostream>
 #include <random>
 #include "Character/Player.h"
 #include "Peripheral.h"
@@ -8,15 +7,20 @@
 
 Shot::Shot()
 {
-	DxLib::LoadDivGraph("img/lightbullet.png", 8, 8, 1, 60, 60, img, true);
+	ReadActionFile("action/shot.act");
+	ChangeAction("Shot1");
+	SetCharaSize(0.5f);
+	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
 	
 	GameScreen gscreen;
 	Vector2 screenSize = gscreen.GetGSSize();
 
 	up = 0;
-	right = screenSize.x;
+	right = screenSize.x + gscreen.outscreen;
 	left = 0;
-	down = screenSize.y;
+	down = screenSize.y + gscreen.outscreen;
+
+	interval = 0;
 }
 
 
@@ -28,33 +32,30 @@ void Shot::Update()
 {
 	for (int j = 0; j < cShot.size(); j++)
 	{
-		/*if (cShot[j].flag == 1)
-		{*/
-			if (cShot[j].shotPtn == SHOT_PTN::NORMAL)
-			{
-				NormalUpdate(j);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::SHOTGUN)
-			{
-				ShotgunUpdate(j);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::TRACKING)
-			{
-				TrackingUpdate(j);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::RADIATION)
-			{
-				RadiationUpdate(j);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::RANDOM)
-			{
-				RandomUpdate(j);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::LASER)
-			{
-				LaserUpdate(j);
-			}
-	//	}
+		if (cShot[j].shotPtn == SHOT_PTN::NORMAL)
+		{
+			NormalUpdate(j);
+		}
+		if (cShot[j].shotPtn == SHOT_PTN::SHOTGUN)
+		{
+			ShotgunUpdate(j);
+		}
+		if (cShot[j].shotPtn == SHOT_PTN::TRACKING)
+		{
+			TrackingUpdate(j);
+		}
+		if (cShot[j].shotPtn == SHOT_PTN::RADIATION)
+		{
+			RadiationUpdate(j);
+		}
+		if (cShot[j].shotPtn == SHOT_PTN::RANDOM)
+		{
+			RandomUpdate(j);
+		}
+		if (cShot[j].shotPtn == SHOT_PTN::LASER)
+		{
+			LaserUpdate(j);
+		}
 	}
 	OutofScreen();
 	
@@ -67,75 +68,76 @@ void Shot::setBullet(Vector2f pos, float angle, int Speed, int movePtn, int leve
 	{
 		if (shotPtn == SHOT_PTN::WEAK)
 		{
-			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn ,shoter });
-			cnt++;
+			cShot.push_back({ pos,pos, angle, Speed, movePtn, level, shotPtn, shoter, "Shot1" });
 		}
 		else if (shotPtn == SHOT_PTN::NORMAL)
 		{
-			cShot.push_back({ 1, { pos.x - 10 + NormalPosPtnX[j],pos.y + NormalPosPtnY[j] },-M_PI_2,Speed,movePtn,level,shotPtn,shoter });
+			cShot.push_back({ { pos.x - 10 + NormalPosPtnX[j],pos.y + NormalPosPtnY[j] },pos, -M_PI_2, Speed, movePtn, level, shotPtn, shoter, "Shot1" });
 		}
 		else if (shotPtn == SHOT_PTN::SHOTGUN)
 		{
-			cShot.push_back({ 1, pos,-(((angle + (M_PI / level))  * j) + M_PI / 6),Speed,movePtn,level,shotPtn,shoter });
+			cShot.push_back({ pos,pos, -(((angle + (M_PI / level))  * j) + M_PI / 6), Speed, movePtn, level, shotPtn, shoter, "Shot2" });
 		}
 		else if (shotPtn == SHOT_PTN::TRACKING)
 		{
-			cShot.push_back({ 1, { pos.x + 20 * j,pos.y },ShotAngle(pos),Speed,movePtn,level,shotPtn ,shoter });
+			cShot.push_back({ { pos.x + 20 * j,pos.y },pos,ShotAngle(pos), Speed, movePtn, level, shotPtn, shoter, "Shot3" });
 		}
 		else if (shotPtn == SHOT_PTN::RADIATION)
 		{
-			cShot.push_back({ 1, pos,-(angle + M_PI_2 / (level / 4)  * j),Speed ,movePtn,level,shotPtn ,shoter });
+			cShot.push_back({ pos,pos, -(angle + M_PI_2 / (level / 4)  * j), Speed, movePtn, level, shotPtn, shoter, "Shot4" });
 		}
 		else if (shotPtn == SHOT_PTN::RANDOM)
 		{
 			std::random_device rd;
-
 			std::mt19937 mt(rd());
 
 			std::uniform_int_distribution<int> rand(1, 10);
-			cShot.push_back({ 1, { pos.x - (float)(rand(mt) * M_PI * 2) + 10,pos.y - 30 },ShotAngle(pos),Speed,movePtn,level,shotPtn });
+			cShot.push_back({ { pos.x - (float)(rand(mt) * M_PI * 2) + 10,pos.y - 30 },pos, ShotAngle(pos), Speed, movePtn, level, shotPtn, shoter, "Shot5" });
 		}
 		else if (shotPtn == SHOT_PTN::LASER)
 		{
-			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn });
-
-			cnt++;
+			cShot.push_back({ pos,pos, angle, Speed, movePtn, level, shotPtn, shoter, "Shot1" });
 		}
 	}
+}
+
+void Shot::ShotBullet(const Peripheral & p, const Vector2f& pos)
+{
+	if (interval % 3 == 0)
+	{
+		if (p.IsPressing(PAD_INPUT_2))
+		{
+			setBullet(pos, 0, 5, 0, 4, SHOT_PTN::NORMAL, SHOTER::PLAYER);
+		}
+		if (p.IsPressing(PAD_INPUT_4))
+		{
+			setBullet(pos, 0, 5, 0, 3, SHOT_PTN::SHOTGUN, SHOTER::PLAYER);
+		}
+		if (p.IsPressing(PAD_INPUT_5))
+		{
+			setBullet(pos, 0, 5, 0, 1, SHOT_PTN::TRACKING, SHOTER::PLAYER);
+		}
+		if (p.IsPressing(PAD_INPUT_6))
+		{
+			setBullet(pos, 0, 5, 0, 50, SHOT_PTN::RADIATION, SHOTER::PLAYER);
+		}
+		if (p.IsPressing(PAD_INPUT_10))
+		{
+			setBullet(pos, 0, 5, 0, 100, SHOT_PTN::RANDOM, SHOTER::PLAYER);
+		}
+	}
+	interval++;
 }
 
 void Shot::Draw(void)
 {
 	for (int j = 0; j < cShot.size(); j++)
 	{
-		/*if (cShot[j].flag == 1)
-		{*/
-			if (cShot[j].shotPtn == SHOT_PTN::NORMAL)
-			{
-				DxLib::DrawExtendGraph(cShot[j].pos.x, cShot[j].pos.y, cShot[j].pos.x + 20, cShot[j].pos.y + 20, img[2], true);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::SHOTGUN)
-			{
-				DxLib::DrawExtendGraph(cShot[j].pos.x, cShot[j].pos.y, cShot[j].pos.x + 20, cShot[j].pos.y + 20, img[4], true);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::TRACKING)
-			{
-				DxLib::DrawExtendGraph(cShot[j].pos.x, cShot[j].pos.y, cShot[j].pos.x + 20, cShot[j].pos.y + 20, img[5], true);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::RADIATION)
-			{
-				DxLib::DrawExtendGraph(cShot[j].pos.x, cShot[j].pos.y, cShot[j].pos.x + 20, cShot[j].pos.y + 20, img[6], true);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::RANDOM)
-			{
-				DxLib::DrawExtendGraph(cShot[j].pos.x, cShot[j].pos.y, cShot[j].pos.x + 20, cShot[j].pos.y + 20, img[1], true);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::LASER)
-			{
+		pos = cShot[j].pos;
+		nowActionName = cShot[j].shotname;
 
-			}
-		}
-	//}
+		CharacterObject::Draw(img);
+	}
 }
 
 
@@ -143,9 +145,10 @@ void Shot::OutofScreen(void)
 {
 	for (int j = 0; j < cShot.size(); j++)
 	{
-		if (cShot[j].pos.x < left - 30 || cShot[j].pos.x > right + 30 || cShot[j].pos.y < up - 30 || cShot[j].pos.y > down + 30)
+		if (cShot[j].pos.x < left - rect.Width()/2 || cShot[j].pos.x > right + rect.Width()/2 || cShot[j].pos.y < up - rect.Height()/2 || cShot[j].pos.y > down + rect.Height()/2)
 		{
 			cShot.erase(cShot.begin() + j);
+			j--;
 		}
 	}
 }
@@ -177,15 +180,22 @@ void Shot::TrackingUpdate(int n)
 
 void Shot::RadiationUpdate(int n)
 {
-	cShot[n].Speed -= 1.2;
+	// Ç´ÇÍÇ¢Ç»Ç‚Å[Ç¬Åi30î≠Åj
+	/*cShot[n].angle += (M_PI / 10) / 120;
 	cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
 	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
-	rotation2D(&cShot[n].pos.x, &cShot[n].pos.y, cShot[n].pos.x, cShot[n].pos.y, 300, 300, (5.0f / 180.0f) * M_PI);
+	rotation2D(&cShot[n].pos.x, &cShot[n].pos.y, cShot[n].pos.x, cShot[n].pos.y, cShot[n].cneterPos.x, cShot[n].cneterPos.y, (5.0f / 180.0f));*/
+
+	cShot[n].angle += (M_PI / 10) / 120;
+	cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
+	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
+	rotation2D(&cShot[n].pos.x, &cShot[n].pos.y, cShot[n].pos.x, cShot[n].pos.y, cShot[n].cneterPos.x, cShot[n].cneterPos.y, (5.0f / 180.0f));
 
 }
 
 void Shot::RandomUpdate(int n)
 {
+
 	cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
 	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
 }
@@ -201,4 +211,5 @@ void Shot::rotation2D(float * xp, float * yp, float x, float y, float xc, float 
 	*xp = (x - xc) * cos(theta) - (y - yc) * sin(theta) + xc;
 	*yp = -1.0 * ((x - xc) * sin(theta) + (y - yc) * cos(theta) + yc);
 }
+
 
