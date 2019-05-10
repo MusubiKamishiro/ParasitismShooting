@@ -30,6 +30,8 @@ Shot * ShotNormal::Clone()
 
 void ShotNormal::Move()
 {
+	pos.x += cos(angle) * Speed;
+	pos.y += sin(angle) * Speed;
 }
 
 ShotNormal::~ShotNormal()

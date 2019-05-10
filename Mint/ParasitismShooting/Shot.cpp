@@ -80,7 +80,8 @@ void Shot::setBullet(Vector2f pos, float angle, int Speed, int movePtn, int leve
 		}
 		else if (shotPtn == SHOT_PTN::TRACKING)
 		{
-			cShot.push_back({ { pos.x + 20 * j,pos.y },pos,ShotAngle(pos), Speed, movePtn, level, shotPtn, shoter, "Shot3" });
+			//cShot.push_back({ { pos.x + 20 * j,pos.y },pos,ShotAngle(pos), Speed, movePtn, level, shotPtn, shoter, "Shot3" });
+			cShot.push_back( { pos,pos, -(angle + M_PI_2 / (level / 4)  * j), Speed, movePtn, level, shotPtn, shoter,"Shot3" });
 		}
 		else if (shotPtn == SHOT_PTN::RADIATION)
 		{
@@ -115,11 +116,12 @@ void Shot::ShotBullet(const Peripheral & p, const Vector2f& pos)
 		}
 		if (p.IsPressing(PAD_INPUT_5))
 		{
-			setBullet(pos, 0, 5, 0, 1, SHOT_PTN::TRACKING, SHOTER::PLAYER);
+			setBullet(pos, 0, 5, 0, 30, SHOT_PTN::TRACKING, SHOTER::PLAYER);
 		}
 		if (p.IsPressing(PAD_INPUT_6))
 		{
-			setBullet(pos, 0, 5, 0, 50, SHOT_PTN::RADIATION, SHOTER::PLAYER);
+			setBullet(pos, 0, 5, 0, 30, SHOT_PTN::RADIATION, SHOTER::PLAYER);
+			//setBullet(pos, 0, 5, 0, 50, SHOT_PTN::RADIATION, SHOTER::PLAYER);
 		}
 		if (p.IsPressing(PAD_INPUT_10))
 		{
@@ -174,22 +176,28 @@ void Shot::ShotgunUpdate(int n)
 
 void Shot::TrackingUpdate(int n)
 {
-	cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
-	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
+	/*cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
+	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;*/
+
+
+	cShot[n].angle += (M_PI / 10) / 120;
+	cShot[n].pos.x += sin(cShot[n].angle) * cShot[n].Speed;
+	cShot[n].pos.y += cos(cShot[n].angle) * cShot[n].Speed;
+	rotation2D(&cShot[n].pos.x, &cShot[n].pos.y, cShot[n].pos.x, cShot[n].pos.y, cShot[n].cneterPos.x, cShot[n].cneterPos.y, (5.0f / 180.0f));
 }
 
 void Shot::RadiationUpdate(int n)
 {
 	// Ç´ÇÍÇ¢Ç»Ç‚Å[Ç¬Åi30î≠Åj
-	/*cShot[n].angle += (M_PI / 10) / 120;
-	cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
-	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
-	rotation2D(&cShot[n].pos.x, &cShot[n].pos.y, cShot[n].pos.x, cShot[n].pos.y, cShot[n].cneterPos.x, cShot[n].cneterPos.y, (5.0f / 180.0f));*/
-
 	cShot[n].angle += (M_PI / 10) / 120;
 	cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
 	cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
 	rotation2D(&cShot[n].pos.x, &cShot[n].pos.y, cShot[n].pos.x, cShot[n].pos.y, cShot[n].cneterPos.x, cShot[n].cneterPos.y, (5.0f / 180.0f));
+
+	//cShot[n].angle += (M_PI / 10) / 120;
+	//cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
+	//cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
+	//rotation2D(&cShot[n].pos.x, &cShot[n].pos.y, cShot[n].pos.x, cShot[n].pos.y, cShot[n].cneterPos.x, cShot[n].cneterPos.y, (5.0f / 180.0f));
 
 }
 

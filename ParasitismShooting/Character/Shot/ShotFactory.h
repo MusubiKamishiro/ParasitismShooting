@@ -23,7 +23,7 @@ public:
 
 	// ’e‚ğì‚é
 	// enemyname...’e‚Ì–¼‘O
-	Shot* Create(const char* enemyname, Vector2f pos, int movePtn, int cnt, int wait, int hp, int sp, float speed);
+	Shot* Create(const char * shotname,Vector2f pos, float angle, int Speed, int movePtn, int level, int shotPtn, int shooter);
 	
 	// ’e‚ÌW‡‘Ì‚ğ•Ô‚·
 	SLegion& GetLegion();
