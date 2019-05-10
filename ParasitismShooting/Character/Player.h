@@ -26,7 +26,8 @@ private:
 	void Move(const Peripheral &p);
 	void Damage(const Peripheral &p);		// ダメージくらった
 	void Invincible(const Peripheral &p);	// 無敵時間
-	void Die(const Peripheral &p);			// 敵機に当たって死んだ
+	void Die(const Peripheral &p);			// 敵機又は弾に当たって死んだ
+	void Reborn(const Peripheral &p);		// 復活
 
 	void NotOutOfRange();		// 範囲外に行かせない
 
@@ -48,7 +49,5 @@ public:
 
 	void Update(const Peripheral &p);
 	void Draw(const int& time);
-
-	int& GetHP();
 };
 

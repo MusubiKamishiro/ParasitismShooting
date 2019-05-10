@@ -24,19 +24,14 @@
 
 void GamePlayingScene::FadeinUpdate(const Peripheral & p)
 {
-	if ((player->HP == 0) && (!pauseFlag))
+	if (pal > 255)
 	{
 		pal = 255;
-		updater = &GamePlayingScene::FadeoutUpdate;
-	}
-
-	if (pal == 255)
-	{
-		;
+		updater = &GamePlayingScene::GameUpdate;
 	}
 	else
 	{
-		pal++;
+		pal += 20;
 	}
 }
 
@@ -49,6 +44,32 @@ void GamePlayingScene::FadeoutUpdate(const Peripheral & p)
 	else
 	{
 		pal -= 20;
+	}
+}
+
+void GamePlayingScene::GameUpdate(const Peripheral & p)
+{
+	pal = 255;
+	if ((player->updater == &Player::Die))
+	{
+		updater = &GamePlayingScene::ContinueUpdate;
+	}
+}
+
+void GamePlayingScene::ContinueUpdate(const Peripheral & p)
+{
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+	pal = 128;
+	DxLib::DrawString(0, 0, "コンティニューする？", 0xffffff);
+
+	if (p.IsTrigger(PAD_INPUT_8))
+	{
+		player->Reborn(p);
+		updater = &GamePlayingScene::GameUpdate;
+	}
+	else if(p.IsTrigger(PAD_INPUT_1))
+	{
+		updater = &GamePlayingScene::FadeoutUpdate;
 	}
 }
 
@@ -109,89 +130,80 @@ GamePlayingScene::~GamePlayingScene()
 
 void GamePlayingScene::Update(const Peripheral& p)
 {
-	if (p.IsTrigger(PAD_INPUT_8))
+	if (updater != &GamePlayingScene::ContinueUpdate)
 	{
-		pauseFlag = !pauseFlag;
-	}
-
-	// ポーズしてたら通らないよ
-	// アップデート関連
-	if (!pauseFlag)
-	{
-		if (cBank[bankCnt].time == time)
+		if (p.IsTrigger(PAD_INPUT_8))
 		{
-			ef->Create(cBank[bankCnt].enemyname.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y), 
-				cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed);
-			if (cBank.size() > bankCnt)
+			pauseFlag = !pauseFlag;
+		}
+
+		// ポーズしてたら通らないよ
+		// アップデート関連
+		if (!pauseFlag)
+		{
+			if (cBank[bankCnt].time == time)
 			{
-				bankCnt++;
-				if (bankCnt == cBank.size())
+				ef->Create(cBank[bankCnt].enemyname.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y),
+					cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed);
+				if (cBank.size() > bankCnt)
 				{
-					bankCnt--;
-				}
-			}
-		}
-
-		for (auto& shot : sf->GetLegion())
-		{
-			shot->Update();
-		}
-		//shot->Update();
-		player->Update(p);
-		//shot->ShotBullet(p, player->pos);
-		for (auto& enemy : ef->GetLegion())
-		{
-			enemy->Update();
-		}
-
-		// 当たり判定
-		for (auto& enemy : ef->GetLegion())
-		{
-			// 当たり判定ﾙｰﾌﾟ
-			for (auto& eRect : enemy->GetActRect())
-			{
-				// 敵とプレイヤー
-				for (auto& pRect : player->GetActRect())
-				{
-					if (cd->IsCollision(player->GetRects(pRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(pRect.rt, eRect.rt)))
+					bankCnt++;
+					if (bankCnt == cBank.size())
 					{
-						if (player->updater != &Player::Invincible)
-						{
-							player->Damage(p);
-						}
+						bankCnt--;
 					}
 				}
+			}
 
-				// 敵と弾
-				for (auto& shot : sf->GetLegion())
+			for (auto& shot : sf->GetLegion())
+			{
+				shot->Update();
+			}
+
+			player->Update(p);
+			if (p.IsPressing(PAD_INPUT_2))
+			{
+				sf->Create("ShotNormal", player->GetPos(), 1, 1, 1, 1, 1, 1);
+			}
+
+			for (auto& enemy : ef->GetLegion())
+			{
+				enemy->Update();
+			}
+
+			// 当たり判定
+			for (auto& enemy : ef->GetLegion())
+			{
+				// 当たり判定ﾙｰﾌﾟ
+				for (auto& eRect : enemy->GetActRect())
 				{
-					for (auto& sRect : shot->GetActRect())
+					// 敵とプレイヤー
+					for (auto& pRect : player->GetActRect())
 					{
-						if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
+						if (cd->IsCollision(player->GetRects(pRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(pRect.rt, eRect.rt)))
 						{
-							//if (player->updater != &Player::Invincible)
+							if (player->updater != &Player::Invincible)
+							{
+								player->Damage(p);
+							}
+						}
+					}
+
+					// 敵と弾
+					for (auto& shot : sf->GetLegion())
+					{
+						for (auto& sRect : shot->GetActRect())
+						{
+							if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
 							{
 								enemy->Damage();
 							}
 						}
 					}
-
-				}
-
-//				for (int s = 0; s < shot->cShot.size(); ++s)
-				{
-					/*for (auto& sRect : shot->GetActRect())
-					{
-						if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
-						{
-							enemy->Damage();
-						}
-					}*/
 				}
 			}
+			time++;
 		}
-		
-		time++;
 	}
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
@@ -203,7 +215,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 	
 	bg->Draw((int)time);
 	player->Draw((int)time);
-	//shot->Draw();
+	
 	for(auto& shot : sf->GetLegion())
 	{
 		shot->Draw();
@@ -215,7 +227,6 @@ void GamePlayingScene::Update(const Peripheral& p)
 		{
 			enemy->Draw();
 		}
-		
 	}
 
 	// ゲーム画面の描画

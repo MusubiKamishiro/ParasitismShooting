@@ -85,6 +85,7 @@ void Player::Damage(const Peripheral & p)
 	if (HP <= 0)
 	{
 		updater = &Player::Die;
+		Die(p);
 	}
 	else
 	{
@@ -104,12 +105,17 @@ void Player::Invincible(const Peripheral & p)
 		count++;
 	}
 	Move(p);
-	
 }
 
 void Player::Die(const Peripheral &p)
 {
-	
+	vel = Vector2f(0, 0);
+}
+
+void Player::Reborn(const Peripheral & p)
+{
+	HP = 1;
+	updater = &Player::Invincible;
 }
 
 
@@ -126,11 +132,6 @@ void Player::Draw(const int& time)
 			CharacterObject::Draw(img);
 		}
 	}
-}
-
-int& Player::GetHP()
-{
-	return HP;
 }
 
 

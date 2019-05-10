@@ -34,6 +34,8 @@ private:
 
 	void FadeinUpdate(const Peripheral& p);
 	void FadeoutUpdate(const Peripheral& p);
+	void GameUpdate(const Peripheral& p);
+	void ContinueUpdate(const Peripheral& p);
 
 	float time;
 	Vector2 ssize;
