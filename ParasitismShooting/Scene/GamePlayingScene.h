@@ -6,7 +6,7 @@
 
 class GameScreen;
 class Player;
-class Shot;
+//class Shot;
 class HUD;
 class BackGround;
 class PauseMenu;
@@ -45,7 +45,7 @@ private:
 
 	std::shared_ptr<GameScreen> gs;
 	std::shared_ptr<Player> player;
-	std::shared_ptr<Shot> shot;
+	//std::shared_ptr<Shot> shot;
 	std::shared_ptr<HUD> hud;
 	std::shared_ptr<BackGround> bg;
 	std::shared_ptr<PauseMenu> pmenu;

@@ -3,7 +3,6 @@
 #include <algorithm>
 #include "../Peripheral.h"
 #include "../GameScreen.h"
-#include "../Shot.h"
 
 
 Player::Player()
@@ -28,7 +27,6 @@ Player::Player()
 	HP = 1;
 	count = 0;
 	
-	shot.reset(new Shot());
 	updater = &Player::Move;
 }
 
@@ -41,10 +39,8 @@ void Player::Update(const Peripheral &p)
 	// ˆÚ“®•ûŒü‚ªŒˆ‚Ü‚é
 	(this->*updater)(p);
 
-	//shot->Update();
 	pos += vel;
 	NotOutOfRange();
-	//ShotBullet(p);
 }
 
 
@@ -130,8 +126,6 @@ void Player::Draw(const int& time)
 			CharacterObject::Draw(img);
 		}
 	}
-		
-	//shot->Draw();
 }
 
 int& Player::GetHP()

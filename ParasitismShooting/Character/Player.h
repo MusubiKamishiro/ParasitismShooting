@@ -14,7 +14,6 @@ enum Dir
 
 class Peripheral;
 class GamePlayingScene;
-class Shot;
 class GameScreen;
 
 
@@ -41,8 +40,6 @@ private:
 	int left;
 	int down;
 
-
-	std::shared_ptr<Shot> shot;
 	std::shared_ptr<GameScreen> gs;
 	
 public:
