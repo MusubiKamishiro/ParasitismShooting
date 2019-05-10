@@ -89,8 +89,7 @@ GamePlayingScene::GamePlayingScene()
 	{
 		std::string tmp = "";
 		std::istringstream stream(str);
-
-
+		
 		while (std::getline(stream, tmp, ','))
 		{
 			Bank[i][j] = tmp;
@@ -163,7 +162,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 			player->Update(p);
 			if (p.IsPressing(PAD_INPUT_2) && ((int)time %3 ==0))
 			{
-				sf->Create("ShotNormal", player->GetPos(), 0, 5, 1, 1, 1, 1);
+				sf->Create("ShotNormal", player->GetPos(), 180, 5, 1, 100, 1, 1);
 			}
 
 			for (auto& enemy : ef->GetLegion())

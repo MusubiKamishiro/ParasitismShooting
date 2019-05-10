@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <DxLib.h>
+#include <string>
 #include "Peripheral.h"
 
 #include "Scene/TitleScene.h"
@@ -8,7 +9,7 @@
 
 Game::Game() : ScreenSize(800, 500)
 {
-
+	time = fps = count = oldcount = 0.0;
 }
 
 void Game::operator=(const Game &)
@@ -57,6 +58,7 @@ void Game::Run()
 
 	while (DxLib::ProcessMessage() == 0)
 	{
+		++time;
 		DxLib::ClearDrawScreen();
 
 		if (DxLib::CheckHitKey(KEY_INPUT_ESCAPE))
@@ -67,6 +69,19 @@ void Game::Run()
 
 		scene->Update(peripheral);
 
+		count = DxLib::GetNowCount();
+
+		if ((count - oldcount) > 1000)
+		{
+			fps = ((time * 1000) / (count - oldcount));
+			oldcount = count;
+			time = 0;
+		}
+
+		std::string s = "fpsÅF" + std::to_string(fps);
+		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+		DxLib::DrawString(0, 0, s.c_str(), 0xff00ff);
+		
 		DxLib::ScreenFlip();
 	}
 }
