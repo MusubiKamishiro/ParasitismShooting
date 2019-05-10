@@ -161,9 +161,9 @@ void GamePlayingScene::Update(const Peripheral& p)
 			}
 
 			player->Update(p);
-			if (p.IsPressing(PAD_INPUT_2))
+			if (p.IsPressing(PAD_INPUT_2) && ((int)time %3 ==0))
 			{
-				sf->Create("ShotNormal", player->GetPos(), 1, 1, 1, 1, 1, 1);
+				sf->Create("ShotNormal", player->GetPos(), 0, 5, 1, 1, 1, 1);
 			}
 
 			for (auto& enemy : ef->GetLegion())

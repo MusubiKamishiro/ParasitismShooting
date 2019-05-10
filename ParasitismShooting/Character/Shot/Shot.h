@@ -47,7 +47,6 @@ protected:
 
 	Shot(const Player& player/*, const Enemy& enemy*/);
 
-	Vector2f pos;
 	Vector2f cneterPos;
 	double angle;
 	int Speed;
