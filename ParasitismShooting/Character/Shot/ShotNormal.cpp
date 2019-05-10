@@ -5,6 +5,11 @@
 
 ShotNormal::ShotNormal(const Player& player/*, const Enemy& enemy*/) : Shot(player/*, enemy*/),player(player), enemy(enemy)
 {
+	ReadActionFile("action/shot.act");
+	ChangeAction("Shot1");
+	SetCharaSize(0.5f);
+	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
+
 	updater = &ShotNormal::Move;
 }
 
@@ -38,4 +43,5 @@ void ShotNormal::Update()
 
 void ShotNormal::Draw()
 {
+	CharacterObject::Draw(img);
 }

@@ -132,6 +132,10 @@ void GamePlayingScene::Update(const Peripheral& p)
 			}
 		}
 
+		for (auto& shot : sf->GetLegion())
+		{
+			shot->Update();
+		}
 		//shot->Update();
 		player->Update(p);
 		//shot->ShotBullet(p, player->pos);
@@ -159,6 +163,21 @@ void GamePlayingScene::Update(const Peripheral& p)
 				}
 
 				// “G‚Æ’e
+				for (auto& shot : sf->GetLegion())
+				{
+					for (auto& sRect : shot->GetActRect())
+					{
+						if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
+						{
+							//if (player->updater != &Player::Invincible)
+							{
+								enemy->Damage();
+							}
+						}
+					}
+
+				}
+
 //				for (int s = 0; s < shot->cShot.size(); ++s)
 				{
 					/*for (auto& sRect : shot->GetActRect())
@@ -185,6 +204,10 @@ void GamePlayingScene::Update(const Peripheral& p)
 	bg->Draw((int)time);
 	player->Draw((int)time);
 	//shot->Draw();
+	for(auto& shot : sf->GetLegion())
+	{
+		shot->Draw();
+	}
 	for (auto& enemy : ef->GetLegion())
 	{
 		auto h = enemy->GetHP();
