@@ -1,6 +1,5 @@
 #include "Shot.h"
 #include <DxLib.h>
-#include <iostream>
 #include <random>
 #include "Character/Player.h"
 #include "Peripheral.h"
@@ -8,16 +7,18 @@
 
 Shot::Shot()
 {
-	DxLib::LoadDivGraph("img/lightbullet.png", 8, 8, 1, 60, 60, img, true);
+	ReadActionFile("action/shot.act");
+	ChangeAction("Shot1");
+
+	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
 	
-	cnt = 0;
 	GameScreen gscreen;
 	Vector2 screenSize = gscreen.GetGSSize();
 
 	up = 0;
-	right = screenSize.x;
+	right = screenSize.x + gscreen.outscreen;
 	left = 0;
-	down = screenSize.y;
+	down = screenSize.y + gscreen.outscreen;
 }
 
 
@@ -29,32 +30,29 @@ void Shot::Update()
 {
 	for (int j = 0; j < cShot.size(); j++)
 	{
-		if (cShot[j].flag == 1)
+		if (cShot[j].shotPtn == SHOT_PTN::NORMAL)
 		{
-			if (cShot[j].shotPtn == SHOT_PTN::NORMAL)
-			{
-				NormalUpdate(j);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::SHOTGUN)
-			{
-				ShotgunUpdate(j);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::TRACKING)
-			{
-				TrackingUpdate(j);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::RADIATION)
-			{
-				RadiationUpdate(j);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::RANDOM)
-			{
-				RandomUpdate(j);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::LASER)
-			{
-				LaserUpdate(j);
-			}
+			NormalUpdate(j);
+		}
+		if (cShot[j].shotPtn == SHOT_PTN::SHOTGUN)
+		{
+			ShotgunUpdate(j);
+		}
+		if (cShot[j].shotPtn == SHOT_PTN::TRACKING)
+		{
+			TrackingUpdate(j);
+		}
+		if (cShot[j].shotPtn == SHOT_PTN::RADIATION)
+		{
+			RadiationUpdate(j);
+		}
+		if (cShot[j].shotPtn == SHOT_PTN::RANDOM)
+		{
+			RandomUpdate(j);
+		}
+		if (cShot[j].shotPtn == SHOT_PTN::LASER)
+		{
+			LaserUpdate(j);
 		}
 	}
 	OutofScreen();
@@ -68,79 +66,35 @@ void Shot::setBullet(Vector2f pos, float angle, int Speed, int movePtn, int leve
 	{
 		if (shotPtn == SHOT_PTN::WEAK)
 		{
-			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn });
-			cnt++;
+			cShot.push_back({ pos, angle, Speed, movePtn, level, shotPtn , "Shot1"});
 		}
 		else if (shotPtn == SHOT_PTN::NORMAL)
 		{
-			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn });
-			cShot[cnt].flag = 1;
-			cShot[cnt].pos = { pos.x - 10 + NormalPosPtnX[j],pos.y + NormalPosPtnY[j] };
-			cShot[cnt].angle = -M_PI_2;
-			cShot[cnt].Speed = Speed;
-			cShot[cnt].movePtn = movePtn;
-			cShot[cnt].level = level;
-			cShot[cnt].shotPtn = shotPtn;
-			cnt++;
+			cShot.push_back({ { pos.x - 10 + NormalPosPtnX[j],pos.y + NormalPosPtnY[j] }, -M_PI_2, Speed, movePtn, level, shotPtn , "Shot1" });
 		}
 		else if (shotPtn == SHOT_PTN::SHOTGUN)
 		{
-			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn });
-			cShot[cnt].flag = 1;
-			cShot[cnt].pos = pos;
-			cShot[cnt].angle = -(((angle + (M_PI / level))  * j) + M_PI / 6);
-			cShot[cnt].Speed = Speed;
-			cShot[cnt].movePtn = movePtn;
-			cShot[cnt].level = level;
-			cShot[cnt].shotPtn = shotPtn;
-			cnt++;
+			cShot.push_back({ pos, -(((angle + (M_PI / level))  * j) + M_PI / 6), Speed, movePtn, level, shotPtn , "Shot2" });
 		}
 		else if (shotPtn == SHOT_PTN::TRACKING)
 		{
-			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn });
-			cShot[cnt].flag = 1;
-			cShot[cnt].pos = { pos.x + 20 * j,pos.y };
-			cShot[cnt].angle = ShotAngle(pos);
-			cShot[cnt].Speed = Speed;
-			cShot[cnt].movePtn = movePtn;
-			cShot[cnt].level = level;
-			cShot[cnt].shotPtn = shotPtn;
-			cnt++;
+			cShot.push_back({ { pos.x + 20 * j,pos.y },ShotAngle(pos), Speed, movePtn, level, shotPtn , "Shot3" });
 		}
 		else if (shotPtn == SHOT_PTN::RADIATION)
 		{
-			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn });
-			cShot[cnt].flag = 1;
-			cShot[cnt].pos = pos;
-			cShot[cnt].angle = -(angle + M_PI_2 / (level / 4)  * j);
-			cShot[cnt].Speed = Speed;
-			cShot[cnt].movePtn = movePtn;
-			cShot[cnt].level = level;
-			cShot[cnt].shotPtn = shotPtn;
-			cnt++;
+			cShot.push_back({ pos, -(angle + M_PI_2 / (level / 4)  * j), Speed, movePtn, level, shotPtn , "Shot4" });
 		}
 		else if (shotPtn == SHOT_PTN::RANDOM)
 		{
 			std::random_device rd;
-
 			std::mt19937 mt(rd());
 
 			std::uniform_int_distribution<int> rand(1, 10);
-			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn });
-			cShot[cnt].flag = 1;
-			cShot[cnt].pos = { pos.x - (float)(rand(mt) * M_PI * 2) + 10,pos.y - 30 };
-			cShot[cnt].angle = ShotAngle(pos);
-			cShot[cnt].Speed = Speed;
-			cShot[cnt].movePtn = movePtn;
-			cShot[cnt].level = level;
-			cShot[cnt].shotPtn = shotPtn;
-			cnt++;
+			cShot.push_back({ { pos.x - (float)(rand(mt) * M_PI * 2) + 10,pos.y - 30 }, ShotAngle(pos), Speed, movePtn, level, shotPtn , "Shot5" });
 		}
 		else if (shotPtn == SHOT_PTN::LASER)
 		{
-			cShot.push_back({ 1, pos,angle,Speed,movePtn,level,shotPtn });
-
-			cnt++;
+			cShot.push_back({ pos, angle, Speed, movePtn, level, shotPtn , "Shot1" });
 		}
 	}
 }
@@ -149,33 +103,10 @@ void Shot::Draw(void)
 {
 	for (int j = 0; j < cShot.size(); j++)
 	{
-		if (cShot[j].flag == 1)
-		{
-			if (cShot[j].shotPtn == SHOT_PTN::NORMAL)
-			{
-				DxLib::DrawExtendGraph(cShot[j].pos.x, cShot[j].pos.y, cShot[j].pos.x + 20, cShot[j].pos.y + 20, img[2], true);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::SHOTGUN)
-			{
-				DxLib::DrawExtendGraph(cShot[j].pos.x, cShot[j].pos.y, cShot[j].pos.x + 20, cShot[j].pos.y + 20, img[4], true);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::TRACKING)
-			{
-				DxLib::DrawExtendGraph(cShot[j].pos.x, cShot[j].pos.y, cShot[j].pos.x + 20, cShot[j].pos.y + 20, img[5], true);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::RADIATION)
-			{
-				DxLib::DrawExtendGraph(cShot[j].pos.x, cShot[j].pos.y, cShot[j].pos.x + 20, cShot[j].pos.y + 20, img[6], true);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::RANDOM)
-			{
-				DxLib::DrawExtendGraph(cShot[j].pos.x, cShot[j].pos.y, cShot[j].pos.x + 20, cShot[j].pos.y + 20, img[1], true);
-			}
-			if (cShot[j].shotPtn == SHOT_PTN::LASER)
-			{
+		pos = cShot[j].pos;
+		nowActionName = cShot[j].shotname;
 
-			}
-		}
+		CharacterObject::Draw(img);
 	}
 }
 
@@ -184,13 +115,10 @@ void Shot::OutofScreen(void)
 {
 	for (int j = 0; j < cShot.size(); j++)
 	{
-		if (cShot[j].flag == 1)
+		if (cShot[j].pos.x < left - rect.Width()/2 || cShot[j].pos.x > right + rect.Width()/2 || cShot[j].pos.y < up - rect.Height()/2 || cShot[j].pos.y > down + rect.Height()/2)
 		{
-			if (cShot[j].pos.x < left - 30 || cShot[j].pos.x > right + 30 || cShot[j].pos.y < up - 30 || cShot[j].pos.y > down + 30)
-			{
-				cShot.erase(cShot.begin() + j);
-				cnt--;
-			}
+			cShot.erase(cShot.begin() + j);
+			j--;
 		}
 	}
 }
