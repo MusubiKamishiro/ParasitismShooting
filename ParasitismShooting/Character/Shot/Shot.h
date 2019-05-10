@@ -34,6 +34,7 @@ enum SHOTER
 typedef struct ShotST
 {
 	Vector2f pos;
+	Vector2f cneterPos;
 	double angle;
 	int Speed;
 	int movePtn;
@@ -75,11 +76,11 @@ private:
 	
 public:
 	Shot();
-	~Shot();
+//	~Shot();
 
-	void Update();
-	void Draw(void);
-	void setBullet(Vector2f pos, float angle, int Speed, int movePtn, int level, int shotPtn,int shoter);
+	//void Update();
+	//void Draw(void);
+	void setBullet(Vector2f pos, Vector2f cenerPos,float angle, int Speed, int movePtn, int level, int shotPtn,int shoter);
 
 	void ShotBullet(const Peripheral& p, const Vector2f& pos);
 private:

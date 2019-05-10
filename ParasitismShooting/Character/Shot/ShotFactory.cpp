@@ -1,4 +1,6 @@
 #include "ShotFactory.h"
+#include "Shot.h"
+#include "ShotNormal.h"
 //#include "Class"
 
 
@@ -7,9 +9,10 @@ Legion& ShotFactory::GetLegion()
 	return legion;		// èWçáëÃÇï‘Ç∑
 }
 
-ShotFactory::ShotFactory(const Player& player) : player(player)
+ShotFactory::ShotFactory(const Shot& shot) : shot(shot)
 {
 	//originalShot["name"] = new Class(player);
+	originalShot["ShotNormal"] = new ShotNormal(shot);
 }
 
 

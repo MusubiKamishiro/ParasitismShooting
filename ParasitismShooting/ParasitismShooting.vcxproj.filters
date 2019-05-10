@@ -111,6 +111,9 @@
     <ClCompile Include="Character\Shot\ShotFactory.cpp">
       <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Character\Shot\ShotNormal.cpp">
+      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -180,6 +183,9 @@
       <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\Shot\ShotFactory.h">
+      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Shot\ShotNormal.h">
       <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>

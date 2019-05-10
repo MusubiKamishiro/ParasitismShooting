@@ -4,20 +4,19 @@
 #include <map>
 
 class Shot;
-class Player;
 
 typedef std::list<Shot*> Legion;	// ’e‚ÌW‡‘Ì‚ÌŒ^
 
 class ShotFactory
 {
 private:
-	const Player& player;
+	const Shot& shot;
 	
 	std::map<std::string, Shot*> originalShot;	// ’e‚ÌŒ³‚Æ‚È‚émap‚Ìì¬
 	Legion legion;
 
 public:
-	ShotFactory(const Player& player);
+	ShotFactory(const Shot& shot);
 	~ShotFactory();
 
 	// ’e‚ğì‚é

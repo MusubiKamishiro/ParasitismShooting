@@ -132,6 +132,7 @@
     <ClCompile Include="Character\Player.cpp" />
     <ClCompile Include="Character\Shot\Shot.cpp" />
     <ClCompile Include="Character\Shot\ShotFactory.cpp" />
+    <ClCompile Include="Character\Shot\ShotNormal.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScreen.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Character\Player.h" />
     <ClInclude Include="Character\Shot\Shot.h" />
     <ClInclude Include="Character\Shot\ShotFactory.h" />
+    <ClInclude Include="Character\Shot\ShotNormal.h" />
     <ClInclude Include="CollisionDetector.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameScreen.h" />
