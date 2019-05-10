@@ -80,5 +80,6 @@ public:
 	std::vector<ActRect> GetActRect()const;
 
 	Vector2f GetPos()const;
+	int GetHP()const;
 };
 

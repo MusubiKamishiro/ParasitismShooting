@@ -1,12 +1,13 @@
 #pragma once
-#include "Character/CharacterObject.h"
-#include "Geometry.h"
+#include "../CharacterObject.h"
+#include "../../Geometry.h"
 #include <memory>
 #include <vector>
 #define _USE_MATH_DEFINES
 #include <math.h>
 
 class Player;
+class ShotFactory;
 class Peripheral;
 
 enum SHOT_PTN
@@ -44,6 +45,19 @@ typedef struct ShotST
 
 class Shot : public CharacterObject
 {
+	friend ShotFactory;
+protected:
+	virtual Shot* Clone() = 0;
+
+	Shot(const Player& player);
+
+public:
+	virtual ~Shot();
+
+	virtual void Update() = 0;
+	virtual void Draw() = 0;
+
+
 private:
 	int up;
 	int right;

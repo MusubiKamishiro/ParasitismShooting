@@ -1,9 +1,18 @@
 #include "Shot.h"
 #include <DxLib.h>
 #include <random>
-#include "Character/Player.h"
-#include "Peripheral.h"
-#include "GameScreen.h"
+#include "../Player.h"
+#include "../../Peripheral.h"
+#include "../../GameScreen.h"
+
+Shot::Shot(const Player & player)
+{
+}
+
+Shot::~Shot()
+{
+}
+
 
 Shot::Shot()
 {
@@ -11,7 +20,7 @@ Shot::Shot()
 	ChangeAction("Shot1");
 	SetCharaSize(0.5f);
 	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
-	
+
 	GameScreen gscreen;
 	Vector2 screenSize = gscreen.GetGSSize();
 
@@ -23,10 +32,6 @@ Shot::Shot()
 	interval = 0;
 }
 
-
-Shot::~Shot()
-{
-}
 
 void Shot::Update()
 {

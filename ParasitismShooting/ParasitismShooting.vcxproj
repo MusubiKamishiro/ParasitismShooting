@@ -130,6 +130,8 @@
     <ClCompile Include="Character\EnemyFactory.cpp" />
     <ClCompile Include="Character\Fish.cpp" />
     <ClCompile Include="Character\Player.cpp" />
+    <ClCompile Include="Character\Shot\Shot.cpp" />
+    <ClCompile Include="Character\Shot\ShotFactory.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScreen.cpp" />
@@ -144,7 +146,6 @@
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SelectScene.cpp" />
     <ClCompile Include="Scene\TitleScene.cpp" />
-    <ClCompile Include="Shot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
@@ -154,6 +155,8 @@
     <ClInclude Include="Character\EnemyFactory.h" />
     <ClInclude Include="Character\Fish.h" />
     <ClInclude Include="Character\Player.h" />
+    <ClInclude Include="Character\Shot\Shot.h" />
+    <ClInclude Include="Character\Shot\ShotFactory.h" />
     <ClInclude Include="CollisionDetector.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameScreen.h" />
@@ -168,7 +171,6 @@
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SelectScene.h" />
     <ClInclude Include="Scene\TitleScene.h" />
-    <ClInclude Include="Shot.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ParasitismShooting.rc" />

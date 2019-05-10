@@ -13,7 +13,6 @@ protected:
 	Enemy(const Player& player);
 
 public:
-	
 	virtual ~Enemy();
 
 	virtual void Update() = 0;
