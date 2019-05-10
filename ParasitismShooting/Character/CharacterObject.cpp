@@ -149,3 +149,8 @@ Vector2f CharacterObject::GetPos() const
 {
 	return pos;
 }
+
+int CharacterObject::GetHP() const
+{
+	return HP;
+}

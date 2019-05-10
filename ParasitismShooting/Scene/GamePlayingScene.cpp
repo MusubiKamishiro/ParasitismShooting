@@ -119,7 +119,8 @@ void GamePlayingScene::Update(const Peripheral& p)
 	{
 		if (cBank[bankCnt].time == time)
 		{
-			ef->Create(cBank[bankCnt].enemyname.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y), cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait);
+			ef->Create(cBank[bankCnt].enemyname.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y), 
+				cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed);
 			if (cBank.size() > bankCnt)
 			{
 				bankCnt++;
@@ -157,11 +158,14 @@ void GamePlayingScene::Update(const Peripheral& p)
 				}
 
 				// “G‚Æ’e
-				for (auto& sRect : shot->GetActRect())
+//				for (int s = 0; s < shot->cShot.size(); ++s)
 				{
-					if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
+					for (auto& sRect : shot->GetActRect())
 					{
-						enemy->Damage();
+						if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
+						{
+							enemy->Damage();
+						}
 					}
 				}
 			}
@@ -182,7 +186,12 @@ void GamePlayingScene::Update(const Peripheral& p)
 	shot->Draw();
 	for (auto& enemy : ef->GetLegion())
 	{
-		enemy->Draw();
+		auto h = enemy->GetHP();
+		if (h > 0)
+		{
+			enemy->Draw();
+		}
+		
 	}
 
 	// ƒQ[ƒ€‰æ–Ê‚Ì•`‰æ
