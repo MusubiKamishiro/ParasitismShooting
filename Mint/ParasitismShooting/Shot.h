@@ -21,6 +21,13 @@ enum SHOT_PTN
 
 };
 
+enum SHOTER
+{
+	PLAYER,
+	ENEMY,
+	MAX
+};
+
 typedef struct ShotST
 {
 	int flag;
@@ -30,6 +37,7 @@ typedef struct ShotST
 	int movePtn;
 	int level;
 	int shotPtn;
+	int shoter;
 }shot_st;
 
 class Shot
@@ -55,7 +63,6 @@ private:
 
 	int NormalPosPtnX[4] = { -10, 10,-30, 30 };
 	int NormalPosPtnY[4] = { -30,-30,-10,-10 };
-	double ShotGunAngle[3] = { M_PI / 1.5,M_PI / 2,M_PI / 3 };
 
 public:
 	Shot();
@@ -63,7 +70,7 @@ public:
 
 	void Update();
 	void Draw(void);
-	void setBullet(Vector2f pos, float angle, int Speed, int movePtn, int level, int shotPtn);
+	void setBullet(Vector2f pos, float angle, int Speed, int movePtn, int level, int shotPtn,int shoter);
 private:
 	void OutofScreen(void);
 	double ShotAngle(Vector2f pos);
@@ -73,5 +80,7 @@ private:
 	void RadiationUpdate(int n);
 	void RandomUpdate(int n);
 	void LaserUpdate(int n);
+
+	void rotation2D(float * xp, float * yp, float x, float y, float xc, float yc, float theta);
 };
 

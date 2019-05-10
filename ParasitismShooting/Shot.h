@@ -22,6 +22,14 @@ enum SHOT_PTN
 
 };
 
+enum SHOTER
+{
+	PLAYER,
+	ENEMY,
+	MAX
+};
+
+
 typedef struct ShotST
 {
 	Vector2f pos;
@@ -30,6 +38,7 @@ typedef struct ShotST
 	int movePtn;
 	int level;
 	int shotPtn;
+	int shoter;
 	std::string shotname;
 }shot_st;
 
@@ -56,7 +65,7 @@ public:
 
 	void Update();
 	void Draw(void);
-	void setBullet(Vector2f pos, float angle, int Speed, int movePtn, int level, int shotPtn);
+	void setBullet(Vector2f pos, float angle, int Speed, int movePtn, int level, int shotPtn,int shoter);
 
 	void ShotBullet(const Peripheral& p, const Vector2f& pos);
 private:

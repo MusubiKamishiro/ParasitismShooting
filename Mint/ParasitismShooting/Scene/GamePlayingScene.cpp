@@ -1,8 +1,7 @@
 #include "GamePlayingScene.h"
 #include <DxLib.h>
 #include <stdlib.h>
-
-#include <iostream>
+#include <cassert>
 #include <fstream>
 #include <string>
 #include <sstream>
@@ -55,10 +54,8 @@ GamePlayingScene::GamePlayingScene()
 {
 	std::ifstream ifs("stage/stage1.csv");
 
-	if (!ifs)
-	{
-		std::cout << "Error! File can not be opened" << std::endl;
-	}
+	assert(ifs);
+
 
 	std::string Bank[100][10];
 	std::string str = "";

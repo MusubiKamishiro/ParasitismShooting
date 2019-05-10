@@ -62,29 +62,29 @@ void Shot::Update()
 }
 
 
-void Shot::setBullet(Vector2f pos, float angle, int Speed, int movePtn, int level, int shotPtn)
+void Shot::setBullet(Vector2f pos, float angle, int Speed, int movePtn, int level, int shotPtn,int shoter)
 {
 	for (int j = 0; j < level; j++)
 	{
 		if (shotPtn == SHOT_PTN::WEAK)
 		{
-			cShot.push_back({ pos, angle, Speed, movePtn, level, shotPtn , "Shot1"});
+			cShot.push_back({ pos, angle, Speed, movePtn, level, shotPtn, shoter, "Shot1" });
 		}
 		else if (shotPtn == SHOT_PTN::NORMAL)
 		{
-			cShot.push_back({ { pos.x - 10 + NormalPosPtnX[j],pos.y + NormalPosPtnY[j] }, -M_PI_2, Speed, movePtn, level, shotPtn , "Shot1" });
+			cShot.push_back({ { pos.x - 10 + NormalPosPtnX[j],pos.y + NormalPosPtnY[j] }, -M_PI_2, Speed, movePtn, level, shotPtn, shoter, "Shot1" });
 		}
 		else if (shotPtn == SHOT_PTN::SHOTGUN)
 		{
-			cShot.push_back({ pos, -(((angle + (M_PI / level))  * j) + M_PI / 6), Speed, movePtn, level, shotPtn , "Shot2" });
+			cShot.push_back({ pos, -(((angle + (M_PI / level))  * j) + M_PI / 6), Speed, movePtn, level, shotPtn, shoter, "Shot2" });
 		}
 		else if (shotPtn == SHOT_PTN::TRACKING)
 		{
-			cShot.push_back({ { pos.x + 20 * j,pos.y },ShotAngle(pos), Speed, movePtn, level, shotPtn , "Shot3" });
+			cShot.push_back({ { pos.x + 20 * j,pos.y },ShotAngle(pos), Speed, movePtn, level, shotPtn, shoter, "Shot3" });
 		}
 		else if (shotPtn == SHOT_PTN::RADIATION)
 		{
-			cShot.push_back({ pos, -(angle + M_PI_2 / (level / 4)  * j), Speed, movePtn, level, shotPtn , "Shot4" });
+			cShot.push_back({ pos, -(angle + M_PI_2 / (level / 4)  * j), Speed, movePtn, level, shotPtn, shoter, "Shot4" });
 		}
 		else if (shotPtn == SHOT_PTN::RANDOM)
 		{
@@ -92,11 +92,11 @@ void Shot::setBullet(Vector2f pos, float angle, int Speed, int movePtn, int leve
 			std::mt19937 mt(rd());
 
 			std::uniform_int_distribution<int> rand(1, 10);
-			cShot.push_back({ { pos.x - (float)(rand(mt) * M_PI * 2) + 10,pos.y - 30 }, ShotAngle(pos), Speed, movePtn, level, shotPtn , "Shot5" });
+			cShot.push_back({ { pos.x - (float)(rand(mt) * M_PI * 2) + 10,pos.y - 30 }, ShotAngle(pos), Speed, movePtn, level, shotPtn, shoter, "Shot5" });
 		}
 		else if (shotPtn == SHOT_PTN::LASER)
 		{
-			cShot.push_back({ pos, angle, Speed, movePtn, level, shotPtn , "Shot1" });
+			cShot.push_back({ pos, angle, Speed, movePtn, level, shotPtn, shoter, "Shot1" });
 		}
 	}
 }
@@ -107,23 +107,23 @@ void Shot::ShotBullet(const Peripheral & p, const Vector2f& pos)
 	{
 		if (p.IsPressing(PAD_INPUT_2))
 		{
-			setBullet(pos, 0, 5, 0, 4, SHOT_PTN::NORMAL);
+			setBullet(pos, 0, 5, 0, 4, SHOT_PTN::NORMAL, SHOTER::PLAYER);
 		}
 		if (p.IsPressing(PAD_INPUT_4))
 		{
-			setBullet(pos, 0, 5, 0, 3, SHOT_PTN::SHOTGUN);
+			setBullet(pos, 0, 5, 0, 3, SHOT_PTN::SHOTGUN, SHOTER::PLAYER);
 		}
 		if (p.IsPressing(PAD_INPUT_5))
 		{
-			setBullet(pos, 0, 5, 0, 1, SHOT_PTN::TRACKING);
+			setBullet(pos, 0, 5, 0, 1, SHOT_PTN::TRACKING, SHOTER::PLAYER);
 		}
 		if (p.IsPressing(PAD_INPUT_6))
 		{
-			setBullet(pos, 0, 5, 0, 50, SHOT_PTN::RADIATION);
+			setBullet(pos, 0, 5, 0, 50, SHOT_PTN::RADIATION, SHOTER::PLAYER);
 		}
 		if (p.IsPressing(PAD_INPUT_10))
 		{
-			setBullet(pos, 0, 5, 0, 100, SHOT_PTN::RANDOM);
+			setBullet(pos, 0, 5, 0, 100, SHOT_PTN::RANDOM, SHOTER::PLAYER);
 		}
 	}
 	interval++;
