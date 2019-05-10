@@ -19,16 +19,15 @@ private:
 
 	void Move();
 	
-	
 	void (Fish::*updater)();
 
 	const Player& player;
 
-	int wait;
 
 public:
 	~Fish();
 
 	void Update();
 	void Draw();
+	void Damage();
 };

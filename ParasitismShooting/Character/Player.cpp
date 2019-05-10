@@ -10,6 +10,7 @@ Player::Player()
 {
 	ReadActionFile("action/player.act");
 	ChangeAction("Idle");
+	SetCharaSize(0.1f);
 	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
 
 	gs.reset(new GameScreen());
@@ -24,11 +25,9 @@ Player::Player()
 	moveVel = 3.0;
 	startPos = Vector2f(gssize.x / 2, gssize.y - 20);
 	pos = startPos;
-	HP = 3;
+	HP = 1;
 	count = 0;
-	interval = 0;
 	
-
 	shot.reset(new Shot());
 	updater = &Player::Move;
 }
@@ -42,10 +41,10 @@ void Player::Update(const Peripheral &p)
 	// ˆÚ“®•ûŒü‚ªŒˆ‚Ü‚é
 	(this->*updater)(p);
 
-	shot->Update();
+	//shot->Update();
 	pos += vel;
 	NotOutOfRange();
-	ShotBullet(p);
+	//ShotBullet(p);
 }
 
 
@@ -82,34 +81,6 @@ void Player::Move(const Peripheral & p)
 	{
 		vel /= 1.4142136;
 	}
-}
-
-void Player::ShotBullet(const Peripheral & p)
-{
-	if (interval % 3 == 0)
-	{
-		if (p.IsPressing(PAD_INPUT_2))
-		{
-			shot->setBullet(pos, 0, 5, 0, 4, SHOT_PTN::NORMAL);
-		}
-		if (p.IsPressing(PAD_INPUT_4))
-		{
-			shot->setBullet(pos, 0, 5, 0, 3, SHOT_PTN::SHOTGUN);
-		}
-		if (p.IsPressing(PAD_INPUT_5))
-		{
-			shot->setBullet(pos, 0, 5, 0, 1, SHOT_PTN::TRACKING);
-		}
-		if (p.IsPressing(PAD_INPUT_6))
-		{
-			shot->setBullet(pos, 0, 5, 0, 50, SHOT_PTN::RADIATION);
-		}
-		if (p.IsPressing(PAD_INPUT_10))
-		{
-			shot->setBullet(pos, 0, 5, 0, 100, SHOT_PTN::RANDOM);
-		}
-	}
-	interval++;
 }
 
 void Player::Damage(const Peripheral & p)
@@ -160,7 +131,7 @@ void Player::Draw(const int& time)
 		}
 	}
 		
-	shot->Draw();
+	//shot->Draw();
 }
 
 int& Player::GetHP()

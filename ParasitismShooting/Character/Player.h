@@ -3,7 +3,6 @@
 #include "CharacterObject.h"
 #include <memory>
 
-
 enum Dir
 {
 	DIR_UP,
@@ -26,7 +25,6 @@ private:
 	// 状態遷移のためのメンバ関数ポインタ
 	void (Player::*updater)(const Peripheral &p);
 	void Move(const Peripheral &p);
-	void ShotBullet(const Peripheral &p);	// 攻撃
 	void Damage(const Peripheral &p);		// ダメージくらった
 	void Invincible(const Peripheral &p);	// 無敵時間
 	void Die(const Peripheral &p);			// 敵機に当たって死んだ
@@ -43,8 +41,6 @@ private:
 	int left;
 	int down;
 
-
-	int interval;
 
 	std::shared_ptr<Shot> shot;
 	std::shared_ptr<GameScreen> gs;
