@@ -13,7 +13,7 @@
 #include "../GameScreen.h"
 #include "../HUD.h"
 #include "../Character/Player.h"
-#include "../Shot.h"
+//#include "../Shot.h"
 #include "../BackGround.h"
 #include "../PauseMenu.h"
 #include "../Character/EnemyFactory.h"
@@ -90,7 +90,7 @@ GamePlayingScene::GamePlayingScene()
 
 	gs.reset(new GameScreen());
 	player.reset(new Player());
-	shot.reset(new Shot());
+	//shot.reset(new Shot());
 	hud.reset(new HUD());
 	bg.reset(new BackGround());
 	pmenu.reset(new PauseMenu());
@@ -131,9 +131,9 @@ void GamePlayingScene::Update(const Peripheral& p)
 			}
 		}
 
-		shot->Update();
+		//shot->Update();
 		player->Update(p);
-		shot->ShotBullet(p, player->pos);
+		//shot->ShotBullet(p, player->pos);
 		for (auto& enemy : ef->GetLegion())
 		{
 			enemy->Update();
@@ -160,13 +160,13 @@ void GamePlayingScene::Update(const Peripheral& p)
 				// “G‚Æ’e
 //				for (int s = 0; s < shot->cShot.size(); ++s)
 				{
-					for (auto& sRect : shot->GetActRect())
+					/*for (auto& sRect : shot->GetActRect())
 					{
 						if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
 						{
 							enemy->Damage();
 						}
-					}
+					}*/
 				}
 			}
 		}
@@ -183,7 +183,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 	
 	bg->Draw((int)time);
 	player->Draw((int)time);
-	shot->Draw();
+	//shot->Draw();
 	for (auto& enemy : ef->GetLegion())
 	{
 		auto h = enemy->GetHP();

@@ -32,6 +32,11 @@ struct Vector2D
 		x -= in.x;
 		y -= in.y;
 	}
+	void operator*=(const T& in)
+	{
+		x *= in;
+		y *= in;
+	}
 	void operator/=(const T& in)
 	{
 		x /= in;
