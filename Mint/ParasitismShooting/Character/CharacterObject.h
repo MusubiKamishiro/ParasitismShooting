@@ -41,6 +41,8 @@ protected:
 	// アニメーション切り替え
 	void ChangeAction(const char* name);
 
+	void SetCharaSize(const float& size);
+
 	int HP;			// 体力
 	int SP;			// スタミナ
 
@@ -75,7 +77,7 @@ public:
 
 	// 矩形の情報をもらう
 	Rect GetRects(Rect& rect)const;
-	std::vector<ActRect> GetAcutRect()const;
+	std::vector<ActRect> GetActRect()const;
 
 	Vector2f GetPos()const;
 };
