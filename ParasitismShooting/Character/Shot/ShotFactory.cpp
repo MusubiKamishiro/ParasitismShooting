@@ -35,15 +35,12 @@ void ShotFactory::ShotDelete()
 
 void ShotFactory::OutofScreen(void)
 {
-	for (int i = 0; i < legion.size(); ++i)
+	for(auto &shot :legion)
 	{
-
-		auto shot = *std::next(legion.begin(), i);
 		if (shot->pos.x < left - shot->rect.Width() / 2 || shot->pos.x > right + shot->rect.Width() / 2 ||
 			shot->pos.y < up - shot->rect.Height() / 2 || shot->pos.y > down + shot->rect.Height() / 2)
 		{
-			legion.erase(std::next(legion.begin(), i));
-			--i;
+			shot->lifeFlag = false;
 		}
 	}
 }
