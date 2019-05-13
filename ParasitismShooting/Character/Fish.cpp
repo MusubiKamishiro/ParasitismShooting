@@ -36,6 +36,25 @@ void Fish::Move()
 	cnt++;
 }
 
+void Fish::Die()
+{
+	lifeFlag = false;
+}
+
+void Fish::Stunning()
+{
+	
+}
+
+void Fish::StunDamage()
+{
+	--SP;
+	if (SP <= 0)
+	{
+		updater = &Fish::Stunning;
+	}
+}
+
 Fish::~Fish()
 {
 }
@@ -47,13 +66,32 @@ void Fish::Update()
 	(this->*updater)();
 }
 
-void Fish::Draw()
+void Fish::Draw(int time)
 {
-	CharacterObject::Draw(img);
-
+	if (updater != &Fish::Stunning)
+	{
+		CharacterObject::Draw(img);
+	}
+	else
+	{
+		if ((time / 20) % 2)
+		{
+			DxLib::GraphFilter(img, DX_GRAPH_FILTER_INVERT);
+			CharacterObject::Draw(img);
+			DxLib::GraphFilter(img, DX_GRAPH_FILTER_INVERT);
+		}
+		else
+		{
+			CharacterObject::Draw(img);
+		}
+	}
 }
 
 void Fish::Damage()
 {
 	HP -= 1;
+	if (HP <= 0)
+	{
+		updater = &Fish::Die;
+	}
 }

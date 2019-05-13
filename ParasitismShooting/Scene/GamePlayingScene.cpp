@@ -207,7 +207,8 @@ void GamePlayingScene::Update(const Peripheral& p)
 						{
 							if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
 							{
-								enemy->Damage();
+								//enemy->Damage();
+								enemy->StunDamage();
 								shot->Delete();
 							}
 						}
@@ -238,12 +239,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 	}
 	for (auto& enemy : ef->GetLegion())
 	{
-		//auto h = enemy->GetHP();
-		//
-		//if (h > 0)
-		//{
-			enemy->Draw();
-		//}
+		enemy->Draw((int)time);
 	}
 
 	// ƒQ[ƒ€‰æ–Ê‚Ì•`‰æ
