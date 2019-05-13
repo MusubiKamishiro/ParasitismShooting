@@ -74,16 +74,9 @@ void Fish::Draw(int time)
 	}
 	else
 	{
-		if ((time / 20) % 2)
-		{
-			DxLib::GraphFilter(img, DX_GRAPH_FILTER_INVERT);
-			CharacterObject::Draw(img);
-			DxLib::GraphFilter(img, DX_GRAPH_FILTER_INVERT);
-		}
-		else
-		{
-			CharacterObject::Draw(img);
-		}
+		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs((time*5 % 255) - 127) + 128);
+		CharacterObject::Draw(img);
+		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 	}
 }
 
