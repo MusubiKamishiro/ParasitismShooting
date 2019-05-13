@@ -28,6 +28,7 @@ private:
 	void Invincible(const Peripheral &p);	// –³“GŠÔ
 	void Die(const Peripheral &p);			// “G‹@–”‚Í’e‚É“–‚½‚Á‚Ä€‚ñ‚¾
 	void Reborn(const Peripheral &p);		// •œŠˆ
+	void Parasitic(const Peripheral &p, const int &eimg, const float &charasize, const ActionData &actdata);	// Šñ¶
 
 	void NotOutOfRange();		// ”ÍˆÍŠO‚És‚©‚¹‚È‚¢
 

@@ -64,7 +64,7 @@ protected:
 	unsigned int nowCutIdx;		// 現在表示中のｶｯﾄ番号
 	unsigned int flame;			// そのｶｯﾄ番号における経過時間
 
-	float charaSize;
+	float charaSize;			// キャラクターの拡大率
 
 public:
 	CharacterObject();
@@ -79,8 +79,12 @@ public:
 	Rect GetRects(Rect& rect)const;
 	std::vector<ActRect> GetActRect()const;
 
+	ActionData GetActionData()const;
 	Vector2f GetPos()const;
 	int GetHP()const;
+	int GetSP()const;
+	int GetImg()const;
+	float GetCharaSize()const;
 	bool GetLifeFlag()const;
 };
 
