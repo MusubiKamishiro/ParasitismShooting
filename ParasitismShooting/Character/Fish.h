@@ -27,7 +27,7 @@ private:
 
 	const Player& player;
 
-
+	bool flag;
 public:
 	~Fish();
 
