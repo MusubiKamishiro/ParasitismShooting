@@ -194,9 +194,17 @@ void GamePlayingScene::Update(const Peripheral& p)
 					{
 						if (cd->IsCollision(player->GetRects(pRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(pRect.rt, eRect.rt)))
 						{
-							if (player->updater != &Player::Invincible)
+							if (enemy->GetSP() > 0)
 							{
-								player->Damage(p);
+								if (player->updater != &Player::Invincible)
+								{
+									player->Damage(p);
+								}
+							}
+							else
+							{
+								player->Parasitic(p, enemy->GetImg(), enemy->GetCharaSize(), enemy->GetActionData());
+								enemy->Die();
 							}
 						}
 					}

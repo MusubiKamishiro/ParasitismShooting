@@ -118,6 +118,13 @@ void Player::Reborn(const Peripheral & p)
 	updater = &Player::Invincible;
 }
 
+void Player::Parasitic(const Peripheral & p, const int &eimg, const float &charasize, const ActionData &actdata)
+{
+	actData = actdata;
+	img = eimg;
+	charaSize = charasize;
+}
+
 
 void Player::Draw(const int& time)
 {
