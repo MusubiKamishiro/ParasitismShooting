@@ -80,7 +80,7 @@ Shot * ShotFactory::Create(const char * shotname, Vector2f pos, float angle, int
 			else if (shotname == "ShotShotgun")
 			{
 				shot->pos = pos;
-				shot->angle = -(((angle + (M_PI / level))  * cnt) + M_PI / 6);
+				shot->angle = -(((angle + (M_PI / level))  * j) + M_PI / 6);
 			}
 			else if (shotname == "ShotTracking")
 			{

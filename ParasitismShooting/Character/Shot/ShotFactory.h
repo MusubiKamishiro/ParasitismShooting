@@ -12,7 +12,6 @@ typedef std::list<Shot*> SLegion;	// ’e‚ÌW‡‘Ì‚ÌŒ^
 class ShotFactory
 {
 private:
-	int cnt = 0;
 	const Player& player;
 	
 	std::map<std::string, Shot*> originalShot;	// ’e‚ÌŒ³‚Æ‚È‚émap‚Ìì¬
