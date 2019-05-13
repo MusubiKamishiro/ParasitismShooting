@@ -41,14 +41,14 @@ Shot * ShotFactory::Create(const char * shotname,Vector2f pos, float angle, int 
 		auto shot = originalShot[shotname]->Clone();
 		if (shotname == "ShotNormal")
 		{
-			
-			shot->pos = { pos.x - 10 + NormalPosPtnX[cnt],pos.y + NormalPosPtnY[cnt] };
+			shot->pos = pos;
+			/*shot->pos = { pos.x - 10 + NormalPosPtnX[cnt],pos.y + NormalPosPtnY[cnt] };*/
 			shot->angle = -M_PI_2;
-			cnt++;
+		/*	cnt++;
 			if (cnt == level)
 			{
 				cnt = 0;
-			}
+			}*/
 		}
 		else if (shotname == "ShotRadiation")
 		{
