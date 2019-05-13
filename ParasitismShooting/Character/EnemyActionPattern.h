@@ -1,5 +1,6 @@
 #pragma once
 #include "../Geometry.h"
+class Player;
 
 class EnemyActionPattern
 {

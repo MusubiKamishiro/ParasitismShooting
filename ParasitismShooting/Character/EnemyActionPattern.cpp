@@ -1,8 +1,11 @@
 #include "EnemyActionPattern.h"
+#include "Shot/ShotFactory.h"
+#include "Shot/Shot.h"
+#include "Player.h"
 
 void EnemyActionPattern::ActPattern0(Vector2f &pos, float speed, int cnt, int wait)
 {
-	if (cnt < 60)
+	if (cnt < wait / 2)
 	{
 		pos.y += speed;
 	}

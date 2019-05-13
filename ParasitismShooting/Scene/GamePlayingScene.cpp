@@ -160,6 +160,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 			}
 
 			player->Update(p);
+
 			if (p.IsPressing(PAD_INPUT_2) && ((int)time % 3 ==0))
 			{
 				sf->Create("ShotNormal", player->GetPos(), 180, 5, 1, 4, SHOT_PTN::NORMAL, SHOOTER::PLAYER);
