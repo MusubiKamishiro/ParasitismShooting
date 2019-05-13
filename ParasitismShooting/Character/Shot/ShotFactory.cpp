@@ -3,6 +3,8 @@
 #include "Shot.h"
 #include "../Player.h"
 #include "../Enemy.h"
+
+#include "../../GameScreen.h"
 #include "ShotNormal.h"
 #include "ShotRadiation.h"
 #include "ShotRandom.h"
@@ -31,8 +33,31 @@ void ShotFactory::ShotDelete()
 	}
 }
 
+void ShotFactory::OutofScreen(void)
+{
+	for (int i = 0; i < legion.size(); ++i)
+	{
+
+		auto shot = *std::next(legion.begin(), i);
+		if (shot->pos.x < left - shot->rect.Width() / 2 || shot->pos.x > right + shot->rect.Width() / 2 ||
+			shot->pos.y < up - shot->rect.Height() / 2 || shot->pos.y > down + shot->rect.Height() / 2)
+		{
+			legion.erase(std::next(legion.begin(), i));
+			--i;
+		}
+	}
+}
+
 ShotFactory::ShotFactory(const Player& player/*, const Enemy& enemy*/) : player(player)
 {
+	GameScreen gscreen;
+	Vector2 screenSize = gscreen.GetGSSize();
+
+	up = 0;
+	right = screenSize.x + gscreen.outscreen;
+	left = 0;
+	down = screenSize.y + gscreen.outscreen;
+
 	//originalShot["name"] = new Class(player);
 	originalShot["ShotNormal"] = new ShotNormal(player);
 	originalShot["ShotRadiation"] = new ShotRadiation(player);

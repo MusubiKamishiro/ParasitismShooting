@@ -17,6 +17,10 @@ private:
 	std::map<std::string, Shot*> originalShot;	// ’e‚ÌŒ³‚Æ‚È‚émap‚Ìì¬
 	SLegion legion;
 
+	int up;
+	int right;
+	int left;
+	int down;
 public:
 	ShotFactory(const Player& player/*, const Enemy& enemy*/);
 	~ShotFactory();
@@ -29,5 +33,6 @@ public:
 	SLegion& GetLegion();
 	// ‘¼‚Ì‚à‚Ì‚É“–‚½‚Á‚½’e‚ğÁ‚·
 	void ShotDelete();
+	void OutofScreen(void);
 };
 
