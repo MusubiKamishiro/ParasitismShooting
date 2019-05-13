@@ -34,6 +34,11 @@ void ShotTracking::Move()
 	pos.y += sin(angle) * Speed;
 }
 
+void ShotTracking::Delete()
+{
+	lifeFlag = false;
+}
+
 ShotTracking::~ShotTracking()
 {
 }

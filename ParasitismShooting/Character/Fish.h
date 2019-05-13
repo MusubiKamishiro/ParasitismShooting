@@ -18,6 +18,9 @@ private:
 	Enemy* Clone();
 
 	void Move();
+	//void Die();
+	//void Stunning();
+	void Damage();
 	
 	void (Fish::*updater)();
 
@@ -29,5 +32,4 @@ public:
 
 	void Update();
 	void Draw();
-	void Damage();
 };

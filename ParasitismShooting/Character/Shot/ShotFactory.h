@@ -28,5 +28,7 @@ public:
 	
 	// ’e‚ÌW‡‘Ì‚ğ•Ô‚·
 	SLegion& GetLegion();
+	// ‘¼‚Ì‚à‚Ì‚É“–‚½‚Á‚½’e‚ğÁ‚·
+	void ShotDelete();
 };
 

@@ -34,6 +34,11 @@ void ShotRandom::Move()
 	pos.y += sin(angle) * Speed;
 }
 
+void ShotRandom::Delete()
+{
+	lifeFlag = false;
+}
+
 ShotRandom::~ShotRandom()
 {
 }

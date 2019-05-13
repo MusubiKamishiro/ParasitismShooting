@@ -88,6 +88,7 @@ void CharacterObject::SetCharaSize(const float& size)
 
 CharacterObject::CharacterObject()
 {
+	lifeFlag = true;
 }
 
 
@@ -153,4 +154,9 @@ Vector2f CharacterObject::GetPos() const
 int CharacterObject::GetHP() const
 {
 	return HP;
+}
+
+bool CharacterObject::GetLifeFlag() const
+{
+	return lifeFlag;
 }
