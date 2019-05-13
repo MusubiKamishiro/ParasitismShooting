@@ -8,7 +8,6 @@ class HUD
 private:
 	const Vector2 ssize;
 	const Vector2 hudPos;
-	int img;
 	
 
 public:
