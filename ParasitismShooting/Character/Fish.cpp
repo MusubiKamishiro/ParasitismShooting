@@ -10,7 +10,7 @@ Fish::Fish(const Player& player) : Enemy(player), player(player)
 	ChangeAction("Idle");
 	SetCharaSize(0.07f);
 	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
-
+	
 	updater = &Fish::Move;
 }
 
