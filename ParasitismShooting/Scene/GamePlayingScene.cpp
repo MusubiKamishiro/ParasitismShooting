@@ -194,6 +194,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 					{
 						if (cd->IsCollision(player->GetRects(pRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(pRect.rt, eRect.rt)))
 						{
+							// 敵に気力があればダメージ
 							if (enemy->GetSP() > 0)
 							{
 								if (player->updater != &Player::Invincible)
@@ -203,8 +204,20 @@ void GamePlayingScene::Update(const Peripheral& p)
 							}
 							else
 							{
-								player->Parasitic(p, enemy->GetImg(), enemy->GetCharaSize(), enemy->GetActionData());
-								enemy->Die();
+								// プレイヤーが寄生中ならダメージ
+								if (player->parasFlag)
+								{
+									if (player->updater != &Player::Invincible)
+									{
+										player->Damage(p);
+									}
+								}
+								else
+								{
+									// 敵の力を手に入れる
+									player->Parasitic(p, enemy->GetImg(), enemy->GetCharaSize(), enemy->GetActionData(), enemy->GetHP());
+									enemy->Die();
+								}
 							}
 						}
 					}
@@ -251,15 +264,15 @@ void GamePlayingScene::Update(const Peripheral& p)
 		enemy->Draw((int)time);
 	}
 
+	if (pauseFlag)
+	{
+		pmenu->Update(p);
+		pmenu->Draw();
+	}
+
 	// ゲーム画面の描画
 	gs->DrawAndChangeScreen();
 
-
-	if (pauseFlag)
-	{
-		pmenu->Update();
-		pmenu->Draw();
-	}
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, ssize.x, ssize.y, 0x000000, true);

@@ -26,6 +26,7 @@ Player::Player()
 	pos = startPos;
 	HP = 1;
 	count = 0;
+	parasFlag = false;
 	
 	updater = &Player::Move;
 }
@@ -84,8 +85,17 @@ void Player::Damage(const Peripheral & p)
 	HP--;
 	if (HP <= 0)
 	{
-		updater = &Player::Die;
-		Die(p);
+		if (parasFlag)
+		{
+			HP = 1;
+			parasFlag = false;
+			updater = &Player::Invincible;
+		}
+		else
+		{
+			updater = &Player::Die;
+			Die(p);
+		}
 	}
 	else
 	{
@@ -118,11 +128,18 @@ void Player::Reborn(const Peripheral & p)
 	updater = &Player::Invincible;
 }
 
-void Player::Parasitic(const Peripheral & p, const int &eimg, const float &charasize, const ActionData &actdata)
+void Player::Parasitic(const Peripheral & p, const int &eimg, const float &charasize, const ActionData &actdata, const int& hp)
 {
+	parasFlag = true;
+
 	actData = actdata;
 	img = eimg;
 	charaSize = charasize;
+	HP = hp;
+	
+
+	count = 0;
+	updater = &Player::Invincible;
 }
 
 

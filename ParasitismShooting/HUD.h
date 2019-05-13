@@ -1,6 +1,6 @@
 #pragma once
-#include "Geometry.h"
 #include <memory>
+#include "Geometry.h"
 
 
 class HUD
