@@ -207,6 +207,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 	}
 
 	sf->ShotDelete();
+	ef->EnemyDelete();
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
@@ -220,23 +221,16 @@ void GamePlayingScene::Update(const Peripheral& p)
 	
 	for(auto& shot : sf->GetLegion())
 	{
-		/*if (shot->GetLifeFlag())
-		{*/
-			shot->Draw();
-		//}
-		//else
-		//{
-		//	
-		//}
+		shot->Draw();
 	}
 	for (auto& enemy : ef->GetLegion())
 	{
-		auto h = enemy->GetHP();
-		
-		if (h > 0)
-		{
+		//auto h = enemy->GetHP();
+		//
+		//if (h > 0)
+		//{
 			enemy->Draw();
-		}
+		//}
 	}
 
 	// ƒQ[ƒ€‰æ–Ê‚Ì•`‰æ

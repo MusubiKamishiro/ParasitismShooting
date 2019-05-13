@@ -26,5 +26,7 @@ public:
 	
 	// 敵の集合体を返す
 	ELegion& GetLegion();
+	// ダメージ弾に当たったを消す
+	void EnemyDelete();
 };
 
