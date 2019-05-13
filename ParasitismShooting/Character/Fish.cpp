@@ -36,6 +36,11 @@ void Fish::Move()
 	cnt++;
 }
 
+void Fish::Die()
+{
+	lifeFlag = false;
+}
+
 Fish::~Fish()
 {
 }
@@ -56,4 +61,8 @@ void Fish::Draw()
 void Fish::Damage()
 {
 	HP -= 1;
+	if (HP <= 0)
+	{
+		updater = &Fish::Die;
+	}
 }

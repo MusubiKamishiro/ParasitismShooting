@@ -18,7 +18,7 @@ private:
 	Enemy* Clone();
 
 	void Move();
-	//void Die();
+	void Die();
 	//void Stunning();
 	void Damage();
 	
