@@ -50,7 +50,7 @@ protected:
 	int cnt;		// キャラクターごとのカウント
 	int wait;		// キャラクターごとの待機時間
 
-	bool flag;
+	bool lifeFlag;	// 生きてるか死んでるか
 
 	Vector2f pos;	// 座標
 	Vector2f vel;	// 移動速度
@@ -81,5 +81,6 @@ public:
 
 	Vector2f GetPos()const;
 	int GetHP()const;
+	bool GetLifeFlag()const;
 };
 

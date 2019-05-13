@@ -18,6 +18,20 @@ SLegion& ShotFactory::GetLegion()
 	return legion;		// W‡‘Ì‚ð•Ô‚·
 }
 
+void ShotFactory::ShotDelete()
+{
+	int cnt = 0;
+	for (auto& shot : legion)
+	{
+		if (!shot->GetLifeFlag())
+		{
+			legion.erase(std::next(legion.begin(), cnt));
+			cnt--;
+		}
+		cnt++;
+	}
+}
+
 ShotFactory::ShotFactory(const Player& player/*, const Enemy& enemy*/) : player(player)
 {
 	//originalShot["name"] = new Class(player);

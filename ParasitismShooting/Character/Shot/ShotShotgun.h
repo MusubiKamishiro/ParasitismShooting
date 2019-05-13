@@ -15,6 +15,7 @@ private:
 	Shot* Clone();
 
 	void Move();
+	void Delete();
 	
 	void (ShotShotgun::*updater)();
 

@@ -34,6 +34,11 @@ void ShotNormal::Move()
 	pos.y += sin(angle) * Speed;
 }
 
+void ShotNormal::Delete()
+{
+	lifeFlag = false;
+}
+
 ShotNormal::~ShotNormal()
 {
 }

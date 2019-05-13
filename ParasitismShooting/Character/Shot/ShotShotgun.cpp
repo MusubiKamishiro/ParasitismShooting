@@ -34,6 +34,11 @@ void ShotShotgun::Move()
 	pos.y += sin(angle) * Speed;
 }
 
+void ShotShotgun::Delete()
+{
+	lifeFlag = false;
+}
+
 ShotShotgun::~ShotShotgun()
 {
 }

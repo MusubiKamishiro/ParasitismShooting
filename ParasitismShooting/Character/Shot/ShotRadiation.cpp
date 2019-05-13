@@ -42,6 +42,11 @@ void ShotRadiation::Move()
 	//rotation2D(&cShot[n].pos.x, &cShot[n].pos.y, cShot[n].pos.x, cShot[n].pos.y, cShot[n].cneterPos.x, cShot[n].cneterPos.y, (5.0f / 180.0f));
 }
 
+void ShotRadiation::Delete()
+{
+	lifeFlag = false;
+}
+
 ShotRadiation::~ShotRadiation()
 {
 }
