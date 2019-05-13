@@ -19,7 +19,8 @@ private:
 
 	void Move();
 	void Die();
-	//void Stunning();
+	void Stunning();
+	void StunDamage();
 	void Damage();
 	
 	void (Fish::*updater)();
@@ -31,5 +32,5 @@ public:
 	~Fish();
 
 	void Update();
-	void Draw();
+	void Draw(int time);
 };
