@@ -22,7 +22,7 @@ enum SHOT_PTN
 
 };
 
-enum SHOTER
+enum SHOOTER
 {
 	PLAYER,
 	ENEMY,
