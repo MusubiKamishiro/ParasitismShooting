@@ -44,5 +44,6 @@ public:
 	void ChangeScene(Scene* s);
 
 	const Vector2& GetScreenSize()const;
+
 };
 
