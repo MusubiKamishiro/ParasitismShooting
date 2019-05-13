@@ -24,6 +24,11 @@ void EnemyActionPattern::ActPattern3(void)
 {
 }
 
+void EnemyActionPattern::ActPattern4(Vector2f &pos, float speed)
+{
+	pos.y += speed;
+}
+
 EnemyActionPattern::EnemyActionPattern()
 {
 }
