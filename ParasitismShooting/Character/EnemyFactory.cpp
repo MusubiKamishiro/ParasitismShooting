@@ -7,6 +7,19 @@ ELegion & EnemyFactory::GetLegion()
 	return legion;		// W‡‘Ì‚ğ•Ô‚·
 }
 
+void EnemyFactory::EnemyDelete()
+{
+	for (int i = 0; i < legion.size(); ++i)
+	{
+		auto shot = *std::next(legion.begin(), i);
+		if (!shot->GetLifeFlag())
+		{
+			legion.erase(std::next(legion.begin(), i));
+			--i;
+		}
+	}
+}
+
 EnemyFactory::EnemyFactory(const Player& player) : player(player)
 {
 	originalEnemy["fish"] = new Fish(player);

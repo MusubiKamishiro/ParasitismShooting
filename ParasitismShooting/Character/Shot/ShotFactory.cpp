@@ -20,15 +20,14 @@ SLegion& ShotFactory::GetLegion()
 
 void ShotFactory::ShotDelete()
 {
-	int cnt = 0;
-	for (auto& shot : legion)
+	for (int i = 0; i < legion.size(); ++i)
 	{
+		auto shot = *std::next(legion.begin(), i);
 		if (!shot->GetLifeFlag())
 		{
-			legion.erase(std::next(legion.begin(), cnt));
-			cnt--;
+			legion.erase(std::next(legion.begin(), i));
+			--i;
 		}
-		cnt++;
 	}
 }
 
