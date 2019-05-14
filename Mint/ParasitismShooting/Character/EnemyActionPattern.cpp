@@ -5,11 +5,15 @@
 
 void EnemyActionPattern::UpDown(Vector2f &pos, Vector2f speed, int cnt, int wait, bool lifeFlag)
 {
-	if (cnt < wait / 2)
+	if (cnt < wait / 4)
 	{
 		pos.y += speed.y;
 	}
-	if (cnt > 120 + wait)
+	if (cnt == wait / 2)
+	{
+
+	}
+	if (cnt > wait)
 	{
 		pos.y -= speed.x;
 	}
