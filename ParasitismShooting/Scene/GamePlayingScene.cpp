@@ -170,9 +170,10 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 			if (p.IsPressing(PAD_INPUT_2) && ((int)time % 3 ==0))
 			{
-				sf->Create("ShotNormal", player->GetPos(), 180, 5, 1, 4, SHOT_PTN::NORMAL, SHOOTER::PLAYER);
+				//std::string s = player->GetCharaData().shotType;
+				sf->Create(player->GetCharaData().shotType, player->GetPos(), 180, 5, 1, 4, SHOT_PTN::NORMAL, SHOOTER::PLAYER);
 			}
-			if (p.IsPressing(PAD_INPUT_4) && ((int)time % 3 == 0))
+			/*if (p.IsPressing(PAD_INPUT_4) && ((int)time % 3 == 0))
 			{
 				sf->Create("ShotShotgun", player->GetPos(), 0, 5, 1, 3, SHOT_PTN::SHOTGUN, SHOOTER::PLAYER);
 			}
@@ -183,7 +184,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 			if (p.IsPressing(PAD_INPUT_6) && ((int)time % 3 == 0))
 			{
 				sf->Create("ShotTracking", player->GetPos(), 0, 5, 1, 3, SHOT_PTN::TRACKING, SHOOTER::PLAYER);
-			}
+			}*/
 
 			for (auto& enemy : ef->GetLegion())
 			{

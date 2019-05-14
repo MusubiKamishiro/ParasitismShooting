@@ -9,6 +9,7 @@ Fish::Fish(const Player& player) : Enemy(player), player(player)
 	ReadActionFile("action/fish.act");
 	ChangeAction("Idle");
 	SetCharaSize(0.07f);
+	charaData.shotType = "ShotRadiation";
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 	
 	updater = &Fish::Move;

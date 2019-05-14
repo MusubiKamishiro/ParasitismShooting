@@ -41,8 +41,7 @@ struct CharaData
 	int HP;					// 体力
 	int SP;					// スタミナ
 	float moveVel;			// 移動量
-
-	// shottype
+	const char* shotType;	// 弾の名前
 };
 
 // ｷｬﾗｸﾀｰ基底ｸﾗｽ
