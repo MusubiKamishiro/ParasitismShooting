@@ -11,6 +11,9 @@ Player::Player()
 	ChangeAction("Idle");
 	SetCharaSize(0.1f);
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
+	charaData.HP = 1;
+	charaData.moveVel = 3.0;
+	originData = charaData;
 
 	gs.reset(new GameScreen());
 	Vector2 gssize = gs->GetGSSize();
@@ -21,10 +24,8 @@ Player::Player()
 	down = gssize.y;
 
 	vel = Vector2f(0, 0);
-	charaData.moveVel = 3.0;
 	startPos = Vector2f(gssize.x / 2 + gs->outscreen / 2, gssize.y - 20);
 	pos = startPos;
-	charaData.HP = 1;
 	count = 0;
 	parasFlag = false;
 	
@@ -89,6 +90,7 @@ void Player::Damage(const Peripheral & p)
 		{
 			charaData.HP = 1;
 			parasFlag = false;
+			ParasiticCancel(p);
 			updater = &Player::Invincible;
 		}
 		else
@@ -124,7 +126,7 @@ void Player::Die(const Peripheral &p)
 
 void Player::Reborn(const Peripheral & p)
 {
-	charaData.HP = 1;
+	charaData = originData;
 	updater = &Player::Invincible;
 }
 
@@ -141,6 +143,7 @@ void Player::Parasitic(const Peripheral & p, const CharaData& cdata)
 
 void Player::ParasiticCancel(const Peripheral & p)
 {
+	charaData = originData;
 }
 
 

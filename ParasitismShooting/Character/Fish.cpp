@@ -32,7 +32,7 @@ Enemy * Fish::Clone()
 void Fish::Move()
 {
 	EnemyActionPattern eAction;
-	eAction.ActPattern0(pos, 1.0f, cnt, wait);
+	eAction.ActPattern0(pos, charaData.moveVel, cnt, wait);
 	cnt++;
 }
 
