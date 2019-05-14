@@ -30,8 +30,16 @@ Shot * ShotNormal::Clone()
 
 void ShotNormal::Move()
 {
-	pos.x += cos(angle) * Speed;
-	pos.y += sin(angle) * Speed;
+	if (shooter == SHOOTER::PLAYER)
+	{
+		pos.x += cos(angle) * Speed;
+		pos.y += sin(angle) * Speed;
+	}
+	else if (shooter == SHOOTER::ENEMY)
+	{
+		pos.x -= cos(angle) * Speed;
+		pos.y -= sin(angle) * Speed;
+	}
 }
 
 void ShotNormal::Delete()

@@ -2,7 +2,10 @@
 //#include <string>
 #include <vector>
 #include <map>
+#include <memory>
 #include "../Geometry.h"
+
+class ShotFactory;
 
 
 // ｱｸｼｮﾝ矩形定義
@@ -65,6 +68,8 @@ protected:
 	unsigned int flame;			// そのｶｯﾄ番号における経過時間
 
 	float charaSize;			// キャラクターの拡大率
+
+	std::shared_ptr<ShotFactory> sf;
 
 public:
 	CharacterObject();

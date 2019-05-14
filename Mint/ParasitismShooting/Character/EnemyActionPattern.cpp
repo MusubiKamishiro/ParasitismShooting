@@ -9,10 +9,6 @@ void EnemyActionPattern::UpDown(Vector2f &pos, Vector2f speed, int cnt, int wait
 	{
 		pos.y += speed.y;
 	}
-	if (cnt == wait / 2)
-	{
-
-	}
 	if (cnt > wait)
 	{
 		pos.y -= speed.x;
@@ -42,7 +38,6 @@ EnemyActionPattern::EnemyActionPattern()
 	movementPtn[1] = &EnemyActionPattern::LeftRight;
 	movementPtn[2] = &EnemyActionPattern::Rush;
 	movementPtn[3] = &EnemyActionPattern::Wavy;
-
 }
 
 EnemyActionPattern::~EnemyActionPattern()

@@ -2,6 +2,7 @@
 #include "../Game.h"
 #include <DxLib.h>
 #include "EnemyActionPattern.h"
+#include "Shot/ShotFactory.h"
 
 
 Fish::Fish(const Player& player) : Enemy(player), player(player)
