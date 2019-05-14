@@ -3,7 +3,6 @@
 #include <algorithm>
 #include "../Peripheral.h"
 #include "../GameScreen.h"
-#include "../Shot.h"
 
 
 Player::Player()
@@ -27,8 +26,8 @@ Player::Player()
 	pos = startPos;
 	HP = 1;
 	count = 0;
+	parasFlag = false;
 	
-	shot.reset(new Shot());
 	updater = &Player::Move;
 }
 
@@ -41,10 +40,8 @@ void Player::Update(const Peripheral &p)
 	// ˆÚ“®•ûŒü‚ªŒˆ‚Ü‚é
 	(this->*updater)(p);
 
-	//shot->Update();
 	pos += vel;
 	NotOutOfRange();
-	//ShotBullet(p);
 }
 
 
@@ -88,7 +85,17 @@ void Player::Damage(const Peripheral & p)
 	HP--;
 	if (HP <= 0)
 	{
-		updater = &Player::Die;
+		if (parasFlag)
+		{
+			HP = 1;
+			parasFlag = false;
+			updater = &Player::Invincible;
+		}
+		else
+		{
+			updater = &Player::Die;
+			Die(p);
+		}
 	}
 	else
 	{
@@ -108,12 +115,31 @@ void Player::Invincible(const Peripheral & p)
 		count++;
 	}
 	Move(p);
-	
 }
 
 void Player::Die(const Peripheral &p)
 {
+	vel = Vector2f(0, 0);
+}
+
+void Player::Reborn(const Peripheral & p)
+{
+	HP = 1;
+	updater = &Player::Invincible;
+}
+
+void Player::Parasitic(const Peripheral & p, const int &eimg, const float &charasize, const ActionData &actdata, const int& hp)
+{
+	parasFlag = true;
+
+	actData = actdata;
+	img = eimg;
+	charaSize = charasize;
+	HP = hp;
 	
+
+	count = 0;
+	updater = &Player::Invincible;
 }
 
 
@@ -130,13 +156,6 @@ void Player::Draw(const int& time)
 			CharacterObject::Draw(img);
 		}
 	}
-		
-	//shot->Draw();
-}
-
-int& Player::GetHP()
-{
-	return HP;
 }
 
 

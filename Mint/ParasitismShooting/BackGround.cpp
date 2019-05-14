@@ -22,8 +22,9 @@ BackGround::~BackGround()
 
 void BackGround::Draw(const int& time)
 {
-	int pos = (time * 2) % (int)gssize.y;
+	int posy = (time * 2) % (int)gssize.y;
 
-	DxLib::DrawExtendGraph(gs->outscreen, pos, gssize.x, pos + gssize.y, BGimg, true);
-	DxLib::DrawExtendGraph(gs->outscreen, pos - gssize.y, gssize.x, pos, BGimg, true);
+	DxLib::DrawExtendGraph(0, posy, gssize.x + gs->outscreen, posy + gssize.y, BGimg, true);
+	DxLib::DrawExtendGraph(0, posy - gssize.y, gssize.x + gs->outscreen, posy, BGimg, true);
+	DxLib::DrawExtendGraph(0, posy + gssize.y, gssize.x + gs->outscreen, posy + gssize.y*2, BGimg, true);
 }

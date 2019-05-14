@@ -6,7 +6,7 @@
 class Enemy;
 class Player;
 
-typedef std::list<Enemy*> Legion;	// “G‚ÌW‡‘Ì‚ÌŒ^
+typedef std::list<Enemy*> ELegion;	// “G‚ÌW‡‘Ì‚ÌŒ^
 
 class EnemyFactory
 {
@@ -14,7 +14,7 @@ private:
 	const Player& player;
 	
 	std::map<std::string, Enemy*> originalEnemy;	// “G‚ÌŒ³‚Æ‚È‚émap‚Ìì¬
-	Legion legion;
+	ELegion legion;
 
 public:
 	EnemyFactory(const Player& player);
@@ -22,9 +22,11 @@ public:
 
 	// “G‚ğì‚é
 	// enemyname...“G‚Ì–¼‘O
-	Enemy* Create(const char * enemyname, Vector2f pos, int movePtn, int cnt, int wait);
+	Enemy* Create(const char * enemyname, Vector2f pos, int movePtn, int cnt, int wait, int hp, int sp, float speed);
 	
 	// “G‚ÌW‡‘Ì‚ğ•Ô‚·
-	Legion& GetLegion();
+	ELegion& GetLegion();
+	// ƒ_ƒ[ƒW’e‚É“–‚½‚Á‚½‚ğÁ‚·
+	void EnemyDelete();
 };
 

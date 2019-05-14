@@ -1,6 +1,6 @@
 #pragma once
-#include "Geometry.h"
 #include <memory>
+#include "Geometry.h"
 
 
 class HUD
@@ -8,7 +8,6 @@ class HUD
 private:
 	const Vector2 ssize;
 	const Vector2 hudPos;
-	int img;
 	
 
 public:
