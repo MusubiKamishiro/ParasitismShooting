@@ -5,10 +5,11 @@
 
 PauseMenu::PauseMenu()
 {
-	img = DxLib::LoadGraph("img/283logo.png");
 	gs.reset(new GameScreen());
 
 	ssize = gs->GetGSSize();
+
+	pause = "ˆê’â~’†";
 }
 
 
@@ -34,7 +35,6 @@ void PauseMenu::Update(const Peripheral& p)
 
 void PauseMenu::Draw()
 {
-	//DxLib::DrawExtendGraph(100, 100, 400, 400, img, true);
-
-	DxLib::DrawString(gs->outscreen, gs->outscreen, "break", 0xff00ff);
+	DxLib::DrawString(ssize.x / 2 + gs->outscreen / 2 - DxLib::GetDrawStringWidth(pause.c_str(), std::strlen(pause.c_str())) / 2, 
+						ssize.y / 2 + gs->outscreen / 2, pause.c_str(), 0xff00ff);
 }

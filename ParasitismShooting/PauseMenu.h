@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <string>
 #include "Geometry.h"
 
 class GameScreen;
@@ -8,8 +9,9 @@ class Peripheral;
 class PauseMenu
 {
 private:
-	int img;
 	Vector2 ssize;
+
+	std::string pause;
 
 	std::shared_ptr<GameScreen> gs;
 

@@ -22,7 +22,7 @@ Player::Player()
 
 	vel = Vector2f(0, 0);
 	moveVel = 3.0;
-	startPos = Vector2f(gssize.x / 2, gssize.y - 20);
+	startPos = Vector2f(gssize.x / 2 + gs->outscreen / 2, gssize.y - 20);
 	pos = startPos;
 	HP = 1;
 	count = 0;
