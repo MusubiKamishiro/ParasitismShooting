@@ -55,7 +55,6 @@ protected:
 
 	void SetCharaSize(const float& size);
 
-
 	CharaData charaData;
 
 	int movePtn;	// ˆÚ“®ƒpƒ^[ƒ“

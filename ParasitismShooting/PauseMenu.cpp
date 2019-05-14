@@ -1,18 +1,16 @@
 #include "PauseMenu.h"
 #include <DxLib.h>
 #include "Peripheral.h"
-#include "GameScreen.h"
+#include "Menu.h"
 
 
 PauseMenu::PauseMenu()
 {
-	gs.reset(new GameScreen());
+	menu.reset(new Menu());
 
-	ssize = gs->GetGSSize();
-
-	pause = "ˆêŽž’âŽ~’†";
-	resume = "ƒQ[ƒ€‚ð‘±‚¯‚é";
-	end = "ƒ^ƒCƒgƒ‹‚É–ß‚é";
+	menu->menuTitle = { Vector2(menu->GetStringPosx("ˆêŽž’âŽ~’†"), (menu->ssize.y) / 3), "ˆêŽž’âŽ~’†", 0xff00ff };
+	menu->menudata.push_back({ Vector2(menu->GetStringPosx("ƒQ[ƒ€‚ð‘±‚¯‚é"), (menu->ssize.y) / 3 + 100), "ƒQ[ƒ€‚ð‘±‚¯‚é", 0xff00ff });
+	menu->menudata.push_back({ Vector2(menu->GetStringPosx("ƒ^ƒCƒgƒ‹‚É–ß‚é"), (menu->ssize.y) / 3 + 130), "ƒ^ƒCƒgƒ‹‚É–ß‚é", 0xff00ff });
 }
 
 
@@ -20,30 +18,27 @@ PauseMenu::~PauseMenu()
 {
 }
 
-void PauseMenu::Update(const Peripheral& p)
+bool PauseMenu::Update(const Peripheral& p, bool& flag)
 {
-	if(p.IsTrigger(PAD_INPUT_UP))
-	{
-
-	}
-	if (p.IsTrigger(PAD_INPUT_DOWN))
-	{
-
-	}
+	menu->Update(p);
 	if (p.IsTrigger(PAD_INPUT_2))
 	{
-
+		if (menu->selcnt == 0)
+		{
+			flag = false;
+		}
+		else if (menu->selcnt == 1)
+		{
+			return true;
+		}
 	}
+
+	return false;
 }
 
 void PauseMenu::Draw()
 {
-	DxLib::DrawString(GetStringPosx(pause), (ssize.y + gs->outscreen) / 3, pause.c_str(), 0xff00ff);
-	DxLib::DrawString(GetStringPosx(resume), (ssize.y + gs->outscreen) / 3 + 100, resume.c_str(), 0xff00ff);
-	DxLib::DrawString(GetStringPosx(end), (ssize.y + gs->outscreen) / 3 + 130, end.c_str(), 0xff00ff);
+	menu->Draw(Vector2(5, 5), 0x000000);
 }
 
-int PauseMenu::GetStringPosx(const std::string & name)
-{
-	return ((ssize.x + gs->outscreen) / 2 - DxLib::GetDrawStringWidth(name.c_str(), std::strlen(name.c_str())) / 2);
-}
+

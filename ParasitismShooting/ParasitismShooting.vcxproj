@@ -138,11 +138,13 @@
     <ClCompile Include="Character\Shot\ShotShotgun.cpp" />
     <ClCompile Include="Character\Shot\ShotTracking.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
+    <ClCompile Include="ContinueMenu.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Peripheral.cpp" />
     <ClCompile Include="Scene\GamePlayingScene.cpp" />
@@ -168,10 +170,12 @@
     <ClInclude Include="Character\Shot\ShotShotgun.h" />
     <ClInclude Include="Character\Shot\ShotTracking.h" />
     <ClInclude Include="CollisionDetector.h" />
+    <ClInclude Include="ContinueMenu.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Peripheral.h" />
     <ClInclude Include="resource.h" />

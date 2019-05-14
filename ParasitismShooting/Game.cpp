@@ -49,10 +49,7 @@ void Game::Initialize()
 	DxLib::SetWindowIconID(IDI_ICON1);					// アイコン
 	DxLib::SetDrawScreen(DX_SCREEN_BACK);				// 裏画面に描画
 
-	if (AddFontResourceEx("Ronde-B_square.otf", FR_PRIVATE, nullptr) <= 0)
-	{
-		MessageBox(DxLib::GetMainWindowHandle(), "バーカ", "フォントがないよ", MB_OK | MB_ICONQUESTION);
-	}
+	AddFontResourceEx("Ronde-B_square.otf", FR_PRIVATE, nullptr);
 	
 	DxLib::ChangeFont("ロンド B スクエア", DX_CHARSET_DEFAULT);
 	DxLib::SetFontSize(24);
