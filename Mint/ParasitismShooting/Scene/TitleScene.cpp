@@ -48,8 +48,8 @@ TitleScene::~TitleScene()
 
 void TitleScene::Update(const Peripheral& p)
 {
-	(this->*updater)(p);
-
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
 	DxLib::DrawExtendGraph(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, titleImage, true);
+
+	(this->*updater)(p);
 }

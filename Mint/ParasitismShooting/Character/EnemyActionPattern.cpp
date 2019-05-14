@@ -1,33 +1,51 @@
 #include "EnemyActionPattern.h"
+#include "Shot/ShotFactory.h"
+#include "Shot/Shot.h"
+#include "Player.h"
 
-void EnemyActionPattern::ActPattern0(Vector2f &pos, float speed, int cnt, int wait)
+void EnemyActionPattern::UpDown(Vector2f &pos, Vector2f speed, int cnt, int wait, bool lifeFlag)
 {
-	if (cnt < 60)
+	if (cnt < wait / 2)
 	{
-		pos.y += speed;
+		pos.y += speed.y;
 	}
 	if (cnt > 120 + wait)
 	{
-		pos.y -= speed;
+		pos.y -= speed.x;
 	}
 }
 
-void EnemyActionPattern::ActPattern1(void)
+void EnemyActionPattern::LeftRight(Vector2f &pos, Vector2f speed, int cnt, int wait, bool lifeFlag)
 {
 }
 
-void EnemyActionPattern::ActPattern2(void)
+void EnemyActionPattern::Rush(Vector2f &pos, Vector2f speed, int cnt, int wait, bool lifeFlag)
 {
 }
 
-void EnemyActionPattern::ActPattern3(void)
+void EnemyActionPattern::Wavy(Vector2f &pos, Vector2f speed, int cnt, int wait, bool lifeFlag)
 {
+}
+
+void EnemyActionPattern::Stun(Vector2f &pos, Vector2f speed)
+{
+	pos.y += speed.y;
 }
 
 EnemyActionPattern::EnemyActionPattern()
 {
+	movementPtn[0] = &EnemyActionPattern::UpDown;
+	movementPtn[1] = &EnemyActionPattern::LeftRight;
+	movementPtn[2] = &EnemyActionPattern::Rush;
+	movementPtn[3] = &EnemyActionPattern::Wavy;
+
 }
 
 EnemyActionPattern::~EnemyActionPattern()
 {
+}
+
+void EnemyActionPattern::Update(int movePtn, Vector2f & pos, Vector2f vel, int cnt, int wait, bool lifeFlag)
+{
+	(this->*movementPtn[movePtn])(pos, vel, cnt, wait, lifeFlag);
 }

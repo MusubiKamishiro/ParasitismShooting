@@ -88,6 +88,7 @@ void CharacterObject::SetCharaSize(const float& size)
 
 CharacterObject::CharacterObject()
 {
+	lifeFlag = true;
 }
 
 
@@ -145,7 +146,37 @@ std::vector<ActRect> CharacterObject::GetActRect() const
 	return actData.animInfo.at(nowActionName).cuts[nowCutIdx].actrects;
 }
 
+ActionData CharacterObject::GetActionData() const
+{
+	return actData;
+}
+
 Vector2f CharacterObject::GetPos() const
 {
 	return pos;
+}
+
+int CharacterObject::GetHP() const
+{
+	return HP;
+}
+
+int CharacterObject::GetSP() const
+{
+	return SP;
+}
+
+int CharacterObject::GetImg() const
+{
+	return img;
+}
+
+float CharacterObject::GetCharaSize() const
+{
+	return charaSize;
+}
+
+bool CharacterObject::GetLifeFlag() const
+{
+	return lifeFlag;
 }

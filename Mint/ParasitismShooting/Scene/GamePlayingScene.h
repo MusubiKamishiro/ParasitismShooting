@@ -6,7 +6,7 @@
 
 class GameScreen;
 class Player;
-class Shot;
+class ShotFactory;
 class HUD;
 class BackGround;
 class PauseMenu;
@@ -34,6 +34,8 @@ private:
 
 	void FadeinUpdate(const Peripheral& p);
 	void FadeoutUpdate(const Peripheral& p);
+	void GameUpdate(const Peripheral& p);
+	void ContinueUpdate(const Peripheral& p);
 
 	float time;
 	Vector2 ssize;
@@ -45,7 +47,7 @@ private:
 
 	std::shared_ptr<GameScreen> gs;
 	std::shared_ptr<Player> player;
-	std::shared_ptr<Shot> shot;
+	std::shared_ptr<ShotFactory> sf;
 	std::shared_ptr<HUD> hud;
 	std::shared_ptr<BackGround> bg;
 	std::shared_ptr<PauseMenu> pmenu;

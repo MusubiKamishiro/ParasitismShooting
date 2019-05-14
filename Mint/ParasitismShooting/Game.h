@@ -14,6 +14,7 @@ private:
 	void operator=(const Game&);	// ‘ã“ü‹ÖŽ~
 
 	const Vector2 ScreenSize;
+	float time, fps, count, oldcount;
 
 public:
 	// ¼Ý¸ÞÙÄÝ²ÝÀ°Ìª°½
@@ -43,5 +44,6 @@ public:
 	void ChangeScene(Scene* s);
 
 	const Vector2& GetScreenSize()const;
+
 };
 

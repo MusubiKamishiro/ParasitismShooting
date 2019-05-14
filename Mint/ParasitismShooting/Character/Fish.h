@@ -18,16 +18,19 @@ private:
 	Enemy* Clone();
 
 	void Move();
+	void Die();
+	void Stunning();
+	void StunDamage();
+	void Damage();
 	
 	void (Fish::*updater)();
 
 	const Player& player;
 
-
+	bool flag;
 public:
 	~Fish();
 
 	void Update();
-	void Draw();
-	void Damage();
+	void Draw(int time);
 };

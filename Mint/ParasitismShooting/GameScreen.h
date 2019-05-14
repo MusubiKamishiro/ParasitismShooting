@@ -5,7 +5,7 @@ class GameScreen
 private:
 	Vector2 gssize;
 	int screen;
-	
+	Vector2f swing;
 
 public:
 	GameScreen();
