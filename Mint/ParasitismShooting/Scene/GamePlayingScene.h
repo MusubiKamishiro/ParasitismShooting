@@ -37,6 +37,8 @@ private:
 	void GameUpdate(const Peripheral& p);
 	void ContinueUpdate(const Peripheral& p);
 
+	void Draw(const Peripheral& p, const int& time);
+
 	float time;
 	Vector2 ssize;
 	bool pauseFlag;

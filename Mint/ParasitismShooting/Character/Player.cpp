@@ -10,7 +10,11 @@ Player::Player()
 	ReadActionFile("action/player.act");
 	ChangeAction("Idle");
 	SetCharaSize(0.1f);
-	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
+	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
+	charaData.HP = 1;
+	charaData.moveVel = 3.0;
+	charaData.shotType = "ShotNormal";
+	originData = charaData;
 
 	gs.reset(new GameScreen());
 	Vector2 gssize = gs->GetGSSize();
@@ -21,10 +25,8 @@ Player::Player()
 	down = gssize.y;
 
 	vel = Vector2f(0, 0);
-	moveVel = 3.0;
-	startPos = Vector2f(gssize.x / 2, gssize.y - 20);
+	startPos = Vector2f(gssize.x / 2 + gs->outscreen / 2, gssize.y - 20);
 	pos = startPos;
-	HP = 1;
 	count = 0;
 	parasFlag = false;
 	
@@ -48,11 +50,11 @@ void Player::Update(const Peripheral &p)
 void Player::Move(const Peripheral & p)
 {
 	vel = Vector2f();
-	float mvel = moveVel;
+	float mvel = charaData.moveVel;
 
 	if (p.IsPressing(PAD_INPUT_1))
 	{
-		mvel = moveVel / 2;
+		mvel = charaData.moveVel / 2;
 	}
 
 	// ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚çˆÚ“®(¡‰ñ‚Í8•ûŒü)
@@ -82,13 +84,14 @@ void Player::Move(const Peripheral & p)
 
 void Player::Damage(const Peripheral & p)
 {
-	HP--;
-	if (HP <= 0)
+	--charaData.HP;
+	if (charaData.HP <= 0)
 	{
 		if (parasFlag)
 		{
-			HP = 1;
+			charaData.HP = 1;
 			parasFlag = false;
+			ParasiticCancel(p);
 			updater = &Player::Invincible;
 		}
 		else
@@ -124,22 +127,24 @@ void Player::Die(const Peripheral &p)
 
 void Player::Reborn(const Peripheral & p)
 {
-	HP = 1;
+	charaData = originData;
 	updater = &Player::Invincible;
 }
 
-void Player::Parasitic(const Peripheral & p, const int &eimg, const float &charasize, const ActionData &actdata, const int& hp)
+
+void Player::Parasitic(const Peripheral & p, const CharaData& cdata)
 {
 	parasFlag = true;
 
-	actData = actdata;
-	img = eimg;
-	charaSize = charasize;
-	HP = hp;
-	
+	charaData = cdata;
 
 	count = 0;
 	updater = &Player::Invincible;
+}
+
+void Player::ParasiticCancel(const Peripheral & p)
+{
+	charaData = originData;
 }
 
 
@@ -147,13 +152,13 @@ void Player::Draw(const int& time)
 {
 	if (updater != &Player::Invincible)
 	{
-		CharacterObject::Draw(img);
+		CharacterObject::Draw(charaData.img);
 	}
 	else
 	{
 		if ((time / 5) % 2)
 		{
-			CharacterObject::Draw(img);
+			CharacterObject::Draw(charaData.img);
 		}
 	}
 }

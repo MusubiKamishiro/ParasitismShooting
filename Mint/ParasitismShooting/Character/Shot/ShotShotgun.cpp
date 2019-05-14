@@ -8,7 +8,7 @@ ShotShotgun::ShotShotgun(const Player& player/*, const Enemy& enemy*/) : Shot(pl
 	ReadActionFile("action/shot.act");
 	ChangeAction("Shot2");
 	SetCharaSize(0.5f);
-	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
+	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 
 	updater = &ShotShotgun::Move;
 }
@@ -50,5 +50,5 @@ void ShotShotgun::Update()
 
 void ShotShotgun::Draw()
 {
-	CharacterObject::Draw(img);
+	CharacterObject::Draw(charaData.img);
 }

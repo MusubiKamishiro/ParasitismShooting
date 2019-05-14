@@ -13,6 +13,7 @@ public:
 
 	void SetAndClearScreen();
 	void DrawAndChangeScreen();
+	void SetGaussFilter();
 	const Vector2 GetGSSize()const;
 
 	const int outscreen;	// ‰æ–Ê‚É‚Í‰f‚ç‚È‚¢ƒXƒNƒŠ[ƒ“‚Ì•

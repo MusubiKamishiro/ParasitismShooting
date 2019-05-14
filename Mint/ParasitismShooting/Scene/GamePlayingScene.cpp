@@ -73,6 +73,8 @@ void GamePlayingScene::ContinueUpdate(const Peripheral & p)
 	}
 }
 
+
+
 GamePlayingScene::GamePlayingScene()
 {
 	std::ifstream ifs("stage/stage1.csv");
@@ -118,6 +120,11 @@ GamePlayingScene::GamePlayingScene()
 	ef.reset(new EnemyFactory(*player));
 	cd.reset(new CollisionDetector());
 	
+	ef->Create("fish", Vector2f(250, 100), 0, 0, 0, 1, 1, 3);
+	ef->Create("fish", Vector2f(100, 100), 0, 0, 0, 1, 1, 3);
+	ef->Create("fish", Vector2f(150, 100), 0, 0, 0, 1, 1, 3);
+	ef->Create("fish", Vector2f(200, 100), 0, 0, 0, 1, 1, 3);
+
 	ssize = Game::Instance().GetScreenSize();
 	updater = &GamePlayingScene::FadeinUpdate;
 }
@@ -163,9 +170,10 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 			if (p.IsPressing(PAD_INPUT_2) && ((int)time % 3 ==0))
 			{
-				sf->Create("ShotNormal", player->GetPos(), 180, 5, 1, 4, SHOT_PTN::NORMAL, SHOOTER::PLAYER);
+				//std::string s = player->GetCharaData().shotType;
+				sf->Create(player->GetCharaData().shotType, player->GetPos(), 180, 5, 1, 4, SHOT_PTN::NORMAL, SHOOTER::PLAYER);
 			}
-			if (p.IsPressing(PAD_INPUT_4) && ((int)time % 3 == 0))
+			/*if (p.IsPressing(PAD_INPUT_4) && ((int)time % 3 == 0))
 			{
 				sf->Create("ShotShotgun", player->GetPos(), 0, 5, 1, 3, SHOT_PTN::SHOTGUN, SHOOTER::PLAYER);
 			}
@@ -176,7 +184,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 			if (p.IsPressing(PAD_INPUT_6) && ((int)time % 3 == 0))
 			{
 				sf->Create("ShotTracking", player->GetPos(), 0, 5, 1, 3, SHOT_PTN::TRACKING, SHOOTER::PLAYER);
-			}
+			}*/
 
 			for (auto& enemy : ef->GetLegion())
 			{
@@ -195,7 +203,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 						if (cd->IsCollision(player->GetRects(pRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(pRect.rt, eRect.rt)))
 						{
 							// “G‚É‹C—Í‚ª‚ ‚ê‚Îƒ_ƒ[ƒW
-							if (enemy->GetSP() > 0)
+							if (enemy->GetCharaData().SP > 0)
 							{
 								if (player->updater != &Player::Invincible)
 								{
@@ -215,7 +223,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 								else
 								{
 									// “G‚Ì—Í‚ğè‚É“ü‚ê‚é
-									player->Parasitic(p, enemy->GetImg(), enemy->GetCharaSize(), enemy->GetActionData(), enemy->GetHP());
+									player->Parasitic(p, enemy->GetCharaData());
 									enemy->Die();
 								}
 							}
@@ -239,23 +247,34 @@ void GamePlayingScene::Update(const Peripheral& p)
 			}
 			time++;
 		}
+		else
+		{
+			pmenu->Update(p);
+		}
 	}
 
 	sf->OutofScreen();
 	sf->ShotDelete();
 	ef->EnemyDelete();
 
+	Draw(p, time);
+	
+	(this->*updater)(p);
+}
+
+void GamePlayingScene::Draw(const Peripheral& p, const int & time)
+{
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
-	hud->Draw(player->GetHP());
-	
+	hud->Draw(player->GetCharaData().HP);
+
 	// ƒQ[ƒ€‰æ–Ê‚Ì•`‰æ€”õ
 	gs->SetAndClearScreen();
-	
+
 	bg->Draw((int)time);
 	player->Draw((int)time);
-	
-	for(auto& shot : sf->GetLegion())
+
+	for (auto& shot : sf->GetLegion())
 	{
 		shot->Draw();
 	}
@@ -266,7 +285,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 	if (pauseFlag)
 	{
-		pmenu->Update(p);
+		gs->SetGaussFilter();
 		pmenu->Draw();
 	}
 
@@ -276,6 +295,4 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, ssize.x, ssize.y, 0x000000, true);
-	(this->*updater)(p);
 }
-

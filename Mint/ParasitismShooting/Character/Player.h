@@ -28,12 +28,14 @@ private:
 	void Invincible(const Peripheral &p);	// 無敵時間
 	void Die(const Peripheral &p);			// 敵機又は弾に当たって死んだ
 	void Reborn(const Peripheral &p);		// 復活
-	void Parasitic(const Peripheral &p, const int &eimg, const float &charasize, const ActionData &actdata, const int& hp);	// 寄生
+	void Parasitic(const Peripheral &p, const CharaData& cdata);	// 寄生
+	void ParasiticCancel(const Peripheral &p);		// 寄生解除
 
 	void NotOutOfRange();		// 範囲外に行かせない
 
+	CharaData originData;		// 寄生前の元々のデータ
 	Vector2f startPos;			// 開始座標
-	float moveVel;				// 移動量
+
 	int count;
 
 	bool parasFlag;				// 寄生中か否か

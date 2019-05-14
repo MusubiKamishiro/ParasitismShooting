@@ -1,11 +1,7 @@
 #pragma once
-//#include <string>
 #include <vector>
 #include <map>
-#include <memory>
 #include "../Geometry.h"
-
-class ShotFactory;
 
 
 // ｱｸｼｮﾝ矩形定義
@@ -29,16 +25,29 @@ struct ActionInfo {
 	bool isLoop;				// ﾙｰﾌﾟする
 	CutInfoes_t cuts;			// ｶｯﾄ情報配列
 };
+
 struct ActionData {
 	std::string imgFilePath;					// 画像ﾌｧｲﾙﾊﾟｽ
 	std::map<std::string, ActionInfo> animInfo;	// ｱｸｼｮﾝ情報
+};
+
+// キャラクターが持つべきデータ
+// 寄生の際に使用する
+struct CharaData
+{
+	ActionData actData;		// アクションデータ
+	int img;				// 画像
+	float charaSize;		// キャラクターの拡大率
+	int HP;					// 体力
+	int SP;					// スタミナ
+	float moveVel;			// 移動量
+	const char* shotType;	// 弾の名前
 };
 
 // ｷｬﾗｸﾀｰ基底ｸﾗｽ
 class CharacterObject
 {
 protected:
-	ActionData actData;
 	// ﾌｧｲﾙの読み込み
 	void ReadActionFile(const char* actionPath);
 	// アニメーション切り替え
@@ -46,8 +55,8 @@ protected:
 
 	void SetCharaSize(const float& size);
 
-	int HP;			// 体力
-	int SP;			// スタミナ
+
+	CharaData charaData;
 
 	int movePtn;	// 移動パターン
 	int cnt;		// キャラクターごとのカウント
@@ -59,17 +68,11 @@ protected:
 	Vector2f vel;	// 移動速度
 	Rect rect;		// 中心、幅と高さ
 
-	int img;		// 画像
 	//shottype
-	//bombtype
 
 	std::string nowActionName;	// 現在再生中のｱｸｼｮﾝ名
 	unsigned int nowCutIdx;		// 現在表示中のｶｯﾄ番号
 	unsigned int flame;			// そのｶｯﾄ番号における経過時間
-
-	float charaSize;			// キャラクターの拡大率
-
-	std::shared_ptr<ShotFactory> sf;
 
 public:
 	CharacterObject();
@@ -83,13 +86,9 @@ public:
 	// 矩形の情報をもらう
 	Rect GetRects(Rect& rect)const;
 	std::vector<ActRect> GetActRect()const;
-
-	ActionData GetActionData()const;
+	
+	CharaData GetCharaData()const;
 	Vector2f GetPos()const;
-	int GetHP()const;
-	int GetSP()const;
-	int GetImg()const;
-	float GetCharaSize()const;
 	bool GetLifeFlag()const;
 };
 

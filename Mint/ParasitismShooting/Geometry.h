@@ -77,7 +77,7 @@ struct Rect {
 	Rect(const Vector2& inc, const Size& ins) : center(inc), size(ins) {}
 
 	Vector2 center;	// ’†S
-	Size size;			// •‚Æ‚‚³
+	Size size;		// •‚Æ‚‚³
 
 
 	const int Left()const

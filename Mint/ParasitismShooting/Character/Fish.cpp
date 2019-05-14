@@ -2,7 +2,6 @@
 #include "../Game.h"
 #include <DxLib.h>
 #include "EnemyActionPattern.h"
-#include "Shot/ShotFactory.h"
 
 
 Fish::Fish(const Player& player) : Enemy(player), player(player)
@@ -10,7 +9,8 @@ Fish::Fish(const Player& player) : Enemy(player), player(player)
 	ReadActionFile("action/fish.act");
 	ChangeAction("Idle");
 	SetCharaSize(0.07f);
-	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
+	charaData.shotType = "ShotRadiation";
+	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 	
 	updater = &Fish::Move;
 }
@@ -33,7 +33,7 @@ Enemy * Fish::Clone()
 void Fish::Move()
 {
 	EnemyActionPattern eAction;
-	eAction.Update(movePtn, pos, { 1.0f,1.0f }, cnt, wait, lifeFlag);
+	eAction.Update(movePtn, pos, charaData.moveVel, cnt, wait, lifeFlag);
 	cnt++;
 }
 
@@ -49,8 +49,8 @@ void Fish::Stunning()
 
 void Fish::StunDamage()
 {
-	--SP;
-	if (SP <= 0)
+	--charaData.SP;
+	if (charaData.SP <= 0)
 	{
 		updater = &Fish::Stunning;
 	}
@@ -71,20 +71,20 @@ void Fish::Draw(int time)
 {
 	if (updater != &Fish::Stunning)
 	{
-		CharacterObject::Draw(img);
+		CharacterObject::Draw(charaData.img);
 	}
 	else
 	{
 		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs((time*5 % 255) - 127) + 128);
-		CharacterObject::Draw(img);
+		CharacterObject::Draw(charaData.img);
 		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 	}
 }
 
 void Fish::Damage()
 {
-	HP -= 1;
-	if (HP <= 0)
+	charaData.HP -= 1;
+	if (charaData.HP <= 0)
 	{
 		updater = &Fish::Die;
 	}

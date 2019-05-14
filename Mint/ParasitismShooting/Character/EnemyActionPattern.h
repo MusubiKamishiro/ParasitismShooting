@@ -20,14 +20,13 @@ class EnemyActionPattern
 public:
 	EnemyActionPattern();
 	~EnemyActionPattern();
-	void Update(int movePtn, Vector2f &pos, Vector2f Speed, int cnt, int wait, bool lifeFlag);
+	void Update(int movePtn, Vector2f &pos, float Speed, int cnt, int wait, bool lifeFlag);
 private:
-	void UpDown(Vector2f &pos, Vector2f speed, int cnt, int wait, bool lifeFlag);		// ã‰ºˆÚ“®
-	void LeftRight(Vector2f &pos, Vector2f speed, int cnt, int wait, bool lifeFlag);		// ¶‰E‚É—š‚¯‚é
-	void Rush(Vector2f &pos, Vector2f speed, int cnt, int wait, bool lifeFlag);		// ©‹@‚É“ÁU‚ğdŠ|‚¯‚é
-	void Wavy(Vector2f &pos, Vector2f speed, int cnt, int wait, bool lifeFlag);		// ”góˆÚ“®
-	void Stun(Vector2f &pos, Vector2f speed);		// ‹Câó‘Ô
+	void UpDown(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag);		// ã‰ºˆÚ“®
+	void LeftRight(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag);		// ¶‰E‚É—š‚¯‚é
+	void Rush(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag);		// ©‹@‚É“ÁU‚ğdŠ|‚¯‚é
+	void Wavy(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag);		// ”góˆÚ“®
+	void Stun(Vector2f &pos, float speed);		// ‹Câó‘Ô
 
-	void(EnemyActionPattern::*movementPtn[MOVEMENT_PTN_MAX])(Vector2f &pos, Vector2f vel, int cnt, int wait, bool lifeFlag)/* = { &EnemyActionPattern::UpDown,&EnemyActionPattern::LeftRight }*/;
+	void(EnemyActionPattern::*movementPtn[MOVEMENT_PTN_MAX])(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag)/* = { &EnemyActionPattern::UpDown,&EnemyActionPattern::LeftRight }*/;
 };
- 

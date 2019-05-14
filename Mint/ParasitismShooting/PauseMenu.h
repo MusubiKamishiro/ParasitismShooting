@@ -1,6 +1,14 @@
 #pragma once
 #include <memory>
+#include <string>
 #include "Geometry.h"
+
+enum PauseMenuList
+{
+	resume,
+	end,
+	max
+};
 
 class GameScreen;
 class Peripheral;
@@ -8,10 +16,12 @@ class Peripheral;
 class PauseMenu
 {
 private:
-	int img;
+	std::shared_ptr<GameScreen> gs;
 	Vector2 ssize;
 
-	std::shared_ptr<GameScreen> gs;
+	std::string pause, resume, end;
+
+	int GetStringPosx(const std::string& name);
 
 public:
 	PauseMenu();
