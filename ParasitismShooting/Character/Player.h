@@ -33,6 +33,7 @@ private:
 
 	void NotOutOfRange();		// 範囲外に行かせない
 
+	CharaData originData;		// 寄生前の元々のデータ
 	Vector2f startPos;			// 開始座標
 
 	int count;

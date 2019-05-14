@@ -120,6 +120,11 @@ GamePlayingScene::GamePlayingScene()
 	ef.reset(new EnemyFactory(*player));
 	cd.reset(new CollisionDetector());
 	
+	ef->Create("fish", Vector2f(250, 100), 0, 0, 0, 1, 1, 3);
+	ef->Create("fish", Vector2f(100, 100), 0, 0, 0, 1, 1, 3);
+	ef->Create("fish", Vector2f(150, 100), 0, 0, 0, 1, 1, 3);
+	ef->Create("fish", Vector2f(200, 100), 0, 0, 0, 1, 1, 3);
+
 	ssize = Game::Instance().GetScreenSize();
 	updater = &GamePlayingScene::FadeinUpdate;
 }
