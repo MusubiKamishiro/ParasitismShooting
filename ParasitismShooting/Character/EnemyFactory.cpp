@@ -39,9 +39,10 @@ Enemy * EnemyFactory::Create(const char * enemyname, Vector2f pos, int movePtn, 
 		enemy->movePtn = movePtn;
 		enemy->cnt = cnt;
 		enemy->wait = wait;
-		enemy->HP = hp;
-		enemy->SP = sp;
+		enemy->charaData.HP = hp;
+		enemy->charaData.SP = sp;
 		//enemy->vel = speed;
+		enemy->charaData.moveVel = speed;
 		legion.push_back(enemy);
 
 		return enemy;

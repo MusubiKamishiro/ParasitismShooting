@@ -8,7 +8,7 @@ ShotTracking::ShotTracking(const Player& player/*, const Enemy& enemy*/) : Shot(
 	ReadActionFile("action/shot.act");
 	ChangeAction("Shot3");
 	SetCharaSize(0.5f);
-	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
+	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 
 	updater = &ShotTracking::Move;
 }
@@ -50,5 +50,5 @@ void ShotTracking::Update()
 
 void ShotTracking::Draw()
 {
-	CharacterObject::Draw(img);
+	CharacterObject::Draw(charaData.img);
 }

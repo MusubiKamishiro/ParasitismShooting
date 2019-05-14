@@ -8,7 +8,7 @@ ShotRandom::ShotRandom(const Player& player/*, const Enemy& enemy*/) : Shot(play
 	ReadActionFile("action/shot.act");
 	ChangeAction("Shot5");
 	SetCharaSize(0.5f);
-	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
+	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 
 	updater = &ShotRandom::Move;
 }
@@ -50,5 +50,5 @@ void ShotRandom::Update()
 
 void ShotRandom::Draw()
 {
-	CharacterObject::Draw(img);
+	CharacterObject::Draw(charaData.img);
 }

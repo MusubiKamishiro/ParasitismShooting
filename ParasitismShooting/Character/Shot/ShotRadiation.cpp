@@ -8,7 +8,7 @@ ShotRadiation::ShotRadiation(const Player& player/*, const Enemy& enemy*/) : Sho
 	ReadActionFile("action/shot.act");
 	ChangeAction("Shot4");
 	SetCharaSize(0.5f);
-	img = DxLib::LoadGraph(actData.imgFilePath.c_str());
+	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 
 	updater = &ShotRadiation::Move;
 }
@@ -58,7 +58,7 @@ void ShotRadiation::Update()
 
 void ShotRadiation::Draw()
 {
-	CharacterObject::Draw(img);
+	CharacterObject::Draw(charaData.img);
 }
 
 void ShotRadiation::rotation2D(float * xp, float * yp, float x, float y, float xc, float yc, float theta)

@@ -73,6 +73,8 @@ void GamePlayingScene::ContinueUpdate(const Peripheral & p)
 	}
 }
 
+
+
 GamePlayingScene::GamePlayingScene()
 {
 	std::ifstream ifs("stage/stage1.csv");
@@ -195,7 +197,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 						if (cd->IsCollision(player->GetRects(pRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(pRect.rt, eRect.rt)))
 						{
 							// “G‚É‹C—Í‚ª‚ ‚ê‚Îƒ_ƒ[ƒW
-							if (enemy->GetSP() > 0)
+							if (enemy->GetCharaData().SP > 0)
 							{
 								if (player->updater != &Player::Invincible)
 								{
@@ -215,7 +217,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 								else
 								{
 									// “G‚Ì—Í‚ğè‚É“ü‚ê‚é
-									player->Parasitic(p, enemy->GetImg(), enemy->GetCharaSize(), enemy->GetActionData(), enemy->GetHP());
+									player->Parasitic(p, enemy->GetCharaData());
 									enemy->Die();
 								}
 							}
@@ -239,23 +241,34 @@ void GamePlayingScene::Update(const Peripheral& p)
 			}
 			time++;
 		}
+		else
+		{
+			pmenu->Update(p);
+		}
 	}
 
 	sf->OutofScreen();
 	sf->ShotDelete();
 	ef->EnemyDelete();
 
+	Draw(p, time);
+	
+	(this->*updater)(p);
+}
+
+void GamePlayingScene::Draw(const Peripheral& p, const int & time)
+{
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
-	hud->Draw(player->GetHP());
-	
+	hud->Draw(player->GetCharaData().HP);
+
 	// ƒQ[ƒ€‰æ–Ê‚Ì•`‰æ€”õ
 	gs->SetAndClearScreen();
-	
+
 	bg->Draw((int)time);
 	player->Draw((int)time);
-	
-	for(auto& shot : sf->GetLegion())
+
+	for (auto& shot : sf->GetLegion())
 	{
 		shot->Draw();
 	}
@@ -266,7 +279,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 	if (pauseFlag)
 	{
-		pmenu->Update(p);
+		gs->SetGaussFilter();
 		pmenu->Draw();
 	}
 
@@ -276,6 +289,4 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, ssize.x, ssize.y, 0x000000, true);
-	(this->*updater)(p);
 }
-

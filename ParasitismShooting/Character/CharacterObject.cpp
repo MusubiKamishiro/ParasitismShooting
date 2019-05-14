@@ -26,7 +26,7 @@ void CharacterObject::ReadActionFile(const char * actionPath)
 
 	// substr(a, b)	aï∂éöñ⁄Ç©ÇÁbï∂éöñ⁄ÇÃïîï™ï∂éöÇê∂ê¨
 	// ç°âÒÇÃèÍçáÅAêÊì™Ç©ÇÁfind_last_ofÇ≈å©Ç¬ÇØÇΩí∑Ç≥Ç‹Ç≈ + Ç∑ÇÈ
-	actData.imgFilePath = actPath.substr(0, ipos) + FilePath;
+	charaData.actData.imgFilePath = actPath.substr(0, ipos) + FilePath;
 
 	int actionCnt = 0;
 	DxLib::FileRead_read(&actionCnt, sizeof(actionCnt), h);
@@ -69,7 +69,7 @@ void CharacterObject::ReadActionFile(const char * actionPath)
 		}
 
 		// ±∏ºÆ›œØÃﬂÇ…ìoò^
-		actData.animInfo[actionName] = actInfo;
+		charaData.actData.animInfo[actionName] = actInfo;
 	}
 	DxLib::FileRead_close(h);
 }
@@ -83,7 +83,7 @@ void CharacterObject::ChangeAction(const char * name)
 
 void CharacterObject::SetCharaSize(const float& size)
 {
-	charaSize = size;
+	charaData.charaSize = size;
 }
 
 CharacterObject::CharacterObject()
@@ -99,11 +99,11 @@ CharacterObject::~CharacterObject()
 
 void CharacterObject::Draw(int img)
 {
-	auto& actInfo = actData.animInfo[nowActionName];
+	auto& actInfo = charaData.actData.animInfo[nowActionName];
 	auto& cut = actInfo.cuts[nowCutIdx];
 	auto& rc = cut.rect;
 	
-	DxLib::DrawRectRotaGraph2F(pos.x, pos.y, rc.Left(), rc.Top(), rc.Width(), rc.Height(), cut.center.x, cut.center.y, charaSize, 0.0, img, true, false);
+	DxLib::DrawRectRotaGraph2F(pos.x, pos.y, rc.Left(), rc.Top(), rc.Width(), rc.Height(), cut.center.x, cut.center.y, charaData.charaSize, 0.0, img, true, false);
 
 
 #ifdef _DEBUG
@@ -122,58 +122,41 @@ void CharacterObject::DebugDraw(ActRect actrect)
 
 	if (actrect.rt == RectType::circle)
 	{
-		DxLib::DrawCircle(rc.center.x * charaSize + pos.x - (rc.Width() * charaSize) / 2, rc.center.y * charaSize + pos.y - (rc.Height() * charaSize) / 2, (rc.Width() * charaSize) / 2, 0x00ff00, false);
+		DxLib::DrawCircle(rc.center.x * charaData.charaSize + pos.x - (rc.Width() * charaData.charaSize) / 2,
+			rc.center.y * charaData.charaSize + pos.y - (rc.Height() * charaData.charaSize) / 2, (rc.Width() * charaData.charaSize) / 2, 0x00ff00, false);
 	}
 	else if (actrect.rt == RectType::box)
 	{
-		DxLib::DrawBox(rc.Left() * charaSize + pos.x, rc.Top() * charaSize + pos.y, rc.Right() * charaSize + pos.x, rc.Bottom() * charaSize + pos.y, 0x00ff00, false);
+		DxLib::DrawBox(rc.Left() * charaData.charaSize + pos.x, rc.Top() * charaData.charaSize + pos.y,
+			rc.Right() * charaData.charaSize + pos.x, rc.Bottom() * charaData.charaSize + pos.y, 0x00ff00, false);
 	}
 }
 
 Rect CharacterObject::GetRects(Rect& rect)const
 {
 	Rect rc = rect;
-	rc.center.x = rc.center.x * charaSize + pos.x;
-	rc.center.y = rc.center.y * charaSize + pos.y;
-	rc.size.height *= charaSize;
-	rc.size.width *= charaSize;
+	rc.center.x = rc.center.x * charaData.charaSize + pos.x;
+	rc.center.y = rc.center.y * charaData.charaSize + pos.y;
+	rc.size.height *= charaData.charaSize;
+	rc.size.width *= charaData.charaSize;
 
 	return rc;
 }
 
 std::vector<ActRect> CharacterObject::GetActRect() const
 {
-	return actData.animInfo.at(nowActionName).cuts[nowCutIdx].actrects;
+	return charaData.actData.animInfo.at(nowActionName).cuts[nowCutIdx].actrects;
 }
 
-ActionData CharacterObject::GetActionData() const
+CharaData CharacterObject::GetCharaData() const
 {
-	return actData;
+	return charaData;
 }
+
 
 Vector2f CharacterObject::GetPos() const
 {
 	return pos;
-}
-
-int CharacterObject::GetHP() const
-{
-	return HP;
-}
-
-int CharacterObject::GetSP() const
-{
-	return SP;
-}
-
-int CharacterObject::GetImg() const
-{
-	return img;
-}
-
-float CharacterObject::GetCharaSize() const
-{
-	return charaSize;
 }
 
 bool CharacterObject::GetLifeFlag() const
