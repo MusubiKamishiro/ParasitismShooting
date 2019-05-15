@@ -2,6 +2,7 @@
 #include <DxLib.h>
 #include <string>
 #include "Peripheral.h"
+#include "Credit.h"
 
 #include "Scene/TitleScene.h"
 #include "resource.h"
@@ -10,6 +11,7 @@
 Game::Game() : ScreenSize(800, 500)
 {
 	time = fps = count = oldcount = 0.0;
+	oldEnter = enter = 0;
 }
 
 void Game::operator=(const Game &)
@@ -50,7 +52,6 @@ void Game::Initialize()
 	DxLib::SetDrawScreen(DX_SCREEN_BACK);				// 裏画面に描画
 
 	AddFontResourceEx("Ronde-B_square.otf", FR_PRIVATE, nullptr);
-	
 	DxLib::ChangeFont("ロンド B スクエア", DX_CHARSET_DEFAULT);
 	DxLib::SetFontSize(24);
 
@@ -60,6 +61,7 @@ void Game::Initialize()
 void Game::Run()
 {
 	Peripheral peripheral;
+	Credit credit;
 
 	while (DxLib::ProcessMessage() == 0)
 	{
@@ -70,12 +72,17 @@ void Game::Run()
 		{
 			break;
 		}
+		oldEnter = enter;
+		enter = DxLib::CheckHitKey(KEY_INPUT_RETURN);
+		if (enter && !oldEnter)
+		{
+			credit.AddCredit();
+		}
 		peripheral.Update();
 
 		scene->Update(peripheral);
 
 		count = DxLib::GetNowCount();
-
 		if ((count - oldcount) > 1000)
 		{
 			fps = ((time * 1000) / (count - oldcount));
@@ -83,10 +90,13 @@ void Game::Run()
 			time = 0;
 		}
 
+		// fps, クレジット表示
 		std::string s = "fps：" + std::to_string(fps);
 		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 		DxLib::DrawString(0, 0, s.c_str(), 0xff00ff);
-		
+
+		credit.Draw();
+				
 		DxLib::ScreenFlip();
 	}
 }

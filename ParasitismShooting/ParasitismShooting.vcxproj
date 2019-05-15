@@ -139,6 +139,7 @@
     <ClCompile Include="Character\Shot\ShotTracking.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="ContinueMenu.cpp" />
+    <ClCompile Include="Credit.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="Geometry.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="Character\Shot\ShotTracking.h" />
     <ClInclude Include="CollisionDetector.h" />
     <ClInclude Include="ContinueMenu.h" />
+    <ClInclude Include="Credit.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="Geometry.h" />

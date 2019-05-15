@@ -122,11 +122,6 @@ GamePlayingScene::GamePlayingScene()
 	ef.reset(new EnemyFactory(*player));
 	cd.reset(new CollisionDetector());
 	
-	ef->Create("fish", Vector2f(250, 100), 0, 0, 0, 1, 1, 3);
-	ef->Create("fish", Vector2f(100, 100), 0, 0, 0, 1, 1, 3);
-	ef->Create("fish", Vector2f(150, 100), 0, 0, 0, 1, 1, 3);
-	ef->Create("fish", Vector2f(200, 100), 0, 0, 0, 1, 1, 3);
-
 	ssize = Game::Instance().GetScreenSize();
 	updater = &GamePlayingScene::FadeinUpdate;
 }
@@ -226,9 +221,15 @@ void GamePlayingScene::Update(const Peripheral& p)
 						{
 							if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
 							{
-								//enemy->Damage();
-								enemy->StunDamage();
-								shot->Delete();
+								if (player->parasFlag)
+								{
+									enemy->Damage();
+								}
+								else
+								{
+									enemy->StunDamage();
+									shot->Delete();
+								}
 							}
 						}
 					}
@@ -265,7 +266,7 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 {
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
-	hud->Draw(player->GetCharaData().HP);
+	hud->Draw(player->GetCharaData().HP, player->parasFlag);
 
 	// ƒQ[ƒ€‰æ–Ê‚Ì•`‰æ€”õ
 	gs->SetAndClearScreen();
@@ -273,10 +274,13 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 	bg->Draw((int)time);
 	player->Draw((int)time);
 
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 64);
 	for (auto& shot : sf->GetLegion())
 	{
 		shot->Draw();
 	}
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+
 	for (auto& enemy : ef->GetLegion())
 	{
 		enemy->Draw((int)time);
