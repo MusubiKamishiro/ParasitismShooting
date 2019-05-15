@@ -10,6 +10,7 @@ Fish::Fish(const Player& player) : Enemy(player), player(player)
 	ChangeAction("Idle");
 	SetCharaSize(0.07f);
 	charaData.shotType = "ShotRadiation";
+	charaData.ShotReady = false;
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 	
 	updater = &Fish::Move;
@@ -32,8 +33,12 @@ Enemy * Fish::Clone()
 
 void Fish::Move()
 {
+	if (charaData.ShotReady == true)
+	{
+		charaData.ShotReady = false;
+	}
 	EnemyActionPattern eAction;
-	eAction.Update(movePtn, pos, charaData.moveVel, cnt, wait, lifeFlag);
+	eAction.Update(movePtn, pos, charaData.moveVel, cnt, wait, lifeFlag, charaData.ShotReady);
 	cnt++;
 }
 

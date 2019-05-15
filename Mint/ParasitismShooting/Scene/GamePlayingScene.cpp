@@ -120,10 +120,10 @@ GamePlayingScene::GamePlayingScene()
 	ef.reset(new EnemyFactory(*player));
 	cd.reset(new CollisionDetector());
 	
-	ef->Create("fish", Vector2f(250, 100), 0, 0, 0, 1, 1, 3);
+	/*ef->Create("fish", Vector2f(250, 100), 0, 0, 0, 1, 1, 3);
 	ef->Create("fish", Vector2f(100, 100), 0, 0, 0, 1, 1, 3);
 	ef->Create("fish", Vector2f(150, 100), 0, 0, 0, 1, 1, 3);
-	ef->Create("fish", Vector2f(200, 100), 0, 0, 0, 1, 1, 3);
+	ef->Create("fish", Vector2f(200, 100), 0, 0, 0, 1, 1, 3);*/
 
 	ssize = Game::Instance().GetScreenSize();
 	updater = &GamePlayingScene::FadeinUpdate;
@@ -171,7 +171,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 			if (p.IsPressing(PAD_INPUT_2) && ((int)time % 3 ==0))
 			{
 				//std::string s = player->GetCharaData().shotType;
-				sf->Create(player->GetCharaData().shotType, player->GetPos(), 180, 5, 1, 4, SHOT_PTN::NORMAL, SHOOTER::PLAYER);
+				sf->Create(player->GetCharaData().shotType, player->GetPos(), 180, 5, 1, 4, SHOT_PTN::RADIATION, SHOOTER::PLAYER);
 			}
 			/*if (p.IsPressing(PAD_INPUT_4) && ((int)time % 3 == 0))
 			{
@@ -188,6 +188,10 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 			for (auto& enemy : ef->GetLegion())
 			{
+				if (enemy->GetShotReady())
+				{
+					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 180, 5, 1, 4, SHOT_PTN::RADIATION, SHOOTER::ENEMY);
+				}
 				enemy->Update();
 			}
 
@@ -239,7 +243,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 							{
 								//enemy->Damage();
 								enemy->StunDamage();
-								shot->Delete();
+								//shot->Delete();
 							}
 						}
 					}
