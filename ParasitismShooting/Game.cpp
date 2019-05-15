@@ -54,6 +54,8 @@ void Game::Initialize()
 	AddFontResourceEx("Ronde-B_square.otf", FR_PRIVATE, nullptr);
 	DxLib::ChangeFont("ロンド B スクエア", DX_CHARSET_DEFAULT);
 	DxLib::SetFontSize(24);
+	
+	coinSound = DxLib::LoadSoundMem("sound/tirin1.mp3");
 
 	ChangeScene(new TitleScene());
 }
@@ -76,6 +78,7 @@ void Game::Run()
 		enter = DxLib::CheckHitKey(KEY_INPUT_RETURN);
 		if (enter && !oldEnter)
 		{
+			DxLib::PlaySoundMem(coinSound, DX_PLAYTYPE_BACK);
 			credit.AddCredit();
 		}
 		peripheral.Update();
