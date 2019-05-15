@@ -18,7 +18,7 @@ class Menu
 public:
 	std::shared_ptr<GameScreen> gs;
 	std::vector<MenuData> menudata;
-	MenuData menuTitle;
+	std::vector <MenuData> menuTitle;
 	int selcnt;
 	Vector2 ssize;
 
@@ -29,6 +29,6 @@ public:
 	~Menu();
 
 	void Update(const Peripheral &p);
-	void Draw(const Vector2& shiftpos, const unsigned int& color);
+	void Draw(const Vector2& shiftpos);
 };
 

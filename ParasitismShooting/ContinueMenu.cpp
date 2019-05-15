@@ -8,7 +8,8 @@ ContinueMenu::ContinueMenu()
 {
 	menu.reset(new Menu());
 
-	menu->menuTitle = { Vector2(menu->GetStringPosx("コンティニューする？"), menu->ssize.y / 3), "コンティニューする？", 0xff00ff };
+	menu->menuTitle.push_back({ Vector2(menu->GetStringPosx("コンティニューする？"), menu->ssize.y / 3), "コンティニューする？", 0xff00ff });
+	menu->menuTitle.push_back({ Vector2(menu->GetStringPosx("コインを入れてね"), menu->ssize.y / 3 + 30), "コインを入れてね", 0xff00ff });
 	menu->menudata.push_back({ Vector2(menu->GetStringPosx("はい"), menu->ssize.y / 3 + 100), "はい", 0xff00ff });
 	menu->menudata.push_back({ Vector2(menu->GetStringPosx("いいえ"), menu->ssize.y / 3 + 130), "いいえ", 0xff00ff });
 }
@@ -37,5 +38,5 @@ bool ContinueMenu::Update(const Peripheral & p, bool & flag)
 
 void ContinueMenu::Draw()
 {
-	menu->Draw(Vector2(5, 5), 0x000000);
+	menu->Draw(Vector2(5, 5));
 }

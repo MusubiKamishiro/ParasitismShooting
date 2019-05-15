@@ -12,6 +12,7 @@ Menu::Menu()
 
 	menuTitle = {};
 	menudata.resize(0);
+	menuTitle.resize(0);
 	selcnt = 0;
 }
 
@@ -40,25 +41,27 @@ void Menu::Update(const Peripheral & p)
 	}
 }
 
-void Menu::Draw(const Vector2 & shiftpos, const unsigned int & color)
+void Menu::Draw(const Vector2 & shiftpos)
 {
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 64);
-	DxLib::DrawString(menuTitle.pos.x + shiftpos.x, menuTitle.pos.y + shiftpos.y, menuTitle.name, menuTitle.color);
+	for (auto& m : menuTitle)
+	{
+		DxLib::DrawString(m.pos.x + shiftpos.x, m.pos.y + shiftpos.y, m.name, m.color);
+	}
 	for (auto& m : menudata)
 	{
 		DxLib::DrawString(m.pos.x + shiftpos.x, m.pos.y + shiftpos.y, m.name, m.color);
 	}
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
-	DxLib::DrawString(menuTitle.pos.x, menuTitle.pos.y, menuTitle.name, menuTitle.color);
+	for (auto& m : menuTitle)
+	{
+		DxLib::DrawString(m.pos.x, m.pos.y, m.name, m.color);
+	}
 	for (int i = 0; i < menudata.size(); i++)
 	{
 		auto m = menudata.at(i);
 		if ((selcnt) == i)
-		{
-			DxLib::DrawString(m.pos.x + shiftpos.x, m.pos.y + shiftpos.y, m.name, color);
-		}
-		else
 		{
 			DxLib::DrawString(m.pos.x, m.pos.y, m.name, m.color);
 		}
