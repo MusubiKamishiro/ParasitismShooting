@@ -3,11 +3,15 @@
 #include "Shot/Shot.h"
 #include "Player.h"
 
-void EnemyActionPattern::UpDown(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag)
+void EnemyActionPattern::UpDown(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag, bool& ShotReady)
 {
 	if (cnt < wait / 4)
 	{
 		pos.y += speed;
+	}
+	if (cnt == wait / 2)
+	{
+		ShotReady = true;
 	}
 	if (cnt > wait)
 	{
@@ -15,15 +19,15 @@ void EnemyActionPattern::UpDown(Vector2f &pos, float speed, int cnt, int wait, b
 	}
 }
 
-void EnemyActionPattern::LeftRight(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag)
+void EnemyActionPattern::LeftRight(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag, bool& ShotReady)
 {
 }
 
-void EnemyActionPattern::Rush(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag)
+void EnemyActionPattern::Rush(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag, bool& ShotReady)
 {
 }
 
-void EnemyActionPattern::Wavy(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag)
+void EnemyActionPattern::Wavy(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag, bool& ShotReady)
 {
 }
 
@@ -44,7 +48,7 @@ EnemyActionPattern::~EnemyActionPattern()
 {
 }
 
-void EnemyActionPattern::Update(int movePtn, Vector2f & pos, float speed, int cnt, int wait, bool lifeFlag)
+void EnemyActionPattern::Update(int movePtn, Vector2f & pos, float speed, int cnt, int wait, bool lifeFlag, bool& ShotReady)
 {
-	(this->*movementPtn[movePtn])(pos, speed, cnt, wait, lifeFlag);
+	(this->*movementPtn[movePtn])(pos, speed, cnt, wait, lifeFlag, ShotReady);
 }

@@ -89,6 +89,7 @@ void CharacterObject::SetCharaSize(const float& size)
 CharacterObject::CharacterObject()
 {
 	lifeFlag = true;
+	shotReady = false;
 }
 
 
@@ -162,4 +163,9 @@ Vector2f CharacterObject::GetPos() const
 bool CharacterObject::GetLifeFlag() const
 {
 	return lifeFlag;
+}
+
+bool CharacterObject::GetShotReady() const
+{
+	return charaData.ShotReady;
 }

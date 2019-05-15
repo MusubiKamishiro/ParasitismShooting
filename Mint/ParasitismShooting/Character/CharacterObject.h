@@ -42,6 +42,7 @@ struct CharaData
 	int SP;					// スタミナ
 	float moveVel;			// 移動量
 	const char* shotType;	// 弾の名前
+	bool ShotReady;
 };
 
 // ｷｬﾗｸﾀｰ基底ｸﾗｽ
@@ -63,6 +64,7 @@ protected:
 	int wait;		// キャラクターごとの待機時間
 
 	bool lifeFlag;	// 生きてるか死んでるか
+	bool shotReady;
 
 	Vector2f pos;	// 座標
 	Vector2f vel;	// 移動速度
@@ -90,5 +92,6 @@ public:
 	CharaData GetCharaData()const;
 	Vector2f GetPos()const;
 	bool GetLifeFlag()const;
+	bool GetShotReady()const;
 };
 
