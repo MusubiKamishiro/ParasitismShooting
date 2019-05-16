@@ -40,7 +40,7 @@ private:
 	void ContinueUpdate(const Peripheral& p);
 	void MoveResultUpdate(const Peripheral& p);
 
-	void HitCol(const Peripheral& p);	// “–‚½‚è”»’è‚Ü‚Æ‚ß
+	void HitCol(const Peripheral& p);			// “–‚½‚è”»’è‚Ü‚Æ‚ß
 	void Draw(const Peripheral& p, const int& time);	// •`‰æ‚Ü‚Æ‚ß
 
 	float time;

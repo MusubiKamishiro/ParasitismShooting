@@ -36,10 +36,12 @@ private:
 	CharaData originData;		// 寄生前の元々のデータ
 	Vector2f startPos;			// 開始座標
 
-	int count;
-	int efect;
-
 	bool parasFlag;				// 寄生中か否か
+	bool pinchFlag;				// 寄生解除されたらtrueになる
+
+	int icount;
+	int ccount;
+	//int efect;
 
 	// 移動範囲限界値
 	int up;

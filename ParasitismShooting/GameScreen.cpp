@@ -28,13 +28,14 @@ void GameScreen::SetAndClearScreen()
 	DxLib::ClearDrawScreen();
 }
 
-void GameScreen::DrawAndChangeScreen()
+void GameScreen::DrawAndChangeScreen(bool& swingflag)
 {
 	DxLib::SetDrawScreen(DX_SCREEN_BACK);		// ï`âÊêÊÇñﬂÇ∑
 
-	if (DxLib::CheckHitKey(KEY_INPUT_H))
+	if (swingflag)
 	{
 		swing = Vector2f(outscreen / 3, outscreen / 3);
+		swingflag = false;
 	}
 
 	std::random_device seed_gen;

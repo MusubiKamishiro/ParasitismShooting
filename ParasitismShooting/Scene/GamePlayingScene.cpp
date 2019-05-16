@@ -51,6 +51,7 @@ void GamePlayingScene::FadeoutUpdate(const Peripheral & p)
 
 void GamePlayingScene::GameUpdate(const Peripheral & p)
 {
+	time++;
 	if ((player->updater == &Player::Die))
 	{
 		continueFlag = true;
@@ -174,15 +175,12 @@ void GamePlayingScene::Update(const Peripheral& p)
 			{
 				if (enemy->GetShotReady())
 				{
-					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 180, 5, 1, 4, SHOT_PTN::RADIATION, SHOOTER::ENEMY);
+					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 180, 5, 1, 30, SHOT_PTN::RADIATION, SHOOTER::ENEMY);
 				}
 				enemy->Update();
 			}
 
-			// “–‚½‚è”»’è
 			HitCol(p);
-
-			time++;
 		}
 		else
 		{
@@ -333,7 +331,7 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 	}
 
 	// ƒQ[ƒ€‰æ–Ê‚Ì•`‰æ
-	gs->DrawAndChangeScreen();
+	gs->DrawAndChangeScreen(player->pinchFlag);
 
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));

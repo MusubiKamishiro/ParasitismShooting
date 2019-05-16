@@ -14,7 +14,7 @@ public:
 	~GameScreen();
 
 	void SetAndClearScreen();
-	void DrawAndChangeScreen();
+	void DrawAndChangeScreen(bool& swingflag);
 	void SetGaussFilter();
 	const Vector2 GetGSSize()const;
 
