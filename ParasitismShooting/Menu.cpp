@@ -61,7 +61,7 @@ void Menu::Draw(const Vector2 & shiftpos)
 	for (int i = 0; i < menudata.size(); i++)
 	{
 		auto m = menudata.at(i);
-		if ((selcnt) == i)
+		if (selcnt == i)
 		{
 			DxLib::DrawString(m.pos.x, m.pos.y, m.name, m.color);
 		}

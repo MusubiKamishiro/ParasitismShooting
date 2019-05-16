@@ -13,6 +13,8 @@ GameScreen::GameScreen() : outscreen(60)
 	screen = DxLib::MakeScreen(gssize.x, gssize.y);
 
 	swing = Vector2f(0, 0);
+	count = 0;
+	countMax = 64;
 }
 
 
@@ -70,7 +72,7 @@ void GameScreen::SetGaussFilter()
 {
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 32);
 	DxLib::DrawBox(0, 0, gssize.x, gssize.y, 0x000000, true);
-	DxLib::GraphFilter(screen, DX_GRAPH_FILTER_GAUSS, 16, 100);
+	DxLib::GraphFilter(screen, DX_GRAPH_FILTER_GAUSS, 16, count = count > countMax ? countMax : ++count);
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 }
 

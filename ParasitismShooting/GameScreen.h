@@ -7,6 +7,8 @@ private:
 	int screen;
 	Vector2f swing;
 
+	int count, countMax;
+
 public:
 	GameScreen();
 	~GameScreen();
