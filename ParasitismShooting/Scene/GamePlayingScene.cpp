@@ -51,7 +51,7 @@ void GamePlayingScene::FadeoutUpdate(const Peripheral & p)
 
 void GamePlayingScene::GameUpdate(const Peripheral & p)
 {
-	pal = 255;
+	time++;
 	if ((player->updater == &Player::Die))
 	{
 		continueFlag = true;
@@ -86,6 +86,7 @@ GamePlayingScene::GamePlayingScene()
 	int i = 0;
 	int j = 0;
 
+	bankCnt = 2;
 
 	while (std::getline(ifs, str))
 	{
@@ -137,7 +138,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 	{
 		if (p.IsTrigger(PAD_INPUT_8))
 		{
-			pauseFlag = true;
+			pauseFlag = !pauseFlag;
 		}
 
 		// ポーズしてたら通らないよ
@@ -174,15 +175,12 @@ void GamePlayingScene::Update(const Peripheral& p)
 			{
 				if (enemy->GetShotReady())
 				{
-					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 180, 5, 1, 4, SHOT_PTN::RADIATION, SHOOTER::ENEMY);
+					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 180, 5, 1, 30, SHOT_PTN::RADIATION, SHOOTER::ENEMY);
 				}
 				enemy->Update();
 			}
 
-			// 当たり判定
-			HitCol(*player, *ef, *sf, p);
-
-			time++;
+			HitCol(p);
 		}
 		else
 		{
@@ -210,21 +208,21 @@ void GamePlayingScene::Update(const Peripheral& p)
 	(this->*updater)(p);
 }
 
-void GamePlayingScene::HitCol(Player& player, EnemyFactory& ef, ShotFactory& sf, const Peripheral& p)
+void GamePlayingScene::HitCol(const Peripheral& p)
 {
 	// キャラクターと弾
-	for (auto& shot : sf.GetLegion())
+	for (auto& shot : sf->GetLegion())
 	{
 		if (shot->GetShooter() == SHOOTER::ENEMY)
 		{
 			// 自機と敵の弾
-			for (auto& pRect : player.GetActRect())
+			for (auto& pRect : player->GetActRect())
 			{
 				for (auto& sRect : shot->GetActRect())
 				{
-					if (cd->IsCollision(shot->GetRects(sRect.rc), player.GetRects(pRect.rc), cd->GetRectCombi(sRect.rt, pRect.rt)))
+					if (cd->IsCollision(shot->GetRects(sRect.rc), player->GetRects(pRect.rc), cd->GetRectCombi(sRect.rt, pRect.rt)))
 					{
-						player.Damage(p);
+						player->Damage(p);
 					}
 				}
 			}
@@ -232,7 +230,7 @@ void GamePlayingScene::HitCol(Player& player, EnemyFactory& ef, ShotFactory& sf,
 		else if (shot->GetShooter() == SHOOTER::PLAYER)
 		{
 			// 敵機と自機の弾
-			for (auto& enemy : ef.GetLegion())
+			for (auto& enemy : ef->GetLegion())
 			{
 				for (auto& eRect : enemy->GetActRect())
 				{
@@ -240,15 +238,15 @@ void GamePlayingScene::HitCol(Player& player, EnemyFactory& ef, ShotFactory& sf,
 					{
 						if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
 						{
-							if (player.parasFlag)
+							if (player->parasFlag)
 							{
 								enemy->Damage();
 							}
 							else
 							{
 								enemy->StunDamage();
-								shot->Delete();
 							}
+							shot->Delete();
 						}
 					}
 				}
@@ -257,30 +255,30 @@ void GamePlayingScene::HitCol(Player& player, EnemyFactory& ef, ShotFactory& sf,
 	}
 
 	// 敵とプレイヤー
-	for (auto& enemy : ef.GetLegion())
+	for (auto& enemy : ef->GetLegion())
 	{
 		for (auto& eRect : enemy->GetActRect())
 		{
-			for (auto& pRect : player.GetActRect())
+			for (auto& pRect : player->GetActRect())
 			{
-				if (cd->IsCollision(player.GetRects(pRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(pRect.rt, eRect.rt)))
+				if (cd->IsCollision(player->GetRects(pRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(pRect.rt, eRect.rt)))
 				{
 					// 敵に気力があればダメージ
 					if (enemy->GetCharaData().SP > 0)
 					{
-						player.Damage(p);
+						player->Damage(p);
 					}
 					else
 					{
 						// プレイヤーが寄生中ならダメージ
-						if (player.parasFlag)
+						if (player->parasFlag)
 						{
-							player.Damage(p);
+							player->Damage(p);
 						}
 						else
 						{
 							// 敵の力を手に入れる
-							player.Parasitic(p, enemy->GetCharaData());
+							player->Parasitic(p, enemy->GetCharaData());
 							enemy->Die();
 						}
 					}
@@ -302,12 +300,19 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 	bg->Draw((int)time);
 	player->Draw((int)time);
 
-	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 64);
 	for (auto& shot : sf->GetLegion())
 	{
-		shot->Draw();
+		if (shot->GetShooter() == SHOOTER::PLAYER)
+		{
+			DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 64);
+			shot->Draw();
+			DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+		}
+		else if (shot->GetShooter() == SHOOTER::ENEMY)
+		{
+			shot->Draw();
+		}
 	}
-	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
 	for (auto& enemy : ef->GetLegion())
 	{
@@ -326,7 +331,7 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 	}
 
 	// ゲーム画面の描画
-	gs->DrawAndChangeScreen();
+	gs->DrawAndChangeScreen(player->pinchFlag);
 
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
