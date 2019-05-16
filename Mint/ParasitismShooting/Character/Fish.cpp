@@ -38,7 +38,7 @@ void Fish::Move()
 		charaData.ShotReady = false;
 	}
 	EnemyActionPattern eAction;
-	eAction.Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, lifeFlag, charaData.ShotReady);
+	eAction.Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.ShotReady);
 	cnt++;
 }
 
@@ -49,7 +49,8 @@ void Fish::Die()
 
 void Fish::Stunning()
 {
-	
+	EnemyActionPattern eAction;
+	eAction.Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.ShotReady);
 }
 
 void Fish::StunDamage()

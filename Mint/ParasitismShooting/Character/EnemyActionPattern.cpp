@@ -4,12 +4,8 @@
 #include "Player.h"
 #include <math.h>
 
-void EnemyActionPattern::UpDown(Vector2f &pos, float speed, int cnt, int wait, int shotCnt, bool lifeFlag, bool& ShotReady)
+void EnemyActionPattern::UpDown(Vector2f &pos, float speed, int cnt, int wait)
 {
-	if (cnt == shotCnt)
-	{
-		ShotReady = true;
-	}
 	if (cnt < wait / 4)
 	{
 		pos.y += speed;
@@ -21,12 +17,8 @@ void EnemyActionPattern::UpDown(Vector2f &pos, float speed, int cnt, int wait, i
 	}
 }
 
-void EnemyActionPattern::LeftRight(Vector2f &pos, float speed, int cnt, int wait, int shotCnt, bool lifeFlag, bool& ShotReady)
+void EnemyActionPattern::LeftRight(Vector2f &pos, float speed, int cnt, int wait)
 {
-	if (cnt == shotCnt)
-	{
-		ShotReady = true;
-	}
 	if (cnt < wait / 4)
 	{
 		pos.x += speed;
@@ -39,11 +31,11 @@ void EnemyActionPattern::LeftRight(Vector2f &pos, float speed, int cnt, int wait
 
 }
 
-void EnemyActionPattern::Rush(Vector2f &pos, float speed, int cnt, int wait, int shotCnt, bool lifeFlag, bool& ShotReady)
+void EnemyActionPattern::Rush(Vector2f &pos, float speed, int cnt, int wait)
 {
 }
 
-void EnemyActionPattern::Wavy(Vector2f &pos, float speed, int cnt, int wait, int shotCnt, bool lifeFlag, bool& ShotReady)
+void EnemyActionPattern::Wavy(Vector2f &pos, float speed, int cnt, int wait)
 {
 	if ((cnt / 30) % 2 == 0)
 	{
@@ -55,15 +47,11 @@ void EnemyActionPattern::Wavy(Vector2f &pos, float speed, int cnt, int wait, int
 		pos.x += speed / 4;
 		pos.y -= 2 * pow(x, 2);
 	}
-	if (cnt == shotCnt)
-	{
-		ShotReady = true;
-	}
 }
 
 void EnemyActionPattern::Stun(Vector2f &pos, float speed)
 {
-	pos.y += speed;
+	pos.y += speed / 2;
 }
 
 EnemyActionPattern::EnemyActionPattern()
@@ -78,7 +66,19 @@ EnemyActionPattern::~EnemyActionPattern()
 {
 }
 
-void EnemyActionPattern::Update(int movePtn, Vector2f & pos, float speed, int cnt, int wait, int shotCnt, bool lifeFlag, bool& ShotReady)
+void EnemyActionPattern::Update(int movePtn, Vector2f & pos, float speed, int cnt, int wait, int shotCnt, int charSP, bool& ShotReady)
 {
-	(this->*movementPtn[movePtn])(pos, speed, cnt, wait, shotCnt, lifeFlag,ShotReady);
+	if (cnt == shotCnt)
+	{
+		ShotReady = true;
+	}
+
+	if (charSP > 0)
+	{
+		(this->*movementPtn[movePtn])(pos, speed, cnt, wait);
+	}
+	else
+	{
+		Stun(pos, speed);
+	}
 }
