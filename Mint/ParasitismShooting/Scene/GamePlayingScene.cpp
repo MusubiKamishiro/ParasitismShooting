@@ -81,7 +81,7 @@ GamePlayingScene::GamePlayingScene()
 	assert(ifs);
 
 
-	std::string Bank[100][10];
+	std::string Bank[100][11];
 	std::string str = "";
 	int i = 0;
 	int j = 0;
@@ -100,8 +100,9 @@ GamePlayingScene::GamePlayingScene()
 
 		cBank.push_back({ atoi(Bank[i][0].c_str()),atoi(Bank[i][1].c_str()),
 			Bank[i][2],Vector2f(atof(Bank[i][3].c_str()),atof(Bank[i][4].c_str())),
-			atoi(Bank[i][5].c_str()),atoi(Bank[i][6].c_str()),
-			atoi(Bank[i][7].c_str()),atoi(Bank[i][8].c_str()),atoi(Bank[i][9].c_str()) });
+			atoi(Bank[i][5].c_str()),atoi(Bank[i][6].c_str()),atoi(Bank[i][7].c_str()),
+			atoi(Bank[i][8].c_str()),atoi(Bank[i][9].c_str()),atoi(Bank[i][10].c_str())
+			});
 		j = 0;
 		i++;
 
@@ -147,7 +148,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 			if (cBank[bankCnt].time == time)
 			{
 				ef->Create(cBank[bankCnt].enemyname.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y),
-					cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed);
+					cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed,cBank[bankCnt].shotCnt);
 				if (cBank.size() > bankCnt)
 				{
 					bankCnt++;

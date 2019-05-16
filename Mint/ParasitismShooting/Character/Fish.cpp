@@ -38,7 +38,7 @@ void Fish::Move()
 		charaData.ShotReady = false;
 	}
 	EnemyActionPattern eAction;
-	eAction.Update(movePtn, pos, charaData.moveVel, cnt, wait, lifeFlag, charaData.ShotReady);
+	eAction.Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, lifeFlag, charaData.ShotReady);
 	cnt++;
 }
 
