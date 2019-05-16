@@ -33,7 +33,7 @@ Player::Player()
 
 	updater = &Player::Move;
 
-	//efect = DxLib::LoadGraph("img/tnm2.png");
+	efect = DxLib::LoadGraph("img/tnm.png");
 }
 
 Player::~Player()
@@ -47,7 +47,10 @@ void Player::Update(const Peripheral &p)
 		++ccount;
 		if (ccount > 120)
 		{
-			updater = &Player::ParasiticCancel;
+			if (parasFlag)
+			{
+				updater = &Player::ParasiticCancel;
+			}
 			ccount = 0;
 		}
 	}
@@ -190,19 +193,18 @@ void Player::Draw(const int& time)
 		}
 	}
 
-	//float a = (time % 30) / 90.f;
-	//
-	//int b = 255 - (255 / (((time % 30) + 1)));
+	float a = (time % 30) / 90.f;
+	
+	int b = 255 - (255 / (((time % 30) + 1)));
 	//DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, b);
-	//DxLib::SetDrawBright(128, 0, 0);
+	DxLib::SetDrawBright(255, 0, 0);
+	DxLib::DrawRotaGraph(pos.x, pos.y, a, 0, efect, true);
+	DxLib::SetDrawBright(255, 255, 255);
+	//DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, 128);
 	//DxLib::DrawRotaGraph(pos.x, pos.y, a, 0, efect, true);
-	//DxLib::SetDrawBright(255, 255, 255);
-	////DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, 128);
-	////DxLib::DrawRotaGraph(pos.x, pos.y, a, 0, efect, true);
 	//DxLib::SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	//DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
-
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 }
 
 

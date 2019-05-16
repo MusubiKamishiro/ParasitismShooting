@@ -41,7 +41,7 @@ private:
 
 	int icount;
 	int ccount;
-	//int efect;
+	int efect;
 
 	// ˆÚ“®”ÍˆÍŒÀŠE’l
 	int up;

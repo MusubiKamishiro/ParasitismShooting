@@ -110,6 +110,7 @@ Shot * ShotFactory::Create(const char * shotname, Vector2f pos, float angle, int
 				}
 				shot->shotst.angle = angle;
 			}
+			shot->shotst.shotname = shotname;
 			shot->shotst.cpos = pos;
 			shot->shotst.speed = Speed;
 			shot->shotst.movePtn = movePtn;
