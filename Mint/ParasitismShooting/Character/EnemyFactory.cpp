@@ -1,5 +1,6 @@
 #include "EnemyFactory.h"
 #include "Fish.h"
+#include "../GameScreen.h"
 
 
 ELegion & EnemyFactory::GetLegion()
@@ -20,8 +21,28 @@ void EnemyFactory::EnemyDelete()
 	}
 }
 
+void EnemyFactory::OutofScreen()
+{
+	for (auto &enemy : legion)
+	{
+		if (enemy->pos.x < left - enemy->rect.Width() / 2 || enemy->pos.x > right + enemy->rect.Width() / 2 ||
+			enemy->pos.y < up - enemy->rect.Height() / 2 || enemy->pos.y > down + enemy->rect.Height() / 2)
+		{
+			enemy->lifeFlag = false;
+		}
+	}
+}
+
 EnemyFactory::EnemyFactory(const Player& player) : player(player)
 {
+	GameScreen gscreen;
+	Vector2 screenSize = gscreen.GetGSSize();
+
+	up = 0;
+	right = screenSize.x + gscreen.outscreen;
+	left = 0;
+	down = screenSize.y + gscreen.outscreen;
+
 	originalEnemy["fish"] = new Fish(player);
 }
 

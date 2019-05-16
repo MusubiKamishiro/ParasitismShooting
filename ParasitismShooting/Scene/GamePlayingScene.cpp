@@ -202,6 +202,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 	}
 
 	sf->OutofScreen();
+	ef->OutofScreen();
 	sf->ShotDelete();
 	ef->EnemyDelete();
 

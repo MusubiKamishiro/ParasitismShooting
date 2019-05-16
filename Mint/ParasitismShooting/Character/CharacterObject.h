@@ -90,6 +90,5 @@ public:
 	CharaData GetCharaData()const;
 	Vector2f GetPos()const;
 	bool GetLifeFlag()const;
-	bool GetShotReady()const;
 };
 
