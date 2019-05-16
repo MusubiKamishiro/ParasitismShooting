@@ -221,18 +221,21 @@ void GamePlayingScene::Update(const Peripheral& p)
 					// “G‚Æ’e
 					for (auto& shot : sf->GetLegion())
 					{
-						for (auto& sRect : shot->GetActRect())
+						if (shot->GetShooter() == SHOOTER::PLAYER)
 						{
-							if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
+							for (auto& sRect : shot->GetActRect())
 							{
-								if (player->parasFlag)
+								if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
 								{
-									enemy->Damage();
-								}
-								else
-								{
-									enemy->StunDamage();
-									shot->Delete();
+									if (player->parasFlag)
+									{
+										enemy->Damage();
+									}
+									else
+									{
+										enemy->StunDamage();
+										shot->Delete();
+									}
 								}
 							}
 						}
