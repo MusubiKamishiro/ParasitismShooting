@@ -42,7 +42,7 @@ struct CharaData
 	int SP;					// スタミナ
 	float moveVel;			// 移動量
 	const char* shotType;	// 弾の名前
-	bool ShotReady;
+	bool ShotReady;			// ショットを打つかどうかのフラグ
 };
 
 // ｷｬﾗｸﾀｰ基底ｸﾗｽ

@@ -172,6 +172,10 @@ void GamePlayingScene::Update(const Peripheral& p)
 			
 			for (auto& enemy : ef->GetLegion())
 			{
+				if (enemy->GetShotReady())
+				{
+					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 180, 5, 1, 4, SHOT_PTN::RADIATION, SHOOTER::ENEMY);
+				}
 				enemy->Update();
 			}
 
