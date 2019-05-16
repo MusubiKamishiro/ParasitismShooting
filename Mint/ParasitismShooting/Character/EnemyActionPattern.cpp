@@ -6,34 +6,36 @@
 
 void EnemyActionPattern::UpDown(Vector2f &pos, float speed, int cnt, int wait, int shotCnt, bool lifeFlag, bool& ShotReady)
 {
-	/*if (cnt < wait / 4)
-	{
-		pos.y += speed;
-	}
 	if (cnt == shotCnt)
 	{
 		ShotReady = true;
 	}
+	if (cnt < wait / 4)
+	{
+		pos.y += speed;
+	}
+	
 	if (cnt > wait)
 	{
 		pos.y -= speed;
-	}*/
+	}
 }
 
 void EnemyActionPattern::LeftRight(Vector2f &pos, float speed, int cnt, int wait, int shotCnt, bool lifeFlag, bool& ShotReady)
 {
-	/*if (cnt < wait / 4)
-	{
-		pos.x += speed;
-	}
 	if (cnt == shotCnt)
 	{
 		ShotReady = true;
 	}
+	if (cnt < wait / 4)
+	{
+		pos.x += speed;
+	}
+	
 	if (cnt > wait)
 	{
 		pos.x -= speed;
-	}*/
+	}
 
 }
 
@@ -43,41 +45,19 @@ void EnemyActionPattern::Rush(Vector2f &pos, float speed, int cnt, int wait, int
 
 void EnemyActionPattern::Wavy(Vector2f &pos, float speed, int cnt, int wait, int shotCnt, bool lifeFlag, bool& ShotReady)
 {
-	/*if (cnt < wait / 4)
+	if ((cnt / 30) % 2 == 0)
 	{
-		pos.x += speed;
-		pos.y += speed / 2;
+		pos.x += speed / 4;
+		pos.y += 2 * pow(x, 2);
+	}
+	else
+	{
+		pos.x += speed / 4;
+		pos.y -= 2 * pow(x, 2);
 	}
 	if (cnt == shotCnt)
 	{
 		ShotReady = true;
-	}
-	if (cnt > wait)
-	{
-		pos.y -= speed;
-	}*/
-	if (cnt < wait / 12)
-	{
-		pos.x += speed / 4;
-		pos.y += 2 * pow(x, 2);
-		return;
-	}
-	if (cnt < wait / 6)
-	{
-		pos.x += speed / 4;
-		pos.y -= 2 * pow(x, 2);
-		return;
-	}
-	if (cnt < wait / 4)
-	{
-		pos.x += speed / 4;
-		pos.y += 2 * pow(x, 2);
-		return;
-	}
-	if (cnt < wait)
-	{
-		pos.x += speed / 4;
-		pos.y -= 2 * pow(x, 2);
 	}
 }
 
