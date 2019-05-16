@@ -164,7 +164,3 @@ bool CharacterObject::GetLifeFlag() const
 	return lifeFlag;
 }
 
-bool CharacterObject::GetShotReady() const
-{
-	return charaData.ShotReady;
-}

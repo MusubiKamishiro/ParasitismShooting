@@ -30,17 +30,17 @@ enum SHOOTER
 };
 
 
-typedef struct ShotST
+struct ShotST
 {
-	Vector2f pos;
+	Vector2f cpos;
 	double angle;
-	int Speed;
+	int speed;
 	int movePtn;
 	int level;
 	int shotPtn;
 	int shooter;
 	std::string shotname;
-}shot_st;
+};
 
 class Shot : public CharacterObject
 {
@@ -50,13 +50,7 @@ protected:
 
 	Shot(const Player& player/*, const Enemy& enemy*/);
 
-	Vector2f cneterPos;
-	double angle;
-	int Speed;
-	int movePtn;
-	int level;
-	int shotPtn;
-	int shooter;
+	ShotST shotst;
 
 public:
 	virtual ~Shot();
@@ -66,5 +60,6 @@ public:
 	virtual void Delete() = 0;
 
 	int GetShooter()const;
+	std::string GetShotName()const;
 };
 
