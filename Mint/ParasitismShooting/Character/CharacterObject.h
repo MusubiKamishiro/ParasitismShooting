@@ -56,7 +56,6 @@ protected:
 
 	void SetCharaSize(const float& size);
 
-
 	CharaData charaData;
 
 	int movePtn;	// 移動パターン
@@ -64,7 +63,6 @@ protected:
 	int wait;		// キャラクターごとの待機時間
 
 	bool lifeFlag;	// 生きてるか死んでるか
-	bool shotReady;
 
 	Vector2f pos;	// 座標
 	Vector2f vel;	// 移動速度

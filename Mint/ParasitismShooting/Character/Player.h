@@ -37,6 +37,7 @@ private:
 	Vector2f startPos;			// ŠJnÀ•W
 
 	int count;
+	int efect;
 
 	bool parasFlag;				// Šñ¶’†‚©”Û‚©
 

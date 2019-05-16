@@ -12,4 +12,7 @@ Shot::~Shot()
 {
 }
 
-
+int Shot::GetShooter()const
+{
+	return shooter;
+}
