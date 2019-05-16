@@ -61,6 +61,7 @@ protected:
 	int movePtn;	// 移動パターン
 	int cnt;		// キャラクターごとのカウント
 	int wait;		// キャラクターごとの待機時間
+	int shotCnt;	// 敵キャラクターがショットを打つタイミング
 
 	bool lifeFlag;	// 生きてるか死んでるか
 

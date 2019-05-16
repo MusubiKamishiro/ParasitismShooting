@@ -12,7 +12,7 @@ Fish::Fish(const Player& player) : Enemy(player), player(player)
 	charaData.shotType = "ShotRadiation";
 	charaData.ShotReady = false;
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
-	
+
 	updater = &Fish::Move;
 }
 
@@ -38,7 +38,7 @@ void Fish::Move()
 		charaData.ShotReady = false;
 	}
 	EnemyActionPattern eAction;
-	eAction.Update(movePtn, pos, charaData.moveVel, cnt, wait, lifeFlag, charaData.ShotReady);
+	eAction.Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.ShotReady);
 	cnt++;
 }
 
@@ -49,7 +49,8 @@ void Fish::Die()
 
 void Fish::Stunning()
 {
-	
+	EnemyActionPattern eAction;
+	eAction.Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.ShotReady);
 }
 
 void Fish::StunDamage()
@@ -80,7 +81,7 @@ void Fish::Draw(int time)
 	}
 	else
 	{
-		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs((time*5 % 255) - 127) + 128);
+		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs((time * 5 % 255) - 127) + 128);
 		CharacterObject::Draw(charaData.img);
 		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 	}

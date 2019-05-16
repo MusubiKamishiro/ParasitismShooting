@@ -3,8 +3,6 @@
 #include "../Geometry.h"
 class Player;
 
-//typedef void(EnemyActionPattern::*movePtn[])(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag);
-
 enum MovementPTN
 {
 	UpDown,
