@@ -86,6 +86,7 @@ GamePlayingScene::GamePlayingScene()
 	int i = 0;
 	int j = 0;
 
+	bankCnt = 2;
 
 	while (std::getline(ifs, str))
 	{
@@ -246,8 +247,8 @@ void GamePlayingScene::HitCol(Player& player, EnemyFactory& ef, ShotFactory& sf,
 							else
 							{
 								enemy->StunDamage();
-								shot->Delete();
 							}
+							shot->Delete();
 						}
 					}
 				}
@@ -301,12 +302,19 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 	bg->Draw((int)time);
 	player->Draw((int)time);
 
-	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 64);
 	for (auto& shot : sf->GetLegion())
 	{
-		shot->Draw();
+		if (shot->GetShooter() == SHOOTER::PLAYER)
+		{
+			DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 64);
+			shot->Draw();
+			DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+		}
+		else if (shot->GetShooter() == SHOOTER::ENEMY)
+		{
+			shot->Draw();
+		}
 	}
-	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
 	for (auto& enemy : ef->GetLegion())
 	{
