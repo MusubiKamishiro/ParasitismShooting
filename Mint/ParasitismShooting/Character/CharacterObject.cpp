@@ -89,7 +89,6 @@ void CharacterObject::SetCharaSize(const float& size)
 CharacterObject::CharacterObject()
 {
 	lifeFlag = true;
-	shotReady = false;
 }
 
 

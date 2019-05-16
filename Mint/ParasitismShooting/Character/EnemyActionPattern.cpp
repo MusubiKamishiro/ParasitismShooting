@@ -50,5 +50,5 @@ EnemyActionPattern::~EnemyActionPattern()
 
 void EnemyActionPattern::Update(int movePtn, Vector2f & pos, float speed, int cnt, int wait, bool lifeFlag, bool& ShotReady)
 {
-	(this->*movementPtn[movePtn])(pos, speed, cnt, wait, lifeFlag, ShotReady);
+	(this->*movementPtn[movePtn])(pos, speed, cnt, wait, lifeFlag,ShotReady);
 }

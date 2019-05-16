@@ -31,6 +31,8 @@ Player::Player()
 	parasFlag = false;
 	
 	updater = &Player::Move;
+
+	efect = DxLib::LoadGraph("img/tnm2.png");
 }
 
 Player::~Player()
@@ -158,9 +160,29 @@ void Player::Draw(const int& time)
 	{
 		if ((time / 5) % 2)
 		{
+			DxLib::SetDrawBright(0, 255, 0);
+			CharacterObject::Draw(charaData.img);
+			DxLib::SetDrawBright(255, 255, 255);
+		}
+		else
+		{
 			CharacterObject::Draw(charaData.img);
 		}
 	}
+
+	//float a = (time % 30) / 90.f;
+	//
+	//int b = 255 - (255 / (((time % 30) + 1)));
+	//DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, b);
+	//DxLib::SetDrawBright(128, 0, 0);
+	//DxLib::DrawRotaGraph(pos.x, pos.y, a, 0, efect, true);
+	//DxLib::SetDrawBright(255, 255, 255);
+	////DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, 128);
+	////DxLib::DrawRotaGraph(pos.x, pos.y, a, 0, efect, true);
+	//DxLib::SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	//DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+
 }
 
 

@@ -1,10 +1,9 @@
 #pragma once
+#include <iostream>
 #include "../Geometry.h"
-#include <memory>
 class Player;
-class ShotFactory;
-class GamePlayingScene;
 
+//typedef void(EnemyActionPattern::*movePtn[])(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag);
 
 enum MovementPTN
 {
@@ -21,7 +20,7 @@ class EnemyActionPattern
 public:
 	EnemyActionPattern();
 	~EnemyActionPattern();
-	void Update(int movePtn, Vector2f &pos, float Speed, int cnt, int wait, bool lifeFlag, bool& ShotReady);
+	void Update(int movePtn, Vector2f & pos, float speed, int cnt, int wait, bool lifeFlag, bool& ShotReady);
 private:
 	void UpDown(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag, bool& ShotReady);		// è„â∫à⁄ìÆ
 	void LeftRight(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag, bool& ShotReady);		// ç∂âEÇ…óöÇØÇÈ
@@ -29,5 +28,5 @@ private:
 	void Wavy(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag, bool& ShotReady);		// îgèÛà⁄ìÆ
 	void Stun(Vector2f &pos, float speed);		// ãCê‚èÛë‘
 
-	void(EnemyActionPattern::*movementPtn[MOVEMENT_PTN_MAX])(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag, bool& ShotReady)/* = { &EnemyActionPattern::UpDown,&EnemyActionPattern::LeftRight }*/;
+	void(EnemyActionPattern::*movementPtn[MOVEMENT_PTN_MAX])(Vector2f &pos, float speed, int cnt, int wait, bool lifeFlag, bool& ShotReady);
 };

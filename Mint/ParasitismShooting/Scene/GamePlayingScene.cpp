@@ -9,6 +9,7 @@
 #include "../Peripheral.h"
 #include "../Game.h"
 #include "ResultScene.h"
+#include "TitleScene.h"
 
 #include "../GameScreen.h"
 #include "../HUD.h"
@@ -17,6 +18,7 @@
 #include "../Character/Shot/Shot.h"
 #include "../BackGround.h"
 #include "../PauseMenu.h"
+#include "../ContinueMenu.h"
 #include "../Character/EnemyFactory.h"
 #include "../Character/Enemy.h"
 #include "../CollisionDetector.h"
@@ -39,7 +41,7 @@ void GamePlayingScene::FadeoutUpdate(const Peripheral & p)
 {
 	if (pal <= 0)
 	{
-		Game::Instance().ChangeScene(new ResultScene());
+		Game::Instance().ChangeScene(new TitleScene());
 	}
 	else
 	{
@@ -52,25 +54,23 @@ void GamePlayingScene::GameUpdate(const Peripheral & p)
 	pal = 255;
 	if ((player->updater == &Player::Die))
 	{
+		continueFlag = true;
 		updater = &GamePlayingScene::ContinueUpdate;
 	}
 }
 
 void GamePlayingScene::ContinueUpdate(const Peripheral & p)
 {
-	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
-	pal = 128;
-	DxLib::DrawString(0, 0, "コンティニューする？", 0xffffff);
-
-	if (p.IsTrigger(PAD_INPUT_8))
+	if (!continueFlag)
 	{
 		player->Reborn(p);
 		updater = &GamePlayingScene::GameUpdate;
 	}
-	else if(p.IsTrigger(PAD_INPUT_1))
-	{
-		updater = &GamePlayingScene::FadeoutUpdate;
-	}
+}
+
+void GamePlayingScene::MoveResultUpdate(const Peripheral & p)
+{
+	Game::Instance().ChangeScene(new ResultScene());
 }
 
 
@@ -108,6 +108,7 @@ GamePlayingScene::GamePlayingScene()
 	}
 	time = 0;
 	pauseFlag = false;
+	continueFlag = false;
 
 	GetJoypadInputState(DX_INPUT_KEY_PAD1);		// パッドもしくはキーボードで動かせる
 
@@ -117,14 +118,10 @@ GamePlayingScene::GamePlayingScene()
 	hud.reset(new HUD());
 	bg.reset(new BackGround());
 	pmenu.reset(new PauseMenu());
+	cmenu.reset(new ContinueMenu());
 	ef.reset(new EnemyFactory(*player));
 	cd.reset(new CollisionDetector());
 	
-	/*ef->Create("fish", Vector2f(250, 100), 0, 0, 0, 1, 1, 3);
-	ef->Create("fish", Vector2f(100, 100), 0, 0, 0, 1, 1, 3);
-	ef->Create("fish", Vector2f(150, 100), 0, 0, 0, 1, 1, 3);
-	ef->Create("fish", Vector2f(200, 100), 0, 0, 0, 1, 1, 3);*/
-
 	ssize = Game::Instance().GetScreenSize();
 	updater = &GamePlayingScene::FadeinUpdate;
 }
@@ -140,7 +137,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 	{
 		if (p.IsTrigger(PAD_INPUT_8))
 		{
-			pauseFlag = !pauseFlag;
+			pauseFlag = true;
 		}
 
 		// ポーズしてたら通らないよ
@@ -170,29 +167,16 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 			if (p.IsPressing(PAD_INPUT_2) && ((int)time % 3 ==0))
 			{
-				//std::string s = player->GetCharaData().shotType;
-				sf->Create(player->GetCharaData().shotType, player->GetPos(), 180, 5, 1, 4, SHOT_PTN::RADIATION, SHOOTER::PLAYER);
+				sf->Create(player->GetCharaData().shotType, player->GetPos(), 180, 5, 1, 4, SHOT_PTN::NORMAL, SHOOTER::PLAYER);
 			}
-			/*if (p.IsPressing(PAD_INPUT_4) && ((int)time % 3 == 0))
-			{
-				sf->Create("ShotShotgun", player->GetPos(), 0, 5, 1, 3, SHOT_PTN::SHOTGUN, SHOOTER::PLAYER);
-			}
-			if (p.IsPressing(PAD_INPUT_5) && ((int)time % 3 == 0))
-			{
-				sf->Create("ShotRadiation", player->GetPos(), 0, 5, 1, 50, SHOT_PTN::RADIATION, SHOOTER::PLAYER);
-			}
-			if (p.IsPressing(PAD_INPUT_6) && ((int)time % 3 == 0))
-			{
-				sf->Create("ShotTracking", player->GetPos(), 0, 5, 1, 3, SHOT_PTN::TRACKING, SHOOTER::PLAYER);
-			}*/
-
+			
 			for (auto& enemy : ef->GetLegion())
 			{
-				enemy->Update();
 				if (enemy->GetShotReady())
 				{
 					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 180, 5, 1, 4, SHOT_PTN::RADIATION, SHOOTER::ENEMY);
 				}
+				enemy->Update();
 			}
 
 			// 当たり判定
@@ -237,13 +221,22 @@ void GamePlayingScene::Update(const Peripheral& p)
 					// 敵と弾
 					for (auto& shot : sf->GetLegion())
 					{
-						for (auto& sRect : shot->GetActRect())
+						if (shot->GetShooter() == SHOOTER::PLAYER)
 						{
-							if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
+							for (auto& sRect : shot->GetActRect())
 							{
-								//enemy->Damage();
-								enemy->StunDamage();
-								//shot->Delete();
+								if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
+								{
+									if (player->parasFlag)
+									{
+										enemy->Damage();
+									}
+									else
+									{
+										enemy->StunDamage();
+										shot->Delete();
+									}
+								}
 							}
 						}
 					}
@@ -253,7 +246,17 @@ void GamePlayingScene::Update(const Peripheral& p)
 		}
 		else
 		{
-			pmenu->Update(p);
+			if (pmenu->Update(p, pauseFlag))
+			{
+				updater = &GamePlayingScene::FadeoutUpdate;
+			}
+		}
+	}
+	else
+	{
+		if (cmenu->Update(p, continueFlag))
+		{
+			updater = &GamePlayingScene::MoveResultUpdate;
 		}
 	}
 
@@ -270,7 +273,7 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 {
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
-	hud->Draw(player->GetCharaData().HP);
+	hud->Draw(player->GetCharaData().HP, player->parasFlag);
 
 	// ゲーム画面の描画準備
 	gs->SetAndClearScreen();
@@ -278,10 +281,13 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 	bg->Draw((int)time);
 	player->Draw((int)time);
 
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 64);
 	for (auto& shot : sf->GetLegion())
 	{
 		shot->Draw();
 	}
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+
 	for (auto& enemy : ef->GetLegion())
 	{
 		enemy->Draw((int)time);
@@ -291,6 +297,11 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 	{
 		gs->SetGaussFilter();
 		pmenu->Draw();
+	}
+	else if (continueFlag)
+	{
+		gs->SetGaussFilter();
+		cmenu->Draw();
 	}
 
 	// ゲーム画面の描画

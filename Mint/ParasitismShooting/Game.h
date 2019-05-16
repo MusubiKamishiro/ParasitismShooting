@@ -15,6 +15,8 @@ private:
 
 	const Vector2 ScreenSize;
 	float time, fps, count, oldcount;
+	int oldEnter, enter;
+	int coinSound;
 
 public:
 	// ¼Ý¸ÞÙÄÝ²ÝÀ°Ìª°½

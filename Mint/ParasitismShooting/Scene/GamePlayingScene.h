@@ -10,6 +10,7 @@ class ShotFactory;
 class HUD;
 class BackGround;
 class PauseMenu;
+class ContinueMenu;
 class EnemyFactory;
 class CollisionDetector;
 
@@ -36,12 +37,13 @@ private:
 	void FadeoutUpdate(const Peripheral& p);
 	void GameUpdate(const Peripheral& p);
 	void ContinueUpdate(const Peripheral& p);
+	void MoveResultUpdate(const Peripheral& p);
 
 	void Draw(const Peripheral& p, const int& time);
 
 	float time;
 	Vector2 ssize;
-	bool pauseFlag;
+	bool pauseFlag, continueFlag;
 
 	std::vector<CharacterBank> cBank;
 
@@ -53,6 +55,7 @@ private:
 	std::shared_ptr<HUD> hud;
 	std::shared_ptr<BackGround> bg;
 	std::shared_ptr<PauseMenu> pmenu;
+	std::shared_ptr<ContinueMenu> cmenu;
 	std::shared_ptr<EnemyFactory> ef;
 	std::shared_ptr<CollisionDetector> cd;
 
