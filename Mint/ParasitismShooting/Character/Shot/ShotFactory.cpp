@@ -10,6 +10,7 @@
 #include "ShotRandom.h"
 #include "ShotShotgun.h"
 #include "ShotTracking.h"
+#include "ShotWeak.h"
 
 
 int NormalPosPtnX[4] = { -10, 10,-30, 30 };
@@ -60,6 +61,7 @@ ShotFactory::ShotFactory(const Player& player/*, const Enemy& enemy*/) : player(
 	originalShot["ShotRandom"] = new ShotRandom(player);
 	originalShot["ShotShotgun"] = new ShotShotgun(player);
 	originalShot["ShotTracking"] = new ShotTracking(player);
+	originalShot["ShotWeak"] = new ShotWeak(player);
 
 }
 

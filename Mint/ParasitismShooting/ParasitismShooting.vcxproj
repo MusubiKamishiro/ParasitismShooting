@@ -137,6 +137,7 @@
     <ClCompile Include="Character\Shot\ShotRandom.cpp" />
     <ClCompile Include="Character\Shot\ShotShotgun.cpp" />
     <ClCompile Include="Character\Shot\ShotTracking.cpp" />
+    <ClCompile Include="Character\Shot\ShotWeak.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="ContinueMenu.cpp" />
     <ClCompile Include="Credit.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Character\Shot\ShotRandom.h" />
     <ClInclude Include="Character\Shot\ShotShotgun.h" />
     <ClInclude Include="Character\Shot\ShotTracking.h" />
+    <ClInclude Include="Character\Shot\ShotWeak.h" />
     <ClInclude Include="CollisionDetector.h" />
     <ClInclude Include="ContinueMenu.h" />
     <ClInclude Include="Credit.h" />
