@@ -14,5 +14,10 @@ Shot::~Shot()
 
 int Shot::GetShooter()const
 {
-	return shooter;
+	return shotst.shooter;
+}
+
+std::string Shot::GetShotName() const
+{
+	return shotst.shotname;
 }

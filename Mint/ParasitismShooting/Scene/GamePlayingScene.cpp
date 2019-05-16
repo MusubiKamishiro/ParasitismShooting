@@ -180,68 +180,8 @@ void GamePlayingScene::Update(const Peripheral& p)
 			}
 
 			// 当たり判定
-			for (auto& enemy : ef->GetLegion())
-			{
-				// 当たり判定ﾙｰﾌﾟ
-				for (auto& eRect : enemy->GetActRect())
-				{
-					// 敵とプレイヤー
-					for (auto& pRect : player->GetActRect())
-					{
-						if (cd->IsCollision(player->GetRects(pRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(pRect.rt, eRect.rt)))
-						{
-							// 敵に気力があればダメージ
-							if (enemy->GetCharaData().SP > 0)
-							{
-								if (player->updater != &Player::Invincible)
-								{
-									player->Damage(p);
-								}
-							}
-							else
-							{
-								// プレイヤーが寄生中ならダメージ
-								if (player->parasFlag)
-								{
-									if (player->updater != &Player::Invincible)
-									{
-										player->Damage(p);
-									}
-								}
-								else
-								{
-									// 敵の力を手に入れる
-									player->Parasitic(p, enemy->GetCharaData());
-									enemy->Die();
-								}
-							}
-						}
-					}
+			HitCol(*player, *ef, *sf, p);
 
-					// 敵と弾
-					for (auto& shot : sf->GetLegion())
-					{
-						if (shot->GetShooter() == SHOOTER::PLAYER)
-						{
-							for (auto& sRect : shot->GetActRect())
-							{
-								if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
-								{
-									if (player->parasFlag)
-									{
-										enemy->Damage();
-									}
-									else
-									{
-										enemy->StunDamage();
-										shot->Delete();
-									}
-								}
-							}
-						}
-					}
-				}
-			}
 			time++;
 		}
 		else
@@ -261,12 +201,93 @@ void GamePlayingScene::Update(const Peripheral& p)
 	}
 
 	sf->OutofScreen();
+	ef->OutofScreen();
 	sf->ShotDelete();
 	ef->EnemyDelete();
 
 	Draw(p, time);
 	
 	(this->*updater)(p);
+}
+
+void GamePlayingScene::HitCol(Player& player, EnemyFactory& ef, ShotFactory& sf, const Peripheral& p)
+{
+	// キャラクターと弾
+	for (auto& shot : sf.GetLegion())
+	{
+		if (shot->GetShooter() == SHOOTER::ENEMY)
+		{
+			// 自機と敵の弾
+			for (auto& pRect : player.GetActRect())
+			{
+				for (auto& sRect : shot->GetActRect())
+				{
+					if (cd->IsCollision(shot->GetRects(sRect.rc), player.GetRects(pRect.rc), cd->GetRectCombi(sRect.rt, pRect.rt)))
+					{
+						player.Damage(p);
+					}
+				}
+			}
+		}
+		else if (shot->GetShooter() == SHOOTER::PLAYER)
+		{
+			// 敵機と自機の弾
+			for (auto& enemy : ef.GetLegion())
+			{
+				for (auto& eRect : enemy->GetActRect())
+				{
+					for (auto& sRect : shot->GetActRect())
+					{
+						if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
+						{
+							if (player.parasFlag)
+							{
+								enemy->Damage();
+							}
+							else
+							{
+								enemy->StunDamage();
+								shot->Delete();
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// 敵とプレイヤー
+	for (auto& enemy : ef.GetLegion())
+	{
+		for (auto& eRect : enemy->GetActRect())
+		{
+			for (auto& pRect : player.GetActRect())
+			{
+				if (cd->IsCollision(player.GetRects(pRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(pRect.rt, eRect.rt)))
+				{
+					// 敵に気力があればダメージ
+					if (enemy->GetCharaData().SP > 0)
+					{
+						player.Damage(p);
+					}
+					else
+					{
+						// プレイヤーが寄生中ならダメージ
+						if (player.parasFlag)
+						{
+							player.Damage(p);
+						}
+						else
+						{
+							// 敵の力を手に入れる
+							player.Parasitic(p, enemy->GetCharaData());
+							enemy->Die();
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 void GamePlayingScene::Draw(const Peripheral& p, const int & time)

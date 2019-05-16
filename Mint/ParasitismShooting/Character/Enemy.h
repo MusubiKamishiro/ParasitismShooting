@@ -21,5 +21,7 @@ public:
 	virtual void Die() = 0;
 	virtual void Stunning() = 0;
 	virtual void StunDamage() = 0;
+
+	bool GetShotReady()const;
 };
 

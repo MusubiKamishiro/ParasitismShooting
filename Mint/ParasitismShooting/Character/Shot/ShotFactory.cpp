@@ -55,7 +55,6 @@ ShotFactory::ShotFactory(const Player& player/*, const Enemy& enemy*/) : player(
 	left = 0;
 	down = screenSize.y + gscreen.outscreen;
 
-	//originalShot["name"] = new Class(player);
 	originalShot["ShotNormal"] = new ShotNormal(player);
 	originalShot["ShotRadiation"] = new ShotRadiation(player);
 	originalShot["ShotRandom"] = new ShotRandom(player);
@@ -81,14 +80,13 @@ Shot * ShotFactory::Create(const char * shotname, Vector2f pos, float angle, int
 				//shot->pos = pos;
 
 				shot->pos = { pos.x - 10 + NormalPosPtnX[j],pos.y + NormalPosPtnY[j] };
-				shot->angle = -M_PI_2;
-
+				shot->shotst.angle = -M_PI_2;
 			}
 			else if (shotname == "ShotRadiation")
 			{
 				shot->pos = pos;
 
-				shot->angle = -(angle + M_PI_2 / (level / 4)  * j);
+				shot->shotst.angle = -(angle + M_PI_2 / (level / 4)  * j);
 			}
 			else if (shotname == "ShotRandom")
 			{
@@ -97,12 +95,12 @@ Shot * ShotFactory::Create(const char * shotname, Vector2f pos, float angle, int
 
 				std::uniform_int_distribution<int> rand(1, 10);
 				shot->pos = { pos.x - (float)(rand(mt) * M_PI * 2) + 10,pos.y - 30 };
-				shot->angle = angle;
+				shot->shotst.angle = angle;
 			}
 			else if (shotname == "ShotShotgun")
 			{
 				shot->pos = pos;
-				shot->angle = -(((angle + (M_PI / level))  * j) + M_PI / 6);
+				shot->shotst.angle = -(((angle + (M_PI / level))  * j) + M_PI / 6);
 			}
 			else if (shotname == "ShotTracking")
 			{
@@ -110,14 +108,14 @@ Shot * ShotFactory::Create(const char * shotname, Vector2f pos, float angle, int
 				{
 					shot->pos = { pos.x + 20 * j,pos.y };
 				}
-				shot->angle = angle;
+				shot->shotst.angle = angle;
 			}
-			shot->cneterPos = pos;
-			shot->Speed = Speed;
-			shot->movePtn = movePtn;
-			shot->level = level;
-			shot->shotPtn = shotPtn;
-			shot->shooter = shooter;
+			shot->shotst.cpos = pos;
+			shot->shotst.speed = Speed;
+			shot->shotst.movePtn = movePtn;
+			shot->shotst.level = level;
+			shot->shotst.shotPtn = shotPtn;
+			shot->shotst.shooter = shooter;
 			legion.push_back(shot);
 
 			if (j == level)

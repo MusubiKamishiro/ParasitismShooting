@@ -86,25 +86,28 @@ void Player::Move(const Peripheral & p)
 
 void Player::Damage(const Peripheral & p)
 {
-	--charaData.HP;
-	if (charaData.HP <= 0)
+	if (updater != &Player::Invincible)
 	{
-		if (parasFlag)
+		--charaData.HP;
+		if (charaData.HP <= 0)
 		{
-			charaData.HP = 1;
-			parasFlag = false;
-			ParasiticCancel(p);
-			updater = &Player::Invincible;
+			if (parasFlag)
+			{
+				charaData.HP = 1;
+				parasFlag = false;
+				ParasiticCancel(p);
+				updater = &Player::Invincible;
+			}
+			else
+			{
+				updater = &Player::Die;
+				Die(p);
+			}
 		}
 		else
 		{
-			updater = &Player::Die;
-			Die(p);
+			updater = &Player::Invincible;
 		}
-	}
-	else
-	{
-		updater = &Player::Invincible;
 	}
 }
 

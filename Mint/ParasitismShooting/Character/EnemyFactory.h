@@ -16,6 +16,10 @@ private:
 	std::map<std::string, Enemy*> originalEnemy;	// “G‚ÌŒ³‚Æ‚È‚émap‚Ìì¬
 	ELegion legion;
 
+	int up;
+	int right;
+	int left;
+	int down;
 public:
 	EnemyFactory(const Player& player);
 	~EnemyFactory();
@@ -28,5 +32,6 @@ public:
 	ELegion& GetLegion();
 	// ƒ_ƒ[ƒW’e‚É“–‚½‚Á‚½‚ğÁ‚·
 	void EnemyDelete();
+	void OutofScreen();
 };
 
