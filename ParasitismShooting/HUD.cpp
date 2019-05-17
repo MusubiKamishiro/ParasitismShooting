@@ -9,7 +9,7 @@ HUD::HUD() : ssize(Game::Instance().GetScreenSize()), hudPos(Vector2(ssize.x - 3
 	lifeColor = 0x0000ff;
 	score = 0;
 	upScore = 0;
-	highScore = 2000;
+	highScore = 5000;
 }
 
 
@@ -54,6 +54,13 @@ void HUD::Draw(const int& life, const bool& flag)
 void HUD::AddScore(const unsigned int & inscore)
 {
 	upScore += inscore;
+}
+
+void HUD::DelScore()
+{
+	highScore = score > highScore ? score : highScore;
+	score = 0;
+	upScore = 0;
 }
 
 const Vector2 HUD::GetHUDPos()const

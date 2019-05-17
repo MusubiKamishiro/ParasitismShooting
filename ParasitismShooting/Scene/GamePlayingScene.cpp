@@ -67,6 +67,7 @@ void GamePlayingScene::ContinueUpdate(const Peripheral & p)
 {
 	if (!continueFlag)
 	{
+		hud->DelScore();
 		player->Reborn(p);
 		updater = &GamePlayingScene::GameUpdate;
 	}
@@ -153,7 +154,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 			if (cBank[bankCnt].time == ((int)time%250))
 			{
 				ef->Create(cBank[bankCnt].enemyname.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y),
-					cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, 3/*cBank[bankCnt].HP*/, 10/*cBank[bankCnt].SP*/, cBank[bankCnt].Speed,cBank[bankCnt].shotCnt);
+					cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, 10/*cBank[bankCnt].HP*/, 10/*cBank[bankCnt].SP*/, cBank[bankCnt].Speed,cBank[bankCnt].shotCnt);
 				/*if (cBank.size() > bankCnt)
 				{
 					bankCnt++;
@@ -162,7 +163,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 						bankCnt--;
 					}
 				}*/
-				bankCnt = bankCnt % 8 + 2;
+				bankCnt = bankCnt % (cBank.size()-2) + 2;
 			}
 
 			for (auto& shot : sf->GetLegion())
@@ -172,7 +173,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 			player->Update(p);
 
-			if (p.IsPressing(PAD_INPUT_2) && ((int)time % 3 == 0))
+			if (p.IsPressing(PAD_INPUT_2) && ((int)time % 6 == 0))
 			{
 				sf->Create(player->GetCharaData().shotType, player->GetPos(), 180, 5, 1, 4, SHOT_PTN::NORMAL, SHOOTER::PLAYER);
 			}

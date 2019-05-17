@@ -20,6 +20,7 @@ public:
 	void Update();
 	void Draw(const int& life, const bool& flag);
 	void AddScore(const unsigned int& inscore);
+	void DelScore();
 
 	const Vector2 GetHUDPos()const;
 };

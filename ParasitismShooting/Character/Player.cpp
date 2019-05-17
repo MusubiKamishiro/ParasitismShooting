@@ -159,6 +159,7 @@ void Player::Parasitic(const Peripheral & p, const CharaData& cdata)
 	parasFlag = true;
 
 	charaData = cdata;
+	charaData.HP = cdata.HP / 3;
 
 	icount = 0;
 	updater = &Player::Invincible;

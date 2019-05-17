@@ -7,7 +7,7 @@
 Fish::Fish(const Player& player) : Enemy(player), player(player)
 {
 	ReadActionFile("action/fish.act");
-	ChangeAction("Idle");
+	ChangeAction("eIdle");
 	SetCharaSize(0.07f);
 	charaData.shotType = "ShotRadiation";
 	charaData.ShotReady = false;
