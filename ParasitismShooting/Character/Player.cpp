@@ -195,7 +195,8 @@ void Player::Draw(const int& time)
 
 	float a = (time % 30) / 90.f;
 	
-	int b = 255 - (255 / (((time % 30) + 1)));
+	float b = (30 - (time % 30)) * 8;
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, (b));
 	//DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, b);
 	DxLib::SetDrawBright(255, 0, 0);
 	DxLib::DrawRotaGraph(pos.x, pos.y, a, 0, efect, true);

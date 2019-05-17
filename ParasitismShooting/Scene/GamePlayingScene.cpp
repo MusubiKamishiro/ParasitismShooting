@@ -51,7 +51,11 @@ void GamePlayingScene::FadeoutUpdate(const Peripheral & p)
 
 void GamePlayingScene::GameUpdate(const Peripheral & p)
 {
-	time++;
+	if (!pauseFlag)
+	{
+		time++;
+	}
+	
 	if ((player->updater == &Player::Die))
 	{
 		continueFlag = true;
@@ -98,7 +102,6 @@ GamePlayingScene::GamePlayingScene()
 			Bank[i][j] = tmp;
 			j++;
 		}
-
 
 		cBank.push_back({ atoi(Bank[i][0].c_str()),atoi(Bank[i][1].c_str()),
 			Bank[i][2],Vector2f(atof(Bank[i][3].c_str()),atof(Bank[i][4].c_str())),
@@ -150,7 +153,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 			if (cBank[bankCnt].time == time)
 			{
 				ef->Create(cBank[bankCnt].enemyname.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y),
-					cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed,cBank[bankCnt].shotCnt);
+					cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, 3/*cBank[bankCnt].HP*/, 10/*cBank[bankCnt].SP*/, cBank[bankCnt].Speed,cBank[bankCnt].shotCnt);
 				if (cBank.size() > bankCnt)
 				{
 					bankCnt++;
@@ -168,7 +171,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 			player->Update(p);
 
-			if (p.IsPressing(PAD_INPUT_2) && ((int)time % 3 ==0))
+			if (p.IsPressing(PAD_INPUT_2) && ((int)time % 3 == 0))
 			{
 				sf->Create(player->GetCharaData().shotType, player->GetPos(), 180, 5, 1, 4, SHOT_PTN::NORMAL, SHOOTER::PLAYER);
 			}
@@ -177,12 +180,22 @@ void GamePlayingScene::Update(const Peripheral& p)
 			{
 				if (enemy->GetShotReady())
 				{
-					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 180, 5, 1, 30, SHOT_PTN::RADIATION, SHOOTER::ENEMY);
+					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 180, 5, 1, 10, SHOT_PTN::RADIATION, SHOOTER::ENEMY);
 				}
 				enemy->Update();
 			}
 
 			HitCol(p);
+
+			for (auto& enemy : ef->GetLegion())
+			{
+				if (enemy->scoreFlag)
+				{
+					hud->AddScore(enemy->GetScore());
+					enemy->scoreFlag = false;
+				}
+			}
+			hud->Update();
 		}
 		else
 		{
@@ -240,7 +253,7 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 					{
 						if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
 						{
-							if (shot->GetShotName() !="ShotNormal")
+							if (shot->GetShotName() != "ShotNormal")
 							{
 								enemy->Damage();
 							}

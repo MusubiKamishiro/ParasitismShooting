@@ -12,6 +12,7 @@ Fish::Fish(const Player& player) : Enemy(player), player(player)
 	charaData.shotType = "ShotRadiation";
 	charaData.ShotReady = false;
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
+	score = 200;
 
 	updater = &Fish::Move;
 }
@@ -44,6 +45,7 @@ void Fish::Move()
 
 void Fish::Die()
 {
+	scoreFlag = true;
 	lifeFlag = false;
 }
 

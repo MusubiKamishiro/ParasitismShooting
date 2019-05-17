@@ -1,6 +1,5 @@
 #include "Game.h"
 #include <DxLib.h>
-#include <string>
 #include "Peripheral.h"
 #include "Credit.h"
 
@@ -12,6 +11,7 @@ Game::Game() : ScreenSize(800, 500)
 {
 	time = fps = count = oldcount = 0.0;
 	oldEnter = enter = 0;
+	fontSize = 24;
 }
 
 void Game::operator=(const Game &)
@@ -53,7 +53,7 @@ void Game::Initialize()
 
 	AddFontResourceEx("Ronde-B_square.otf", FR_PRIVATE, nullptr);
 	DxLib::ChangeFont("ロンド B スクエア", DX_CHARSET_DEFAULT);
-	DxLib::SetFontSize(24);
+	DxLib::SetFontSize(fontSize);
 	
 	coinSound = DxLib::LoadSoundMem("sound/tirin1.mp3");
 
@@ -94,10 +94,8 @@ void Game::Run()
 		}
 
 		// fps, クレジット表示
-		std::string s = "fps：" + std::to_string(fps);
 		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
-		DxLib::DrawString(0, 0, s.c_str(), 0xff00ff);
-
+		DxLib::DrawFormatString(ScreenSize.x - 100, ScreenSize.y - fontSize, 0xff00ff, "%.2ffps", fps);
 		credit.Draw();
 				
 		DxLib::ScreenFlip();
