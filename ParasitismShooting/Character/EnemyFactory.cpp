@@ -51,11 +51,12 @@ EnemyFactory::~EnemyFactory()
 {
 }
 
-Enemy * EnemyFactory::Create(const char * enemyname, Vector2f pos, int movePtn, int cnt, int wait, int hp, int sp, float speed, int shotCnt)
+Enemy * EnemyFactory::Create(const char * enemyname, const char * shotType, Vector2f pos, int movePtn, int cnt, int wait, int hp, int sp, float speed, int shotCnt)
 {
 	if(originalEnemy.find(enemyname) != originalEnemy.end())
 	{
 		auto enemy = originalEnemy[enemyname]->Clone();
+		enemy->charaData.shotType = shotType;
 		enemy->pos = pos;
 		enemy->movePtn = movePtn;
 		enemy->cnt = cnt;

@@ -12,6 +12,11 @@ Enemy::~Enemy()
 {
 }
 
+void Enemy::ShotStop()
+{
+	charaData.ShotReady = false;
+}
+
 bool Enemy::GetShotReady() const
 {
 	return charaData.ShotReady;

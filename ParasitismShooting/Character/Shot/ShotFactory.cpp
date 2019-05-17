@@ -68,54 +68,50 @@ ShotFactory::~ShotFactory()
 {
 }
 
-Shot * ShotFactory::Create(const char * shotname, Vector2f pos, float angle, int Speed, int movePtn, int level, int shotPtn, int shooter)
+Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int movePtn, int level, int shooter)
 {
-	if (originalShot.find(shotname) != originalShot.end())
+	if (originalShot.find(shotType) != originalShot.end())
 	{
+		if (shotType == "ShotNormal")
+		{
+			level = 1;
+		}
 		for (int j = 0; j < level; j++)
 		{
-		auto shot = originalShot[shotname]->Clone();
-			if (shotname == "ShotNormal")
+		auto shot = originalShot[shotType]->Clone();
+			if (shotType == "ShotNormal")
 			{
-				//shot->pos = pos;
-
-				shot->pos = { pos.x - 10 + NormalPosPtnX[j],pos.y + NormalPosPtnY[j] };
-				shot->shotst.angle = -M_PI_2;
+				shot->pos = { pos.x - 10 + NormalPosPtnX[j],pos.y};
+				shot->shotst.angle = SetAngle(pos, shooter);
 			}
-			else if (shotname == "ShotRadiation")
+			else if (shotType == "ShotRadiation")
 			{
 				shot->pos = pos;
-
-				shot->shotst.angle = -(angle + M_PI_2 / (level / 4)  * j);
+				shot->shotst.angle = (SetAngle(pos, shooter) + M_PI_2 * j);
 			}
-			else if (shotname == "ShotRandom")
+			else if (shotType == "ShotRandom")
 			{
 				std::random_device rd;
 				std::mt19937 mt(rd());
-
 				std::uniform_int_distribution<int> rand(1, 10);
 				shot->pos = { pos.x - (float)(rand(mt) * M_PI * 2) + 10,pos.y - 30 };
-				shot->shotst.angle = angle;
+				shot->shotst.angle = SetAngle(pos, shooter);
 			}
-			else if (shotname == "ShotShotgun")
+			else if (shotType == "ShotShotgun")
 			{
 				shot->pos = pos;
-				shot->shotst.angle = -(((angle + (M_PI / level))  * j) + M_PI / 6);
+				shot->shotst.angle = ((SetAngle(pos, shooter)  * j));
 			}
-			else if (shotname == "ShotTracking")
+			else if (shotType == "ShotTracking")
 			{
-				for (int j = 0; j < level; j++)
-				{
-					shot->pos = { pos.x + 20 * j,pos.y };
-				}
-				shot->shotst.angle = angle;
+				shot->pos = pos;
+				shot->shotst.angle = SetAngle(pos, shooter);
 			}
-			shot->shotst.shotname = shotname;
+			shot->shotst.shotType = shotType;
 			shot->shotst.cpos = pos;
 			shot->shotst.speed = Speed;
 			shot->shotst.movePtn = movePtn;
 			shot->shotst.level = level;
-			shot->shotst.shotPtn = shotPtn;
 			shot->shotst.shooter = shooter;
 			legion.push_back(shot);
 
@@ -127,4 +123,18 @@ Shot * ShotFactory::Create(const char * shotname, Vector2f pos, float angle, int
 	}
 
 	return nullptr;
+}
+
+
+double ShotFactory::SetAngle(Vector2f pos, int shooter)
+{
+	if (shooter == SHOOTER::ENEMY)
+	{
+		Vector2f pPos = player.GetPos();
+		return atan2(pPos.y - pos.y, pPos.x - pos.x);
+	}
+	else
+	{
+		return -M_PI_2;
+	}
 }

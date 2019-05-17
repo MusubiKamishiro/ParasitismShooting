@@ -9,7 +9,6 @@ Fish::Fish(const Player& player) : Enemy(player), player(player)
 	ReadActionFile("action/fish.act");
 	ChangeAction("eIdle");
 	SetCharaSize(0.07f);
-	charaData.shotType = "ShotRadiation";
 	charaData.ShotReady = false;
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 	score = 200;
@@ -60,6 +59,10 @@ void Fish::StunDamage()
 	--charaData.SP;
 	if (charaData.SP <= 0)
 	{
+		if (charaData.ShotReady == true)
+		{
+			charaData.ShotReady = false;
+		}
 		updater = &Fish::Stunning;
 	}
 }
@@ -94,6 +97,10 @@ void Fish::Damage()
 	charaData.HP -= 1;
 	if (charaData.HP <= 0)
 	{
+		if (charaData.ShotReady == true)
+		{
+			charaData.ShotReady = false;
+		}
 		updater = &Fish::Die;
 	}
 }

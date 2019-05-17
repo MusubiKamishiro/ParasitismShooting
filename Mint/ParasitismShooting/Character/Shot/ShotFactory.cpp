@@ -68,31 +68,31 @@ ShotFactory::~ShotFactory()
 {
 }
 
-Shot * ShotFactory::Create(std::string shotname, Vector2f pos, int Speed, int movePtn, int level, int shooter)
+Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int movePtn, int level, int shooter)
 {
-	if (originalShot.find(shotname) != originalShot.end())
+	if (originalShot.find(shotType) != originalShot.end())
 	{
-		if (shotname == "ShotNormal")
+		if (shotType == "ShotNormal")
 		{
 			level = 1;
 		}
 		for (int j = 0; j < level; j++)
 		{
-		auto shot = originalShot[shotname]->Clone();
-			if (shotname == "ShotNormal")
+		auto shot = originalShot[shotType]->Clone();
+			if (shotType == "ShotNormal")
 			{
 				//shot->pos = pos;
 
 				shot->pos = { pos.x - 10 + NormalPosPtnX[j],pos.y};
 				shot->shotst.angle = SetAngle(pos, shooter);
 			}
-			else if (shotname == "ShotRadiation")
+			else if (shotType == "ShotRadiation")
 			{
 				shot->pos = pos;
 
 				shot->shotst.angle = (SetAngle(pos, shooter) + M_PI_2 * j);
 			}
-			else if (shotname == "ShotRandom")
+			else if (shotType == "ShotRandom")
 			{
 				std::random_device rd;
 				std::mt19937 mt(rd());
@@ -101,12 +101,12 @@ Shot * ShotFactory::Create(std::string shotname, Vector2f pos, int Speed, int mo
 				shot->pos = { pos.x - (float)(rand(mt) * M_PI * 2) + 10,pos.y - 30 };
 				shot->shotst.angle = SetAngle(pos, shooter);
 			}
-			else if (shotname == "ShotShotgun")
+			else if (shotType == "ShotShotgun")
 			{
 				shot->pos = pos;
 				shot->shotst.angle = ((SetAngle(pos, shooter)  * j));
 			}
-			else if (shotname == "ShotTracking")
+			else if (shotType == "ShotTracking")
 			{
 
 				shot->pos = pos;
@@ -114,7 +114,7 @@ Shot * ShotFactory::Create(std::string shotname, Vector2f pos, int Speed, int mo
 				shot->shotst.angle = SetAngle(pos, shooter);
 			}
 			shot->shotst.cpos = pos;
-			shot->shotst.shotType = shotname;
+			shot->shotst.shotType = shotType;
 			shot->shotst.speed = Speed;
 			shot->shotst.level = level;
 			shot->shotst.shooter = shooter;

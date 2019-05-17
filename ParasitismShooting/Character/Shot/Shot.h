@@ -39,7 +39,7 @@ struct ShotST
 	int level;
 	int shotPtn;
 	int shooter;
-	std::string shotname;
+	std::string shotType;
 };
 
 class Shot : public CharacterObject

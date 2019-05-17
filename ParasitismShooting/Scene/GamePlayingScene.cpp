@@ -86,7 +86,7 @@ GamePlayingScene::GamePlayingScene()
 	assert(ifs);
 
 
-	std::string Bank[100][11];
+	std::string Bank[100][12];
 	std::string str = "";
 	int i = 0;
 	int j = 0;
@@ -105,9 +105,9 @@ GamePlayingScene::GamePlayingScene()
 		}
 
 		cBank.push_back({ atoi(Bank[i][0].c_str()),atoi(Bank[i][1].c_str()),
-			Bank[i][2],Vector2f(atof(Bank[i][3].c_str()),atof(Bank[i][4].c_str())),
-			atoi(Bank[i][5].c_str()),atoi(Bank[i][6].c_str()),atoi(Bank[i][7].c_str()),
-			atoi(Bank[i][8].c_str()),atoi(Bank[i][9].c_str()),atoi(Bank[i][10].c_str())
+			Bank[i][2],Bank[i][3],Vector2f(atof(Bank[i][4].c_str()),atof(Bank[i][5].c_str())),
+			atoi(Bank[i][6].c_str()),atoi(Bank[i][7].c_str()),atoi(Bank[i][8].c_str()),
+			atoi(Bank[i][9].c_str()),atoi(Bank[i][10].c_str()),atoi(Bank[i][11].c_str())
 			});
 		j = 0;
 		i++;
@@ -153,8 +153,8 @@ void GamePlayingScene::Update(const Peripheral& p)
 		{
 			if (cBank[bankCnt].time == ((int)time%250))
 			{
-				ef->Create(cBank[bankCnt].enemyname.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y),
-					cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, 10/*cBank[bankCnt].HP*/, 10/*cBank[bankCnt].SP*/, cBank[bankCnt].Speed,cBank[bankCnt].shotCnt);
+				ef->Create(cBank[bankCnt].enemyname.c_str(), cBank[bankCnt].shotType.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y),
+					cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed, cBank[bankCnt].shotCnt);
 				/*if (cBank.size() > bankCnt)
 				{
 					bankCnt++;
@@ -175,14 +175,14 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 			if (p.IsPressing(PAD_INPUT_2) && ((int)time % 6 == 0))
 			{
-				sf->Create(player->GetCharaData().shotType, player->GetPos(), 180, 5, 1, 4, SHOT_PTN::NORMAL, SHOOTER::PLAYER);
+				sf->Create(player->GetCharaData().shotType, player->GetPos(), 5, 1, 4, SHOOTER::PLAYER);
 			}
 			
 			for (auto& enemy : ef->GetLegion())
 			{
 				if (enemy->GetShotReady())
 				{
-					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 180, 5, 1, 10, SHOT_PTN::RADIATION, SHOOTER::ENEMY);
+					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 5, 1, 20, SHOOTER::ENEMY);
 				}
 				enemy->Update();
 			}
@@ -257,12 +257,15 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 						{
 							if (shot->GetShotName() != "ShotNormal")
 							{
+								enemy->ShotStop();
 								enemy->Damage();
 							}
 							else
 							{
+								enemy->ShotStop();
 								enemy->StunDamage();
 							}
+							enemy->ShotStop();
 							shot->Delete();
 						}
 					}

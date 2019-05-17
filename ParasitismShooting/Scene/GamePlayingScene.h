@@ -19,6 +19,7 @@ typedef struct CSV
 	int time;
 	int movePtn;
 	std::string enemyname;
+	std::string shotType;
 	Vector2f pos;
 	int Speed;
 	int HP;

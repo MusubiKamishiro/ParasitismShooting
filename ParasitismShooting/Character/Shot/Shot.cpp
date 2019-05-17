@@ -19,5 +19,5 @@ int Shot::GetShooter()const
 
 std::string Shot::GetShotName() const
 {
-	return shotst.shotname;
+	return shotst.shotType;
 }

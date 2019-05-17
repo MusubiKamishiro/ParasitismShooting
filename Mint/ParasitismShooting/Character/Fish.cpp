@@ -48,6 +48,10 @@ void Fish::Die()
 
 void Fish::Stunning()
 {
+	if (charaData.ShotReady == true)
+	{
+		charaData.ShotReady = false;
+	}
 	EnemyActionPattern eAction;
 	eAction.Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.ShotReady);
 }
@@ -95,6 +99,10 @@ void Fish::Damage()
 	charaData.HP -= 1;
 	if (charaData.HP <= 0)
 	{
+		if (charaData.ShotReady == true)
+		{
+			charaData.ShotReady = false;
+		}
 		updater = &Fish::Die;
 	}
 }
