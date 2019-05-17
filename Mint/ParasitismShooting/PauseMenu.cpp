@@ -9,6 +9,7 @@ PauseMenu::PauseMenu()
 	menu.reset(new Menu());
 
 	menu->menuTitle.push_back({ Vector2(menu->GetStringPosx("一時停止中"), (menu->ssize.y) / 3), "一時停止中", 0xff00ff });
+
 	menu->menudata.push_back({ Vector2(menu->GetStringPosx("ゲームを続ける"), (menu->ssize.y) / 3 + 100), "ゲームを続ける", 0xff00ff });
 	menu->menudata.push_back({ Vector2(menu->GetStringPosx("タイトルに戻る"), (menu->ssize.y) / 3 + 130), "タイトルに戻る", 0xff00ff });
 }

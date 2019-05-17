@@ -27,12 +27,14 @@ public:
 
 	// ’e‚ğì‚é
 	// enemyname...’e‚Ì–¼‘O
-	Shot* Create(const char * shotname,Vector2f pos, float angle, int Speed, int movePtn, int level, int shotPtn, int shooter);
+	Shot* Create(const char * shotname,Vector2f pos, int Speed, int movePtn, int level, int shooter);
 	
 	// ’e‚ÌW‡‘Ì‚ğ•Ô‚·
 	SLegion& GetLegion();
 	// ‘¼‚Ì‚à‚Ì‚É“–‚½‚Á‚½’e‚ğÁ‚·
 	void ShotDelete();
 	void OutofScreen(void);
+
+	double SetAngle(Vector2f pos, int shooter);
 };
 

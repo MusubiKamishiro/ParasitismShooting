@@ -51,7 +51,7 @@ EnemyFactory::~EnemyFactory()
 {
 }
 
-Enemy * EnemyFactory::Create(const char * enemyname, Vector2f pos, int movePtn, int cnt, int wait, int hp, int sp, float speed,int shotCnt)
+Enemy * EnemyFactory::Create(const char * enemyname, Vector2f pos, int movePtn, int cnt, int wait, int hp, int sp, float speed, int shotCnt)
 {
 	if(originalEnemy.find(enemyname) != originalEnemy.end())
 	{

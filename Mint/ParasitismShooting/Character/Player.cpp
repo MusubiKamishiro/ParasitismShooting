@@ -27,12 +27,13 @@ Player::Player()
 	vel = Vector2f(0, 0);
 	startPos = Vector2f(gssize.x / 2 + gs->outscreen / 2, gssize.y - 20);
 	pos = startPos;
-	count = 0;
+	icount = ccount = 0;
 	parasFlag = false;
-	
+	pinchFlag = false;
+
 	updater = &Player::Move;
 
-	efect = DxLib::LoadGraph("img/tnm2.png");
+	efect = DxLib::LoadGraph("img/tnm.png");
 }
 
 Player::~Player()
@@ -41,6 +42,23 @@ Player::~Player()
 
 void Player::Update(const Peripheral &p)
 {
+	if (p.IsPressing(PAD_INPUT_5))
+	{
+		++ccount;
+		if (ccount > 120)
+		{
+			if (parasFlag)
+			{
+				updater = &Player::ParasiticCancel;
+			}
+			ccount = 0;
+		}
+	}
+	else
+	{
+		ccount = 0;
+	}
+
 	// ˆÚ“®•ûŒü‚ªŒˆ‚Ü‚é
 	(this->*updater)(p);
 
@@ -96,7 +114,6 @@ void Player::Damage(const Peripheral & p)
 				charaData.HP = 1;
 				parasFlag = false;
 				ParasiticCancel(p);
-				updater = &Player::Invincible;
 			}
 			else
 			{
@@ -113,14 +130,14 @@ void Player::Damage(const Peripheral & p)
 
 void Player::Invincible(const Peripheral & p)
 {
-	if (count >= 300)
+	if (icount >= 180)
 	{
-		count = 0;
+		icount = 0;
 		updater = &Player::Move;
 	}
 	else
 	{
-		count++;
+		++icount;
 	}
 	Move(p);
 }
@@ -143,13 +160,16 @@ void Player::Parasitic(const Peripheral & p, const CharaData& cdata)
 
 	charaData = cdata;
 
-	count = 0;
+	icount = 0;
 	updater = &Player::Invincible;
 }
 
 void Player::ParasiticCancel(const Peripheral & p)
 {
 	charaData = originData;
+	pinchFlag = true;
+	parasFlag = false;
+	updater = &Player::Invincible;
 }
 
 
@@ -173,19 +193,18 @@ void Player::Draw(const int& time)
 		}
 	}
 
-	//float a = (time % 30) / 90.f;
-	//
-	//int b = 255 - (255 / (((time % 30) + 1)));
+	float a = (time % 30) / 90.f;
+	
+	int b = 255 - (255 / (((time % 30) + 1)));
 	//DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, b);
-	//DxLib::SetDrawBright(128, 0, 0);
+	DxLib::SetDrawBright(255, 0, 0);
+	DxLib::DrawRotaGraph(pos.x, pos.y, a, 0, efect, true);
+	DxLib::SetDrawBright(255, 255, 255);
+	//DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, 128);
 	//DxLib::DrawRotaGraph(pos.x, pos.y, a, 0, efect, true);
-	//DxLib::SetDrawBright(255, 255, 255);
-	////DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, 128);
-	////DxLib::DrawRotaGraph(pos.x, pos.y, a, 0, efect, true);
 	//DxLib::SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	//DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
-
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 }
 
 

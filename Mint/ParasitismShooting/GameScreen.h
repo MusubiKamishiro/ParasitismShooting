@@ -7,12 +7,14 @@ private:
 	int screen;
 	Vector2f swing;
 
+	int count, countMax;
+
 public:
 	GameScreen();
 	~GameScreen();
 
 	void SetAndClearScreen();
-	void DrawAndChangeScreen();
+	void DrawAndChangeScreen(bool& swingflag);
 	void SetGaussFilter();
 	const Vector2 GetGSSize()const;
 

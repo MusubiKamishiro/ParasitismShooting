@@ -10,7 +10,7 @@ void EnemyActionPattern::UpDown(Vector2f &pos, float speed, int cnt, int wait)
 	{
 		pos.y += speed;
 	}
-	
+
 	if (cnt > wait)
 	{
 		pos.y -= speed;
@@ -23,7 +23,7 @@ void EnemyActionPattern::LeftRight(Vector2f &pos, float speed, int cnt, int wait
 	{
 		pos.x += speed;
 	}
-	
+
 	if (cnt > wait)
 	{
 		pos.x -= speed;
@@ -68,7 +68,8 @@ EnemyActionPattern::~EnemyActionPattern()
 
 void EnemyActionPattern::Update(int movePtn, Vector2f & pos, float speed, int cnt, int wait, int shotCnt, int charSP, bool& ShotReady)
 {
-	if (cnt == shotCnt)
+	//if (cnt == shotCnt)
+	if ((cnt % 30) == 0)
 	{
 		ShotReady = true;
 	}

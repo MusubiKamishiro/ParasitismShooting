@@ -20,13 +20,14 @@ private:
 	int right;
 	int left;
 	int down;
+
 public:
 	EnemyFactory(const Player& player);
 	~EnemyFactory();
 
 	// “G‚ğì‚é
 	// enemyname...“G‚Ì–¼‘O
-	Enemy* Create(const char * enemyname, Vector2f pos, int movePtn, int cnt, int wait, int hp, int sp, float speed,int shotCnt);
+	Enemy* Create(const char * enemyname, Vector2f pos, int movePtn, int cnt, int wait, int hp, int sp, float speed, int shotCnt);
 	
 	// “G‚ÌW‡‘Ì‚ğ•Ô‚·
 	ELegion& GetLegion();

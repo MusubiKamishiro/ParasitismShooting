@@ -9,10 +9,10 @@ Fish::Fish(const Player& player) : Enemy(player), player(player)
 	ReadActionFile("action/fish.act");
 	ChangeAction("Idle");
 	SetCharaSize(0.07f);
-	charaData.shotType = "ShotRadiation";
+	charaData.shotType = "ShotShotgun";
 	charaData.ShotReady = false;
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
-	
+
 	updater = &Fish::Move;
 }
 
@@ -81,7 +81,7 @@ void Fish::Draw(int time)
 	}
 	else
 	{
-		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs((time*5 % 255) - 127) + 128);
+		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs((time * 5 % 255) - 127) + 128);
 		CharacterObject::Draw(charaData.img);
 		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 	}
