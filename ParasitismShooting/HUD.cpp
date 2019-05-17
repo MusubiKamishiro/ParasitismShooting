@@ -33,8 +33,6 @@ void HUD::Draw(const int& life, const bool& flag)
 	DxLib::DrawFormatString(510, 50, 0x000000, "最高得点　%012d", score > highScore ? score : highScore);
 	DxLib::DrawFormatString(510, 80, 0x000000, "　　得点　%012d", score);
 
-	//score+=10;
-
 
 	// 寄生してるかどうかで色を分ける
 	if (flag)

@@ -150,18 +150,19 @@ void GamePlayingScene::Update(const Peripheral& p)
 		// アップデート関連
 		if (!pauseFlag)
 		{
-			if (cBank[bankCnt].time == time)
+			if (cBank[bankCnt].time == ((int)time%250))
 			{
 				ef->Create(cBank[bankCnt].enemyname.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y),
 					cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, 3/*cBank[bankCnt].HP*/, 10/*cBank[bankCnt].SP*/, cBank[bankCnt].Speed,cBank[bankCnt].shotCnt);
-				if (cBank.size() > bankCnt)
+				/*if (cBank.size() > bankCnt)
 				{
 					bankCnt++;
 					if (bankCnt == cBank.size())
 					{
 						bankCnt--;
 					}
-				}
+				}*/
+				bankCnt = bankCnt % 8 + 2;
 			}
 
 			for (auto& shot : sf->GetLegion())
@@ -294,6 +295,7 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 						{
 							// 敵の力を手に入れる
 							player->Parasitic(p, enemy->GetCharaData());
+							hud->AddScore(enemy->GetScore() * 1.2);
 							enemy->Die();
 						}
 					}
