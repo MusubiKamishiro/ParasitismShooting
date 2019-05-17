@@ -262,10 +262,8 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 							}
 							else
 							{
-								enemy->ShotStop();
 								enemy->StunDamage();
 							}
-							enemy->ShotStop();
 							shot->Delete();
 						}
 					}
