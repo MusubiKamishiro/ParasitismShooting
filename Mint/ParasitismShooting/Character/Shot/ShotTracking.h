@@ -22,7 +22,6 @@ private:
 	const Player& player;
 	const Enemy& enemy;
 
-
 public:
 	~ShotTracking();
 

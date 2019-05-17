@@ -41,7 +41,7 @@ struct CharaData
 	int HP;					// 体力
 	int SP;					// スタミナ
 	float moveVel;			// 移動量
-	const char* shotType;	// 弾の名前
+	std::string shotType;	// 弾の名前
 	bool ShotReady;			// ショットを打つかどうかのフラグ
 };
 

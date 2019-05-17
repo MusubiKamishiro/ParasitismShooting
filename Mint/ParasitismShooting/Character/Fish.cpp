@@ -9,7 +9,6 @@ Fish::Fish(const Player& player) : Enemy(player), player(player)
 	ReadActionFile("action/fish.act");
 	ChangeAction("Idle");
 	SetCharaSize(0.07f);
-	charaData.shotType = "ShotShotgun";
 	charaData.ShotReady = false;
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 
@@ -58,6 +57,10 @@ void Fish::StunDamage()
 	--charaData.SP;
 	if (charaData.SP <= 0)
 	{
+		if (charaData.ShotReady == true)
+		{
+			charaData.ShotReady = false;
+		}
 		updater = &Fish::Stunning;
 	}
 }

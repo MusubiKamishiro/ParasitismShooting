@@ -1,6 +1,7 @@
 #include "ShotTracking.h"
 #include "../../Game.h"
 #include "../Enemy.h"
+#include "ShotFactory.h"
 #include <DxLib.h>
 
 ShotTracking::ShotTracking(const Player& player/*, const Enemy& enemy*/) : Shot(player/*, enemy*/),player(player), enemy(enemy)
@@ -30,8 +31,13 @@ Shot * ShotTracking::Clone()
 
 void ShotTracking::Move()
 {
+	if ((cnt % 30) == 0)
+	{
+		
+	}
 	pos.x += cos(shotst.angle) * shotst.speed;
 	pos.y += sin(shotst.angle) * shotst.speed;
+	cnt++;
 }
 
 void ShotTracking::Delete()

@@ -26,8 +26,8 @@ public:
 	~ShotFactory();
 
 	// ’e‚ğì‚é
-	// enemyname...’e‚Ì–¼‘O
-	Shot* Create(const char * shotname,Vector2f pos, int Speed, int movePtn, int level, int shooter);
+	// shotType...’e‚Ì–¼‘O
+	Shot* Create(std::string shotType, Vector2f pos, int Speed, int movePtn, int level, int shooter);
 	
 	// ’e‚ÌW‡‘Ì‚ğ•Ô‚·
 	SLegion& GetLegion();

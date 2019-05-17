@@ -68,10 +68,14 @@ ShotFactory::~ShotFactory()
 {
 }
 
-Shot * ShotFactory::Create(const char * shotname, Vector2f pos, int Speed, int movePtn, int level, int shooter)
+Shot * ShotFactory::Create(std::string shotname, Vector2f pos, int Speed, int movePtn, int level, int shooter)
 {
 	if (originalShot.find(shotname) != originalShot.end())
 	{
+		if (shotname == "ShotNormal")
+		{
+			level = 1;
+		}
 		for (int j = 0; j < level; j++)
 		{
 		auto shot = originalShot[shotname]->Clone();
@@ -104,18 +108,17 @@ Shot * ShotFactory::Create(const char * shotname, Vector2f pos, int Speed, int m
 			}
 			else if (shotname == "ShotTracking")
 			{
-				for (int j = 0; j < level; j++)
-				{
-					shot->pos = { pos.x + 20 * j,pos.y };
-				}
-				//shot->shotst.angle = angle;
+
+				shot->pos = pos;
+
+				shot->shotst.angle = SetAngle(pos, shooter);
 			}
-			shot->shotst.shotname = shotname;
 			shot->shotst.cpos = pos;
+			shot->shotst.shotType = shotname;
 			shot->shotst.speed = Speed;
-			shot->shotst.movePtn = movePtn;
 			shot->shotst.level = level;
 			shot->shotst.shooter = shooter;
+			shot->cnt = 0;
 			legion.push_back(shot);
 
 			if (j == level)
