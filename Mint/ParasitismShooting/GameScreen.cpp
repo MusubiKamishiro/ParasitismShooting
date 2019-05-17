@@ -13,6 +13,8 @@ GameScreen::GameScreen() : outscreen(60)
 	screen = DxLib::MakeScreen(gssize.x, gssize.y);
 
 	swing = Vector2f(0, 0);
+	count = 0;
+	countMax = 64;
 }
 
 
@@ -26,13 +28,14 @@ void GameScreen::SetAndClearScreen()
 	DxLib::ClearDrawScreen();
 }
 
-void GameScreen::DrawAndChangeScreen()
+void GameScreen::DrawAndChangeScreen(bool& swingflag)
 {
 	DxLib::SetDrawScreen(DX_SCREEN_BACK);		// •`‰ææ‚ð–ß‚·
 
-	if (DxLib::CheckHitKey(KEY_INPUT_H))
+	if (swingflag)
 	{
 		swing = Vector2f(outscreen / 3, outscreen / 3);
+		swingflag = false;
 	}
 
 	std::random_device seed_gen;
@@ -70,7 +73,7 @@ void GameScreen::SetGaussFilter()
 {
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 32);
 	DxLib::DrawBox(0, 0, gssize.x, gssize.y, 0x000000, true);
-	DxLib::GraphFilter(screen, DX_GRAPH_FILTER_GAUSS, 16, 100);
+	DxLib::GraphFilter(screen, DX_GRAPH_FILTER_GAUSS, 16, count = count > countMax ? countMax : ++count);
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 }
 
