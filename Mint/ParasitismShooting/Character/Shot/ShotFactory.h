@@ -5,7 +5,7 @@
 
 class Shot;
 class Player;
-class Enemy;
+class EnemyFactory;
 
 typedef std::list<Shot*> SLegion;	// ’e‚ÌW‡‘Ì‚ÌŒ^
 
@@ -13,6 +13,7 @@ class ShotFactory
 {
 private:
 	const Player& player;
+	const EnemyFactory& enemyfactory;
 	
 	std::map<std::string, Shot*> originalShot;	// ’e‚ÌŒ³‚Æ‚È‚émap‚Ìì¬
 	SLegion legion;
@@ -22,7 +23,7 @@ private:
 	int left;
 	int down;
 public:
-	ShotFactory(const Player& player/*, const Enemy& enemy*/);
+	ShotFactory(const Player& player, const EnemyFactory& enemyfactory);
 	~ShotFactory();
 
 	// ’e‚ğì‚é

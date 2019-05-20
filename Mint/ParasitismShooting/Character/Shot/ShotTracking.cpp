@@ -1,9 +1,9 @@
 #include "ShotTracking.h"
 #include "../../Game.h"
-#include "../Enemy.h"
+#include "../EnemyFactory.h"
 #include <DxLib.h>
 
-ShotTracking::ShotTracking(const Player& player/*, const Enemy& enemy*/) : Shot(player/*, enemy*/),player(player), enemy(enemy)
+ShotTracking::ShotTracking(const Player& player, const EnemyFactory& enemyfactory) : Shot(player, enemyfactory),player(player), enemyfactory(enemyfactory)
 {
 	ReadActionFile("action/shot.act");
 	ChangeAction("Shot3");
@@ -13,7 +13,7 @@ ShotTracking::ShotTracking(const Player& player/*, const Enemy& enemy*/) : Shot(
 	updater = &ShotTracking::Move;
 }
 
-ShotTracking::ShotTracking(const ShotTracking & d) : Shot(d.player/*, d.enemy*/),player(player), enemy(enemy)
+ShotTracking::ShotTracking(const ShotTracking & d) : Shot(d.player, d.enemyfactory),player(player), enemyfactory(enemyfactory)
 {
 	*this = d;
 }

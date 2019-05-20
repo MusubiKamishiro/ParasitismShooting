@@ -1,5 +1,9 @@
 #pragma once
 #include "Scene.h"
+#include <memory>
+
+class TitleMenu;
+
 
 class TitleScene : public Scene
 {
@@ -10,6 +14,8 @@ private:
 
 	void FadeinUpdate(const Peripheral& p);
 	void FadeoutUpdate(const Peripheral& p);
+
+	std::shared_ptr<TitleMenu> tmenu;
 
 public:
 	TitleScene();

@@ -1,10 +1,11 @@
 #include "Shot.h"
 #include "../Player.h"
-#include "../Enemy.h"
+//#include "../Enemy.h"
+#include "../EnemyFactory.h"
 
 
 
-Shot::Shot(const Player & player/*, const Enemy& enemy*/)
+Shot::Shot(const Player & player, const EnemyFactory& enemyfactory/*, const Enemy& enemy*/)
 {
 }
 
