@@ -2,20 +2,19 @@
 #include <memory>
 #include "Geometry.h"
 
-
 class Menu;
 class Peripheral;
 
-class PauseMenu
+class TitleMenu
 {
 private:
 	std::shared_ptr<Menu> menu;
 
 public:
-	PauseMenu();
-	~PauseMenu();
+	TitleMenu();
+	~TitleMenu();
 
-	bool Update(const Peripheral& p, bool& flag);
+	bool Update(const Peripheral& p/*, bool& flag*/);
 	void Draw();
 };
 

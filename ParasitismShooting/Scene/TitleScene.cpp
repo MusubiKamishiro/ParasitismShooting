@@ -3,15 +3,10 @@
 #include "../Peripheral.h"
 #include "../Game.h"
 #include "SelectScene.h"
+#include "../TitleMenu.h"
 
 void TitleScene::FadeinUpdate(const Peripheral & p)
 {
-	if (p.IsTrigger(PAD_INPUT_8))
-	{
-		pal = 255;
-		updater = &TitleScene::FadeoutUpdate;
-	}
-	
 	if (pal == 255)
 	{
 		;
@@ -39,6 +34,8 @@ TitleScene::TitleScene()
 {
 	titleImage = DxLib::LoadGraph("img/title.png");
 	updater = &TitleScene::FadeinUpdate;
+
+	tmenu.reset(new TitleMenu());
 }
 
 
@@ -50,6 +47,14 @@ void TitleScene::Update(const Peripheral& p)
 {
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
 	DxLib::DrawExtendGraph(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, titleImage, true);
+
+	if (tmenu->Update(p))
+	{
+		pal = 255;
+		updater = &TitleScene::FadeoutUpdate;
+	}
+	
+	tmenu->Draw();
 
 	(this->*updater)(p);
 }
