@@ -1,9 +1,9 @@
 #include "ShotRandom.h"
 #include "../../Game.h"
-#include "../Enemy.h"
+#include "../EnemyFactory.h"
 #include <DxLib.h>
 
-ShotRandom::ShotRandom(const Player& player/*, const Enemy& enemy*/) : Shot(player/*, enemy*/),player(player), enemy(enemy)
+ShotRandom::ShotRandom(const Player& player, const EnemyFactory& enemyfactory) : Shot(player, enemyfactory),player(player), enemyfactory(enemyfactory)
 {
 	ReadActionFile("action/shot.act");
 	ChangeAction("Shot5");
@@ -13,7 +13,7 @@ ShotRandom::ShotRandom(const Player& player/*, const Enemy& enemy*/) : Shot(play
 	updater = &ShotRandom::Move;
 }
 
-ShotRandom::ShotRandom(const ShotRandom & d) : Shot(d.player/*, d.enemy*/),player(player), enemy(enemy)
+ShotRandom::ShotRandom(const ShotRandom & d) : Shot(d.player, d.enemyfactory),player(player), enemyfactory(enemyfactory)
 {
 	*this = d;
 }
