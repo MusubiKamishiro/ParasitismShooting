@@ -121,12 +121,12 @@ GamePlayingScene::GamePlayingScene()
 
 	gs.reset(new GameScreen());
 	player.reset(new Player());
-	sf.reset(new ShotFactory(*player));
+	ef.reset(new EnemyFactory(*player));
+	sf.reset(new ShotFactory(*player, *ef));
 	hud.reset(new HUD());
 	bg.reset(new BackGround());
 	pmenu.reset(new PauseMenu());
 	cmenu.reset(new ContinueMenu());
-	ef.reset(new EnemyFactory(*player));
 	cd.reset(new CollisionDetector());
 	
 	ssize = Game::Instance().GetScreenSize();
@@ -163,7 +163,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 						bankCnt--;
 					}
 				}*/
-				bankCnt = bankCnt % (cBank.size()-2) + 2;
+				bankCnt = bankCnt % (cBank.size()-4) +2;
 			}
 
 			for (auto& shot : sf->GetLegion())

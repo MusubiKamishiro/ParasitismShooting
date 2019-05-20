@@ -1,14 +1,14 @@
 #pragma once
 #include "Shot.h"
 
-class Enemy;
+class EnemyFactory;
 class ShotFactory;
 
 class ShotNormal : public Shot
 {
 	friend ShotFactory;
 private:
-	ShotNormal(const Player& player/*, const Enemy& enemy*/);
+	ShotNormal(const Player& player, const EnemyFactory& enemyfactory);
 	ShotNormal(const ShotNormal&);	
 	void operator=(const ShotNormal&);
 
@@ -20,7 +20,7 @@ private:
 	void (ShotNormal::*updater)();
 
 	const Player& player;
-	const Enemy& enemy;
+	const EnemyFactory& enemyfactory;
 
 
 public:

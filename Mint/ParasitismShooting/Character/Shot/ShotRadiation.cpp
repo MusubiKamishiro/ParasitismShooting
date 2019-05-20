@@ -1,9 +1,9 @@
 #include "ShotRadiation.h"
 #include "../../Game.h"
-#include "../Enemy.h"
+#include "../EnemyFactory.h"
 #include <DxLib.h>
 
-ShotRadiation::ShotRadiation(const Player& player/*, const Enemy& enemy*/) : Shot(player/*, enemy*/),player(player), enemy(enemy)
+ShotRadiation::ShotRadiation(const Player& player, const EnemyFactory& enemyfactory) : Shot(player, enemyfactory),player(player), enemyfactory(enemyfactory)
 {
 	ReadActionFile("action/shot.act");
 	ChangeAction("Shot4");
@@ -13,7 +13,7 @@ ShotRadiation::ShotRadiation(const Player& player/*, const Enemy& enemy*/) : Sho
 	updater = &ShotRadiation::Move;
 }
 
-ShotRadiation::ShotRadiation(const ShotRadiation & d) : Shot(d.player/*, d.enemy*/),player(player), enemy(enemy)
+ShotRadiation::ShotRadiation(const ShotRadiation & d) : Shot(d.player, d.enemyfactory),player(player), enemyfactory(enemyfactory)
 {
 	*this = d;
 }

@@ -45,7 +45,7 @@ void ShotFactory::OutofScreen(void)
 	}
 }
 
-ShotFactory::ShotFactory(const Player& player/*, const Enemy& enemy*/) : player(player)
+ShotFactory::ShotFactory(const Player& player, const EnemyFactory& enemyfactory) : player(player), enemyfactory(enemyfactory)
 {
 	GameScreen gscreen;
 	Vector2 screenSize = gscreen.GetGSSize();
@@ -55,11 +55,11 @@ ShotFactory::ShotFactory(const Player& player/*, const Enemy& enemy*/) : player(
 	left = 0;
 	down = screenSize.y + gscreen.outscreen;
 
-	originalShot["ShotNormal"] = new ShotNormal(player);
-	originalShot["ShotRadiation"] = new ShotRadiation(player);
-	originalShot["ShotRandom"] = new ShotRandom(player);
-	originalShot["ShotShotgun"] = new ShotShotgun(player);
-	originalShot["ShotTracking"] = new ShotTracking(player);
+	originalShot["ShotNormal"] = new ShotNormal(player, enemyfactory);
+	originalShot["ShotRadiation"] = new ShotRadiation(player, enemyfactory);
+	originalShot["ShotRandom"] = new ShotRandom(player, enemyfactory);
+	originalShot["ShotShotgun"] = new ShotShotgun(player, enemyfactory);
+	originalShot["ShotTracking"] = new ShotTracking(player, enemyfactory);
 
 }
 

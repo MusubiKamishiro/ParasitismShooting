@@ -1,9 +1,9 @@
 #include "ShotShotgun.h"
 #include "../../Game.h"
-#include "../Enemy.h"
+#include "../EnemyFactory.h"
 #include <DxLib.h>
 
-ShotShotgun::ShotShotgun(const Player& player/*, const Enemy& enemy*/) : Shot(player/*, enemy*/),player(player), enemy(enemy)
+ShotShotgun::ShotShotgun(const Player& player, const EnemyFactory& enemyfactory) : Shot(player, enemyfactory),player(player), enemyfactory(enemyfactory)
 {
 	ReadActionFile("action/shot.act");
 	ChangeAction("Shot2");
@@ -13,7 +13,7 @@ ShotShotgun::ShotShotgun(const Player& player/*, const Enemy& enemy*/) : Shot(pl
 	updater = &ShotShotgun::Move;
 }
 
-ShotShotgun::ShotShotgun(const ShotShotgun & d) : Shot(d.player/*, d.enemy*/),player(player), enemy(enemy)
+ShotShotgun::ShotShotgun(const ShotShotgun & d) : Shot(d.player, d.enemyfactory),player(player), enemyfactory(enemyfactory)
 {
 	*this = d;
 }

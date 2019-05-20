@@ -1,14 +1,14 @@
 #pragma once
 #include "Shot.h"
 
-class Enemy;
+class EnemyFactory;
 class ShotFactory;
 
 class ShotRadiation : public Shot
 {
 	friend ShotFactory;
 private:
-	ShotRadiation(const Player& player/*, const Enemy& enemy*/);
+	ShotRadiation(const Player& player, const EnemyFactory& enemyfactory/*, const Enemy& enemy*/);
 	ShotRadiation(const ShotRadiation&);
 	void operator=(const ShotRadiation&);
 
@@ -20,7 +20,7 @@ private:
 	void (ShotRadiation::*updater)();
 
 	const Player& player;
-	const Enemy& enemy;
+	const EnemyFactory& enemyfactory;
 
 	void rotation2D(float * xp, float * yp, float x, float y, float xc, float yc, float theta);
 

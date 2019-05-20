@@ -6,7 +6,8 @@
 #include <math.h>
 
 class Player;
-class Enemy;
+//class Enemy;
+class EnemyFactory;
 class ShotFactory;
 
 enum SHOT_PTN
@@ -48,7 +49,7 @@ class Shot : public CharacterObject
 protected:
 	virtual Shot* Clone() = 0;
 
-	Shot(const Player& player/*, const Enemy& enemy*/);
+	Shot(const Player& player, const EnemyFactory& enemyfactory/*, const Enemy& enemy*/);
 
 	ShotST shotst;
 

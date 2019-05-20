@@ -22,11 +22,7 @@ PauseMenu::~PauseMenu()
 bool PauseMenu::Update(const Peripheral& p, bool& flag)
 {
 	menu->Update(p);
-/*	if (p.IsTrigger(PAD_INPUT_8))
-	{
-		flag = false;
-	}
-	else */if (p.IsTrigger(PAD_INPUT_2))
+	if (p.IsTrigger(PAD_INPUT_2))
 	{
 		if (menu->selcnt == 0)
 		{
