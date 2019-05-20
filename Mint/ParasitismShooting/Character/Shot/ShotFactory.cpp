@@ -81,22 +81,18 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 		auto shot = originalShot[shotType]->Clone();
 			if (shotType == "ShotNormal")
 			{
-				//shot->pos = pos;
-
 				shot->pos = { pos.x - 10 + NormalPosPtnX[j],pos.y};
 				shot->shotst.angle = SetAngle(pos, shooter);
 			}
 			else if (shotType == "ShotRadiation")
 			{
 				shot->pos = pos;
-
 				shot->shotst.angle = (SetAngle(pos, shooter) + M_PI_2 * j);
 			}
 			else if (shotType == "ShotRandom")
 			{
 				std::random_device rd;
 				std::mt19937 mt(rd());
-
 				std::uniform_int_distribution<int> rand(1, 10);
 				shot->pos = { pos.x - (float)(rand(mt) * M_PI * 2) + 10,pos.y - 30 };
 				shot->shotst.angle = SetAngle(pos, shooter);
@@ -108,17 +104,15 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 			}
 			else if (shotType == "ShotTracking")
 			{
-
 				shot->pos = pos;
-
 				shot->shotst.angle = SetAngle(pos, shooter);
 			}
-			shot->shotst.cpos = pos;
 			shot->shotst.shotType = shotType;
+			shot->shotst.cpos = pos;
 			shot->shotst.speed = Speed;
+			shot->shotst.movePtn = movePtn;
 			shot->shotst.level = level;
 			shot->shotst.shooter = shooter;
-			shot->cnt = 0;
 			legion.push_back(shot);
 
 			if (j == level)
@@ -130,6 +124,7 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 
 	return nullptr;
 }
+
 
 double ShotFactory::SetAngle(Vector2f pos, int shooter)
 {
