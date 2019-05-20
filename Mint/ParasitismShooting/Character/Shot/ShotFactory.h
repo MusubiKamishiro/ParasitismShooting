@@ -28,7 +28,7 @@ public:
 	// ’e‚ğì‚é
 	// shotType...’e‚Ì–¼‘O
 	Shot* Create(std::string shotType, Vector2f pos, int Speed, int movePtn, int level, int shooter);
-	
+
 	// ’e‚ÌW‡‘Ì‚ğ•Ô‚·
 	SLegion& GetLegion();
 	// ‘¼‚Ì‚à‚Ì‚É“–‚½‚Á‚½’e‚ğÁ‚·

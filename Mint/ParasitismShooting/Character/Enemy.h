@@ -11,6 +11,8 @@ protected:
 	virtual Enemy* Clone() = 0;
 
 	Enemy(const Player& player);
+	
+	unsigned int score;
 
 public:
 	virtual ~Enemy();
@@ -21,7 +23,10 @@ public:
 	virtual void Die() = 0;
 	virtual void Stunning() = 0;
 	virtual void StunDamage() = 0;
+	void ShotStop();
 
 	bool GetShotReady()const;
+	unsigned int GetScore()const;
+	bool scoreFlag;
 };
 

@@ -1,7 +1,7 @@
 /出現カウントカウント,移動パターン,敵の種類,ショットタイプ,x座標,y座標,スピード,体力,スタミナ,カウンタ,待機時間,ショットタイミング
 /time,movePtn,"""string""","""string""",pos.x,pos.y,speed,HP,SP,cnt,wait,shotCnt
-100,0,fish,ShotNormal,100,60,3,1,1,0,120,60
-120,0,fish,ShotNormal,130,60,3,1,1,0,120,60
+100,0,fish,ShotShotgun,100,60,3,1,1,0,120,60
+120,0,fish,ShotShotgun,130,60,3,1,1,0,120,60
 140,1,fish,ShotShotgun,160,60,3,1,1,0,120,60
 160,1,fish,ShotShotgun,190,60,3,1,1,0,120,60
 180,1,fish,ShotTracking,220,60,3,1,1,0,120,60

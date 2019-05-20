@@ -17,6 +17,7 @@ private:
 	float time, fps, count, oldcount;
 	int oldEnter, enter;
 	int coinSound;
+	unsigned int fontSize;
 
 public:
 	// ¼İ¸ŞÙÄİ²İÀ°Ìª°½

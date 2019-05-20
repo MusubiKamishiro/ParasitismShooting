@@ -7,10 +7,11 @@
 Fish::Fish(const Player& player) : Enemy(player), player(player)
 {
 	ReadActionFile("action/fish.act");
-	ChangeAction("Idle");
+	ChangeAction("eIdle");
 	SetCharaSize(0.07f);
 	charaData.ShotReady = false;
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
+	score = 200;
 
 	updater = &Fish::Move;
 }
@@ -43,17 +44,19 @@ void Fish::Move()
 
 void Fish::Die()
 {
+	scoreFlag = true;
 	lifeFlag = false;
 }
 
 void Fish::Stunning()
 {
+	
+	EnemyActionPattern eAction;
+	eAction.Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.ShotReady);
 	if (charaData.ShotReady == true)
 	{
 		charaData.ShotReady = false;
 	}
-	EnemyActionPattern eAction;
-	eAction.Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.ShotReady);
 }
 
 void Fish::StunDamage()
@@ -61,10 +64,6 @@ void Fish::StunDamage()
 	--charaData.SP;
 	if (charaData.SP <= 0)
 	{
-		if (charaData.ShotReady == true)
-		{
-			charaData.ShotReady = false;
-		}
 		updater = &Fish::Stunning;
 	}
 }
@@ -99,10 +98,6 @@ void Fish::Damage()
 	charaData.HP -= 1;
 	if (charaData.HP <= 0)
 	{
-		if (charaData.ShotReady == true)
-		{
-			charaData.ShotReady = false;
-		}
 		updater = &Fish::Die;
 	}
 }
