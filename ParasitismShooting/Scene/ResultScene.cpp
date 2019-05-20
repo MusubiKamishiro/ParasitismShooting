@@ -3,6 +3,7 @@
 #include "../Peripheral.h"
 #include "../Game.h"
 #include "TitleScene.h"
+#include <string>
 
 void ResultScene::FadeinUpdate(const Peripheral & p)
 {
@@ -34,9 +35,10 @@ void ResultScene::FadeoutUpdate(const Peripheral & p)
 	}
 }
 
-ResultScene::ResultScene()
+ResultScene::ResultScene(const unsigned int& score)
 {
 	updater = &ResultScene::FadeinUpdate;
+	totalScore = score;
 }
 
 
@@ -48,5 +50,6 @@ void ResultScene::Update(const Peripheral& p)
 {
 	(this->*updater)(p);
 	DxLib::DrawString(50, 50, "ResultScene", 0xffffff);
+	DxLib::DrawString(100, 100, std::to_string(totalScore).c_str(), 0xffffff);
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
 }

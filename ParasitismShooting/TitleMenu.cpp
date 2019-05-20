@@ -4,7 +4,6 @@
 #include "Menu.h"
 
 
-
 TitleMenu::TitleMenu()
 {
 	menu.reset(new Menu());
@@ -19,7 +18,7 @@ TitleMenu::~TitleMenu()
 {
 }
 
-bool TitleMenu::Update(const Peripheral & p/*, bool & flag*/)
+bool TitleMenu::Update(const Peripheral & p, bool & flag)
 {
 	menu->Update(p);
 	if (p.IsTrigger(PAD_INPUT_2))
@@ -30,7 +29,7 @@ bool TitleMenu::Update(const Peripheral & p/*, bool & flag*/)
 		}
 		else if (menu->selcnt == 1)
 		{
-			//return true;
+			flag = true;
 		}
 		else if (menu->selcnt == 2)
 		{

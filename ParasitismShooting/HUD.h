@@ -23,5 +23,6 @@ public:
 	void DelScore();
 
 	const Vector2 GetHUDPos()const;
+	unsigned int GetScore()const;
 };
 

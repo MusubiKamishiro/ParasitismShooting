@@ -75,7 +75,7 @@ void GamePlayingScene::ContinueUpdate(const Peripheral & p)
 
 void GamePlayingScene::MoveResultUpdate(const Peripheral & p)
 {
-	Game::Instance().ChangeScene(new ResultScene());
+	Game::Instance().ChangeScene(new ResultScene(hud->GetScore()));
 }
 
 

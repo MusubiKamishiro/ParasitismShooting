@@ -67,3 +67,8 @@ const Vector2 HUD::GetHUDPos()const
 {
 	return hudPos;
 }
+
+unsigned int HUD::GetScore() const
+{
+	return score;
+}
