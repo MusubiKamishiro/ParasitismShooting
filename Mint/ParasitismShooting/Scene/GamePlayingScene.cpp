@@ -163,7 +163,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 						bankCnt--;
 					}
 				}*/
-				bankCnt = bankCnt % (cBank.size()-4) +2;
+				bankCnt = bankCnt % (cBank.size()-4) + 2;
 			}
 
 			for (auto& shot : sf->GetLegion())
@@ -175,14 +175,14 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 			if (p.IsPressing(PAD_INPUT_2) && ((int)time % 6 == 0))
 			{
-				sf->Create(player->GetCharaData().shotType, player->GetPos(), 5, 1, 4, SHOOTER::PLAYER);
+				sf->Create(player->GetCharaData().shotType, player->GetPos(), 5, 1, 5, SHOOTER::PLAYER);
 			}
 			
 			for (auto& enemy : ef->GetLegion())
 			{
 				if (enemy->GetShotReady())
 				{
-					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 5, 1, 20, SHOOTER::ENEMY);
+					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 2, 1, 20, SHOOTER::ENEMY);
 				}
 				enemy->Update();
 			}
@@ -255,7 +255,7 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 					{
 						if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
 						{
-							if (shot->GetShotName() != "ShotNormal")
+							if (shot->GetShotName() != "ShotWeak")
 							{
 								enemy->ShotStop();
 								enemy->Damage();

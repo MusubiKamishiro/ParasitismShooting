@@ -2,18 +2,19 @@
 #include <random>
 #include "Shot.h"
 #include "../Player.h"
-#include "../Enemy.h"
 
+#include "../EnemyFactory.h"
 #include "../../GameScreen.h"
 #include "ShotNormal.h"
 #include "ShotRadiation.h"
 #include "ShotRandom.h"
 #include "ShotShotgun.h"
 #include "ShotTracking.h"
+#include "ShotWeak.h"
 
 
-int NormalPosPtnX[4] = { -10, 10,-30, 30 };
-int NormalPosPtnY[4] = { -30,-30,-10,-10 };
+int NormalPosPtnX[5] = { 0,-5, 5,-10, 10 };
+float ShotGunRange[9] = { 90,80,100,70,110,60,120,50,130 };
 
 SLegion& ShotFactory::GetLegion()
 {
@@ -60,6 +61,7 @@ ShotFactory::ShotFactory(const Player& player, const EnemyFactory& enemyfactory)
 	originalShot["ShotRandom"] = new ShotRandom(player, enemyfactory);
 	originalShot["ShotShotgun"] = new ShotShotgun(player, enemyfactory);
 	originalShot["ShotTracking"] = new ShotTracking(player, enemyfactory);
+	originalShot["ShotWeak"] = new ShotWeak(player, enemyfactory);
 
 }
 
@@ -72,7 +74,7 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 {
 	if (originalShot.find(shotType) != originalShot.end())
 	{
-		if (shotType == "ShotNormal")
+		if ((shotType == "ShotWeak" && shooter == SHOOTER::PLAYER) || (shotType == "ShotTracking" && shooter == SHOOTER::PLAYER) || (shotType == "ShotNormal" && shooter == SHOOTER::ENEMY))
 		{
 			level = 1;
 		}
@@ -82,12 +84,12 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 			if (shotType == "ShotNormal")
 			{
 				shot->pos = { pos.x - 10 + NormalPosPtnX[j],pos.y};
-				shot->shotst.angle = SetAngle(pos, shooter);
+				shot->shotst.angle = SetAngle(shotType, pos, shooter);
 			}
 			else if (shotType == "ShotRadiation")
 			{
 				shot->pos = pos;
-				shot->shotst.angle = (SetAngle(pos, shooter) + M_PI_2 * j);
+				shot->shotst.angle = (SetAngle(shotType, pos, shooter) + M_PI_2 * j);
 			}
 			else if (shotType == "ShotRandom")
 			{
@@ -95,17 +97,29 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 				std::mt19937 mt(rd());
 				std::uniform_int_distribution<int> rand(1, 10);
 				shot->pos = { pos.x - (float)(rand(mt) * M_PI * 2) + 10,pos.y - 30 };
-				shot->shotst.angle = SetAngle(pos, shooter);
+				shot->shotst.angle = SetAngle(shotType, pos, shooter);
 			}
 			else if (shotType == "ShotShotgun")
 			{
 				shot->pos = pos;
-				shot->shotst.angle = ((SetAngle(pos, shooter)  * j));
+				if (shooter == SHOOTER::ENEMY)
+				{
+					shot->shotst.angle = cos(360/level) * j;
+				}
+				else
+				{
+					shot->shotst.angle = -(ShotGunRange[j] / 180) * M_PI;
+				}
 			}
 			else if (shotType == "ShotTracking")
 			{
 				shot->pos = pos;
-				shot->shotst.angle = SetAngle(pos, shooter);
+				shot->shotst.angle = SetAngle(shotType, pos, shooter);
+			}
+			else if (shotType == "ShotWeak")
+			{
+				shot->pos = pos;
+				shot->shotst.angle = SetAngle(shotType, pos, shooter);
 			}
 			shot->shotst.shotType = shotType;
 			shot->shotst.cpos = pos;
@@ -126,14 +140,14 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 }
 
 
-double ShotFactory::SetAngle(Vector2f pos, int shooter)
+double ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter)
 {
 	if (shooter == SHOOTER::ENEMY)
 	{
 		Vector2f pPos = player.GetPos();
 		return atan2(pPos.y - pos.y, pPos.x - pos.x);
 	}
-	else
+	else if(shooter == SHOOTER::PLAYER)
 	{
 		return -M_PI_2;
 	}

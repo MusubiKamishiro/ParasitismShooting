@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="Character\Boss.cpp" />
     <ClCompile Include="Character\CharacterObject.cpp" />
     <ClCompile Include="Character\Enemy.cpp" />
     <ClCompile Include="Character\EnemyActionPattern.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="Character\Shot\ShotRandom.cpp" />
     <ClCompile Include="Character\Shot\ShotShotgun.cpp" />
     <ClCompile Include="Character\Shot\ShotTracking.cpp" />
+    <ClCompile Include="Character\Shot\ShotWeak.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="ContinueMenu.cpp" />
     <ClCompile Include="Credit.cpp" />
@@ -158,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="Character\Boss.h" />
     <ClInclude Include="Character\CharacterObject.h" />
     <ClInclude Include="Character\Enemy.h" />
     <ClInclude Include="Character\EnemyActionPattern.h" />
@@ -171,6 +174,7 @@
     <ClInclude Include="Character\Shot\ShotRandom.h" />
     <ClInclude Include="Character\Shot\ShotShotgun.h" />
     <ClInclude Include="Character\Shot\ShotTracking.h" />
+    <ClInclude Include="Character\Shot\ShotWeak.h" />
     <ClInclude Include="CollisionDetector.h" />
     <ClInclude Include="ContinueMenu.h" />
     <ClInclude Include="Credit.h" />
