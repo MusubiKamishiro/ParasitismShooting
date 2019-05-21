@@ -7,7 +7,7 @@
 
 void ResultScene::FadeinUpdate(const Peripheral & p)
 {
-	if (p.IsTrigger(PAD_INPUT_8))
+	if (p.IsTrigger(PAD_INPUT_2))
 	{
 		pal = 255;
 		updater = &ResultScene::FadeoutUpdate;
@@ -48,8 +48,9 @@ ResultScene::~ResultScene()
 
 void ResultScene::Update(const Peripheral& p)
 {
-	(this->*updater)(p);
+	
 	DxLib::DrawString(50, 50, "ResultScene", 0xffffff);
 	DxLib::DrawString(100, 100, std::to_string(totalScore).c_str(), 0xffffff);
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
+	(this->*updater)(p);
 }

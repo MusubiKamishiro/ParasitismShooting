@@ -33,7 +33,6 @@ bool OptionMenu::Update(const Peripheral & p)
 		}
 	}
 	
-
 	return false;
 }
 

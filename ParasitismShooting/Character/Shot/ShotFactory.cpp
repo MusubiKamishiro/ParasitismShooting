@@ -2,7 +2,7 @@
 #include <random>
 #include "Shot.h"
 #include "../Player.h"
-#include "../Enemy.h"
+#include "../EnemyFactory.h"
 
 #include "../../GameScreen.h"
 #include "ShotNormal.h"

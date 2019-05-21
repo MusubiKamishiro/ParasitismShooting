@@ -23,6 +23,8 @@
 #include "../Character/Enemy.h"
 #include "../CollisionDetector.h"
 
+#include "../KeyConfig.h"
+
 
 void GamePlayingScene::FadeinUpdate(const Peripheral & p)
 {
@@ -142,7 +144,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 {
 	if (updater != &GamePlayingScene::ContinueUpdate)
 	{
-		if (p.IsTrigger(PAD_INPUT_8))
+		if (p.IsTrigger(KeyConfig::Instance().GetNowKey(PAUSE)))
 		{
 			pauseFlag = !pauseFlag;
 		}
