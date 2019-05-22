@@ -8,6 +8,11 @@ ELegion & EnemyFactory::GetLegion()
 	return legion;		// W‡‘Ì‚ğ•Ô‚·
 }
 
+ELegion::const_iterator  EnemyFactory::GetLegionBeginChar() const
+{
+	return legion.begin();
+}
+
 void EnemyFactory::EnemyDelete()
 {
 	for (int i = 0; i < legion.size(); ++i)

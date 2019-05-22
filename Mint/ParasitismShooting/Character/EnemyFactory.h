@@ -31,6 +31,8 @@ public:
 
 	// 敵の集合体を返す
 	ELegion& GetLegion();
+
+	ELegion::const_iterator GetLegionBeginChar()const;
 	// ダメージ弾に当たったを消す
 	void EnemyDelete();
 	void OutofScreen();
