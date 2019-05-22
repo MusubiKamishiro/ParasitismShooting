@@ -5,6 +5,7 @@
 #include "../GameScreen.h"
 
 
+
 Player::Player()
 {
 	ReadActionFile("action/player.act");
@@ -42,7 +43,7 @@ Player::~Player()
 
 void Player::Update(const Peripheral &p)
 {
-	if (p.IsPressing(PAD_INPUT_5))
+	if (p.IsPressing(key.GetNowKey(CANCEL)))
 	{
 		++ccount;
 		if (ccount > 120)
@@ -72,25 +73,25 @@ void Player::Move(const Peripheral & p)
 	vel = Vector2f();
 	float mvel = charaData.moveVel;
 
-	if (p.IsPressing(PAD_INPUT_1))
+	if (p.IsPressing(key.GetNowKey(SLOW)))
 	{
 		mvel = charaData.moveVel / 2;
 	}
 
 	// É{É^ÉìÇâüÇµÇΩÇÁà⁄ìÆ(ç°âÒÇÕ8ï˚å¸)
-	if (p.IsPressing(PAD_INPUT_UP))
+	if (p.IsPressing(key.GetNowKey(UP)))
 	{
 		vel += Vector2f(0, -mvel);
 	}
-	if (p.IsPressing(PAD_INPUT_DOWN))
+	if (p.IsPressing(key.GetNowKey(DOWN)))
 	{
 		vel += Vector2f(0, mvel);
 	}
-	if (p.IsPressing(PAD_INPUT_RIGHT))
+	if (p.IsPressing(key.GetNowKey(RIGHT)))
 	{
 		vel += Vector2f(mvel, 0);
 	}
-	if (p.IsPressing(PAD_INPUT_LEFT))
+	if (p.IsPressing(key.GetNowKey(LEFT)))
 	{
 		vel += Vector2f(-mvel, 0);
 	}

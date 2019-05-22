@@ -2,7 +2,7 @@
 #include <DxLib.h>
 #include "GameScreen.h"
 #include "Peripheral.h"
-
+#include "KeyConfig.h"
 
 
 Menu::Menu()
@@ -23,7 +23,7 @@ Menu::~Menu()
 
 void Menu::Update(const Peripheral & p)
 {
-	if (p.IsTrigger(PAD_INPUT_UP))
+	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(UP)))
 	{
 		--selcnt;
 		if (selcnt < 0)
@@ -31,7 +31,7 @@ void Menu::Update(const Peripheral & p)
 			selcnt = menudata.size() - 1;
 		}
 	}
-	if (p.IsTrigger(PAD_INPUT_DOWN))
+	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(DOWN)))
 	{
 		++selcnt;
 		if (selcnt > menudata.size() - 1)

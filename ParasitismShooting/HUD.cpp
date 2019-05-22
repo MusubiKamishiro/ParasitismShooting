@@ -10,6 +10,7 @@ HUD::HUD() : ssize(Game::Instance().GetScreenSize()), hudPos(Vector2(ssize.x - 3
 	score = 0;
 	upScore = 0;
 	highScore = 5000;
+	cCount = 0;
 }
 
 
@@ -34,7 +35,7 @@ void HUD::Draw(const int& life, const bool& flag)
 	DxLib::DrawFormatString(510, 80, 0x000000, "　　得点　%012d", score);
 
 
-	// 寄生してるかどうかで色を分ける
+	// 寄生してるかどうかでHPの色を分ける
 	if (flag)
 	{
 		lifeColor = 0xff0000;
@@ -49,6 +50,8 @@ void HUD::Draw(const int& life, const bool& flag)
 	{
 		DxLib::DrawString(550 + a * 24, 150, "★", lifeColor);
 	}
+
+	DxLib::DrawFormatString(510, 250, 0x000000, "コンティニュー回数　%03d", cCount);
 }
 
 void HUD::AddScore(const unsigned int & inscore)
@@ -56,11 +59,16 @@ void HUD::AddScore(const unsigned int & inscore)
 	upScore += inscore;
 }
 
-void HUD::DelScore()
+void HUD::InitScore()
 {
 	highScore = score > highScore ? score : highScore;
 	score = 0;
 	upScore = 0;
+}
+
+void HUD::AddContinueCount()
+{
+	++cCount;
 }
 
 const Vector2 HUD::GetHUDPos()const
@@ -71,4 +79,9 @@ const Vector2 HUD::GetHUDPos()const
 unsigned int HUD::GetScore() const
 {
 	return score;
+}
+
+unsigned int HUD::GetContinueCount() const
+{
+	return cCount;
 }

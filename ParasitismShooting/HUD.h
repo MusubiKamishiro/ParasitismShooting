@@ -12,6 +12,7 @@ private:
 	unsigned int score;
 	unsigned int upScore;
 	unsigned int highScore;
+	unsigned int cCount;
 
 public:
 	HUD();
@@ -20,9 +21,11 @@ public:
 	void Update();
 	void Draw(const int& life, const bool& flag);
 	void AddScore(const unsigned int& inscore);
-	void DelScore();
+	void InitScore();
+	void AddContinueCount();
 
 	const Vector2 GetHUDPos()const;
 	unsigned int GetScore()const;
+	unsigned int GetContinueCount()const;
 };
 

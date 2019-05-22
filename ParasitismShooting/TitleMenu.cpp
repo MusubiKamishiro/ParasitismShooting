@@ -2,6 +2,7 @@
 #include <DxLib.h>
 #include "Peripheral.h"
 #include "Menu.h"
+#include "KeyConfig.h"
 
 
 TitleMenu::TitleMenu()
@@ -21,7 +22,7 @@ TitleMenu::~TitleMenu()
 bool TitleMenu::Update(const Peripheral & p, bool & flag)
 {
 	menu->Update(p);
-	if (p.IsTrigger(PAD_INPUT_2))
+	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)))
 	{
 		if (menu->selcnt == 0)
 		{
