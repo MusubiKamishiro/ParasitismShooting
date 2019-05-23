@@ -89,7 +89,7 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 			else if (shotType == "ShotRadiation")
 			{
 				shot->pos = pos;
-				shot->shotst.angle = (SetAngle(shotType, pos, shooter) + M_PI_2 * j);
+				shot->shotst.angle = M_PI_2 / level /*(level / 4)*/  * j;/*(SetAngle(shotType, pos, shooter) + M_PI_2 * j);*/
 			}
 			else if (shotType == "ShotRandom")
 			{

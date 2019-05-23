@@ -175,15 +175,15 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 			if (p.IsPressing(PAD_INPUT_2) && ((int)time % 6 == 0))
 			{
-				sf->Create(player->GetCharaData().shotType, player->GetPos(), 5, 1, 5, SHOOTER::PLAYER);
+				sf->Create(player->GetCharaData().shotType, player->GetPos(), 5, 1, 1, SHOOTER::PLAYER);
 			}
 			
 			for (auto& enemy : ef->GetLegion())
 			{
-				if (enemy->GetShotReady())
+				/*if (enemy->GetShotReady())
 				{
 					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 2, 1, 20, SHOOTER::ENEMY);
-				}
+				}*/
 				enemy->Update();
 			}
 
@@ -239,7 +239,7 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 				{
 					if (cd->IsCollision(shot->GetRects(sRect.rc), player->GetRects(pRect.rc), cd->GetRectCombi(sRect.rt, pRect.rt)))
 					{
-						player->Damage(p);
+						//player->Damage(p);
 					}
 				}
 			}
