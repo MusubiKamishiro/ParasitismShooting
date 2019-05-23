@@ -38,6 +38,7 @@ private:
 	void FadeinUpdate(const Peripheral& p);
 	void FadeoutUpdate(const Peripheral& p);
 	void GameUpdate(const Peripheral& p);
+	void ClearUpdate(const Peripheral& p);
 	//void PauseUpdate(const Peripheral& p);
 	void ContinueUpdate(const Peripheral& p);
 	void MoveResultUpdate(const Peripheral& p);
@@ -46,6 +47,7 @@ private:
 	void Draw(const Peripheral& p, const int& time);	// •`‰æ‚Ü‚Æ‚ß
 
 	float time;
+	unsigned int nowStageNum;
 	Vector2 ssize;
 	bool pauseFlag, continueFlag;
 

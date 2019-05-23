@@ -9,6 +9,7 @@
 #include "../Peripheral.h"
 #include "../Game.h"
 #include "ResultScene.h"
+#include "HalfResultScene.h"
 #include "TitleScene.h"
 
 #include "../GameScreen.h"
@@ -54,7 +55,7 @@ void GamePlayingScene::GameUpdate(const Peripheral & p)
 {
 	if (!pauseFlag)
 	{
-		time++;
+		++time;
 	}
 	
 	if ((player->updater == &Player::Die))
@@ -62,6 +63,11 @@ void GamePlayingScene::GameUpdate(const Peripheral & p)
 		continueFlag = true;
 		updater = &GamePlayingScene::ContinueUpdate;
 	}
+}
+
+void GamePlayingScene::ClearUpdate(const Peripheral & p)
+{
+	Game::Instance().ChangeScene(new HalfResultScene(nowStageNum));
 }
 
 void GamePlayingScene::ContinueUpdate(const Peripheral & p)
@@ -84,8 +90,9 @@ void GamePlayingScene::MoveResultUpdate(const Peripheral & p)
 
 GamePlayingScene::GamePlayingScene(const unsigned int& stagenum)
 {
+	nowStageNum = stagenum;
 	// ステージ名の作成
-	std::string s = "stage/stage" + std::to_string(stagenum) + ".csv";
+	std::string s = "stage/stage" + std::to_string(nowStageNum) + ".csv";
 
 	std::ifstream ifs(s);
 	assert(ifs);
@@ -203,6 +210,12 @@ void GamePlayingScene::Update(const Peripheral& p)
 				}
 			}
 			hud->Update();
+
+			// スコアで次のステージへ(デバックのため一時的なもの)
+			if (hud->GetScore() > 1000)
+			{
+				updater = &GamePlayingScene::ClearUpdate;
+			}
 		}
 		else
 		{

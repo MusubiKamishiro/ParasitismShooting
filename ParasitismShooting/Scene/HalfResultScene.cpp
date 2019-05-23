@@ -27,7 +27,7 @@ void HalfResultScene::FadeoutUpdate(const Peripheral & p)
 {
 	if (pal <= 0)
 	{
-		Game::Instance().ChangeScene(new GamePlayingScene(1));
+		Game::Instance().ChangeScene(new GamePlayingScene(nextstage));
 	}
 	else
 	{
@@ -35,9 +35,11 @@ void HalfResultScene::FadeoutUpdate(const Peripheral & p)
 	}
 }
 
-HalfResultScene::HalfResultScene()
+HalfResultScene::HalfResultScene(const unsigned int& nowstagenum)
 {
 	updater = &HalfResultScene::FadeinUpdate;
+
+	nextstage = nowstagenum + 1;
 }
 
 
@@ -47,7 +49,10 @@ HalfResultScene::~HalfResultScene()
 
 void HalfResultScene::Update(const Peripheral& p)
 {
-	(this->*updater)(p);
+	DxLib::DrawString(0, 0, "中間リザルト", 0x00ff00);
+	//DxLib::DrawString(0, 100, "次のステージは" + nextstage, 0x0000ff);
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
+
+	(this->*updater)(p);
 }
