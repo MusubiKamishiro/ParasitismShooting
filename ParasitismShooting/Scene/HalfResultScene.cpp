@@ -3,10 +3,11 @@
 #include "../Peripheral.h"
 #include "../Game.h"
 #include "GamePlayingScene.h"
+#include "../KeyConfig.h"
 
 void HalfResultScene::FadeinUpdate(const Peripheral & p)
 {
-	if (p.IsTrigger(PAD_INPUT_8))
+	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)))
 	{
 		pal = 255;
 		updater = &HalfResultScene::FadeoutUpdate;

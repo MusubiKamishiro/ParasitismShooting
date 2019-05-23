@@ -69,7 +69,8 @@ void GamePlayingScene::ContinueUpdate(const Peripheral & p)
 {
 	if (!continueFlag)
 	{
-		hud->DelScore();
+		hud->InitScore();
+		hud->AddContinueCount();
 		player->Reborn(p);
 		updater = &GamePlayingScene::GameUpdate;
 	}
@@ -77,7 +78,7 @@ void GamePlayingScene::ContinueUpdate(const Peripheral & p)
 
 void GamePlayingScene::MoveResultUpdate(const Peripheral & p)
 {
-	Game::Instance().ChangeScene(new ResultScene(hud->GetScore()));
+	Game::Instance().ChangeScene(new ResultScene(hud->GetScore(), hud->GetContinueCount()));
 }
 
 
@@ -175,7 +176,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 			player->Update(p);
 
-			if (p.IsPressing(PAD_INPUT_2) && ((int)time % 6 == 0))
+			if (p.IsPressing(KeyConfig::Instance().GetNowKey(ATTACK)) && ((int)time % 6 == 0))
 			{
 				sf->Create(player->GetCharaData().shotType, player->GetPos(), 5, 1, 4, SHOOTER::PLAYER);
 			}

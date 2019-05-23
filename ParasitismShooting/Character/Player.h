@@ -1,7 +1,9 @@
 #pragma once
+#include <memory>
 #include "../Geometry.h"
 #include "CharacterObject.h"
-#include <memory>
+#include "../KeyConfig.h"
+
 
 enum Dir
 {
@@ -50,6 +52,7 @@ private:
 	int down;
 
 	std::shared_ptr<GameScreen> gs;
+	KeyConfig& key = KeyConfig::Instance();
 	
 public:
 	Player();
