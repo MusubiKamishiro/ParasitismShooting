@@ -65,7 +65,7 @@ private:
 
 
 public:
-	GamePlayingScene();
+	GamePlayingScene(const unsigned int& stagenum);
 	~GamePlayingScene();
 
 	void Update(const Peripheral& p);

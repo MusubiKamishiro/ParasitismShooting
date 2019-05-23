@@ -83,9 +83,12 @@ void GamePlayingScene::MoveResultUpdate(const Peripheral & p)
 
 
 
-GamePlayingScene::GamePlayingScene()
+GamePlayingScene::GamePlayingScene(const unsigned int& stagenum)
 {
-	std::ifstream ifs("stage/stage1.csv");
+	// ステージ名の作成
+	std::string s = "stage/stage" + std::to_string(stagenum) + ".csv";
+
+	std::ifstream ifs(s);
 	assert(ifs);
 
 

@@ -21,7 +21,7 @@ void SelectScene::FadeoutUpdate(const Peripheral & p)
 {
 	if (pal <= 0)
 	{
-		Game::Instance().ChangeScene(new GamePlayingScene());
+		Game::Instance().ChangeScene(new GamePlayingScene(1));
 	}
 	else
 	{
