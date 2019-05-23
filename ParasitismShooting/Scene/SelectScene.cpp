@@ -4,6 +4,8 @@
 #include "../Game.h"
 #include "GamePlayingScene.h"
 #include "../SelectMenu.h"
+#include "../Character/CharacterObject.h"
+
 
 void SelectScene::FadeinUpdate(const Peripheral & p)
 {

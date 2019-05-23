@@ -1,8 +1,11 @@
 #pragma once
-#include "Scene.h"
-#include "../Geometry.h"
 #include <memory>
 #include <vector>
+#include "Scene.h"
+#include "../Geometry.h"
+#include "../Score.h"
+#include "../Character/CharacterObject.h"
+
 
 class GameScreen;
 class Player;
@@ -39,7 +42,6 @@ private:
 	void FadeoutUpdate(const Peripheral& p);
 	void GameUpdate(const Peripheral& p);
 	void ClearUpdate(const Peripheral& p);
-	//void PauseUpdate(const Peripheral& p);
 	void ContinueUpdate(const Peripheral& p);
 	void MoveResultUpdate(const Peripheral& p);
 
@@ -65,9 +67,11 @@ private:
 	std::shared_ptr<EnemyFactory> ef;
 	std::shared_ptr<CollisionDetector> cd;
 
+	Score& score = Score::Instance();
 
 public:
 	GamePlayingScene(const unsigned int& stagenum);
+	GamePlayingScene(const unsigned int& stagenum, const CharaData& cdata);
 	~GamePlayingScene();
 
 	void Update(const Peripheral& p);

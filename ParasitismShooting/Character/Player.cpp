@@ -5,7 +5,6 @@
 #include "../GameScreen.h"
 
 
-
 Player::Player()
 {
 	ReadActionFile("action/player.act");
@@ -30,6 +29,40 @@ Player::Player()
 	pos = startPos;
 	icount = ccount = 0;
 	parasFlag = false;
+	pinchFlag = false;
+
+	updater = &Player::Move;
+
+	efect = DxLib::LoadGraph("img/tnm.png");
+}
+
+Player::Player(const CharaData& cdata)
+{
+	ReadActionFile("action/player.act");
+	ChangeAction("Idle");
+	SetCharaSize(0.1f);
+	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
+	charaData.HP = 1;
+	charaData.moveVel = 3.0;
+	charaData.shotType = "ShotWeak";
+	originData = charaData;
+
+	// 前のステージでの最後の姿を持ってくる
+	charaData = cdata;
+
+	gs.reset(new GameScreen());
+	Vector2 gssize = gs->GetGSSize();
+
+	up = gs->outscreen;
+	right = gssize.x;
+	left = gs->outscreen;
+	down = gssize.y;
+
+	vel = Vector2f(0, 0);
+	startPos = Vector2f(gssize.x / 2 + gs->outscreen / 2, gssize.y - 20);
+	pos = startPos;
+	icount = ccount = 0;
+	charaData.shotType == "ShotWeak" ? parasFlag = false : parasFlag = true;
 	pinchFlag = false;
 
 	updater = &Player::Move;

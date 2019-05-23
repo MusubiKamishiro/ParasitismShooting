@@ -159,6 +159,7 @@
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SelectScene.cpp" />
     <ClCompile Include="Scene\TitleScene.cpp" />
+    <ClCompile Include="Score.cpp" />
     <ClCompile Include="SelectMenu.cpp" />
     <ClCompile Include="TitleMenu.cpp" />
   </ItemGroup>
@@ -199,6 +200,7 @@
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SelectScene.h" />
     <ClInclude Include="Scene\TitleScene.h" />
+    <ClInclude Include="Score.h" />
     <ClInclude Include="SelectMenu.h" />
     <ClInclude Include="TitleMenu.h" />
   </ItemGroup>

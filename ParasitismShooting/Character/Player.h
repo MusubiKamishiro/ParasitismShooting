@@ -56,6 +56,7 @@ private:
 	
 public:
 	Player();
+	Player(const CharaData& cdata);
 	~Player();
 
 	void Update(const Peripheral &p);
