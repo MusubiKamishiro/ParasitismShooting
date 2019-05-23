@@ -9,7 +9,7 @@ ShotRadiation::ShotRadiation(const Player& player, const EnemyFactory& enemyfact
 	ChangeAction("Shot4");
 	SetCharaSize(0.5f);
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
-
+	range = 5.0f;
 	updater = &ShotRadiation::Move;
 }
 
@@ -31,10 +31,10 @@ Shot * ShotRadiation::Clone()
 void ShotRadiation::Move()
 {
 	// Ç´ÇÍÇ¢Ç»Ç‚Å[Ç¬Åi30î≠Åj
-	shotst.angle += (M_PI / 10) / 120;
+	//shotst.angle += (M_PI / 10) / 120;
 	pos.x += cos(shotst.angle) * shotst.speed;
 	pos.y += sin(shotst.angle) * shotst.speed;
-	rotation2D(&pos.x, &pos.y, pos.x, pos.y, shotst.cpos.x, shotst.cpos.y, (5.0f / 180.0f));
+	rotation2D(&pos.x, &pos.y, pos.x, pos.y, shotst.cpos.x, shotst.cpos.y, (range / 180.0f));
 
 	//cShot[n].angle += (M_PI / 10) / 120;
 	//cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
