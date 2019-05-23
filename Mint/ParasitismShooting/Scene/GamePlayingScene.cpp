@@ -151,20 +151,20 @@ void GamePlayingScene::Update(const Peripheral& p)
 		// アップデート関連
 		if (!pauseFlag)
 		{
-			if (cBank[bankCnt].time == ((int)time%250))
-			{
-				ef->Create(cBank[bankCnt].enemyname.c_str(), cBank[bankCnt].shotType.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y),
-					cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed, cBank[bankCnt].shotCnt);
-				/*if (cBank.size() > bankCnt)
-				{
-					bankCnt++;
-					if (bankCnt == cBank.size())
-					{
-						bankCnt--;
-					}
-				}*/
-				bankCnt = bankCnt % (cBank.size()-4) + 2;
-			}
+			//if (cBank[bankCnt].time == ((int)time%250))
+			//{
+			//	ef->Create(cBank[bankCnt].enemyname.c_str(), cBank[bankCnt].shotType.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y),
+			//		cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed, cBank[bankCnt].shotCnt);
+			//	/*if (cBank.size() > bankCnt)
+			//	{
+			//		bankCnt++;
+			//		if (bankCnt == cBank.size())
+			//		{
+			//			bankCnt--;
+			//		}
+			//	}*/
+			//	bankCnt = bankCnt % (cBank.size()-4) + 2;
+			//}
 
 			for (auto& shot : sf->GetLegion())
 			{

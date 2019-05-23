@@ -21,7 +21,7 @@ private:
 
 	const Player& player;
 	const EnemyFactory& enemyfactory;
-
+	// 座標(x,y)を(xc,yc)を中心にthetaラジアン回転させた座標を(*xp,*yp)に返す関数
 	void rotation2D(float * xp, float * yp, float x, float y, float xc, float yc, float theta);
 
 	float range;

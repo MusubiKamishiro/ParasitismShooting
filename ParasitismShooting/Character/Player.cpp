@@ -14,7 +14,7 @@ Player::Player()
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 	charaData.HP = 1;
 	charaData.moveVel = 3.0;
-	charaData.shotType = "ShotNormal";
+	charaData.shotType = "ShotWeak";
 	originData = charaData;
 
 	gs.reset(new GameScreen());

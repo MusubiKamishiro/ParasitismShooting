@@ -260,7 +260,7 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 					{
 						if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
 						{
-							if (shot->GetShotName() != "ShotNormal")
+							if (shot->GetShotName() != "ShotWeak")
 							{
 								enemy->ShotStop();
 								enemy->Damage();
