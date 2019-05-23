@@ -36,11 +36,16 @@ void Score::Draw(const Vector2& pos)
 	DxLib::DrawFormatString(pos.x, pos.y + 200, 0x000000, "コンティニュー回数　%02d", cCount);
 }
 
-void Score::InitScore()
+void Score::InitScore(const bool& flag)
 {
 	highScore = nowScore > highScore ? nowScore : highScore;
 	nowScore = 0;
 	upScore = 0;
+
+	if (flag)
+	{
+		cCount = 0;
+	}
 }
 
 void Score::AddScore(const unsigned int & inscore)

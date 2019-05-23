@@ -25,7 +25,7 @@ public:
 	void Draw(const Vector2& pos);
 
 	// スコアの初期化, コンティニュー時に使う
-	void InitScore();
+	void InitScore(const bool& flag = false);
 
 	void AddScore(const unsigned int& inscore);
 	void AddContinueCount();

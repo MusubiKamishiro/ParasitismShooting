@@ -5,6 +5,7 @@
 #include "GamePlayingScene.h"
 #include "../SelectMenu.h"
 #include "../Character/CharacterObject.h"
+#include "../Score.h"
 
 
 void SelectScene::FadeinUpdate(const Peripheral & p)
@@ -23,6 +24,7 @@ void SelectScene::FadeoutUpdate(const Peripheral & p)
 {
 	if (pal <= 0)
 	{
+		Score::Instance().InitScore(true);
 		Game::Instance().ChangeScene(new GamePlayingScene(1));
 	}
 	else

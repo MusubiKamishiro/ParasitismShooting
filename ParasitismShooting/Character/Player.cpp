@@ -201,6 +201,7 @@ void Player::Parasitic(const Peripheral & p, const CharaData& cdata)
 
 void Player::ParasiticCancel(const Peripheral & p)
 {
+	DxLib::StartJoypadVibration(DX_INPUT_PAD1, 1000, 1000);
 	charaData = originData;
 	pinchFlag = true;
 	parasFlag = false;
