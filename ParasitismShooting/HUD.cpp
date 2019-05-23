@@ -31,10 +31,6 @@ void HUD::Draw(const int& life, const bool& flag)
 {
 	DxLib::DrawBox(0, 0, ssize.x, ssize.y, 0xffffff, true);
 	
-	/*DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 32);
-	DxLib::DrawBox(510, 10, ssize.x - 10, ssize.y - 10, 0x000000, true);
-	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);*/
-
 	DxLib::DrawFormatString(510, 50, 0x000000, "最高得点　%012d", score > highScore ? score : highScore);
 	DxLib::DrawFormatString(510, 80, 0x000000, "　　得点　%012d", score);
 

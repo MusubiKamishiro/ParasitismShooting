@@ -22,7 +22,6 @@
 #include "../Character/EnemyFactory.h"
 #include "../Character/Enemy.h"
 #include "../CollisionDetector.h"
-
 #include "../KeyConfig.h"
 
 
