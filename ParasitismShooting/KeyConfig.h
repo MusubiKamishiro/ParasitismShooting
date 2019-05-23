@@ -1,5 +1,6 @@
 #pragma once
 
+// 使用可能なキー
 enum ALL_KEY
 {
 	PAD_A,
@@ -17,6 +18,7 @@ enum ALL_KEY
 	ALL_KEY_MAX
 };
 
+// ゲーム中に使用するキー
 enum USE_KEY
 {
 	ATTACK,		// 攻撃,決定
