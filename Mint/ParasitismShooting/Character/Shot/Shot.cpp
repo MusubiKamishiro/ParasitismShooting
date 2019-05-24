@@ -8,6 +8,10 @@ Shot::Shot(const Player & player, const EnemyFactory& enemyfactory/*, const Enem
 {
 }
 
+Shot::~Shot()
+{
+}
+
 double Shot::SetTracking(std::string shotType, Vector2f pos, int shooter, double oldangle)
 {
 	Vector2f pPos = player.GetPos();
@@ -32,10 +36,6 @@ double Shot::SetTracking(std::string shotType, Vector2f pos, int shooter, double
 		}
 		return oldangle;
 	}
-}
-
-Shot::~Shot()
-{
 }
 
 int Shot::GetShooter()const

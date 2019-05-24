@@ -11,9 +11,7 @@
 #include "ShotTracking.h"
 #include "ShotWeak.h"
 
-
-int NormalPosPtnX[4] = { -10, 10,-30, 30 };
-int NormalPosPtnY[4] = { -30,-30,-10,-10 };
+int NormalPosPtnX[5] = { 0,-5, 5,-10, 10 };
 
 SLegion& ShotFactory::GetLegion()
 {
@@ -70,78 +68,108 @@ ShotFactory::~ShotFactory()
 
 Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int movePtn, int level, int shooter)
 {
-	if ((shotType == "ShotWeak" && shooter == SHOOTER::PLAYER) || (shotType == "ShotTracking" && shooter == SHOOTER::PLAYER) || (shotType == "ShotNormal" && shooter == SHOOTER::ENEMY))
-	{
-		level = 1;
-	}
 	if (originalShot.find(shotType) != originalShot.end())
 	{
-		if (shotType == "ShotNormal")
+		if ((shotType == "ShotWeak" && shooter == SHOOTER::PLAYER) || (shotType == "ShotNormal" && shooter == SHOOTER::ENEMY))
 		{
 			level = 1;
 		}
 		for (int j = 0; j < level; j++)
 		{
-		auto shot = originalShot[shotType]->Clone();
-			if (shotType == "ShotNormal")
+			if (shotType == "ShotRadiation")
 			{
-				shot->pos = { pos.x - 10 + NormalPosPtnX[j],pos.y};
-				shot->shotst.angle = SetAngle(shotType, pos, shooter);
+				break;
 			}
-			else if (shotType == "ShotRadiation")
-			{
-				shot->pos = pos;
-				shot->shotst.angle = (SetAngle(shotType, pos, shooter) + M_PI_2 * j);
-			}
-			else if (shotType == "ShotRandom")
-			{
-				std::random_device rd;
-				std::mt19937 mt(rd());
-				std::uniform_int_distribution<int> rand(1, 10);
-				shot->pos = { pos.x - (float)(rand(mt) * M_PI * 2) + 10,pos.y - 30 };
-				shot->shotst.angle = SetAngle(shotType, pos, shooter);;
-			}
-			else if (shotType == "ShotShotgun")
-			{
-				shot->pos = pos;
-				shot->shotst.angle = ((SetAngle(shotType, pos, shooter)  * j));
-			}
-			else if (shotType == "ShotTracking")
-			{
-				shot->pos = pos;
-				shot->shotst.angle = SetAngle(shotType, pos, shooter);;
-			}
-			else if (shotType == "ShotWeak")
-			{
-				shot->pos = pos;
-				shot->shotst.angle = SetAngle(shotType, pos, shooter);
-			}
+			auto shot = originalShot[shotType]->Clone();
+			shot->pos = pos;
 			shot->shotst.shotType = shotType;
 			shot->shotst.cpos = pos;
 			shot->shotst.speed = Speed;
 			shot->shotst.movePtn = movePtn;
 			shot->shotst.level = level;
 			shot->shotst.shooter = shooter;
+			shot->shotst.time = 0;
+			shot->shotst.angle = SetAngle(shot->shotst.shotType, shot->pos, shot->shotst.shooter, j, level);
 			legion.push_back(shot);
-
-			if (j == level)
-			{
-				return shot;
-			}
 		}
 	}
-
 	return nullptr;
 }
 
-double ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter)
+double ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, int cnt, int level)
 {
-	if (shooter == SHOOTER::ENEMY)
+	angle = -M_PI_2;
+	if (shotType == "ShotNormal")
+	{
+		if (shooter == SHOOTER::ENEMY)
+		{
+			Vector2f pPos = player.GetPos();
+			return atan2(pPos.y - pos.y, pPos.x - pos.x);
+		}
+		else if (shooter == SHOOTER::PLAYER)
+		{
+			return -M_PI_2;
+		}
+	}
+	else if (shotType == "ShotRadiation")
 	{
 		Vector2f pPos = player.GetPos();
-		return atan2(pPos.y - pos.y, pPos.x - pos.x);
+		angle = atan2(pPos.y - pos.y, pPos.x - pos.x);
+		angle += 360 / level * cnt;
+		return angle;
+
 	}
-	else if (shooter == SHOOTER::PLAYER)
+	else if (shotType == "ShotShotgun")
+	{
+		if (shooter == SHOOTER::ENEMY)
+		{
+			Vector2f pPos = player.GetPos();
+			angle = atan2(pPos.y - pos.y, pPos.x - pos.x);
+			if (level / 2 > cnt)
+			{
+				angle -= M_PI * (10.0f  * (cnt + 1) / 180.0f);
+			}
+			else if (level / 2 < cnt)
+			{
+				angle += M_PI * (10.0f * (cnt - (level / 2)) / 180.0f);
+			}
+			return angle;
+		}
+		else
+		{
+			if (level / 2 > cnt)
+			{
+				angle -= M_PI * (10.0f  * (cnt + 1) / 180.0f);
+
+			}
+			else if (level / 2 < cnt)
+			{
+				angle += M_PI * (10.0f * (cnt - (level / 2)) / 180.0f);
+			}
+			return  angle;
+		}
+	}
+	else if (shotType == "ShotTracking")
+	{
+		if (shooter == SHOOTER::ENEMY)
+		{
+			return M_PI_2;
+		}
+		else if (shooter == SHOOTER::PLAYER)
+		{
+			if (level / 2 > cnt)
+			{
+				angle -= M_PI * (10.0f  * (cnt + 1) / 180.0f);
+
+			}
+			else if (level / 2 < cnt)
+			{
+				angle += M_PI * (10.0f * (cnt - (level / 2)) / 180.0f);
+			}
+			return  angle;
+		}
+	}
+	else if (shotType == "ShotWeak")
 	{
 		return -M_PI_2;
 	}

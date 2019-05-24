@@ -44,7 +44,7 @@ protected:
 
 	ShotST shotst;
 
-		double SetTracking(std::string shotType, Vector2f pos,int shooter,double oldangle);
+	double SetTracking(std::string shotType, Vector2f pos, int shooter, double oldangle);
 
 public:
 	virtual ~Shot();

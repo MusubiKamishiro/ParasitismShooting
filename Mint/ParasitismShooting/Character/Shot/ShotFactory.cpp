@@ -14,7 +14,6 @@
 
 
 int NormalPosPtnX[5] = { 0,-5, 5,-10, 10 };
-float ShotGunRange[9] = { 90,80,100,70,110,60,120,50,130 };
 
 SLegion& ShotFactory::GetLegion()
 {

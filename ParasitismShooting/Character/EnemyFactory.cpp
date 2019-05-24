@@ -8,6 +8,15 @@ ELegion & EnemyFactory::GetLegion()
 	return legion;		// W‡‘Ì‚ð•Ô‚·
 }
 
+Vector2f  EnemyFactory::GetLegionBeginCharPos() const
+{
+	if (legion.size() != 0)
+	{
+		auto itr = *legion.begin();
+		return itr->GetPos();
+	}
+}
+
 void EnemyFactory::EnemyDelete()
 {
 	for (int i = 0; i < legion.size(); ++i)

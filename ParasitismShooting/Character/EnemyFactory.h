@@ -31,6 +31,8 @@ public:
 
 	// 敵の集合体を返す
 	ELegion& GetLegion();
+
+	Vector2f GetLegionBeginCharPos()const;
 	// ダメージ弾に当たったを消す
 	void EnemyDelete();
 	void OutofScreen();
