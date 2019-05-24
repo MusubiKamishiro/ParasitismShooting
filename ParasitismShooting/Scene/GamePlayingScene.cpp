@@ -200,6 +200,7 @@ GamePlayingScene::GamePlayingScene(const unsigned int& stagenum, const CharaData
 	pmenu.reset(new PauseMenu());
 	cmenu.reset(new ContinueMenu());
 	cd.reset(new CollisionDetector());
+	eff.reset(new EffectFactory());
 	
 	ssize = Game::Instance().GetScreenSize();
 	updater = &GamePlayingScene::FadeinUpdate;
@@ -266,7 +267,6 @@ void GamePlayingScene::Update(const Peripheral& p)
 				if (enemy->scoreFlag)
 				{
 					score.AddScore(enemy->GetScore());
-					//enemy->scoreFlag = false;
 				}
 			}
 			hud->Update();

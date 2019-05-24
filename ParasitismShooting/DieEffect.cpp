@@ -37,9 +37,9 @@ void DieEffect::Draw()
 {
 	float size = time / (float)drawTime;
 
-	float b = (drawTime - time) * 8;
+	float pal = (drawTime - time) * 8;
 
-	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, (b));
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, (pal));
 	DxLib::SetDrawBright(0, 255, 0);
 	DxLib::DrawRotaGraph(pos.x, pos.y, size, size, effect, true);
 	DxLib::SetDrawBright(255, 255, 255);

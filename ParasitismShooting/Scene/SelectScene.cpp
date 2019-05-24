@@ -10,13 +10,13 @@
 
 void SelectScene::FadeinUpdate(const Peripheral & p)
 {
-	if (pal == 255)
+	if (pal >= 255)
 	{
-		;
+		pal = 255;
 	}
 	else
 	{
-		pal++;
+		pal += 20;
 	}
 }
 
@@ -58,6 +58,9 @@ void SelectScene::Update(const Peripheral& p)
 		updater = &SelectScene::FadeoutUpdate;
 	}
 	smenu->Draw();
+
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
+	DxLib::DrawBox(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, 0x000000, true);
 
 	(this->*updater)(p);
 }

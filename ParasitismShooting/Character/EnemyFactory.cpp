@@ -63,7 +63,6 @@ Enemy * EnemyFactory::Create(const char * enemyname, const char * shotType, Vect
 		enemy->wait = wait;
 		enemy->charaData.HP = hp;
 		enemy->charaData.SP = sp;
-		//enemy->vel = speed;
 		enemy->charaData.moveVel = speed;
 		enemy->shotCnt = shotCnt;
 		legion.push_back(enemy);
