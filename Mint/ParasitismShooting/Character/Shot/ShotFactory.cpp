@@ -79,10 +79,10 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 		}
 		for (int j = 0; j < level; j++)
 		{
-			if (shotType == "ShotRadiation")
+			/*if (shotType == "ShotRadiation")
 			{
 				break;
-			}
+			}*/
 			auto shot = originalShot[shotType]->Clone();
 			shot->pos = pos;
 			shot->shotst.shotType = shotType;

@@ -175,14 +175,14 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 			if (p.IsPressing(PAD_INPUT_2) && ((int)time % 6 == 0))
 			{
-				sf->Create(player->GetCharaData().shotType, player->GetPos(), 5, 1, 3, SHOOTER::PLAYER);
+				sf->Create(player->GetCharaData().shotType, player->GetPos(), 5, 1, 1, SHOOTER::PLAYER);
 			}
 			
 			for (auto& enemy : ef->GetLegion())
 			{
 				if (enemy->GetShotReady())
 				{
-					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 2, 1, 10, SHOOTER::ENEMY);
+					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 2, 1, 15, SHOOTER::ENEMY);
 				}
 				enemy->Update();
 			}
