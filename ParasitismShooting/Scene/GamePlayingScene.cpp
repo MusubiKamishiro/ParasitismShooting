@@ -24,6 +24,8 @@
 #include "../Character/Enemy.h"
 #include "../CollisionDetector.h"
 #include "../KeyConfig.h"
+#include "../EffectFactory.h"
+#include "../Effect.h"
 
 
 void GamePlayingScene::FadeinUpdate(const Peripheral & p)
@@ -140,6 +142,7 @@ GamePlayingScene::GamePlayingScene(const unsigned int & stagenum)
 	pmenu.reset(new PauseMenu());
 	cmenu.reset(new ContinueMenu());
 	cd.reset(new CollisionDetector());
+	eff.reset(new EffectFactory());
 
 	ssize = Game::Instance().GetScreenSize();
 	updater = &GamePlayingScene::FadeinUpdate;
@@ -263,7 +266,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 				if (enemy->scoreFlag)
 				{
 					score.AddScore(enemy->GetScore());
-					enemy->scoreFlag = false;
+					//enemy->scoreFlag = false;
 				}
 			}
 			hud->Update();
@@ -301,7 +304,29 @@ void GamePlayingScene::Update(const Peripheral& p)
 	sf->OutofScreen();
 	ef->OutofScreen();
 	sf->ShotDelete();
-	ef->EnemyDelete();
+	//ef->EnemyDelete();
+	
+	for (int i = 0; i < ef->GetLegion().size(); ++i)
+	{
+		auto enemy = *std::next(ef->GetLegion().begin(), i);
+		if (!enemy->GetLifeFlag())
+		{
+			ef->GetLegion().erase(std::next(ef->GetLegion().begin(), i));
+			--i;
+
+			// “|‚µ‚Ä‚é‚È‚çƒGƒtƒFƒNƒg”­“®
+			if (enemy->scoreFlag)
+			{
+				eff->Create("dieEffect", "", enemy->GetPos(), (int)time, 30);
+			}
+		}
+	}
+
+	for (auto& effect : eff->GetLegion())
+	{
+		effect->Update((int)time);
+	}
+	eff->EffectDelete();
 
 	Draw(p, (int)time);
 	
@@ -399,8 +424,8 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 	// ƒQ[ƒ€‰æ–Ê‚Ì•`‰æ€”õ
 	gs->SetAndClearScreen();
 
-	bg->Draw((int)time);
-	player->Draw((int)time);
+	bg->Draw(time);
+	player->Draw(time);
 
 	for (auto& shot : sf->GetLegion())
 	{
@@ -418,7 +443,11 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 
 	for (auto& enemy : ef->GetLegion())
 	{
-		enemy->Draw((int)time);
+		enemy->Draw(time);
+	}
+	for (auto& effect : eff->GetLegion())
+	{
+		effect->Draw();
 	}
 
 	if (pauseFlag)

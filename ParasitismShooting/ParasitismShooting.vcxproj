@@ -141,6 +141,9 @@
     <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="ContinueMenu.cpp" />
     <ClCompile Include="Credit.cpp" />
+    <ClCompile Include="DieEffect.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EffectFactory.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="Geometry.cpp" />
@@ -182,6 +185,9 @@
     <ClInclude Include="CollisionDetector.h" />
     <ClInclude Include="ContinueMenu.h" />
     <ClInclude Include="Credit.h" />
+    <ClInclude Include="DieEffect.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectFactory.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="Geometry.h" />

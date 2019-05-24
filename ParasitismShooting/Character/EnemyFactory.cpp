@@ -12,8 +12,8 @@ void EnemyFactory::EnemyDelete()
 {
 	for (int i = 0; i < legion.size(); ++i)
 	{
-		auto shot = *std::next(legion.begin(), i);
-		if (!shot->GetLifeFlag())
+		auto enemy = *std::next(legion.begin(), i);
+		if (!enemy->GetLifeFlag())
 		{
 			legion.erase(std::next(legion.begin(), i));
 			--i;

@@ -51,7 +51,7 @@ HalfResultScene::~HalfResultScene()
 void HalfResultScene::Update(const Peripheral& p)
 {
 	DxLib::DrawString(0, 0, "中間リザルト", 0x00ff00);
-	DxLib::DrawString(0, 100, "次のステージは" + nextstage, 0x0000ff);
+	//DxLib::DrawString(0, 100, "次のステージは" + nextstage, 0x0000ff);
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
 

@@ -16,6 +16,7 @@ class PauseMenu;
 class ContinueMenu;
 class EnemyFactory;
 class CollisionDetector;
+class EffectFactory;
 
 typedef struct CSV
 {
@@ -66,6 +67,7 @@ private:
 	std::shared_ptr<ContinueMenu> cmenu;
 	std::shared_ptr<EnemyFactory> ef;
 	std::shared_ptr<CollisionDetector> cd;
+	std::shared_ptr<EffectFactory> eff;
 
 	Score& score = Score::Instance();
 

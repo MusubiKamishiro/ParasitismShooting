@@ -32,8 +32,6 @@ Player::Player()
 	pinchFlag = false;
 
 	updater = &Player::Move;
-
-	efect = DxLib::LoadGraph("img/tnm.png");
 }
 
 Player::Player(const CharaData& cdata)
@@ -62,12 +60,10 @@ Player::Player(const CharaData& cdata)
 	startPos = Vector2f(gssize.x / 2 + gs->outscreen / 2, gssize.y - 20);
 	pos = startPos;
 	icount = ccount = 0;
-	charaData.shotType == "ShotWeak" ? parasFlag = false : parasFlag = true;
+	charaData.shotType == originData.shotType ? parasFlag = false : parasFlag = true;
 	pinchFlag = false;
 
 	updater = &Player::Move;
-
-	efect = DxLib::LoadGraph("img/tnm.png");
 }
 
 Player::~Player()
@@ -228,16 +224,6 @@ void Player::Draw(const int& time)
 			CharacterObject::Draw(charaData.img);
 		}
 	}
-
-	float a = (time % 30) / 90.f;
-	
-	float b = (30 - (time % 30)) * 8;
-	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, (b));
-	DxLib::SetDrawBright(255, 0, 0);
-	DxLib::DrawRotaGraph(pos.x, pos.y, a, 0, efect, true);
-	DxLib::SetDrawBright(255, 255, 255);
-
-	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 }
 
 
