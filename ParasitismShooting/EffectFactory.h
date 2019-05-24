@@ -17,7 +17,7 @@ public:
 	EffectFactory();
 	~EffectFactory();
 
-	Effect* Create(const char * effectname, const char * effecttype, Vector2f pos, int starttime, int drawtime);
+	Effect* Create(const char * effectname, Vector2f pos, int starttime, int drawtime);
 
 	// “G‚ÌW‡‘Ì‚ğ•Ô‚·
 	EffLegion& GetLegion();

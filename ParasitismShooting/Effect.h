@@ -13,7 +13,6 @@ protected:
 	Effect();
 
 	Vector2f pos;
-	std::string effectType;
 	int startTime;
 	int drawTime;
 	int time;

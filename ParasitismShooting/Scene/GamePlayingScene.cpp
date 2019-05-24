@@ -317,7 +317,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 			// 倒してるならエフェクト発動
 			if (enemy->scoreFlag)
 			{
-				eff->Create("dieEffect", "", enemy->GetPos(), (int)time, 30);
+				eff->Create("dieEffect", enemy->GetPos(), (int)time, 30);
 			}
 		}
 	}

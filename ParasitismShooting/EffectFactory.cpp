@@ -12,13 +12,12 @@ EffectFactory::~EffectFactory()
 {
 }
 
-Effect * EffectFactory::Create(const char * effectname, const char * effecttype, Vector2f pos, int starttime, int drawtime)
+Effect * EffectFactory::Create(const char * effectname, Vector2f pos, int starttime, int drawtime)
 {
 	if (originalEffect.find(effectname) != originalEffect.end())
 	{
 		auto effect = originalEffect[effectname]->Clone();
 		effect->pos = pos;
-		effect->effectType = effecttype;
 		effect->startTime = starttime;
 		effect->drawTime = drawtime;
 		legion.push_back(effect);
