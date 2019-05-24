@@ -30,8 +30,23 @@ Shot * ShotTracking::Clone()
 
 void ShotTracking::Move()
 {
+	if (shotst.shooter == SHOOTER::ENEMY)
+	{
+		if ((shotst.time % 60) == 0)
+		{
+			shotst.angle = SetTracking(shotst.shotType, pos, shotst.shooter, shotst.angle);
+		}
+	}
+	else if (shotst.shooter == SHOOTER::PLAYER)
+	{
+		if ((shotst.time % 30) == 0)
+		{
+			shotst.angle = SetTracking(shotst.shotType, pos, shotst.shooter, shotst.angle);
+		}
+	}
 	pos.x += cos(shotst.angle) * shotst.speed;
 	pos.y += sin(shotst.angle) * shotst.speed;
+	shotst.time++;
 }
 
 void ShotTracking::Delete()

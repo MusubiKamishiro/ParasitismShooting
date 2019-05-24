@@ -22,6 +22,8 @@ private:
 	int right;
 	int left;
 	int down;
+
+	float angle;
 public:
 	ShotFactory(const Player& player, const EnemyFactory& enemyfactory);
 	~ShotFactory();
@@ -36,6 +38,7 @@ public:
 	void ShotDelete();
 	void OutofScreen(void);
 
-	double SetAngle(std::string shotType, Vector2f pos, int shooter);
+	double SetAngle(std::string shotType, Vector2f pos, int shooter,int cnt,int);
+	double SetTracking(std::string shotType, Vector2f pos,int shooter);
 };
 

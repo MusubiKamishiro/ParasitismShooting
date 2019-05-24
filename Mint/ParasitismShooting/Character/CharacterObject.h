@@ -56,6 +56,8 @@ protected:
 
 	void SetCharaSize(const float& size);
 
+	//double SetAngle(std::string shotType, Vector2f pos, int shooter);
+
 	CharaData charaData;
 
 	int movePtn;	// ˆÚ“®ƒpƒ^[ƒ“

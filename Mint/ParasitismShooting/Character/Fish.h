@@ -1,9 +1,11 @@
 #pragma once
 #include "Enemy.h"
 #include "CharacterObject.h"
+#include <memory>
 
 class Player;
 class EnemyFactory;
+class EnemyActionPattern;
 
 // ‹›
 class Fish : public Enemy
@@ -28,6 +30,8 @@ private:
 	const Player& player;
 
 	bool flag;
+
+	std::shared_ptr<EnemyActionPattern> eAction;
 public:
 	~Fish();
 

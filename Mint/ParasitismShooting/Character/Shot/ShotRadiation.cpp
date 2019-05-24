@@ -30,16 +30,9 @@ Shot * ShotRadiation::Clone()
 
 void ShotRadiation::Move()
 {
-	// Ç´ÇÍÇ¢Ç»Ç‚Å[Ç¬Åi30î≠Åj
-	//shotst.angle += (M_PI / 10) / 120;
-	pos.x += cos(shotst.angle) * shotst.speed;
-	pos.y += sin(shotst.angle) * shotst.speed;
+	pos.x += cos(shotst.angle)/* * shotst.speed*/;
+	pos.y += sin(shotst.angle)/* * shotst.speed*/;
 	rotation2D(&pos.x, &pos.y, pos.x, pos.y, shotst.cpos.x, shotst.cpos.y, (range / 180.0f));
-
-	//cShot[n].angle += (M_PI / 10) / 120;
-	//cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
-	//cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
-	//rotation2D(&cShot[n].pos.x, &cShot[n].pos.y, cShot[n].pos.x, cShot[n].pos.y, cShot[n].cneterPos.x, cShot[n].cneterPos.y, (5.0f / 180.0f));
 }
 
 void ShotRadiation::Delete()

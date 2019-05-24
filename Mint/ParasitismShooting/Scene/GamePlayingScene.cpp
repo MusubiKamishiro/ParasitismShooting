@@ -151,20 +151,20 @@ void GamePlayingScene::Update(const Peripheral& p)
 		// アップデート関連
 		if (!pauseFlag)
 		{
-			//if (cBank[bankCnt].time == ((int)time%250))
-			//{
-			//	ef->Create(cBank[bankCnt].enemyname.c_str(), cBank[bankCnt].shotType.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y),
-			//		cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed, cBank[bankCnt].shotCnt);
-			//	/*if (cBank.size() > bankCnt)
-			//	{
-			//		bankCnt++;
-			//		if (bankCnt == cBank.size())
-			//		{
-			//			bankCnt--;
-			//		}
-			//	}*/
-			//	bankCnt = bankCnt % (cBank.size()-4) + 2;
-			//}
+			if (cBank[bankCnt].time == ((int)time%250))
+			{
+				ef->Create(cBank[bankCnt].enemyname.c_str(), cBank[bankCnt].shotType.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y),
+					cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed, cBank[bankCnt].shotCnt);
+				/*if (cBank.size() > bankCnt)
+				{
+					bankCnt++;
+					if (bankCnt == cBank.size())
+					{
+						bankCnt--;
+					}
+				}*/
+				bankCnt = bankCnt % (cBank.size()-4) + 2;
+			}
 
 			for (auto& shot : sf->GetLegion())
 			{
@@ -175,15 +175,15 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 			if (p.IsPressing(PAD_INPUT_2) && ((int)time % 6 == 0))
 			{
-				sf->Create(player->GetCharaData().shotType, player->GetPos(), 5, 1, 1, SHOOTER::PLAYER);
+				sf->Create(player->GetCharaData().shotType, player->GetPos(), 5, 1, 3, SHOOTER::PLAYER);
 			}
 			
 			for (auto& enemy : ef->GetLegion())
 			{
-				/*if (enemy->GetShotReady())
+				if (enemy->GetShotReady())
 				{
-					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 2, 1, 20, SHOOTER::ENEMY);
-				}*/
+					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 2, 1, 10, SHOOTER::ENEMY);
+				}
 				enemy->Update();
 			}
 

@@ -8,9 +8,13 @@ ELegion & EnemyFactory::GetLegion()
 	return legion;		// W‡‘Ì‚ð•Ô‚·
 }
 
-ELegion::const_iterator  EnemyFactory::GetLegionBeginChar() const
+Vector2f  EnemyFactory::GetLegionBeginCharPos() const
 {
-	return legion.begin();
+	if (legion.size() != 0)
+	{
+		auto itr = *legion.begin();
+		return itr->GetPos();
+	}
 }
 
 void EnemyFactory::EnemyDelete()

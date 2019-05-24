@@ -10,18 +10,6 @@ class Player;
 class EnemyFactory;
 class ShotFactory;
 
-enum SHOT_PTN
-{
-	WEAK,
-	NORMAL,
-	SHOTGUN,
-	TRACKING,
-	RADIATION,
-	RANDOM,
-	LASER,
-	PTN_MAX
-
-};
 
 enum SHOOTER
 {
@@ -38,20 +26,25 @@ struct ShotST
 	int speed;
 	int movePtn;
 	int level;
-	int shotPtn;
 	int shooter;
+	int time;
 	std::string shotType;
 };
 
 class Shot : public CharacterObject
 {
 	friend ShotFactory;
+private:
+	const Player& player;
+	const EnemyFactory& enemyfactory;
 protected:
 	virtual Shot* Clone() = 0;
 
 	Shot(const Player& player, const EnemyFactory& enemyfactory/*, const Enemy& enemy*/);
 
 	ShotST shotst;
+
+		double SetTracking(std::string shotType, Vector2f pos,int shooter,double oldangle);
 
 public:
 	virtual ~Shot();
