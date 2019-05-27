@@ -83,7 +83,7 @@ void GameScreen::DrawAndChangeScreen(bool& swingflag)
 	{
 		if (!b.drawflag)
 		{
-			if ((engine() % 10000) == 0)
+			if ((engine() % 1000) == 0)
 			{
 				b.drawflag = true;
 			}
