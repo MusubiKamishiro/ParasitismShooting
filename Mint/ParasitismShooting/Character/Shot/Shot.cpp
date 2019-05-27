@@ -4,7 +4,7 @@
 
 
 
-Shot::Shot(const Player & player, const EnemyFactory& enemyfactory/*, const Enemy& enemy*/):player(player),enemyfactory(enemyfactory)
+Shot::Shot(const Player & player, const EnemyFactory& enemyfactory/*, const Enemy& enemy*/) :player(player), enemyfactory(enemyfactory)
 {
 }
 
@@ -12,7 +12,7 @@ Shot::~Shot()
 {
 }
 
-double Shot::SetTracking(std::string shotType, Vector2f pos, int shooter, float oldangle)
+float Shot::SetTracking(std::string shotType, Vector2f pos, int shooter, float oldangle)
 {
 	Vector2f pPos = player.GetPos();
 	Vector2f ePos = enemyfactory.GetLegionBeginCharPos();
@@ -36,7 +36,9 @@ double Shot::SetTracking(std::string shotType, Vector2f pos, int shooter, float 
 		}
 		return oldangle;
 	}
+	return 0.0f;
 }
+
 
 int Shot::GetShooter()const
 {

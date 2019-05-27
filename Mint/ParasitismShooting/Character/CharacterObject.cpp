@@ -86,11 +86,6 @@ void CharacterObject::SetCharaSize(const float& size)
 	charaData.charaSize = size;
 }
 
-//double CharacterObject::SetAngle(std::string shotType, Vector2f pos, int shooter)
-//{
-//	
-//}
-
 CharacterObject::CharacterObject()
 {
 	lifeFlag = true;

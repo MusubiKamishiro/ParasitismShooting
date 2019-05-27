@@ -1,8 +1,11 @@
 #pragma once
-#include "Scene.h"
-#include "../Geometry.h"
 #include <memory>
 #include <vector>
+#include "Scene.h"
+#include "../Geometry.h"
+#include "../Score.h"
+#include "../Character/CharacterObject.h"
+
 
 class GameScreen;
 class Player;
@@ -13,6 +16,7 @@ class PauseMenu;
 class ContinueMenu;
 class EnemyFactory;
 class CollisionDetector;
+class EffectFactory;
 
 typedef struct CSV
 {
@@ -39,14 +43,17 @@ private:
 	void FadeinUpdate(const Peripheral& p);
 	void FadeoutUpdate(const Peripheral& p);
 	void GameUpdate(const Peripheral& p);
-	//void PauseUpdate(const Peripheral& p);
+	void ClearUpdate(const Peripheral& p);
 	void ContinueUpdate(const Peripheral& p);
 	void MoveResultUpdate(const Peripheral& p);
 
 	void HitCol(const Peripheral& p);			// 当たり判定まとめ
 	void Draw(const Peripheral& p, const int& time);	// 描画まとめ
 
+	void Init(const unsigned int& stagenum);	// 2つのコンストラクタの共通部分
+
 	float time;
+	unsigned int nowStageNum;
 	Vector2 ssize;
 	bool pauseFlag, continueFlag;
 
@@ -63,10 +70,15 @@ private:
 	std::shared_ptr<ContinueMenu> cmenu;
 	std::shared_ptr<EnemyFactory> ef;
 	std::shared_ptr<CollisionDetector> cd;
+	std::shared_ptr<EffectFactory> eff;
 
+	Score& score = Score::Instance();
 
 public:
-	GamePlayingScene();
+	// セレクトシーンで使うコンストラクタ
+	GamePlayingScene(const unsigned int& stagenum);
+	// 中間リザルトで使うコンストラクタ
+	GamePlayingScene(const unsigned int& stagenum, const CharaData& cdata);
 	~GamePlayingScene();
 
 	void Update(const Peripheral& p);

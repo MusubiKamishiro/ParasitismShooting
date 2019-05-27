@@ -15,14 +15,15 @@ Vector2f  EnemyFactory::GetLegionBeginCharPos() const
 		auto itr = *legion.begin();
 		return itr->GetPos();
 	}
+	return { 0.0f,0.0f };
 }
 
 void EnemyFactory::EnemyDelete()
 {
 	for (int i = 0; i < legion.size(); ++i)
 	{
-		auto shot = *std::next(legion.begin(), i);
-		if (!shot->GetLifeFlag())
+		auto enemy = *std::next(legion.begin(), i);
+		if (!enemy->GetLifeFlag())
 		{
 			legion.erase(std::next(legion.begin(), i));
 			--i;
@@ -60,7 +61,7 @@ EnemyFactory::~EnemyFactory()
 {
 }
 
-Enemy * EnemyFactory::Create(const char * enemyname, const char * shotType, Vector2f pos, int movePtn, int cnt, int wait, int hp, int sp, float speed, int shotCnt,int shotLevel)
+Enemy * EnemyFactory::Create(const char * enemyname, const char * shotType, Vector2f pos, int movePtn, int cnt, int wait, int hp, int sp, float speed, int shotCnt, int shotLevel)
 {
 	if(originalEnemy.find(enemyname) != originalEnemy.end())
 	{
@@ -72,7 +73,6 @@ Enemy * EnemyFactory::Create(const char * enemyname, const char * shotType, Vect
 		enemy->wait = wait;
 		enemy->charaData.HP = hp;
 		enemy->charaData.SP = sp;
-		//enemy->vel = speed;
 		enemy->charaData.moveVel = speed;
 		enemy->shotCnt = shotCnt;
 		enemy->charaData.shotLevel = shotLevel;

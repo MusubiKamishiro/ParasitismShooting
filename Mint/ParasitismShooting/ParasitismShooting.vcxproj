@@ -124,7 +124,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BackGround.cpp" />
-    <ClCompile Include="Character\Boss.cpp" />
     <ClCompile Include="Character\CharacterObject.cpp" />
     <ClCompile Include="Character\Enemy.cpp" />
     <ClCompile Include="Character\EnemyActionPattern.cpp" />
@@ -142,25 +141,33 @@
     <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="ContinueMenu.cpp" />
     <ClCompile Include="Credit.cpp" />
+    <ClCompile Include="DieEffect.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EffectFactory.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="KeyConfig.cpp" />
+    <ClCompile Include="KeyConfigMenu.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="OptionMenu.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Peripheral.cpp" />
     <ClCompile Include="Scene\GamePlayingScene.cpp" />
     <ClCompile Include="Scene\HalfResultScene.cpp" />
+    <ClCompile Include="Scene\OptionScene.cpp" />
     <ClCompile Include="Scene\ResultScene.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SelectScene.cpp" />
     <ClCompile Include="Scene\TitleScene.cpp" />
+    <ClCompile Include="Score.cpp" />
+    <ClCompile Include="SelectMenu.cpp" />
     <ClCompile Include="TitleMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
-    <ClInclude Include="Character\Boss.h" />
     <ClInclude Include="Character\CharacterObject.h" />
     <ClInclude Include="Character\Enemy.h" />
     <ClInclude Include="Character\EnemyActionPattern.h" />
@@ -178,20 +185,29 @@
     <ClInclude Include="CollisionDetector.h" />
     <ClInclude Include="ContinueMenu.h" />
     <ClInclude Include="Credit.h" />
+    <ClInclude Include="DieEffect.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectFactory.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="KeyConfig.h" />
+    <ClInclude Include="KeyConfigMenu.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="OptionMenu.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Peripheral.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene\GamePlayingScene.h" />
     <ClInclude Include="Scene\HalfResultScene.h" />
+    <ClInclude Include="Scene\OptionScene.h" />
     <ClInclude Include="Scene\ResultScene.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SelectScene.h" />
     <ClInclude Include="Scene\TitleScene.h" />
+    <ClInclude Include="Score.h" />
+    <ClInclude Include="SelectMenu.h" />
     <ClInclude Include="TitleMenu.h" />
   </ItemGroup>
   <ItemGroup>

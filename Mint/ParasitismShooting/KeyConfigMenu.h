@@ -5,14 +5,14 @@
 class Menu;
 class Peripheral;
 
-class TitleMenu
+class KeyConfigMenu
 {
 private:
 	std::shared_ptr<Menu> menu;
 
 public:
-	TitleMenu();
-	~TitleMenu();
+	KeyConfigMenu();
+	~KeyConfigMenu();
 
 	bool Update(const Peripheral& p, bool& flag);
 	void Draw();

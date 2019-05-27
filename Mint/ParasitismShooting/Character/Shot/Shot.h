@@ -10,6 +10,18 @@ class Player;
 class EnemyFactory;
 class ShotFactory;
 
+enum SHOT_PTN
+{
+	WEAK,
+	NORMAL,
+	SHOTGUN,
+	TRACKING,
+	RADIATION,
+	RANDOM,
+	LASER,
+	PTN_MAX
+
+};
 
 enum SHOOTER
 {
@@ -26,6 +38,7 @@ struct ShotST
 	int speed;
 	int movePtn;
 	int level;
+	int shotPtn;
 	int shooter;
 	int time;
 	std::string shotType;
@@ -44,7 +57,7 @@ protected:
 
 	ShotST shotst;
 
-	double SetTracking(std::string shotType, Vector2f pos, int shooter, float oldangle);
+	float SetTracking(std::string shotType, Vector2f pos, int shooter, float oldangle);
 
 public:
 	virtual ~Shot();

@@ -9,6 +9,7 @@
 #include "../Peripheral.h"
 #include "../Game.h"
 #include "ResultScene.h"
+#include "HalfResultScene.h"
 #include "TitleScene.h"
 
 #include "../GameScreen.h"
@@ -22,6 +23,9 @@
 #include "../Character/EnemyFactory.h"
 #include "../Character/Enemy.h"
 #include "../CollisionDetector.h"
+#include "../KeyConfig.h"
+#include "../EffectFactory.h"
+#include "../Effect.h"
 
 
 void GamePlayingScene::FadeinUpdate(const Peripheral & p)
@@ -51,23 +55,24 @@ void GamePlayingScene::FadeoutUpdate(const Peripheral & p)
 
 void GamePlayingScene::GameUpdate(const Peripheral & p)
 {
-	if (!pauseFlag)
-	{
-		time++;
-	}
-	
-	if ((player->updater == &Player::Die))
+	if (player->updater == &Player::Die)
 	{
 		continueFlag = true;
 		updater = &GamePlayingScene::ContinueUpdate;
 	}
 }
 
+void GamePlayingScene::ClearUpdate(const Peripheral & p)
+{
+	Game::Instance().ChangeScene(new HalfResultScene(nowStageNum, player->GetCharaData(), player->parasFlag));
+}
+
 void GamePlayingScene::ContinueUpdate(const Peripheral & p)
 {
 	if (!continueFlag)
 	{
-		hud->DelScore();
+		score.InitScore();
+		score.AddContinueCount();
 		player->Reborn(p);
 		updater = &GamePlayingScene::GameUpdate;
 	}
@@ -75,14 +80,16 @@ void GamePlayingScene::ContinueUpdate(const Peripheral & p)
 
 void GamePlayingScene::MoveResultUpdate(const Peripheral & p)
 {
-	Game::Instance().ChangeScene(new ResultScene());
+	Game::Instance().ChangeScene(new ResultScene(score.GetNowScore(), score.GetContinueCount()));
 }
 
-
-
-GamePlayingScene::GamePlayingScene()
+void GamePlayingScene::Init(const unsigned int & stagenum)
 {
-	std::ifstream ifs("stage/stage1.csv");
+	// ステージ名の作成
+	nowStageNum = stagenum;
+	std::string s = "stage/stage" + std::to_string(nowStageNum) + ".csv";
+
+	std::ifstream ifs(s);
 	assert(ifs);
 
 
@@ -97,7 +104,7 @@ GamePlayingScene::GamePlayingScene()
 	{
 		std::string tmp = "";
 		std::istringstream stream(str);
-		
+
 		while (std::getline(stream, tmp, ','))
 		{
 			Bank[i][j] = tmp;
@@ -117,21 +124,40 @@ GamePlayingScene::GamePlayingScene()
 	pauseFlag = false;
 	continueFlag = false;
 
-	GetJoypadInputState(DX_INPUT_KEY_PAD1);		// パッドもしくはキーボードで動かせる
-
 	gs.reset(new GameScreen());
-	player.reset(new Player());
-	ef.reset(new EnemyFactory(*player));
-	sf.reset(new ShotFactory(*player, *ef));
 	hud.reset(new HUD());
-	bg.reset(new BackGround());
+	bg.reset(new BackGround(stagenum));
 	pmenu.reset(new PauseMenu());
 	cmenu.reset(new ContinueMenu());
 	cd.reset(new CollisionDetector());
-	
+	eff.reset(new EffectFactory());
+
 	ssize = Game::Instance().GetScreenSize();
+}
+
+GamePlayingScene::GamePlayingScene(const unsigned int& stagenum)
+{
+	Init(stagenum);
+
+	player.reset(new Player());
+	ef.reset(new EnemyFactory(*player));
+	sf.reset(new ShotFactory(*player, *ef));
+
 	updater = &GamePlayingScene::FadeinUpdate;
 }
+
+GamePlayingScene::GamePlayingScene(const unsigned int& stagenum, const CharaData& cdata)
+{
+	Init(stagenum);
+	
+	player.reset(new Player(cdata));
+	ef.reset(new EnemyFactory(*player));
+	sf.reset(new ShotFactory(*player, *ef));
+
+	pal = 255;
+	updater = &GamePlayingScene::GameUpdate;
+}
+	
 
 
 GamePlayingScene::~GamePlayingScene()
@@ -142,7 +168,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 {
 	if (updater != &GamePlayingScene::ContinueUpdate)
 	{
-		if (p.IsTrigger(PAD_INPUT_8))
+		if (p.IsTrigger(KeyConfig::Instance().GetNowKey(PAUSE)))
 		{
 			pauseFlag = !pauseFlag;
 		}
@@ -154,7 +180,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 			if (cBank[bankCnt].time == ((int)time%250))
 			{
 				ef->Create(cBank[bankCnt].enemyname.c_str(), cBank[bankCnt].shotType.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y),
-					cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed, cBank[bankCnt].shotCnt,cBank[bankCnt].shotLevel);
+					cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed, cBank[bankCnt].shotCnt, cBank[bankCnt].shotLevel);
 				/*if (cBank.size() > bankCnt)
 				{
 					bankCnt++;
@@ -163,7 +189,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 						bankCnt--;
 					}
 				}*/
-				bankCnt = bankCnt % (cBank.size()-4) + 2;
+				bankCnt = bankCnt % (cBank.size()-2) + 2;
 			}
 
 			for (auto& shot : sf->GetLegion())
@@ -173,9 +199,9 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 			player->Update(p);
 
-			if (p.IsPressing(PAD_INPUT_2) && ((int)time % 6 == 0))
+			if (p.IsPressing(KeyConfig::Instance().GetNowKey(ATTACK)) && ((int)time % 6 == 0))
 			{
-				sf->Create(player->GetCharaData().shotType, player->GetPos(), 5, 1, 6, SHOOTER::PLAYER);
+				sf->Create(player->GetCharaData().shotType, player->GetPos(), 8, 1, 3, SHOOTER::PLAYER);
 			}
 			
 			for (auto& enemy : ef->GetLegion())
@@ -193,11 +219,25 @@ void GamePlayingScene::Update(const Peripheral& p)
 			{
 				if (enemy->scoreFlag)
 				{
-					hud->AddScore(enemy->GetScore());
-					enemy->scoreFlag = false;
+					score.AddScore(enemy->GetScore());
 				}
 			}
 			hud->Update();
+
+			// スコアで次のステージへ(デバックのため一時的なもの)
+			if (score.GetNowScore() > (10000 * nowStageNum))
+			{
+				if (nowStageNum == 5)
+				{
+					updater = &GamePlayingScene::MoveResultUpdate;
+				}
+				else
+				{
+					updater = &GamePlayingScene::ClearUpdate;
+				}
+			}
+
+			++time;
 		}
 		else
 		{
@@ -218,11 +258,37 @@ void GamePlayingScene::Update(const Peripheral& p)
 	sf->OutofScreen();
 	ef->OutofScreen();
 	sf->ShotDelete();
-	ef->EnemyDelete();
+	//ef->EnemyDelete();
+	
+	for (int i = 0; i < ef->GetLegion().size(); ++i)
+	{
+		auto enemy = *std::next(ef->GetLegion().begin(), i);
+		if (!enemy->GetLifeFlag())
+		{
+			ef->GetLegion().erase(std::next(ef->GetLegion().begin(), i));
+			--i;
 
-	Draw(p, time);
+			// 倒してるならエフェクト発動
+			if (enemy->scoreFlag)
+			{
+				eff->Create("dieEffect", enemy->GetPos(), (int)time, 30);
+			}
+		}
+	}
+
+	for (auto& effect : eff->GetLegion())
+	{
+		effect->Update((int)time);
+	}
+	eff->EffectDelete();
+
+	Draw(p, (int)time);
 	
 	(this->*updater)(p);
+
+	// フェードイン,アウトのための幕
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
+	DxLib::DrawBox(0, 0, ssize.x, ssize.y, 0x000000, true);
 }
 
 void GamePlayingScene::HitCol(const Peripheral& p)
@@ -239,7 +305,7 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 				{
 					if (cd->IsCollision(shot->GetRects(sRect.rc), player->GetRects(pRect.rc), cd->GetRectCombi(sRect.rt, pRect.rt)))
 					{
-						//player->Damage(p);
+						player->Damage(p);
 					}
 				}
 			}
@@ -297,7 +363,7 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 						{
 							// 敵の力を手に入れる
 							player->Parasitic(p, enemy->GetCharaData());
-							hud->AddScore(enemy->GetScore() * 1.2);
+							score.AddScore(enemy->GetScore() * 1.2);
 							enemy->Die();
 						}
 					}
@@ -316,8 +382,8 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 	// ゲーム画面の描画準備
 	gs->SetAndClearScreen();
 
-	bg->Draw((int)time);
-	player->Draw((int)time);
+	bg->Draw(time);
+	player->Draw(time);
 
 	for (auto& shot : sf->GetLegion())
 	{
@@ -335,7 +401,11 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 
 	for (auto& enemy : ef->GetLegion())
 	{
-		enemy->Draw((int)time);
+		enemy->Draw(time);
+	}
+	for (auto& effect : eff->GetLegion())
+	{
+		effect->Draw();
 	}
 
 	if (pauseFlag)
@@ -351,8 +421,4 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 
 	// ゲーム画面の描画
 	gs->DrawAndChangeScreen(player->pinchFlag);
-
-
-	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
-	DxLib::DrawBox(0, 0, ssize.x, ssize.y, 0x000000, true);
 }

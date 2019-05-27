@@ -16,6 +16,7 @@ private:
 	void FadeoutUpdate(const Peripheral& p);
 
 	std::shared_ptr<TitleMenu> tmenu;
+	bool optionflag;
 
 public:
 	TitleScene();
