@@ -6,15 +6,26 @@
 
 GameScreen::GameScreen() : outscreen(60)
 {
+	luPos = Vector2(20, 20);
 	Vector2 ssize = Game::Instance().GetScreenSize();
 
-	gssize = Vector2((ssize.x - (300 + 20) + outscreen * 2), (ssize.y - 40 + outscreen * 2));
+	gssize = Vector2((ssize.x - (300 + luPos.x) + outscreen * 2), (ssize.y - luPos.y * 2 + outscreen * 2));
 
 	screen = DxLib::MakeScreen(gssize.x, gssize.y);
 
 	swing = Vector2f(0, 0);
 	count = 0;
 	countMax = 64;
+
+	sboxes.resize(0);
+
+	for (int y = 0; y < (gssize.y - outscreen * 2); y += 10)
+	{
+		for (int x = 0; x < (gssize.x - outscreen * 2); x += 10)
+		{
+			sboxes.push_back({Box(x + luPos.x, y + luPos.y, x + luPos.x + 10, y + luPos.y + 10), false});
+		}
+	}
 }
 
 
@@ -57,7 +68,7 @@ void GameScreen::DrawAndChangeScreen(bool& swingflag)
 		swing = Vector2f(-swing.x, -swing.y);
 	}
 
-	DxLib::DrawRectGraph(20, 20, outscreen + swing.x, outscreen + swing.y, gssize.x - outscreen * 2, gssize.y - outscreen * 2 , screen, true, false);
+	DxLib::DrawRectGraph(luPos.x, luPos.y, outscreen + swing.x, outscreen + swing.y, gssize.x - outscreen * 2, gssize.y - outscreen * 2 , screen, true, false);
 
 	if (std::abs(swing.x) > 0.5f)
 	{
@@ -66,6 +77,21 @@ void GameScreen::DrawAndChangeScreen(bool& swingflag)
 	else
 	{
 		swing = Vector2f();
+	}
+
+	for (auto& b : sboxes)
+	{
+		if (!b.drawflag)
+		{
+			if ((engine() % 10000) == 0)
+			{
+				b.drawflag = true;
+			}
+		}
+		else
+		{
+			DxLib::DrawBox(b.box.dotA.x, b.box.dotA.y, b.box.dotB.x, b.box.dotB.y, 0xff0000, true);
+		}
 	}
 }
 

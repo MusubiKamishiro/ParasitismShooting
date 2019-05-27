@@ -225,7 +225,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 			hud->Update();
 
 			// スコアで次のステージへ(デバックのため一時的なもの)
-			if (score.GetNowScore() > (100000 * nowStageNum))
+			if (score.GetNowScore() > (10000 * nowStageNum))
 			{
 				if (nowStageNum == 5)
 				{
