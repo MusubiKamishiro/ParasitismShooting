@@ -126,7 +126,7 @@ void GamePlayingScene::Init(const unsigned int & stagenum)
 
 	gs.reset(new GameScreen());
 	hud.reset(new HUD());
-	bg.reset(new BackGround());
+	bg.reset(new BackGround(stagenum));
 	pmenu.reset(new PauseMenu());
 	cmenu.reset(new ContinueMenu());
 	cd.reset(new CollisionDetector());
@@ -225,7 +225,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 			hud->Update();
 
 			// スコアで次のステージへ(デバックのため一時的なもの)
-			if (score.GetNowScore() > (1000 * nowStageNum))
+			if (score.GetNowScore() > (100000 * nowStageNum))
 			{
 				if (nowStageNum == 5)
 				{

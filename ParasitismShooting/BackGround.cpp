@@ -3,14 +3,13 @@
 #include "GameScreen.h"
 #include <string>
 
-BackGround::BackGround()
+BackGround::BackGround(const unsigned int& stagenum)
 {
 	gs.reset(new GameScreen());
 	gssize = gs->GetGSSize();
 	
 	std::string s;
-	//s += "img/bg" + std::to_string(0) + ".png";
-	s = "img/bg.png";
+	s += "img/bg" + std::to_string(stagenum) + ".png";
 
 	BGimg = DxLib::LoadGraph(s.c_str());
 }

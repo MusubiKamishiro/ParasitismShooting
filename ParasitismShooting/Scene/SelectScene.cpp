@@ -35,7 +35,7 @@ void SelectScene::FadeoutUpdate(const Peripheral & p)
 
 SelectScene::SelectScene()
 {
-	img = DxLib::LoadGraph("img/bg.png");
+	img = DxLib::LoadGraph("img/bg4.png");
 	updater = &SelectScene::FadeinUpdate;
 
 	smenu.reset(new SelectMenu());
