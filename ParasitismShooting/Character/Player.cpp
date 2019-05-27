@@ -4,9 +4,9 @@
 #include "../Peripheral.h"
 #include "../GameScreen.h"
 
-
-Player::Player()
+void Player::Init()
 {
+	// プレイヤー寄生前の基本データ
 	ReadActionFile("action/player.act");
 	ChangeAction("Idle");
 	SetCharaSize(0.1f);
@@ -28,40 +28,25 @@ Player::Player()
 	startPos = Vector2f(gssize.x / 2 + gs->outscreen / 2, gssize.y - 20);
 	pos = startPos;
 	icount = ccount = 0;
-	parasFlag = false;
 	pinchFlag = false;
+}
+
+Player::Player()
+{
+	Init();
+
+	parasFlag = false;
 
 	updater = &Player::Move;
 }
 
 Player::Player(const CharaData& cdata)
 {
-	ReadActionFile("action/player.act");
-	ChangeAction("Idle");
-	SetCharaSize(0.1f);
-	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
-	charaData.HP = 1;
-	charaData.moveVel = 3.0;
-	charaData.shotType = "ShotWeak";
-	originData = charaData;
+	Init();
 
 	// 前のステージでの最後の姿を持ってくる
 	charaData = cdata;
-
-	gs.reset(new GameScreen());
-	Vector2 gssize = gs->GetGSSize();
-
-	up = gs->outscreen;
-	right = gssize.x;
-	left = gs->outscreen;
-	down = gssize.y;
-
-	vel = Vector2f(0, 0);
-	startPos = Vector2f(gssize.x / 2 + gs->outscreen / 2, gssize.y - 20);
-	pos = startPos;
-	icount = ccount = 0;
 	charaData.shotType == originData.shotType ? parasFlag = false : parasFlag = true;
-	pinchFlag = false;
 
 	updater = &Player::Move;
 }

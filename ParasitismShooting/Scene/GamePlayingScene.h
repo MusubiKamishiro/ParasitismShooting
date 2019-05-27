@@ -49,6 +49,8 @@ private:
 	void HitCol(const Peripheral& p);			// 当たり判定まとめ
 	void Draw(const Peripheral& p, const int& time);	// 描画まとめ
 
+	void Init(const unsigned int& stagenum);	// 2つのコンストラクタの共通部分
+
 	float time;
 	unsigned int nowStageNum;
 	Vector2 ssize;
@@ -72,7 +74,9 @@ private:
 	Score& score = Score::Instance();
 
 public:
+	// セレクトシーンで使うコンストラクタ
 	GamePlayingScene(const unsigned int& stagenum);
+	// 中間リザルトで使うコンストラクタ
 	GamePlayingScene(const unsigned int& stagenum, const CharaData& cdata);
 	~GamePlayingScene();
 

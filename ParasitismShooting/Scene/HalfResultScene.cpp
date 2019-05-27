@@ -6,6 +6,7 @@
 #include "GamePlayingScene.h"
 #include "../KeyConfig.h"
 #include "../Score.h"
+#include "../HUD.h"
 
 void HalfResultScene::FadeinUpdate(const Peripheral & p)
 {
@@ -27,22 +28,18 @@ void HalfResultScene::FadeinUpdate(const Peripheral & p)
 
 void HalfResultScene::FadeoutUpdate(const Peripheral & p)
 {
-	if (pal <= 0)
-	{
-		Game::Instance().ChangeScene(new GamePlayingScene(nextstage, nowstate));
-	}
-	else
-	{
-		pal -= 20;
-	}
+	Game::Instance().ChangeScene(new GamePlayingScene(nextstage, nowstate));
 }
 
-HalfResultScene::HalfResultScene(const unsigned int& nowstagenum, const CharaData& cdata)
+HalfResultScene::HalfResultScene(const unsigned int& nowstagenum, const CharaData& cdata, const bool& pflag)
 {
 	updater = &HalfResultScene::FadeinUpdate;
 
 	nextstage = nowstagenum + 1;
 	nowstate = cdata;
+	parasFlag = pflag;
+
+	hud.reset(new HUD());
 }
 
 
@@ -53,6 +50,8 @@ HalfResultScene::~HalfResultScene()
 void HalfResultScene::Update(const Peripheral& p)
 {
 	Score::Instance().Update();
+
+	hud->Draw(nowstate.HP, parasFlag);
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
 

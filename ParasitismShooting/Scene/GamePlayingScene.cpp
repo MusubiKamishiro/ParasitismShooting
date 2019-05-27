@@ -55,12 +55,7 @@ void GamePlayingScene::FadeoutUpdate(const Peripheral & p)
 
 void GamePlayingScene::GameUpdate(const Peripheral & p)
 {
-	if (!pauseFlag)
-	{
-		++time;
-	}
-	
-	if ((player->updater == &Player::Die))
+	if (player->updater == &Player::Die)
 	{
 		continueFlag = true;
 		updater = &GamePlayingScene::ContinueUpdate;
@@ -69,7 +64,7 @@ void GamePlayingScene::GameUpdate(const Peripheral & p)
 
 void GamePlayingScene::ClearUpdate(const Peripheral & p)
 {
-	Game::Instance().ChangeScene(new HalfResultScene(nowStageNum, player->GetCharaData()));
+	Game::Instance().ChangeScene(new HalfResultScene(nowStageNum, player->GetCharaData(), player->parasFlag));
 }
 
 void GamePlayingScene::ContinueUpdate(const Peripheral & p)
@@ -88,12 +83,10 @@ void GamePlayingScene::MoveResultUpdate(const Peripheral & p)
 	Game::Instance().ChangeScene(new ResultScene(score.GetNowScore(), score.GetContinueCount()));
 }
 
-
-
-GamePlayingScene::GamePlayingScene(const unsigned int & stagenum)
+void GamePlayingScene::Init(const unsigned int & stagenum)
 {
-	nowStageNum = stagenum;
 	// ステージ名の作成
+	nowStageNum = stagenum;
 	std::string s = "stage/stage" + std::to_string(nowStageNum) + ".csv";
 
 	std::ifstream ifs(s);
@@ -131,12 +124,7 @@ GamePlayingScene::GamePlayingScene(const unsigned int & stagenum)
 	pauseFlag = false;
 	continueFlag = false;
 
-	GetJoypadInputState(DX_INPUT_KEY_PAD1);		// パッドもしくはキーボードで動かせる
-
 	gs.reset(new GameScreen());
-	player.reset(new Player());
-	ef.reset(new EnemyFactory(*player));
-	sf.reset(new ShotFactory(*player, *ef));
 	hud.reset(new HUD());
 	bg.reset(new BackGround());
 	pmenu.reset(new PauseMenu());
@@ -145,66 +133,31 @@ GamePlayingScene::GamePlayingScene(const unsigned int & stagenum)
 	eff.reset(new EffectFactory());
 
 	ssize = Game::Instance().GetScreenSize();
+}
+
+GamePlayingScene::GamePlayingScene(const unsigned int& stagenum)
+{
+	Init(stagenum);
+
+	player.reset(new Player());
+	ef.reset(new EnemyFactory(*player));
+	sf.reset(new ShotFactory(*player, *ef));
+
 	updater = &GamePlayingScene::FadeinUpdate;
 }
 
 GamePlayingScene::GamePlayingScene(const unsigned int& stagenum, const CharaData& cdata)
 {
-	nowStageNum = stagenum;
-	// ステージ名の作成
-	std::string s = "stage/stage" + std::to_string(nowStageNum) + ".csv";
-
-	std::ifstream ifs(s);
-	assert(ifs);
-
-
-	std::string Bank[100][12];
-	std::string str = "";
-	int i = 0;
-	int j = 0;
-
-	bankCnt = 2;
-
-	while (std::getline(ifs, str))
-	{
-		std::string tmp = "";
-		std::istringstream stream(str);
-		
-		while (std::getline(stream, tmp, ','))
-		{
-			Bank[i][j] = tmp;
-			j++;
-		}
-
-		cBank.push_back({ atoi(Bank[i][0].c_str()),atoi(Bank[i][1].c_str()),
-			Bank[i][2],Bank[i][3],Vector2f(atof(Bank[i][4].c_str()),atof(Bank[i][5].c_str())),
-			atoi(Bank[i][6].c_str()),atoi(Bank[i][7].c_str()),atoi(Bank[i][8].c_str()),
-			atoi(Bank[i][9].c_str()),atoi(Bank[i][10].c_str()),atoi(Bank[i][11].c_str())
-			});
-		j = 0;
-		i++;
-
-	}
-	time = 0;
-	pauseFlag = false;
-	continueFlag = false;
-
-	GetJoypadInputState(DX_INPUT_KEY_PAD1);		// パッドもしくはキーボードで動かせる
-
-	gs.reset(new GameScreen());
+	Init(stagenum);
+	
 	player.reset(new Player(cdata));
 	ef.reset(new EnemyFactory(*player));
 	sf.reset(new ShotFactory(*player, *ef));
-	hud.reset(new HUD());
-	bg.reset(new BackGround());
-	pmenu.reset(new PauseMenu());
-	cmenu.reset(new ContinueMenu());
-	cd.reset(new CollisionDetector());
-	eff.reset(new EffectFactory());
-	
-	ssize = Game::Instance().GetScreenSize();
-	updater = &GamePlayingScene::FadeinUpdate;
+
+	pal = 255;
+	updater = &GamePlayingScene::GameUpdate;
 }
+	
 
 
 GamePlayingScene::~GamePlayingScene()
@@ -272,7 +225,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 			hud->Update();
 
 			// スコアで次のステージへ(デバックのため一時的なもの)
-			if (score.GetNowScore() > (10000 * nowStageNum))
+			if (score.GetNowScore() > (1000 * nowStageNum))
 			{
 				if (nowStageNum == 5)
 				{
@@ -282,8 +235,9 @@ void GamePlayingScene::Update(const Peripheral& p)
 				{
 					updater = &GamePlayingScene::ClearUpdate;
 				}
-				
 			}
+
+			++time;
 		}
 		else
 		{
@@ -331,6 +285,10 @@ void GamePlayingScene::Update(const Peripheral& p)
 	Draw(p, (int)time);
 	
 	(this->*updater)(p);
+
+	// フェードイン,アウトのための幕
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
+	DxLib::DrawBox(0, 0, ssize.x, ssize.y, 0x000000, true);
 }
 
 void GamePlayingScene::HitCol(const Peripheral& p)
@@ -463,8 +421,4 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 
 	// ゲーム画面の描画
 	gs->DrawAndChangeScreen(player->pinchFlag);
-
-
-	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
-	DxLib::DrawBox(0, 0, ssize.x, ssize.y, 0x000000, true);
 }
