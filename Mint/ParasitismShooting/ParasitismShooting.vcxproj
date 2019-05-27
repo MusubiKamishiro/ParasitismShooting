@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="Character\Boss.cpp" />
     <ClCompile Include="Character\CharacterObject.cpp" />
     <ClCompile Include="Character\Enemy.cpp" />
     <ClCompile Include="Character\EnemyActionPattern.cpp" />
@@ -168,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="Character\Boss.h" />
     <ClInclude Include="Character\CharacterObject.h" />
     <ClInclude Include="Character\Enemy.h" />
     <ClInclude Include="Character\EnemyActionPattern.h" />
