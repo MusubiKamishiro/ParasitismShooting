@@ -33,6 +33,7 @@ private:
 	void Parasitic(const Peripheral &p, const CharaData& cdata);	// 寄生
 	void ParasiticCancel(const Peripheral &p);		// 寄生解除
 
+	void Init();	// 2つのコンストラクタの共通部分
 	void NotOutOfRange();		// 範囲外に行かせない
 
 	CharaData originData;		// 寄生前の元々のデータ
@@ -54,7 +55,9 @@ private:
 	KeyConfig& key = KeyConfig::Instance();
 	
 public:
+	// ステージ1で使うインスタンス(初期は何にも寄生していないため)
 	Player();
+	// ステージ2以降で使うインスタンス(前ステージの最後の寄生状態を持ってくる)
 	Player(const CharaData& cdata);
 	~Player();
 

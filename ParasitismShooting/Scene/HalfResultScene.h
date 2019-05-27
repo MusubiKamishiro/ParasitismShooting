@@ -1,6 +1,9 @@
 #pragma once
+#include <memory>
 #include "Scene.h"
 #include "../Character/CharacterObject.h"
+
+class HUD;
 
 class HalfResultScene : public Scene
 {
@@ -12,6 +15,8 @@ private:
 
 	unsigned int nextstage;
 	CharaData nowstate;
+
+	std::shared_ptr<HUD> hud;
 
 public:
 	HalfResultScene(const unsigned int& nowstagenum, const CharaData& cdata);
