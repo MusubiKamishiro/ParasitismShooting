@@ -42,6 +42,7 @@ struct CharaData
 	int SP;					// スタミナ
 	float moveVel;			// 移動量
 	std::string shotType;	// 弾の名前
+	int shotLevel;			// キャラクターのショットのレベル
 	bool ShotReady;			// ショットを打つかどうかのフラグ
 };
 

@@ -8,6 +8,7 @@ ShotRadiation::ShotRadiation(const Player& player, const EnemyFactory& enemyfact
 	ReadActionFile("action/shot.act");
 	ChangeAction("Shot4");
 	SetCharaSize(0.5f);
+	range = 30.0f;
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 
 	updater = &ShotRadiation::Move;
@@ -30,15 +31,22 @@ Shot * ShotRadiation::Clone()
 
 void ShotRadiation::Move()
 {
-	// ‚«‚ê‚¢‚È‚â[‚Âi30”­j
-	shotst.angle += (M_PI / 10) / 120;
+	if (shotst.time % 3 == 0)
+	{
+		shotst.angle += range / 180.0f;
+	}
+	if (shotst.shooter == SHOOTER::PLAYER)
+	{
+		shotst.speed = 3;
+	}
+	if (shotst.time > 300)
+	{
+		lifeFlag = false;
+	}
 	pos.x += cos(shotst.angle) * shotst.speed;
 	pos.y += sin(shotst.angle) * shotst.speed;
-	rotation2D(&pos.x, &pos.y, pos.x, pos.y, shotst.cpos.x, shotst.cpos.y, (5.0f / 180.0f));
 
-	//cShot[n].angle += (M_PI / 10) / 120;
-	//cShot[n].pos.x += cos(cShot[n].angle) * cShot[n].Speed;
-	//cShot[n].pos.y += sin(cShot[n].angle) * cShot[n].Speed;
+	shotst.time++;
 	//rotation2D(&cShot[n].pos.x, &cShot[n].pos.y, cShot[n].pos.x, cShot[n].pos.y, cShot[n].cneterPos.x, cShot[n].cneterPos.y, (5.0f / 180.0f));
 }
 

@@ -76,10 +76,6 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 		}
 		for (int j = 0; j < level; j++)
 		{
-			if (shotType == "ShotRadiation")
-			{
-				break;
-			}
 			auto shot = originalShot[shotType]->Clone();
 			shot->pos = pos;
 			shot->shotst.shotType = shotType;
@@ -113,10 +109,16 @@ double ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, in
 	}
 	else if (shotType == "ShotRadiation")
 	{
-		Vector2f pPos = player.GetPos();
-		angle = atan2(pPos.y - pos.y, pPos.x - pos.x);
-		angle += 360 / level * cnt;
-		return angle;
+		if (shooter == SHOOTER::ENEMY)
+		{
+			angle = M_PI * ((360.0f / level) * (cnt) / 180.0f);
+			return angle;
+		}
+		else if (shooter == SHOOTER::PLAYER)
+		{
+			angle = M_PI * ((360.0f / level) * (cnt) / 180.0f);
+			return angle;
+		}
 
 	}
 	else if (shotType == "ShotShotgun")

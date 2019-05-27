@@ -119,9 +119,7 @@ double ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, in
 	{
 		if (shooter == SHOOTER::ENEMY)
 		{
-			Vector2f pPos = player.GetPos();
-			angle = atan2(pPos.y - pos.y, pPos.x - pos.x);
-			angle += M_PI * ((360.0f / level) * (cnt) / 180.0f);
+			angle = M_PI * ((360.0f / level) * (cnt) / 180.0f);
 			return angle;
 		}
 		else if (shooter == SHOOTER::PLAYER)

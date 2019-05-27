@@ -24,6 +24,7 @@ private:
 
 	void rotation2D(float * xp, float * yp, float x, float y, float xc, float yc, float theta);
 
+	float range;
 public:
 	~ShotRadiation();
 
