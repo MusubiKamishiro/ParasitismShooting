@@ -36,6 +36,7 @@ float Shot::SetTracking(std::string shotType, Vector2f pos, int shooter, float o
 		}
 		return oldangle;
 	}
+	return 0.0f;
 }
 
 
