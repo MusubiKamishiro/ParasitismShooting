@@ -15,11 +15,12 @@ private:
 
 	unsigned int nextstage;
 	CharaData nowstate;
+	bool parasFlag;
 
 	std::shared_ptr<HUD> hud;
 
 public:
-	HalfResultScene(const unsigned int& nowstagenum, const CharaData& cdata);
+	HalfResultScene(const unsigned int& nowstagenum, const CharaData& cdata, const bool& pflag);
 	~HalfResultScene();
 
 	void Update(const Peripheral& p);

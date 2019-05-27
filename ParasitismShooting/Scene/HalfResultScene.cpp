@@ -31,12 +31,13 @@ void HalfResultScene::FadeoutUpdate(const Peripheral & p)
 	Game::Instance().ChangeScene(new GamePlayingScene(nextstage, nowstate));
 }
 
-HalfResultScene::HalfResultScene(const unsigned int& nowstagenum, const CharaData& cdata)
+HalfResultScene::HalfResultScene(const unsigned int& nowstagenum, const CharaData& cdata, const bool& pflag)
 {
 	updater = &HalfResultScene::FadeinUpdate;
 
 	nextstage = nowstagenum + 1;
 	nowstate = cdata;
+	parasFlag = pflag;
 
 	hud.reset(new HUD());
 }
@@ -50,7 +51,7 @@ void HalfResultScene::Update(const Peripheral& p)
 {
 	Score::Instance().Update();
 
-	hud->Draw(0, false);
+	hud->Draw(nowstate.HP, parasFlag);
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
 

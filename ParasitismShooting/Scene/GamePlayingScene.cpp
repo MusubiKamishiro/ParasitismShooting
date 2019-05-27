@@ -64,7 +64,7 @@ void GamePlayingScene::GameUpdate(const Peripheral & p)
 
 void GamePlayingScene::ClearUpdate(const Peripheral & p)
 {
-	Game::Instance().ChangeScene(new HalfResultScene(nowStageNum, player->GetCharaData()));
+	Game::Instance().ChangeScene(new HalfResultScene(nowStageNum, player->GetCharaData(), player->parasFlag));
 }
 
 void GamePlayingScene::ContinueUpdate(const Peripheral & p)
