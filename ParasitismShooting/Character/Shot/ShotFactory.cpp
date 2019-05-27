@@ -20,7 +20,7 @@ SLegion& ShotFactory::GetLegion()
 
 void ShotFactory::ShotDelete()
 {
-	for (int i = 0; i < legion.size(); ++i)
+	for (unsigned int i = 0; i < legion.size(); ++i)
 	{
 		auto shot = *std::next(legion.begin(), i);
 		if (!shot->GetLifeFlag())
@@ -92,9 +92,9 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 	return nullptr;
 }
 
-double ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, int cnt, int level)
+float ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, int cnt, int level)
 {
-	angle = -M_PI_2;
+	angle = -(float)M_PI_2;
 	if (shotType == "ShotNormal")
 	{
 		if (shooter == SHOOTER::ENEMY)
@@ -104,19 +104,19 @@ double ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, in
 		}
 		else if (shooter == SHOOTER::PLAYER)
 		{
-			return -M_PI_2;
+			return -(float)M_PI_2;
 		}
 	}
 	else if (shotType == "ShotRadiation")
 	{
 		if (shooter == SHOOTER::ENEMY)
 		{
-			angle = M_PI * ((360.0f / level) * (cnt) / 180.0f);
+			angle = (float)M_PI * ((360.0f / level) * (cnt) / 180.0f);
 			return angle;
 		}
 		else if (shooter == SHOOTER::PLAYER)
 		{
-			angle = M_PI * ((360.0f / level) * (cnt) / 180.0f);
+			angle = (float)M_PI * ((360.0f / level) * (cnt) / 180.0f);
 			return angle;
 		}
 
@@ -129,11 +129,11 @@ double ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, in
 			angle = atan2(pPos.y - pos.y, pPos.x - pos.x);
 			if (level / 2 > cnt)
 			{
-				angle -= M_PI * (10.0f  * (cnt + 1) / 180.0f);
+				angle -= (float)M_PI * (10.0f  * (cnt + 1) / 180.0f);
 			}
 			else if (level / 2 < cnt)
 			{
-				angle += M_PI * (10.0f * (cnt - (level / 2)) / 180.0f);
+				angle += (float)M_PI * (10.0f * (cnt - (level / 2)) / 180.0f);
 			}
 			return angle;
 		}
@@ -141,12 +141,12 @@ double ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, in
 		{
 			if (level / 2 > cnt)
 			{
-				angle -= M_PI * (10.0f  * (cnt + 1) / 180.0f);
+				angle -= (float)M_PI * (10.0f  * (cnt + 1) / 180.0f);
 
 			}
 			else if (level / 2 < cnt)
 			{
-				angle += M_PI * (10.0f * (cnt - (level / 2)) / 180.0f);
+				angle += (float)M_PI * (10.0f * (cnt - (level / 2)) / 180.0f);
 			}
 			return  angle;
 		}
@@ -155,24 +155,25 @@ double ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, in
 	{
 		if (shooter == SHOOTER::ENEMY)
 		{
-			return M_PI_2;
+			return (float)M_PI_2;
 		}
 		else if (shooter == SHOOTER::PLAYER)
 		{
 			if (level / 2 > cnt)
 			{
-				angle -= M_PI * (10.0f  * (cnt + 1) / 180.0f);
+				angle -= (float)M_PI * (10.0f  * (cnt + 1) / 180.0f);
 
 			}
 			else if (level / 2 < cnt)
 			{
-				angle += M_PI * (10.0f * (cnt - (level / 2)) / 180.0f);
+				angle += (float)M_PI * (10.0f * (cnt - (level / 2)) / 180.0f);
 			}
 			return  angle;
 		}
 	}
 	else if (shotType == "ShotWeak")
 	{
-		return -M_PI_2;
+		return -(float)M_PI_2;
 	}
+	return 0.0f;
 }

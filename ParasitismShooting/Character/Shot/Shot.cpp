@@ -12,7 +12,7 @@ Shot::~Shot()
 {
 }
 
-double Shot::SetTracking(std::string shotType, Vector2f pos, int shooter, double oldangle)
+float Shot::SetTracking(std::string shotType, Vector2f pos, int shooter, float oldangle)
 {
 	Vector2f pPos = player.GetPos();
 	Vector2f ePos = enemyfactory.GetLegionBeginCharPos();

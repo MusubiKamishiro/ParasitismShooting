@@ -22,7 +22,7 @@ enum SHOOTER
 struct ShotST
 {
 	Vector2f cpos;
-	double angle;
+	float angle;
 	int speed;
 	int movePtn;
 	int level;
@@ -44,7 +44,7 @@ protected:
 
 	ShotST shotst;
 
-	double SetTracking(std::string shotType, Vector2f pos, int shooter, double oldangle);
+	double SetTracking(std::string shotType, Vector2f pos, int shooter, float oldangle);
 
 public:
 	virtual ~Shot();
