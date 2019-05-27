@@ -27,6 +27,7 @@ typedef struct CSV
 	int cnt;
 	int wait;
 	int shotCnt;
+	int shotLevel;
 }CharacterBank;
 
 

@@ -9,7 +9,7 @@ ShotRadiation::ShotRadiation(const Player& player, const EnemyFactory& enemyfact
 	ChangeAction("Shot4");
 	SetCharaSize(0.5f);
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
-	//range = 5.0f;
+	range = 30.0f;
 	updater = &ShotRadiation::Move;
 }
 
@@ -31,15 +31,24 @@ Shot * ShotRadiation::Clone()
 void ShotRadiation::Move()
 {
 	//shotst.angle = range / 180.0f;
-	range += 0.1f;
+	if (shotst.time % 3 == 0)
+	{
+		shotst.angle += range / 180.0f;
+	}
+	if (shotst.shooter == SHOOTER::PLAYER)
+	{
+		shotst.speed = 3;
+	}
+	if (shotst.time > 300)
+	{
+		lifeFlag = false;
+	}
 	pos.x += cos(shotst.angle) * shotst.speed;
 	pos.y += sin(shotst.angle) * shotst.speed;
-	if ((shotst.time % 60) == 0)
-	{
-		//shotst.speed++;
-	}
-	rotation2D(&pos.x, &pos.y, pos.x, pos.y, shotst.cpos.x, shotst.cpos.y, (range / 180.0f));
+
 	shotst.time++;
+
+	//rotation2D(&pos.x, &pos.y, pos.x, pos.y, shotst.cpos.x, (shotst.shooter == SHOOTER::PLAYER ? shotst.cpos.y : shotst.cpos.y++), (range / 180.0f));
 }
 
 void ShotRadiation::Delete()
