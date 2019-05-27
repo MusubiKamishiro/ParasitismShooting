@@ -60,7 +60,7 @@ EnemyFactory::~EnemyFactory()
 {
 }
 
-Enemy * EnemyFactory::Create(const char * enemyname, const char * shotType, Vector2f pos, int movePtn, int cnt, int wait, int hp, int sp, float speed, int shotCnt)
+Enemy * EnemyFactory::Create(const char * enemyname, const char * shotType, Vector2f pos, int movePtn, int cnt, int wait, int hp, int sp, float speed, int shotCnt,int shotLevel)
 {
 	if(originalEnemy.find(enemyname) != originalEnemy.end())
 	{
@@ -75,6 +75,7 @@ Enemy * EnemyFactory::Create(const char * enemyname, const char * shotType, Vect
 		//enemy->vel = speed;
 		enemy->charaData.moveVel = speed;
 		enemy->shotCnt = shotCnt;
+		enemy->charaData.shotLevel = shotLevel;
 		legion.push_back(enemy);
 
 		return enemy;
