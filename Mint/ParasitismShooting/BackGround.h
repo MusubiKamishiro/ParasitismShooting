@@ -13,7 +13,7 @@ private:
 	std::shared_ptr<GameScreen> gs;
 
 public:
-	BackGround();
+	BackGround(const unsigned int& stagenum);
 	~BackGround();
 
 	void Draw(const int& time);

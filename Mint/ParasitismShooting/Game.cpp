@@ -95,7 +95,7 @@ void Game::Run()
 
 		// fps, クレジット表示
 		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
-		DxLib::DrawFormatString(ScreenSize.x - 100, ScreenSize.y - fontSize, 0xff00ff, "%.2ffps", fps);
+		DxLib::DrawFormatString(ScreenSize.x - 100, ScreenSize.y - fontSize, 0xff00ff, "%.2f fps", fps);
 		credit.Draw();
 				
 		DxLib::ScreenFlip();

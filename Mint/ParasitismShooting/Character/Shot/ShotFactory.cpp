@@ -1,9 +1,8 @@
 #include "ShotFactory.h"
 #include <random>
-#include "Shot.h"
 #include "../Player.h"
-
 #include "../EnemyFactory.h"
+
 #include "../../GameScreen.h"
 #include "ShotNormal.h"
 #include "ShotRadiation.h"
@@ -11,7 +10,6 @@
 #include "ShotShotgun.h"
 #include "ShotTracking.h"
 #include "ShotWeak.h"
-
 
 int NormalPosPtnX[5] = { 0,-5, 5,-10, 10 };
 
@@ -61,7 +59,6 @@ ShotFactory::ShotFactory(const Player& player, const EnemyFactory& enemyfactory)
 	originalShot["ShotShotgun"] = new ShotShotgun(player, enemyfactory);
 	originalShot["ShotTracking"] = new ShotTracking(player, enemyfactory);
 	originalShot["ShotWeak"] = new ShotWeak(player, enemyfactory);
-
 }
 
 
@@ -79,10 +76,6 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 		}
 		for (int j = 0; j < level; j++)
 		{
-			/*if (shotType == "ShotRadiation")
-			{
-				break;
-			}*/
 			auto shot = originalShot[shotType]->Clone();
 			shot->pos = pos;
 			shot->shotst.shotType = shotType;
@@ -92,13 +85,12 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 			shot->shotst.level = level;
 			shot->shotst.shooter = shooter;
 			shot->shotst.time = 0;
-			shot->shotst.angle = SetAngle(shot->shotst.shotType, shot->pos, shot->shotst.shooter, j ,level);
+			shot->shotst.angle = SetAngle(shot->shotst.shotType, shot->pos, shot->shotst.shooter, j, level);
 			legion.push_back(shot);
 		}
 	}
 	return nullptr;
 }
-
 
 float ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, int cnt, int level)
 {
@@ -150,7 +142,7 @@ float ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, int
 			if (level / 2 > cnt)
 			{
 				angle -= (float)M_PI * (10.0f  * (cnt + 1) / 180.0f);
-				
+
 			}
 			else if (level / 2 < cnt)
 			{
@@ -185,4 +177,3 @@ float ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, int
 	}
 	return 0.0f;
 }
-

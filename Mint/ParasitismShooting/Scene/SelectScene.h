@@ -1,9 +1,13 @@
 #pragma once
 #include "Scene.h"
+#include <memory>
+
+class SelectMenu;
 
 class SelectScene : public Scene
 {
 private:
+	std::shared_ptr<SelectMenu> smenu;
 
 	int img;
 	void (SelectScene::*updater)(const Peripheral& p);

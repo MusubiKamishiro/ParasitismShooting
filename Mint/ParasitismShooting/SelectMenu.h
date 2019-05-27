@@ -5,16 +5,17 @@
 class Menu;
 class Peripheral;
 
-class TitleMenu
+
+class SelectMenu
 {
 private:
 	std::shared_ptr<Menu> menu;
 
 public:
-	TitleMenu();
-	~TitleMenu();
+	SelectMenu();
+	~SelectMenu();
 
-	bool Update(const Peripheral& p, bool& flag);
+	bool Update(const Peripheral& p);
 	void Draw();
 };
 

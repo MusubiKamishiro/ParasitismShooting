@@ -22,8 +22,8 @@ struct CutInfo
 typedef std::vector<CutInfo> CutInfoes_t;
 
 struct ActionInfo {
-	bool isLoop;				// ﾙｰﾌﾟする
-	CutInfoes_t cuts;			// ｶｯﾄ情報配列
+	bool isLoop;		// ﾙｰﾌﾟする
+	CutInfoes_t cuts;	// ｶｯﾄ情報配列
 };
 
 struct ActionData {
@@ -57,8 +57,6 @@ protected:
 
 	void SetCharaSize(const float& size);
 
-	//double SetAngle(std::string shotType, Vector2f pos, int shooter);
-
 	CharaData charaData;
 
 	int movePtn;	// 移動パターン
@@ -71,8 +69,6 @@ protected:
 	Vector2f pos;	// 座標
 	Vector2f vel;	// 移動速度
 	Rect rect;		// 中心、幅と高さ
-
-	//shottype
 
 	std::string nowActionName;	// 現在再生中のｱｸｼｮﾝ名
 	unsigned int nowCutIdx;		// 現在表示中のｶｯﾄ番号

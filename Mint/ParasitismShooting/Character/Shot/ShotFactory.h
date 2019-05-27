@@ -38,6 +38,5 @@ public:
 	void ShotDelete();
 	void OutofScreen(void);
 
-	float SetAngle(std::string shotType, Vector2f pos, int shooter,int cnt,int);
+	float SetAngle(std::string shotType, Vector2f pos, int shooter, int cnt, int);
 };
-

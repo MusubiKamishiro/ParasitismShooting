@@ -4,9 +4,9 @@
 #include "../Peripheral.h"
 #include "../GameScreen.h"
 
-
-Player::Player()
+void Player::Init()
 {
+	// プレイヤー寄生前の基本データ
 	ReadActionFile("action/player.act");
 	ChangeAction("Idle");
 	SetCharaSize(0.1f);
@@ -28,12 +28,27 @@ Player::Player()
 	startPos = Vector2f(gssize.x / 2 + gs->outscreen / 2, gssize.y - 20);
 	pos = startPos;
 	icount = ccount = 0;
-	parasFlag = false;
 	pinchFlag = false;
+}
+
+Player::Player()
+{
+	Init();
+
+	parasFlag = false;
 
 	updater = &Player::Move;
+}
 
-	efect = DxLib::LoadGraph("img/tnm.png");
+Player::Player(const CharaData& cdata)
+{
+	Init();
+
+	// 前のステージでの最後の姿を持ってくる
+	charaData = cdata;
+	charaData.shotType == originData.shotType ? parasFlag = false : parasFlag = true;
+
+	updater = &Player::Move;
 }
 
 Player::~Player()
@@ -42,7 +57,7 @@ Player::~Player()
 
 void Player::Update(const Peripheral &p)
 {
-	if (p.IsPressing(PAD_INPUT_5))
+	if (p.IsPressing(key.GetNowKey(CANCEL)))
 	{
 		++ccount;
 		if (ccount > 120)
@@ -72,25 +87,25 @@ void Player::Move(const Peripheral & p)
 	vel = Vector2f();
 	float mvel = charaData.moveVel;
 
-	if (p.IsPressing(PAD_INPUT_1))
+	if (p.IsPressing(key.GetNowKey(SLOW)))
 	{
 		mvel = charaData.moveVel / 2;
 	}
 
 	// ボタンを押したら移動(今回は8方向)
-	if (p.IsPressing(PAD_INPUT_UP))
+	if (p.IsPressing(key.GetNowKey(UP)))
 	{
 		vel += Vector2f(0, -mvel);
 	}
-	if (p.IsPressing(PAD_INPUT_DOWN))
+	if (p.IsPressing(key.GetNowKey(DOWN)))
 	{
 		vel += Vector2f(0, mvel);
 	}
-	if (p.IsPressing(PAD_INPUT_RIGHT))
+	if (p.IsPressing(key.GetNowKey(RIGHT)))
 	{
 		vel += Vector2f(mvel, 0);
 	}
-	if (p.IsPressing(PAD_INPUT_LEFT))
+	if (p.IsPressing(key.GetNowKey(LEFT)))
 	{
 		vel += Vector2f(-mvel, 0);
 	}
@@ -167,6 +182,7 @@ void Player::Parasitic(const Peripheral & p, const CharaData& cdata)
 
 void Player::ParasiticCancel(const Peripheral & p)
 {
+	DxLib::StartJoypadVibration(DX_INPUT_PAD1, 1000, 1000);
 	charaData = originData;
 	pinchFlag = true;
 	parasFlag = false;
@@ -193,20 +209,6 @@ void Player::Draw(const int& time)
 			CharacterObject::Draw(charaData.img);
 		}
 	}
-
-	float a = (time % 30) / 90.f;
-	
-	float b = (30 - (time % 30)) * 8;
-	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, (b));
-	//DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, b);
-	DxLib::SetDrawBright(255, 0, 0);
-	DxLib::DrawRotaGraph(pos.x, pos.y, a, 0, efect, true);
-	DxLib::SetDrawBright(255, 255, 255);
-	//DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, 128);
-	//DxLib::DrawRotaGraph(pos.x, pos.y, a, 0, efect, true);
-	//DxLib::SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
-	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 }
 
 

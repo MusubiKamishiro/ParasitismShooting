@@ -14,7 +14,6 @@ Fish::Fish(const Player& player) : Enemy(player), player(player)
 	score = 200;
 
 	updater = &Fish::Move;
-	eAction.reset(new EnemyActionPattern());
 }
 
 Fish::Fish(const Fish& d) : Enemy(d.player), player(player)
@@ -38,7 +37,8 @@ void Fish::Move()
 	{
 		charaData.ShotReady = false;
 	}
-	eAction->Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.ShotReady);
+	EnemyActionPattern eAction;
+	eAction.Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.ShotReady);
 	cnt++;
 }
 

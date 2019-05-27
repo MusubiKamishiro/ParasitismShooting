@@ -9,8 +9,11 @@ private:
 	void FadeinUpdate(const Peripheral& p);
 	void FadeoutUpdate(const Peripheral& p);
 
+	unsigned int totalScore;
+	unsigned int continueNum;
+
 public:
-	ResultScene();
+	ResultScene(const unsigned int& score, const unsigned int& cnum);
 	~ResultScene();
 
 	void Update(const Peripheral& p);
