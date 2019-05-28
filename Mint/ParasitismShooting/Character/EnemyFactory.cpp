@@ -1,6 +1,6 @@
 #include "EnemyFactory.h"
 #include "Fish.h"
-#include "Boss.h"
+#include "Gusokun.h"
 #include "../GameScreen.h"
 
 
@@ -55,7 +55,7 @@ EnemyFactory::EnemyFactory(const Player& player) : player(player)
 	down = screenSize.y + gscreen.outscreen;
 
 	originalEnemy["fish"] = new Fish(player);
-	originalEnemy["boss"] = new Boss(player);
+	originalEnemy["gusokun"] = new Gusokun(player);
 }
 
 
@@ -67,10 +67,6 @@ Enemy * EnemyFactory::Create(const char * enemyname, const char * shotType, Vect
 {
 	if(originalEnemy.find(enemyname) != originalEnemy.end())
 	{
-		if (enemyname == "boss")
-		{
-			int a = 0;
-		}
 		auto enemy = originalEnemy[enemyname]->Clone();
 		enemy->charaData.shotType = shotType;
 		enemy->pos = pos;

@@ -188,8 +188,8 @@ void GamePlayingScene::Update(const Peripheral& p)
 					{
 						bankCnt--;
 					}
-				}*/
-				bankCnt = bankCnt % (cBank.size()-2) + 2;
+				}*/				
+				bankCnt = bankCnt % (cBank.size() - 2) + 2;
 			}
 
 			for (auto& shot : sf->GetLegion())
@@ -201,7 +201,8 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 			if (p.IsPressing(KeyConfig::Instance().GetNowKey(ATTACK)) && ((int)time % 6 == 0))
 			{
-				sf->Create(player->GetCharaData().shotType, player->GetPos(), 8, 1, 30, SHOOTER::PLAYER);
+				sf->Create(player->GetCharaData().shotType, player->GetPos(), 8, 1, player->GetCharaData().shotLevel, SHOOTER::PLAYER);
+				sf->Create(player->GetCharaData().shotTypeSub, player->GetPos(), 8, 1, player->GetCharaData().shotLevel, SHOOTER::PLAYER);
 			}
 			
 			for (auto& enemy : ef->GetLegion())
@@ -209,6 +210,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 				if (enemy->GetShotReady())
 				{
 					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 2, 1, enemy->GetCharaData().shotLevel, SHOOTER::ENEMY);
+					sf->Create(enemy->GetCharaData().shotTypeSub, enemy->GetPos(), 2, 1, enemy->GetCharaData().shotLevel, SHOOTER::ENEMY);
 				}
 				enemy->Update();
 			}
@@ -305,7 +307,7 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 				{
 					if (cd->IsCollision(shot->GetRects(sRect.rc), player->GetRects(pRect.rc), cd->GetRectCombi(sRect.rt, pRect.rt)))
 					{
-						player->Damage(p);
+						//player->Damage(p);
 					}
 				}
 			}

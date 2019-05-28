@@ -72,7 +72,7 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 {
 	if (originalShot.find(shotType) != originalShot.end())
 	{
-		if ((shotType == "Weak" && shooter == SHOOTER::PLAYER) || (shotType == "Normal" && shooter == SHOOTER::ENEMY))
+		if ((shotType == "Weak") || (shotType == "Normal"))
 		{
 			level = 1;
 		}
