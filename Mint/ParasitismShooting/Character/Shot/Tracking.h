@@ -4,27 +4,27 @@
 class EnemyFactory;
 class ShotFactory;
 
-class ShotWeak : public Shot
+class Tracking : public Shot
 {
 	friend ShotFactory;
 private:
-	ShotWeak(const Player& player, const EnemyFactory& enemyfactory);
-	ShotWeak(const ShotWeak&);
-	void operator=(const ShotWeak&);
+	Tracking(const Player& player, const EnemyFactory& enemyfactory);
+	Tracking(const Tracking&);
+	void operator=(const Tracking&);
 
 	Shot* Clone();
 
 	void Move();
 	void Delete();
 	
-	void (ShotWeak::*updater)();
+	void (Tracking::*updater)();
 
 	const Player& player;
 	const EnemyFactory& enemyfactory;
 
 
 public:
-	~ShotWeak();
+	~Tracking();
 
 	void Update();
 	void Draw();

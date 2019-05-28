@@ -4,27 +4,27 @@
 class EnemyFactory;
 class ShotFactory;
 
-class ShotRandom : public Shot
+class Weak : public Shot
 {
 	friend ShotFactory;
 private:
-	ShotRandom(const Player& player, const EnemyFactory& enemyfactory);
-	ShotRandom(const ShotRandom&);
-	void operator=(const ShotRandom&);
+	Weak(const Player& player, const EnemyFactory& enemyfactory);
+	Weak(const Weak&);
+	void operator=(const Weak&);
 
 	Shot* Clone();
 
 	void Move();
 	void Delete();
 	
-	void (ShotRandom::*updater)();
+	void (Weak::*updater)();
 
 	const Player& player;
 	const EnemyFactory& enemyfactory;
 
 
 public:
-	~ShotRandom();
+	~Weak();
 
 	void Update();
 	void Draw();

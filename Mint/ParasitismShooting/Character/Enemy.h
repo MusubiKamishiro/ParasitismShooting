@@ -1,8 +1,10 @@
 #pragma once
 #include "CharacterObject.h"
+#include <memory>
 
 class EnemyFactory;
 class Player;
+class EnemyActionPattern;
 
 class Enemy : public CharacterObject
 {
@@ -14,6 +16,7 @@ protected:
 	
 	unsigned int score;
 
+	std::shared_ptr< EnemyActionPattern> eAction;
 public:
 	virtual ~Enemy();
 

@@ -7,11 +7,13 @@
 Boss::Boss(const Player& player) : Enemy(player), player(player)
 {
 	ReadActionFile("action/boss.act");
-	ChangeAction("Idle");
+	ChangeAction("eIdle");
 	SetCharaSize(0.30f);
 	charaData.ShotReady = false;
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 	score = 200;
+
+	eAction.reset(new EnemyActionPattern());
 
 	updater = &Boss::Move;
 }
@@ -37,8 +39,7 @@ void Boss::Move()
 	{
 		charaData.ShotReady = false;
 	}
-	EnemyActionPattern eAction;
-	eAction.Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.ShotReady);
+	//eAction->Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.ShotReady);
 	cnt++;
 }
 

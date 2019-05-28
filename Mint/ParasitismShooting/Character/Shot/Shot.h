@@ -59,6 +59,8 @@ protected:
 
 	float SetTracking(std::string shotType, Vector2f pos, int shooter, float oldangle);
 
+	float GetAtan2(int shooter, float oldangle);
+
 public:
 	virtual ~Shot();
 
