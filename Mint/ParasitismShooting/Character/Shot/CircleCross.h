@@ -4,27 +4,27 @@
 class EnemyFactory;
 class ShotFactory;
 
-class ShotTracking : public Shot
+class CircleCross : public Shot
 {
 	friend ShotFactory;
 private:
-	ShotTracking(const Player& player, const EnemyFactory& enemyfactory);
-	ShotTracking(const ShotTracking&);
-	void operator=(const ShotTracking&);
+	CircleCross(const Player& player, const EnemyFactory& enemyfactory);
+	CircleCross(const CircleCross&);
+	void operator=(const CircleCross&);
 
 	Shot* Clone();
 
 	void Move();
 	void Delete();
 	
-	void (ShotTracking::*updater)();
+	void (CircleCross::*updater)();
 
 	const Player& player;
 	const EnemyFactory& enemyfactory;
 
 
 public:
-	~ShotTracking();
+	~CircleCross();
 
 	void Update();
 	void Draw();

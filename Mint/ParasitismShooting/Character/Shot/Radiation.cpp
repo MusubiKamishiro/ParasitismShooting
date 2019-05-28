@@ -1,9 +1,9 @@
-#include "ShotRadiation.h"
+#include "Radiation.h"
 #include "../../Game.h"
 #include "../EnemyFactory.h"
 #include <DxLib.h>
 
-ShotRadiation::ShotRadiation(const Player& player, const EnemyFactory& enemyfactory) : Shot(player, enemyfactory),player(player), enemyfactory(enemyfactory)
+Radiation::Radiation(const Player& player, const EnemyFactory& enemyfactory) : Shot(player, enemyfactory),player(player), enemyfactory(enemyfactory)
 {
 	ReadActionFile("action/shot.act");
 	ChangeAction("Shot4");
@@ -11,25 +11,25 @@ ShotRadiation::ShotRadiation(const Player& player, const EnemyFactory& enemyfact
 	range = 30.0f;
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 
-	updater = &ShotRadiation::Move;
+	updater = &Radiation::Move;
 }
 
-ShotRadiation::ShotRadiation(const ShotRadiation & d) : Shot(d.player, d.enemyfactory),player(player), enemyfactory(enemyfactory)
+Radiation::Radiation(const Radiation & d) : Shot(d.player, d.enemyfactory),player(player), enemyfactory(enemyfactory)
 {
 	*this = d;
 }
 
-void ShotRadiation::operator=(const ShotRadiation &d)
+void Radiation::operator=(const Radiation &d)
 {
-	memcpy(this, &d, sizeof(ShotRadiation));
+	memcpy(this, &d, sizeof(Radiation));
 }
 
-Shot * ShotRadiation::Clone()
+Shot * Radiation::Clone()
 {
-	return new ShotRadiation(*this);
+	return new Radiation(*this);
 }
 
-void ShotRadiation::Move()
+void Radiation::Move()
 {
 	if (shotst.time % 3 == 0)
 	{
@@ -50,26 +50,26 @@ void ShotRadiation::Move()
 	//rotation2D(&cShot[n].pos.x, &cShot[n].pos.y, cShot[n].pos.x, cShot[n].pos.y, cShot[n].cneterPos.x, cShot[n].cneterPos.y, (5.0f / 180.0f));
 }
 
-void ShotRadiation::Delete()
+void Radiation::Delete()
 {
 	lifeFlag = false;
 }
 
-ShotRadiation::~ShotRadiation()
+Radiation::~Radiation()
 {
 }
 
-void ShotRadiation::Update()
+void Radiation::Update()
 {
 	(this->*updater)();
 }
 
-void ShotRadiation::Draw()
+void Radiation::Draw()
 {
 	CharacterObject::Draw(charaData.img);
 }
 
-void ShotRadiation::rotation2D(float * xp, float * yp, float x, float y, float xc, float yc, float theta)
+void Radiation::rotation2D(float * xp, float * yp, float x, float y, float xc, float yc, float theta)
 {
 	y = -y;
 	yc = -yc;

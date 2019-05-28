@@ -4,12 +4,13 @@
 #include "../EnemyFactory.h"
 
 #include "../../GameScreen.h"
-#include "ShotNormal.h"
-#include "ShotRadiation.h"
-#include "ShotRandom.h"
-#include "ShotShotgun.h"
-#include "ShotTracking.h"
-#include "ShotWeak.h"
+#include "Normal.h"
+#include "Radiation.h"
+#include "Random.h"
+#include "Shotgun.h"
+#include "Tracking.h"
+#include "Weak.h"
+#include "CircleCross.h"
 
 int NormalPosPtnX[5] = { 0,-5, 5,-10, 10 };
 
@@ -53,12 +54,13 @@ ShotFactory::ShotFactory(const Player& player, const EnemyFactory& enemyfactory)
 	left = 0;
 	down = screenSize.y + gscreen.outscreen;
 
-	originalShot["ShotNormal"] = new ShotNormal(player, enemyfactory);
-	originalShot["ShotRadiation"] = new ShotRadiation(player, enemyfactory);
-	originalShot["ShotRandom"] = new ShotRandom(player, enemyfactory);
-	originalShot["ShotShotgun"] = new ShotShotgun(player, enemyfactory);
-	originalShot["ShotTracking"] = new ShotTracking(player, enemyfactory);
-	originalShot["ShotWeak"] = new ShotWeak(player, enemyfactory);
+	originalShot["Normal"] = new Normal(player, enemyfactory);
+	originalShot["Radiation"] = new Radiation(player, enemyfactory);
+	originalShot["Random"] = new Random(player, enemyfactory);
+	originalShot["Shotgun"] = new Shotgun(player, enemyfactory);
+	originalShot["Tracking"] = new Tracking(player, enemyfactory);
+	originalShot["Weak"] = new Weak(player, enemyfactory);
+	originalShot["CircleCross"] = new CircleCross(player, enemyfactory);
 }
 
 
@@ -70,7 +72,7 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 {
 	if (originalShot.find(shotType) != originalShot.end())
 	{
-		if ((shotType == "ShotWeak" && shooter == SHOOTER::PLAYER) || (shotType == "ShotNormal" && shooter == SHOOTER::ENEMY))
+		if ((shotType == "Weak" && shooter == SHOOTER::PLAYER) || (shotType == "Normal" && shooter == SHOOTER::ENEMY))
 		{
 			level = 1;
 		}
@@ -95,7 +97,7 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 float ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, int cnt, int level)
 {
 	angle = -(float)M_PI_2;
-	if (shotType == "ShotNormal")
+	if (shotType == "Normal")
 	{
 		if (shooter == SHOOTER::ENEMY)
 		{
@@ -107,7 +109,7 @@ float ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, int
 			return -(float)M_PI_2;
 		}
 	}
-	else if (shotType == "ShotRadiation")
+	else if (shotType == "Radiation")
 	{
 		if (shooter == SHOOTER::ENEMY)
 		{
@@ -119,9 +121,13 @@ float ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, int
 			angle = (float)M_PI * ((360.0f / level) * (cnt) / 180.0f);
 			return angle;
 		}
-
 	}
-	else if (shotType == "ShotShotgun")
+	else if (shotType == "CircleCross")
+	{
+		angle = (float)M_PI * ((360.0f / level) * (cnt) / 180.0f);
+		return angle;
+	}
+	else if (shotType == "Shotgun")
 	{
 		if (shooter == SHOOTER::ENEMY)
 		{
@@ -151,7 +157,7 @@ float ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, int
 			return  angle;
 		}
 	}
-	else if (shotType == "ShotTracking")
+	else if (shotType == "Tracking")
 	{
 		if (shooter == SHOOTER::ENEMY)
 		{
@@ -171,7 +177,7 @@ float ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, int
 			return  angle;
 		}
 	}
-	else if (shotType == "ShotWeak")
+	else if (shotType == "Weak")
 	{
 		return -(float)M_PI_2;
 	}
