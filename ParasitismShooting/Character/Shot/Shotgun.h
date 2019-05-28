@@ -4,27 +4,27 @@
 class EnemyFactory;
 class ShotFactory;
 
-class ShotShotgun : public Shot
+class Shotgun : public Shot
 {
 	friend ShotFactory;
 private:
-	ShotShotgun(const Player& player, const EnemyFactory& enemyfactory);
-	ShotShotgun(const ShotShotgun&);
-	void operator=(const ShotShotgun&);
+	Shotgun(const Player& player, const EnemyFactory& enemyfactory);
+	Shotgun(const Shotgun&);
+	void operator=(const Shotgun&);
 
 	Shot* Clone();
 
 	void Move();
 	void Delete();
 	
-	void (ShotShotgun::*updater)();
+	void (Shotgun::*updater)();
 
 	const Player& player;
 	const EnemyFactory& enemyfactory;
 
 
 public:
-	~ShotShotgun();
+	~Shotgun();
 
 	void Update();
 	void Draw();

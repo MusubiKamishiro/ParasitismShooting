@@ -42,6 +42,7 @@ struct ShotST
 	int shooter;
 	int time;
 	std::string shotType;
+	std::string shotTypeSub;
 };
 
 class Shot : public CharacterObject
@@ -58,6 +59,8 @@ protected:
 	ShotST shotst;
 
 	float SetTracking(std::string shotType, Vector2f pos, int shooter, float oldangle);
+
+	float GetAtan2(int shooter, float oldangle);
 
 public:
 	virtual ~Shot();

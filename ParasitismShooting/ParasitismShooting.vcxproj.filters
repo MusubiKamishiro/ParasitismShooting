@@ -111,21 +111,6 @@
     <ClCompile Include="Character\Shot\ShotFactory.cpp">
       <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Character\Shot\ShotNormal.cpp">
-      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Character\Shot\ShotRadiation.cpp">
-      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Character\Shot\ShotRandom.cpp">
-      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Character\Shot\ShotShotgun.cpp">
-      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Character\Shot\ShotTracking.cpp">
-      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Menu.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -153,9 +138,6 @@
     <ClCompile Include="KeyConfigMenu.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Character\Shot\ShotWeak.cpp">
-      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Score.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -167,6 +149,27 @@
     </ClCompile>
     <ClCompile Include="DieEffect.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Shot\Radiation.cpp">
+      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Shot\Random.cpp">
+      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Shot\Shotgun.cpp">
+      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Shot\Tracking.cpp">
+      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Shot\Weak.cpp">
+      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Shot\Normal.cpp">
+      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Shot\CircleCross.cpp">
+      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -239,21 +242,6 @@
     <ClInclude Include="Character\Shot\ShotFactory.h">
       <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Character\Shot\ShotNormal.h">
-      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Character\Shot\ShotRadiation.h">
-      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Character\Shot\ShotRandom.h">
-      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Character\Shot\ShotShotgun.h">
-      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Character\Shot\ShotTracking.h">
-      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Menu.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -281,9 +269,6 @@
     <ClInclude Include="KeyConfigMenu.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Character\Shot\ShotWeak.h">
-      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Score.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -295,6 +280,27 @@
     </ClInclude>
     <ClInclude Include="DieEffect.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Shot\Normal.h">
+      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Shot\Radiation.h">
+      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Shot\Random.h">
+      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Shot\Shotgun.h">
+      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Shot\Weak.h">
+      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Shot\Tracking.h">
+      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Shot\CircleCross.h">
+      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

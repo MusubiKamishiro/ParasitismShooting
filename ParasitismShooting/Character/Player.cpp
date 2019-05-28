@@ -13,7 +13,7 @@ void Player::Init()
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 	charaData.HP = 1;
 	charaData.moveVel = 3.0;
-	charaData.shotType = "ShotWeak";
+	charaData.shotType = "Weak";
 	originData = charaData;
 
 	gs.reset(new GameScreen());
@@ -175,6 +175,12 @@ void Player::Parasitic(const Peripheral & p, const CharaData& cdata)
 
 	charaData = cdata;
 	charaData.HP = cdata.HP / 3;
+	if (charaData.HP > 7)
+	{
+		charaData.HP = 7;
+	}
+
+	charaData.shotLevel = cdata.shotLevel;
 
 	icount = 0;
 	updater = &Player::Invincible;

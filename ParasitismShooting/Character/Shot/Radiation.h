@@ -4,20 +4,20 @@
 class EnemyFactory;
 class ShotFactory;
 
-class ShotRadiation : public Shot
+class Radiation : public Shot
 {
 	friend ShotFactory;
 private:
-	ShotRadiation(const Player& player, const EnemyFactory& enemyfactory/*, const Enemy& enemy*/);
-	ShotRadiation(const ShotRadiation&);
-	void operator=(const ShotRadiation&);
+	Radiation(const Player& player, const EnemyFactory& enemyfactory/*, const Enemy& enemy*/);
+	Radiation(const Radiation&);
+	void operator=(const Radiation&);
 
 	Shot* Clone();
 
 	void Move();
 	void Delete();
 	
-	void (ShotRadiation::*updater)();
+	void (Radiation::*updater)();
 
 	const Player& player;
 	const EnemyFactory& enemyfactory;
@@ -26,7 +26,7 @@ private:
 
 	float range;
 public:
-	~ShotRadiation();
+	~Radiation();
 
 	void Update();
 	void Draw();
