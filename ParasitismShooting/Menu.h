@@ -30,5 +30,7 @@ public:
 
 	void Update(const Peripheral &p);
 	void Draw(const Vector2& shiftpos);
+
+	bool decideFlag;
 };
 

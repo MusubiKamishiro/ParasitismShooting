@@ -13,6 +13,8 @@ Menu::Menu()
 	menudata.resize(0);
 	menuTitle.resize(0);
 	selcnt = 0;
+
+	decideFlag = false;
 }
 
 

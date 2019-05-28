@@ -23,8 +23,9 @@ ContinueMenu::~ContinueMenu()
 bool ContinueMenu::Update(const Peripheral & p, bool & flag)
 {
 	menu->Update(p);
-	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)))
+	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)) && !menu->decideFlag)
 	{
+		menu->decideFlag = true;
 		if (menu->selcnt == 0)
 		{
 			flag = false;

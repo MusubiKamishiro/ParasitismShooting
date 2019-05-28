@@ -94,24 +94,24 @@ void Game::Run()
 			time = 0;
 		}
 
-		std::random_device seed_gen;
-		std::mt19937 engine(seed_gen());
-		int edge = 5;
-		for (int y = 0; y < ScreenSize.y; y += edge)
-		{
-			for (int x = 0; x < ScreenSize.x; x += edge)
-			{
-				/*if (engine() % 2 == 0)
-				{
-					DxLib::DrawBox(x, y, x + edge, y + edge, 0xffffff, true);
-				}
-				else
-				{
-					DxLib::DrawBox(x, y, x + edge, y + edge, 0x000000, true);
-				}*/
-				DxLib::DrawBox(x, y, x + edge, y + edge, engine() % 0xffffff, true);
-			}
-		}
+		//std::random_device seed_gen;
+		//std::mt19937 engine(seed_gen());
+		//int edge = 5;
+		//for (int y = 0; y < ScreenSize.y; y += edge)
+		//{
+		//	for (int x = 0; x < ScreenSize.x; x += edge)
+		//	{
+		//		/*if (engine() % 2 == 0)
+		//		{
+		//			DxLib::DrawBox(x, y, x + edge, y + edge, 0xffffff, true);
+		//		}
+		//		else
+		//		{
+		//			DxLib::DrawBox(x, y, x + edge, y + edge, 0x000000, true);
+		//		}*/
+		//		DxLib::DrawBox(x, y, x + edge, y + edge, engine() % 0xffffff, true);
+		//	}
+		//}
 
 		//if (engine() % 2 == 0)
 		//{

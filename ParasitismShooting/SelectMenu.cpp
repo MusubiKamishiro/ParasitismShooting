@@ -23,7 +23,7 @@ SelectMenu::~SelectMenu()
 bool SelectMenu::Update(const Peripheral & p)
 {
 	menu->Update(p);
-	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)))
+	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)) && !menu->decideFlag)
 	{
 		//if (menu->selcnt == 0)
 		//{
@@ -33,7 +33,7 @@ bool SelectMenu::Update(const Peripheral & p)
 		//{
 		//	return true;
 		//}
-
+		menu->decideFlag = true;
 		return true;
 	}
 

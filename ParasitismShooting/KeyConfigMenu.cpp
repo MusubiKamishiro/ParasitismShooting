@@ -28,11 +28,12 @@ bool KeyConfigMenu::Update(const Peripheral & p, bool& flag)
 {
 	menu->Update(p);
 
-	if (menu->selcnt == menu->menudata.size() - 1)
+	if ((menu->selcnt == menu->menudata.size() - 1) && !menu->decideFlag)
 	{
-		if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)))
+		if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)) && !menu->decideFlag)
 		{
 			flag = false;
+			menu->decideFlag = true;
 		}
 	}
 	else
