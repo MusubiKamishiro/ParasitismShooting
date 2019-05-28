@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <DxLib.h>
+#include <random>
 #include "Peripheral.h"
 #include "Credit.h"
 
@@ -93,11 +94,39 @@ void Game::Run()
 			time = 0;
 		}
 
+		std::random_device seed_gen;
+		std::mt19937 engine(seed_gen());
+		int edge = 5;
+		for (int y = 0; y < ScreenSize.y; y += edge)
+		{
+			for (int x = 0; x < ScreenSize.x; x += edge)
+			{
+				/*if (engine() % 2 == 0)
+				{
+					DxLib::DrawBox(x, y, x + edge, y + edge, 0xffffff, true);
+				}
+				else
+				{
+					DxLib::DrawBox(x, y, x + edge, y + edge, 0x000000, true);
+				}*/
+				DxLib::DrawBox(x, y, x + edge, y + edge, engine() % 0xffffff, true);
+			}
+		}
+
+		//if (engine() % 2 == 0)
+		//{
+		//	DxLib::DrawBox(0, 0, ScreenSize.x, ScreenSize.y, 0xff0000, true);
+		//}
+		//else
+		//{
+		//	DxLib::DrawBox(0, 0, ScreenSize.x, ScreenSize.y, 0x0000ff, true);
+		//}
+
 		// fps, クレジット表示
 		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 		DxLib::DrawFormatString(ScreenSize.x - 100, ScreenSize.y - fontSize, 0xff00ff, "%.2f fps", fps);
 		credit.Draw();
-				
+		
 		DxLib::ScreenFlip();
 	}
 }
