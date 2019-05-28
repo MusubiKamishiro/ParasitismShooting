@@ -26,7 +26,7 @@ HalfResultScene::HalfResultScene()
 	boxlength /= 5;
 	imgSize /= 5;
 
-
+	
 	for (int y = gs->outscreen; y < gssize.y; y += boxlength.y)
 	{
 		for (int x = gs->outscreen; x < gssize.x; x += boxlength.x)
@@ -48,10 +48,6 @@ bool HalfResultScene::Update(const Peripheral& p)
 	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)) && returnFlag)
 	{
 		flag = true;
-		if (boxCnt == sboxes.size())
-		{
-			boxCnt = 0;
-		}
 	}
 
 	if (flag)
@@ -83,8 +79,11 @@ void HalfResultScene::Draw()
 				imgSize.x, imgSize.y, img, true);
 		}
 	}
-	DxLib::DrawString(60, 60, "中間リザルト", 0x00ff00);
-	DxLib::DrawString(110, 160, std::to_string(Score::Instance().GetNowScore()).c_str(), 0x00ff00);
+
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, (255 / sboxes.size()) * boxCnt);
+	DxLib::DrawString(200, 100, "中間リザルト", 0x00ff00);
+	DxLib::DrawString(190, 200, std::to_string(Score::Instance().GetNowScore()).c_str(), 0x00ff00);
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 }
 
 bool HalfResultScene::AddBox()
@@ -119,16 +118,16 @@ bool HalfResultScene::SubBox()
 	{
 		if (b.drawflag)
 		{
-			if ((engine() % (sboxes.size() - boxCnt)) == 0)
+			if ((engine() % boxCnt) == 0)
 			{
 				b.drawflag = false;
-				++boxCnt;
+				--boxCnt;
 				break;
 			}
 		}
 	}
 
-	if (boxCnt == sboxes.size())
+	if (boxCnt == 0)
 	{
 		return true;
 	}
