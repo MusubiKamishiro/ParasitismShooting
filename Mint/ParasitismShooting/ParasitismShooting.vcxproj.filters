@@ -150,9 +150,6 @@
     <ClCompile Include="DieEffect.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Character\Boss.cpp">
-      <Filter>キャラクターファイル\ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Character\Shot\Normal.cpp">
       <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
     </ClCompile>
@@ -173,6 +170,9 @@
     </ClCompile>
     <ClCompile Include="Character\Shot\CircleCross.cpp">
       <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Gusokun.cpp">
+      <Filter>キャラクターファイル\ソースファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -284,9 +284,6 @@
     <ClInclude Include="DieEffect.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Character\Boss.h">
-      <Filter>キャラクターファイル\ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Character\Shot\Normal.h">
       <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
     </ClInclude>
@@ -307,6 +304,9 @@
     </ClInclude>
     <ClInclude Include="Character\Shot\CircleCross.h">
       <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Gusokun.h">
+      <Filter>キャラクターファイル\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

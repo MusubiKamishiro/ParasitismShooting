@@ -42,6 +42,7 @@ struct ShotST
 	int shooter;
 	int time;
 	std::string shotType;
+	std::string shotTypeSub;
 };
 
 class Shot : public CharacterObject

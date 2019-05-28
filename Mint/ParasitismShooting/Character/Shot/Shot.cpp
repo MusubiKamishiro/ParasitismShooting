@@ -41,10 +41,9 @@ float Shot::SetTracking(std::string shotType, Vector2f pos, int shooter, float o
 
 float Shot::GetAtan2(int shooter, float oldangle)
 {
-	Vector2f pPos = player.GetPos();
-	Vector2f ePos = enemyfactory.GetLegionBeginCharPos();
 	if (shooter == SHOOTER::ENEMY)
 	{
+	Vector2f pPos = player.GetPos();
 		if (pPos != Vector2f(0.0f, 0.0f))
 		{
 			return atan2(pPos.y - pos.y, pPos.x - pos.x);
@@ -52,6 +51,7 @@ float Shot::GetAtan2(int shooter, float oldangle)
 	}
 	else if (shooter == SHOOTER::PLAYER)
 	{
+	Vector2f ePos = enemyfactory.GetLegionBeginCharPos();
 		if (ePos != Vector2f(0.0f, 0.0f))
 		{
 			return atan2(ePos.y - pos.y, ePos.x - pos.x);

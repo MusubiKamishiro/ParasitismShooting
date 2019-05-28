@@ -6,14 +6,14 @@ class Player;
 class EnemyFactory;
 
 // ƒ{ƒX
-class Boss : public Enemy
+class Gusokun : public Enemy
 {
 	friend EnemyFactory;
 private:
 	// ¼İ¸ŞÙÄİ‚ÌŒˆ‚Ü‚è
-	Boss(const Player& player);		// ¶¬‹Ö~
-	Boss(const Boss&);				// ºËß°‹Ö~
-	void operator=(const Boss&);	// ‘ã“ü‹Ö~
+	Gusokun(const Player& player);		// ¶¬‹Ö~
+	Gusokun(const Gusokun&);				// ºËß°‹Ö~
+	void operator=(const Gusokun&);	// ‘ã“ü‹Ö~
 
 	Enemy* Clone();
 
@@ -23,13 +23,13 @@ private:
 	void StunDamage();
 	void Damage();
 
-	void (Boss::*updater)();
+	void (Gusokun::*updater)();
 
 	const Player& player;
 
 	bool flag;
 public:
-	~Boss();
+	~Gusokun();
 
 	void Update();
 	void Draw(int time);

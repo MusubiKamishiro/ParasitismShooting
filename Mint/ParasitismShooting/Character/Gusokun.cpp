@@ -1,10 +1,10 @@
-#include "Boss.h"
+#include "Gusokun.h"
 #include "../Game.h"
 #include <DxLib.h>
 #include "EnemyActionPattern.h"
 
 
-Boss::Boss(const Player& player) : Enemy(player), player(player)
+Gusokun::Gusokun(const Player& player) : Enemy(player), player(player)
 {
 	ReadActionFile("action/boss.act");
 	ChangeAction("eIdle");
@@ -15,25 +15,25 @@ Boss::Boss(const Player& player) : Enemy(player), player(player)
 
 	eAction.reset(new EnemyActionPattern());
 
-	updater = &Boss::Move;
+	updater = &Gusokun::Move;
 }
 
-Boss::Boss(const Boss& d) : Enemy(d.player), player(player)
+Gusokun::Gusokun(const Gusokun& d) : Enemy(d.player), player(player)
 {
 	*this = d;
 }
 
-void Boss::operator=(const Boss& d)
+void Gusokun::operator=(const Gusokun& d)
 {
-	memcpy(this, &d, sizeof(Boss));
+	memcpy(this, &d, sizeof(Gusokun));
 }
 
-Enemy * Boss::Clone()
+Enemy * Gusokun::Clone()
 {
-	return new Boss(*this);
+	return new Gusokun(*this);
 }
 
-void Boss::Move()
+void Gusokun::Move()
 {
 	if (charaData.ShotReady == true)
 	{
@@ -43,13 +43,13 @@ void Boss::Move()
 	cnt++;
 }
 
-void Boss::Die()
+void Gusokun::Die()
 {
 	scoreFlag = true;
 	lifeFlag = false;
 }
 
-void Boss::Stunning()
+void Gusokun::Stunning()
 {
 
 	EnemyActionPattern eAction;
@@ -60,29 +60,29 @@ void Boss::Stunning()
 	}
 }
 
-void Boss::StunDamage()
+void Gusokun::StunDamage()
 {
 	--charaData.SP;
 	if (charaData.SP <= 0)
 	{
-		updater = &Boss::Stunning;
+		updater = &Gusokun::Stunning;
 	}
 }
 
-Boss::~Boss()
+Gusokun::~Gusokun()
 {
 }
 
-void Boss::Update()
+void Gusokun::Update()
 {
 	//ProceedAnimationFile();
 
 	(this->*updater)();
 }
 
-void Boss::Draw(int time)
+void Gusokun::Draw(int time)
 {
-	if (updater != &Boss::Stunning)
+	if (updater != &Gusokun::Stunning)
 	{
 		CharacterObject::Draw(charaData.img);
 	}
@@ -94,11 +94,11 @@ void Boss::Draw(int time)
 	}
 }
 
-void Boss::Damage()
+void Gusokun::Damage()
 {
 	charaData.HP -= 1;
 	if (charaData.HP <= 0)
 	{
-		updater = &Boss::Die;
+		updater = &Gusokun::Die;
 	}
 }

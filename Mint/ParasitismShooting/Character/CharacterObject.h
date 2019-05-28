@@ -35,15 +35,16 @@ struct ActionData {
 // 寄生の際に使用する
 struct CharaData
 {
-	ActionData actData;		// アクションデータ
-	int img;				// 画像
-	float charaSize;		// キャラクターの拡大率
-	int HP;					// 体力
-	int SP;					// スタミナ
-	float moveVel;			// 移動量
-	std::string shotType;	// 弾の名前
-	int shotLevel;			// キャラクターのショットのレベル
-	bool ShotReady;			// ショットを打つかどうかのフラグ
+	ActionData actData;			// アクションデータ
+	int img;					// 画像
+	float charaSize;			// キャラクターの拡大率
+	int HP;						// 体力
+	int SP;						// スタミナ
+	float moveVel;				// 移動量
+	std::string shotType;		// 弾の名前
+	std::string shotTypeSub;	// 弾の名前2種類目	
+	int shotLevel;				// キャラクターのショットのレベル
+	bool ShotReady;				// ショットを打つかどうかのフラグ
 };
 
 // ｷｬﾗｸﾀｰ基底ｸﾗｽ
