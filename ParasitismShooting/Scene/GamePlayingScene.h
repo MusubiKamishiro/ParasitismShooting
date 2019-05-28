@@ -17,6 +17,7 @@ class ContinueMenu;
 class EnemyFactory;
 class CollisionDetector;
 class EffectFactory;
+class HalfResultScene;
 
 typedef struct CSV
 {
@@ -42,6 +43,7 @@ private:
 
 	void FadeinUpdate(const Peripheral& p);
 	void FadeoutUpdate(const Peripheral& p);
+	void IdleUpdate(const Peripheral& p);
 	void GameUpdate(const Peripheral& p);
 	void ClearUpdate(const Peripheral& p);
 	void ContinueUpdate(const Peripheral& p);
@@ -55,7 +57,7 @@ private:
 	float time;
 	unsigned int nowStageNum;
 	Vector2 ssize;
-	bool pauseFlag, continueFlag;
+	bool pauseFlag, continueFlag, clearFlag;
 
 	std::vector<CharacterBank> cBank;
 
@@ -71,14 +73,12 @@ private:
 	std::shared_ptr<EnemyFactory> ef;
 	std::shared_ptr<CollisionDetector> cd;
 	std::shared_ptr<EffectFactory> eff;
+	std::shared_ptr<HalfResultScene> hresult;
 
 	Score& score = Score::Instance();
 
 public:
-	// セレクトシーンで使うコンストラクタ
 	GamePlayingScene(const unsigned int& stagenum);
-	// 中間リザルトで使うコンストラクタ
-	GamePlayingScene(const unsigned int& stagenum, const CharaData& cdata);
 	~GamePlayingScene();
 
 	void Update(const Peripheral& p);

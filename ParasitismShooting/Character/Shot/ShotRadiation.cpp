@@ -8,7 +8,7 @@ ShotRadiation::ShotRadiation(const Player& player, const EnemyFactory& enemyfact
 	ReadActionFile("action/shot.act");
 	ChangeAction("Shot4");
 	SetCharaSize(0.5f);
-	range = 30.0f;
+	range = 5.0f;
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 
 	updater = &ShotRadiation::Move;

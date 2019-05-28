@@ -1,6 +1,5 @@
 #pragma once
 
-
 class Peripheral;
 
 // (ƒˆ‰¼‘z¸×½)

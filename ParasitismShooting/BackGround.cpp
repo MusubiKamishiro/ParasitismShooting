@@ -1,7 +1,8 @@
 #include "BackGround.h"
 #include <DxLib.h>
-#include "GameScreen.h"
 #include <string>
+#include "GameScreen.h"
+
 
 BackGround::BackGround(const unsigned int& stagenum)
 {

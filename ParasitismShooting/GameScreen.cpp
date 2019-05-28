@@ -12,20 +12,10 @@ GameScreen::GameScreen() : outscreen(60)
 	gssize = Vector2((ssize.x - (300 + luPos.x) + outscreen * 2), (ssize.y - luPos.y * 2 + outscreen * 2));
 
 	screen = DxLib::MakeScreen(gssize.x, gssize.y);
-
+	
 	swing = Vector2f(0, 0);
 	count = 0;
 	countMax = 64;
-
-	sboxes.resize(0);
-
-	for (int y = 0; y < (gssize.y - outscreen * 2); y += 10)
-	{
-		for (int x = 0; x < (gssize.x - outscreen * 2); x += 10)
-		{
-			sboxes.push_back({Box(x + luPos.x, y + luPos.y, x + luPos.x + 10, y + luPos.y + 10), false});
-		}
-	}
 }
 
 
@@ -41,7 +31,7 @@ void GameScreen::SetAndClearScreen()
 
 void GameScreen::DrawAndChangeScreen(bool& swingflag)
 {
-	DxLib::SetDrawScreen(DX_SCREEN_BACK);		// •`‰ææ‚ð–ß‚·
+	DxLib::SetDrawScreen(DX_SCREEN_BACK);
 
 	if (swingflag)
 	{
@@ -78,22 +68,8 @@ void GameScreen::DrawAndChangeScreen(bool& swingflag)
 	{
 		swing = Vector2f();
 	}
-
-	for (auto& b : sboxes)
-	{
-		if (!b.drawflag)
-		{
-			if ((engine() % 1000) == 0)
-			{
-				b.drawflag = true;
-			}
-		}
-		else
-		{
-			DxLib::DrawBox(b.box.dotA.x, b.box.dotA.y, b.box.dotB.x, b.box.dotB.y, 0xff0000, true);
-		}
-	}
 }
+
 
 void GameScreen::SetGaussFilter()
 {

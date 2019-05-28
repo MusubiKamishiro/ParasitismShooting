@@ -53,6 +53,19 @@ void GamePlayingScene::FadeoutUpdate(const Peripheral & p)
 	}
 }
 
+void GamePlayingScene::IdleUpdate(const Peripheral & p)
+{
+	time = 0;
+	if (!hresult->Update(p))
+	{
+		hresult.reset(new HalfResultScene());
+		
+		
+		
+		updater = &GamePlayingScene::GameUpdate;
+	}
+}
+
 void GamePlayingScene::GameUpdate(const Peripheral & p)
 {
 	if (player->updater == &Player::Die)
@@ -64,7 +77,18 @@ void GamePlayingScene::GameUpdate(const Peripheral & p)
 
 void GamePlayingScene::ClearUpdate(const Peripheral & p)
 {
-	Game::Instance().ChangeScene(new HalfResultScene(nowStageNum, player->GetCharaData(), player->parasFlag));
+	if (hresult->Update(p))
+	{
+		Init(nowStageNum + 1);
+
+		player.reset(new Player(player->GetCharaData()));
+		ef.reset(new EnemyFactory(*player));
+		sf.reset(new ShotFactory(*player, *ef));
+
+		clearFlag = false;
+
+		updater = &GamePlayingScene::IdleUpdate;
+	}
 }
 
 void GamePlayingScene::ContinueUpdate(const Peripheral & p)
@@ -99,6 +123,7 @@ void GamePlayingScene::Init(const unsigned int & stagenum)
 	int j = 0;
 
 	bankCnt = 3;
+	cBank.resize(0);
 
 	while (std::getline(ifs, str))
 	{
@@ -123,6 +148,7 @@ void GamePlayingScene::Init(const unsigned int & stagenum)
 	time = 0;
 	pauseFlag = false;
 	continueFlag = false;
+	clearFlag = false;
 
 	gs.reset(new GameScreen());
 	hud.reset(new HUD());
@@ -139,25 +165,13 @@ GamePlayingScene::GamePlayingScene(const unsigned int& stagenum)
 {
 	Init(stagenum);
 
+	hresult.reset(new HalfResultScene());
 	player.reset(new Player());
 	ef.reset(new EnemyFactory(*player));
 	sf.reset(new ShotFactory(*player, *ef));
 
 	updater = &GamePlayingScene::FadeinUpdate;
 }
-
-GamePlayingScene::GamePlayingScene(const unsigned int& stagenum, const CharaData& cdata)
-{
-	Init(stagenum);
-	
-	player.reset(new Player(cdata));
-	ef.reset(new EnemyFactory(*player));
-	sf.reset(new ShotFactory(*player, *ef));
-
-	pal = 255;
-	updater = &GamePlayingScene::GameUpdate;
-}
-	
 
 
 GamePlayingScene::~GamePlayingScene()
@@ -197,35 +211,38 @@ void GamePlayingScene::Update(const Peripheral& p)
 				shot->Update();
 			}
 
-			player->Update(p);
+			if (!clearFlag)
+			{
+				player->Update(p);
 
-			if (p.IsPressing(KeyConfig::Instance().GetNowKey(ATTACK)) && ((int)time % 6 == 0))
-			{
-				sf->Create(player->GetCharaData().shotType, player->GetPos(), 8, 1, 3, SHOOTER::PLAYER);
-			}
-			
-			for (auto& enemy : ef->GetLegion())
-			{
-				if (enemy->GetShotReady())
+				if (p.IsPressing(KeyConfig::Instance().GetNowKey(ATTACK)) && ((int)time % 6 == 1))
 				{
-					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 2, 1, enemy->GetCharaData().shotLevel, SHOOTER::ENEMY);
+					sf->Create(player->GetCharaData().shotType, player->GetPos(), 8, 1, 3, SHOOTER::PLAYER);
 				}
-				enemy->Update();
-			}
 
-			HitCol(p);
-
-			for (auto& enemy : ef->GetLegion())
-			{
-				if (enemy->scoreFlag)
+				for (auto& enemy : ef->GetLegion())
 				{
-					score.AddScore(enemy->GetScore());
+					if (enemy->GetShotReady())
+					{
+						sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 2, 1, enemy->GetCharaData().shotLevel, SHOOTER::ENEMY);
+					}
+					enemy->Update();
+				}
+
+				HitCol(p);
+				
+				for (auto& enemy : ef->GetLegion())
+				{
+					if (enemy->scoreFlag)
+					{
+						score.AddScore(enemy->GetScore());
+					}
 				}
 			}
 			hud->Update();
 
 			// スコアで次のステージへ(デバックのため一時的なもの)
-			if (score.GetNowScore() > (10000 * nowStageNum))
+			if (score.GetNowScore() > (100000 * nowStageNum))
 			{
 				if (nowStageNum == 5)
 				{
@@ -233,6 +250,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 				}
 				else
 				{
+					clearFlag = true;
 					updater = &GamePlayingScene::ClearUpdate;
 				}
 			}
@@ -284,11 +302,11 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 	Draw(p, (int)time);
 	
-	(this->*updater)(p);
-
 	// フェードイン,アウトのための幕
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, ssize.x, ssize.y, 0x000000, true);
+
+	(this->*updater)(p);
 }
 
 void GamePlayingScene::HitCol(const Peripheral& p)
@@ -408,6 +426,8 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 		effect->Draw();
 	}
 
+	hresult->Draw();
+	
 	if (pauseFlag)
 	{
 		gs->SetGaussFilter();
