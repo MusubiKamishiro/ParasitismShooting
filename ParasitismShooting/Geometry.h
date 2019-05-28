@@ -42,6 +42,12 @@ struct Vector2D
 		x /= in;
 		y /= in;
 	}
+	void operator/=(const Vector2D<T>& in)
+	{
+		x /= in.x;
+		y /= in.y;
+	}
+
 	bool operator==(const Vector2D<T>& in)const
 	{
 		return ((x == in.x) && (y == in.y));

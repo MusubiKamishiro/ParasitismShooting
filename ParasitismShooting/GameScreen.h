@@ -3,13 +3,6 @@
 #include "Geometry.h"
 
 
- struct SMALL_BOX
-{
-	 Box box;
-	 bool drawflag;
-};
-
-
 class GameScreen
 {
 private:
@@ -20,13 +13,13 @@ private:
 
 	int count, countMax;
 
-	std::vector<SMALL_BOX> sboxes;	// ¬” ‚ÌW‚Ü‚è, ‰æ–Ê‘JˆÚ‚Ég‚¤
-
 public:
 	GameScreen();
 	~GameScreen();
 
+	// ƒQ[ƒ€‰æ–Ê‚Ì•`‰æ€”õ
 	void SetAndClearScreen();
+	// ƒQ[ƒ€‰æ–Ê‚Ì•`‰æ
 	void DrawAndChangeScreen(bool& swingflag);
 	void SetGaussFilter();
 	const Vector2 GetGSSize()const;
