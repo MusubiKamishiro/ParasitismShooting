@@ -1,6 +1,6 @@
 #include "Game.h"
 #include <DxLib.h>
-#include <random>
+//#include <random>
 #include "Peripheral.h"
 #include "Credit.h"
 
