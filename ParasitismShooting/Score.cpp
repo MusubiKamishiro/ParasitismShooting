@@ -8,6 +8,12 @@ Score::Score()
 	upScore = 0;
 	highScore = 5000;
 	cCount = 0;
+
+	stageBonus = 0;
+	parasBonus = 0;
+	bossHpBonus = 0;
+	contBonus = 0;
+	bonusScore = 0;
 }
 
 void Score::operator=(const Score &)
@@ -56,6 +62,22 @@ void Score::AddScore(const unsigned int & inscore)
 void Score::AddContinueCount()
 {
 	++cCount;
+}
+
+void Score::AddClearBonus(const unsigned int& stagenum, const unsigned int& parasnum, const int& bosshp)
+{
+	stageBonus = stagenum * 1000;
+	parasBonus = parasnum * 10;
+	bossHpBonus = bosshp * 100;
+	contBonus = cCount * -1000;
+
+	bonusScore = stageBonus + parasBonus + bossHpBonus + contBonus;
+	bonusScore *= 1;	// *“ïˆÕ“x;
+
+	if (bonusScore > 0)
+	{
+		upScore += bonusScore;
+	}
 }
 
 unsigned int Score::GetNowScore() const

@@ -14,9 +14,9 @@ void ResultScene::FadeinUpdate(const Peripheral & p)
 		updater = &ResultScene::FadeoutUpdate;
 	}
 	
-	if (pal == 255)
+	if (pal >= 255)
 	{
-		;
+		pal = 255;
 	}
 	else
 	{
@@ -50,6 +50,7 @@ ResultScene::~ResultScene()
 
 void ResultScene::Update(const Peripheral& p)
 {
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
 	DxLib::DrawString(50, 50, "ResultScene", 0xffffff);
 	DxLib::DrawString(100, 100, std::to_string(totalScore).c_str(), 0xffffff);
 	DxLib::DrawString(100, 150, std::to_string(continueNum).c_str(), 0xffffff);

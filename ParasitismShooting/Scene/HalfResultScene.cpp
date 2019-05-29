@@ -25,7 +25,6 @@ HalfResultScene::HalfResultScene()
 	boxlength = Vector2(gssize.x - gs->outscreen, gssize.y - gs->outscreen);
 	boxlength /= 5;
 	imgSize /= 5;
-
 	
 	for (int y = gs->outscreen; y < gssize.y; y += boxlength.y)
 	{
@@ -43,8 +42,6 @@ HalfResultScene::~HalfResultScene()
 
 bool HalfResultScene::Update(const Peripheral& p)
 {
-	//Score::Instance().Update();
-
 	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)) && returnFlag)
 	{
 		flag = true;
@@ -81,8 +78,17 @@ void HalfResultScene::Draw()
 	}
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, (255 / sboxes.size()) * boxCnt);
+	
 	DxLib::DrawString(200, 100, "’†ŠÔƒŠƒUƒ‹ƒg", 0x00ff00);
-	DxLib::DrawString(190, 200, std::to_string(Score::Instance().GetNowScore()).c_str(), 0x00ff00);
+		
+	DxLib::DrawFormatString(200, 200, 0x00ff00, "Stage * 1000 = %d", Score::Instance().stageBonus);
+	DxLib::DrawFormatString(200, 250, 0x00ff00, "ParasCount * 10 = %d", Score::Instance().parasBonus);
+	DxLib::DrawFormatString(200, 300, 0x00ff00, "BossHP * 100 = %d", Score::Instance().bossHpBonus);
+	DxLib::DrawFormatString(200, 350, 0x00ff00, "ContinueCount * -1000 = %d", Score::Instance().contBonus);
+	DxLib::DrawFormatString(200, 400, 0x00ff00, "Difficult * %f", 1.0);
+	DxLib::DrawFormatString(200, 450, 0x00ff00, "TotalBonus = %d", Score::Instance().bonusScore);
+
+	
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 }
 

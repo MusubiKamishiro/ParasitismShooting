@@ -60,8 +60,6 @@ void GamePlayingScene::IdleUpdate(const Peripheral & p)
 	{
 		hresult.reset(new HalfResultScene());
 		
-		
-		
 		updater = &GamePlayingScene::GameUpdate;
 	}
 }
@@ -250,7 +248,12 @@ void GamePlayingScene::Update(const Peripheral& p)
 				}
 				else
 				{
+					if (!clearFlag)
+					{
+						Score::Instance().AddClearBonus(nowStageNum, 0, 0);
+					}
 					clearFlag = true;
+					
 					updater = &GamePlayingScene::ClearUpdate;
 				}
 			}

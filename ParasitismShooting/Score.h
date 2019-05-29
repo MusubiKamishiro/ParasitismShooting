@@ -29,9 +29,18 @@ public:
 
 	void AddScore(const unsigned int& inscore);
 	void AddContinueCount();
+
+	// ステージクリアボーナス
+	void AddClearBonus(const unsigned int& stagenum, const unsigned int& parasnum, const int& bosshp);
 	
 	unsigned int GetNowScore()const;
 	unsigned int GetHighScore()const;
 	unsigned int GetContinueCount()const;
+
+	unsigned int stageBonus;
+	unsigned int parasBonus;
+	unsigned int bossHpBonus;
+	int contBonus;
+	int bonusScore;
 };
 
