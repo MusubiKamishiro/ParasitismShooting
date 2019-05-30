@@ -13,9 +13,9 @@ void Player::Init()
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 	charaData.HP = 1;
 	charaData.moveVel = 3.0;
-	charaData.shotType = "Tracking";
-	charaData.shotTypeSub = "Shotgun";
-	charaData.shotLevel = 7;
+	charaData.shotType = "Weak";
+	//charaData.shotTypeSub = "Shotgun";
+	//charaData.shotLevel = 7;
 	originData = charaData;
 
 	gs.reset(new GameScreen());

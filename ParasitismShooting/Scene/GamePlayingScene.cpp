@@ -209,8 +209,9 @@ void GamePlayingScene::Update(const Peripheral& p)
 		// アップデート関連
 		if (!pauseFlag)
 		{
-			if (cBank[bankCnt].time == ((int)time/*%250*/))
+			if (cBank[bankCnt].time == ((int)time/*%650*/))
 			{
+
 				ef->Create(cBank[bankCnt].enemyname.c_str(), cBank[bankCnt].shotType.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y),
 					cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed, cBank[bankCnt].shotCnt, cBank[bankCnt].shotLevel);
 				if (cBank.size() - 1 > bankCnt)
@@ -267,7 +268,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 				hud->Update();
 
 				// スコアで次のステージへ(デバックのため一時的なもの)
-				if (score.GetNowScore() > (5000 * nowStageNum))
+				if (score.GetNowScore() > (10000 * nowStageNum))
 				{
 					if (nowStageNum == 5)
 					{
