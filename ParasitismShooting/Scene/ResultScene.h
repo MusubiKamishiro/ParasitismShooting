@@ -12,6 +12,8 @@ private:
 	unsigned int totalScore;
 	unsigned int continueNum;
 
+	int resultImage;
+
 public:
 	ResultScene(const unsigned int& score, const unsigned int& cnum);
 	~ResultScene();

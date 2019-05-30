@@ -181,6 +181,8 @@ GamePlayingScene::GamePlayingScene(const unsigned int& stagenum, const int& diff
 	totalParasCnt = 0;
 	totalCCount = 0;
 
+	DuringParasitism = false;
+
 	hresult.reset(new HalfResultScene());
 	player.reset(new Player());
 	ef.reset(new EnemyFactory(*player));
@@ -277,8 +279,10 @@ void GamePlayingScene::Update(const Peripheral& p)
 					updater = &GamePlayingScene::ClearUpdate;
 				}
 			}
-
-			++time;
+			if (!DuringParasitism)
+			{
+				++time;
+			}
 		}
 		else
 		{
@@ -406,6 +410,7 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 							player->Parasitic(p, enemy->GetCharaData());
 							++parasCnt;
 							++totalParasCnt;
+							DuringParasitism = true;
 							score.AddScore(enemy->GetScore() * 1.2);
 							enemy->Die();
 						}
@@ -449,6 +454,21 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 	for (auto& effect : eff->GetLegion())
 	{
 		effect->Draw();
+	}
+
+	if (DuringParasitism)
+	{
+		static int t = 0;
+		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 64);
+		DxLib::DrawBox(0, 0, ssize.x + gs->outscreen, ssize.y + gs->outscreen, 0x000000, true);
+		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+		player->ParasDraw(t);
+		
+		++t;
+		if ((t % 60) == 0)
+		{
+			DuringParasitism = false;
+		}
 	}
 
 	if((updater == &GamePlayingScene::IdleUpdate) || (updater == &GamePlayingScene::ClearUpdate))

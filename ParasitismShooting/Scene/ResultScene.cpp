@@ -41,6 +41,8 @@ ResultScene::ResultScene(const unsigned int& score, const unsigned int& cnum)
 	updater = &ResultScene::FadeinUpdate;
 	totalScore = score;
 	continueNum = cnum;
+
+	resultImage = DxLib::LoadGraph("img/tresult.png");
 }
 
 
@@ -51,9 +53,10 @@ ResultScene::~ResultScene()
 void ResultScene::Update(const Peripheral& p)
 {
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
-	DxLib::DrawString(50, 50, "ResultScene", 0xffffff);
-	DxLib::DrawString(100, 100, std::to_string(totalScore).c_str(), 0xffffff);
-	DxLib::DrawString(100, 150, std::to_string(continueNum).c_str(), 0xffffff);
+	DxLib::DrawExtendGraph(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, resultImage, true);
+	DxLib::DrawString(50, 50, "ResultScene", 0x000000);
+	DxLib::DrawString(100, 100, std::to_string(totalScore).c_str(), 0x000000);
+	DxLib::DrawString(100, 150, std::to_string(continueNum).c_str(), 0x000000);
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, 0x000000, true);
