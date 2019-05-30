@@ -228,59 +228,60 @@ void GamePlayingScene::Update(const Peripheral& p)
 				//bankCnt = bankCnt % (cBank.size()-2) + 2;
 			}
 
-			for (auto& shot : sf->GetLegion())
-			{
-				shot->Update();
-			}
-
-			if (!clearFlag)
-			{
-				player->Update(p);
-
-				if (p.IsPressing(KeyConfig::Instance().GetNowKey(ATTACK)) && ((int)time % 6 == 1))
-				{
-					sf->Create(player->GetCharaData().shotType, player->GetPos(), 8, 1, player->GetCharaData().shotLevel, SHOOTER::PLAYER);
-				}
-
-				for (auto& enemy : ef->GetLegion())
-				{
-					if (enemy->GetShotReady())
-					{
-						sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 2, 1, enemy->GetCharaData().shotLevel, SHOOTER::ENEMY);
-					}
-					enemy->Update();
-				}
-
-				HitCol(p);
-				
-				for (auto& enemy : ef->GetLegion())
-				{
-					if (enemy->scoreFlag)
-					{
-						score.AddScore(enemy->GetScore());
-					}
-				}
-			}
-			hud->Update();
-
-			// スコアで次のステージへ(デバックのため一時的なもの)
-			if (score.GetNowScore() > (5000 * nowStageNum))
-			{
-				if (nowStageNum == 5)
-				{
-					allClearFlag = true;
-				}
-				
-				if (!clearFlag)
-				{
-					Score::Instance().AddClearBonus(nowStageNum, parasCnt, 0, cCount, difficult);
-
-					clearFlag = true;
-					updater = &GamePlayingScene::ClearUpdate;
-				}
-			}
 			if (!DuringParasitism)
 			{
+				for (auto& shot : sf->GetLegion())
+				{
+					shot->Update();
+				}
+
+				if (!clearFlag)
+				{
+					player->Update(p);
+
+					if (p.IsPressing(KeyConfig::Instance().GetNowKey(ATTACK)) && ((int)time % 6 == 1))
+					{
+						sf->Create(player->GetCharaData().shotType, player->GetPos(), 8, 1, player->GetCharaData().shotLevel, SHOOTER::PLAYER);
+					}
+
+					for (auto& enemy : ef->GetLegion())
+					{
+						if (enemy->GetShotReady())
+						{
+							sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 2, 1, enemy->GetCharaData().shotLevel, SHOOTER::ENEMY);
+						}
+						enemy->Update();
+					}
+
+					HitCol(p);
+
+					for (auto& enemy : ef->GetLegion())
+					{
+						if (enemy->scoreFlag)
+						{
+							score.AddScore(enemy->GetScore());
+						}
+					}
+				}
+				hud->Update();
+
+				// スコアで次のステージへ(デバックのため一時的なもの)
+				if (score.GetNowScore() > (5000 * nowStageNum))
+				{
+					if (nowStageNum == 5)
+					{
+						allClearFlag = true;
+					}
+
+					if (!clearFlag)
+					{
+						Score::Instance().AddClearBonus(nowStageNum, parasCnt, 0, cCount, difficult);
+
+						clearFlag = true;
+						updater = &GamePlayingScene::ClearUpdate;
+					}
+				}
+
 				++time;
 			}
 		}
