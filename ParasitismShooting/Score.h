@@ -11,7 +11,7 @@ private:
 	unsigned int nowScore;		// 現在のスコア
 	unsigned int upScore;		// スコアの上昇値
 	unsigned int highScore;		// 歴代の最高スコア
-	unsigned int cCount;		// コンティニュー回数
+	
 
 public:
 	static Score& Instance()
@@ -25,17 +25,15 @@ public:
 	void Draw(const Vector2& pos);
 
 	// スコアの初期化, コンティニュー時に使う
-	void InitScore(const bool& flag = false);
+	void InitScore();
 
 	void AddScore(const unsigned int& inscore);
-	void AddContinueCount();
 
 	// ステージクリアボーナス
-	void AddClearBonus(const unsigned int& stagenum, const unsigned int& parasnum, const int& bosshp, const int& diff);
+	void AddClearBonus(const unsigned int& stagenum, const unsigned int& parasnum, const int& bosshp, const unsigned int& ccount, const int& diff);
 	
 	unsigned int GetNowScore()const;
 	unsigned int GetHighScore()const;
-	unsigned int GetContinueCount()const;
 
 	unsigned int stageBonus;
 	unsigned int parasBonus;

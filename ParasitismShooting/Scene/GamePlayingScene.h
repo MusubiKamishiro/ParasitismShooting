@@ -54,9 +54,13 @@ private:
 
 	void Init(const unsigned int& stagenum, const int& diff);	// 2つのコンストラクタの共通部分
 
-	int difficult;
-	float time;
-	unsigned int nowStageNum;
+	int difficult;				// 難易度
+	float time;					// 時間
+	unsigned int nowStageNum;	// 現在ステージ
+	int parasCnt;				// 寄生回数
+	int totalParasCnt;			// 累計寄生回数
+	unsigned int cCount;		// コンティニュー回数
+	unsigned int totalCCount;	// 累計コンティニュー回数
 	Vector2 ssize;
 	bool pauseFlag, continueFlag, clearFlag, allClearFlag;
 

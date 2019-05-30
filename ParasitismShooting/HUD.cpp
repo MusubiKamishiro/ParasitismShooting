@@ -19,7 +19,7 @@ void HUD::Update()
 	
 }
 
-void HUD::Draw(const int& life, const bool& flag)
+void HUD::Draw(const int& life, const bool& flag, const int& parascnt, const unsigned int& ccount)
 {
 	DxLib::DrawBox(0, 0, ssize.x, ssize.y, 0xffffff, true);
 	
@@ -41,6 +41,9 @@ void HUD::Draw(const int& life, const bool& flag)
 	{
 		DxLib::DrawString(550 + a * 24, 150, "★", lifeColor);
 	}
+
+	DxLib::DrawFormatString((ssize.x - 100) - DxLib::GetDrawStringWidth("ParasCount　000", std::strlen("ParasCount　000")), 250, 0x000000, "ParasCount　%03d", parascnt);
+	DxLib::DrawFormatString((ssize.x - 100) - DxLib::GetDrawStringWidth("ContinueCount　000", std::strlen("ContinueCount　000")), 280, 0x000000, "ContinueCount　%03d", ccount);
 }
 
 const Vector2 HUD::GetHUDPos()const

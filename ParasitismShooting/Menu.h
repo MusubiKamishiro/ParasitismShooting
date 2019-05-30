@@ -17,8 +17,10 @@ class Menu
 {
 public:
 	std::shared_ptr<GameScreen> gs;
-	std::vector<MenuData> menudata;
-	std::vector <MenuData> menuTitle;
+
+	std::vector <MenuData> menuTitle;		// タイトル, 色が薄くならない
+	std::vector<MenuData> menudata;			// 選べる一覧, 選択中のものの色がくっきりしてる
+	std::vector<MenuData> menuDescription;	// 選択中のmanudataの補足説明文章用
 	int selcnt;
 	Vector2 ssize;
 
