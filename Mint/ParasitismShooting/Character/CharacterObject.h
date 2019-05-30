@@ -44,7 +44,7 @@ struct CharaData
 	std::string shotType;		// 弾の名前
 	std::string shotTypeSub;	// 弾の名前2種類目	
 	int shotLevel;				// キャラクターのショットのレベル
-	bool ShotReady;				// ショットを打つかどうかのフラグ
+	bool shotReady;				// ショットを打つかどうかのフラグ
 };
 
 // ｷｬﾗｸﾀｰ基底ｸﾗｽ

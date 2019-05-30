@@ -35,7 +35,8 @@ struct ShotST
 {
 	Vector2f cpos;
 	float angle;
-	int speed;
+	float speed;
+	int power;
 	int movePtn;
 	int level;
 	int shotPtn;

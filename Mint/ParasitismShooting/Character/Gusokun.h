@@ -23,11 +23,16 @@ private:
 	void StunDamage();
 	void Damage();
 
+	void orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int wait, int shotCnt, int charSP, bool& ShotReady);
+
 	void (Gusokun::*updater)();
 
 	const Player& player;
 
-	bool flag;
+	bool actFlag;
+
+	Vector2f basePos;
+	float vecAngle;
 public:
 	~Gusokun();
 

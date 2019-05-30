@@ -8,7 +8,7 @@ Radiation::Radiation(const Player& player, const EnemyFactory& enemyfactory) : S
 	ReadActionFile("action/shot.act");
 	ChangeAction("Shot4");
 	SetCharaSize(0.5f);
-	range = 7.0f;
+	range = 5.0f;
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 
 	updater = &Radiation::Move;
@@ -35,10 +35,9 @@ void Radiation::Move()
 	{
 		shotst.angle += range / 180.0f;
 	}
-	if (shotst.shooter == SHOOTER::PLAYER)
-	{
-		shotst.speed = 3;
-	}
+
+	shotst.speed = 3;
+
 	if (shotst.time > 300)
 	{
 		lifeFlag = false;

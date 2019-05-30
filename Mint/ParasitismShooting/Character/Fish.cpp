@@ -9,8 +9,8 @@ Fish::Fish(const Player& player) : Enemy(player), player(player)
 	ReadActionFile("action/fish.act");
 	ChangeAction("eIdle");
 	SetCharaSize(0.07f);
-	charaData.ShotReady = false;
-	charaData.shotTypeSub = "Shotgun";
+	charaData.shotReady = false;
+	//charaData.shotTypeSub = "Shotgun";
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 	score = 200;
 
@@ -36,12 +36,12 @@ Enemy * Fish::Clone()
 
 void Fish::Move()
 {
-	if (charaData.ShotReady == true)
+	if (charaData.shotReady == true)
 	{
-		charaData.ShotReady = false;
+		charaData.shotReady = false;
 	}
 
-	eAction->Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.ShotReady);
+	eAction->Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.shotReady);
 	cnt++;
 }
 
@@ -53,12 +53,10 @@ void Fish::Die()
 
 void Fish::Stunning()
 {
-	
-	EnemyActionPattern eAction;
-	eAction.Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.ShotReady);
-	if (charaData.ShotReady == true)
+	eAction->Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.shotReady);
+	if (charaData.shotReady == true)
 	{
-		charaData.ShotReady = false;
+		charaData.shotReady = false;
 	}
 }
 

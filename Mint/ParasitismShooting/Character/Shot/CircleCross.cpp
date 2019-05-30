@@ -30,13 +30,24 @@ Shot * CircleCross::Clone()
 
 void CircleCross::Move()
 {
-	shotst.speed = 8 / 3;
+	if (shotst.time < 60)
+	{
+		shotst.speed = (int)8 / (int)3;
+	}
 	if (shotst.time == 60)
 	{
 		shotst.angle = GetAtan2(shotst.shooter,shotst.angle);
 	}
-	pos.x += cos(shotst.angle) * (float)shotst.speed;
-	pos.y += sin(shotst.angle) * (float)shotst.speed;
+	if (shotst.time > 60 && shotst.time < 90)
+	{
+		shotst.speed = 0.0f;
+	}
+	if (shotst.time > 90)
+	{
+		shotst.speed = 4;
+	}
+	pos.x += cos(shotst.angle) * shotst.speed;
+	pos.y += sin(shotst.angle) * shotst.speed;
 
 	shotst.time++;
 }

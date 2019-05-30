@@ -14,12 +14,12 @@ Enemy::~Enemy()
 
 void Enemy::ShotStop()
 {
-	charaData.ShotReady = false;
+	charaData.shotReady = false;
 }
 
 bool Enemy::GetShotReady() const
 {
-	return charaData.ShotReady;
+	return charaData.shotReady;
 }
 
 unsigned int Enemy::GetScore() const
