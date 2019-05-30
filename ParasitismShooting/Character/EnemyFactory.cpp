@@ -1,5 +1,6 @@
 #include "EnemyFactory.h"
 #include "Fish.h"
+#include "Gusokun.h"
 #include "../GameScreen.h"
 
 
@@ -53,6 +54,7 @@ EnemyFactory::EnemyFactory(const Player& player) : player(player)
 	down = screenSize.y + gscreen.outscreen;
 
 	originalEnemy["fish"] = new Fish(player);
+	originalEnemy["gusokun"] = new Gusokun(player);
 }
 
 

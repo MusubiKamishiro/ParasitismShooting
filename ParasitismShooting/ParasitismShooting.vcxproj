@@ -129,6 +129,7 @@
     <ClCompile Include="Character\EnemyActionPattern.cpp" />
     <ClCompile Include="Character\EnemyFactory.cpp" />
     <ClCompile Include="Character\Fish.cpp" />
+    <ClCompile Include="Character\Gusokun.cpp" />
     <ClCompile Include="Character\Player.cpp" />
     <ClCompile Include="Character\Shot\CircleCross.cpp" />
     <ClCompile Include="Character\Shot\Shot.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Character\EnemyActionPattern.h" />
     <ClInclude Include="Character\EnemyFactory.h" />
     <ClInclude Include="Character\Fish.h" />
+    <ClInclude Include="Character\Gusokun.h" />
     <ClInclude Include="Character\Player.h" />
     <ClInclude Include="Character\Shot\CircleCross.h" />
     <ClInclude Include="Character\Shot\Shot.h" />

@@ -12,7 +12,8 @@
 #include "Weak.h"
 #include "CircleCross.h"
 
-int NormalPosPtnX[5] = { 0,-5, 5,-10, 10 };
+int NormalPosPtnX[9] = { 0,-10,10,-20,20,-25,25,-30,30 };
+int DiamondlPosPtnX[9] = { 0,-40,40,-80,80,-120,120,-160,160 };
 
 SLegion& ShotFactory::GetLegion()
 {
@@ -34,7 +35,7 @@ void ShotFactory::ShotDelete()
 
 void ShotFactory::OutofScreen(void)
 {
-	for(auto &shot :legion)
+	for (auto &shot : legion)
 	{
 		if (shot->pos.x < left - shot->rect.Width() / 2 || shot->pos.x > right + shot->rect.Width() / 2 ||
 			shot->pos.y < up - shot->rect.Height() / 2 || shot->pos.y > down + shot->rect.Height() / 2)
@@ -61,6 +62,7 @@ ShotFactory::ShotFactory(const Player& player, const EnemyFactory& enemyfactory)
 	originalShot["Tracking"] = new Tracking(player, enemyfactory);
 	originalShot["Weak"] = new Weak(player, enemyfactory);
 	originalShot["CircleCross"] = new CircleCross(player, enemyfactory);
+	originalShot["Diamond"] = new Normal(player, enemyfactory);
 }
 
 
@@ -72,14 +74,25 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 {
 	if (originalShot.find(shotType) != originalShot.end())
 	{
-		if ((shotType == "Weak" && shooter == SHOOTER::PLAYER) || (shotType == "Normal" && shooter == SHOOTER::ENEMY))
+		if ((shotType == "Weak"))
 		{
 			level = 1;
 		}
 		for (int j = 0; j < level; j++)
 		{
 			auto shot = originalShot[shotType]->Clone();
-			shot->pos = pos;
+			if (shotType == "Normal")
+			{
+				shot->pos = { pos.x + NormalPosPtnX[j],pos.y };
+			}
+			else if (shotType == "Diamond")
+			{
+				shot->pos = { pos.x + DiamondlPosPtnX[j],pos.y };
+			}
+			else
+			{
+				shot->pos = pos;
+			}
 			shot->shotst.shotType = shotType;
 			shot->shotst.cpos = pos;
 			shot->shotst.speed = Speed;
@@ -97,7 +110,7 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 float ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, int cnt, int level)
 {
 	angle = -(float)M_PI_2;
-	if (shotType == "Normal")
+	if (shotType == "Normal" || shotType == "Diamond")
 	{
 		if (shooter == SHOOTER::ENEMY)
 		{
@@ -121,9 +134,13 @@ float ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, int
 			angle = (float)M_PI * ((360.0f / level) * (cnt) / 180.0f);
 			return angle;
 		}
-
 	}
-	else if (shotType == "Shotgun")
+	else if (shotType == "CircleCross")
+	{
+		angle = (float)M_PI * ((360.0f / level) * (cnt) / 180.0f);
+		return angle;
+	}
+	else if (shotType == "Shotgun" || shotType == "Tracking")
 	{
 		if (shooter == SHOOTER::ENEMY)
 		{
@@ -153,11 +170,21 @@ float ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, int
 			return  angle;
 		}
 	}
-	else if (shotType == "Tracking")
+	/*else if (shotType == "Tracking")
 	{
 		if (shooter == SHOOTER::ENEMY)
 		{
-			return (float)M_PI_2;
+			Vector2f pPos = player.GetPos();
+			angle = atan2(pPos.y - pos.y, pPos.x - pos.x);
+			if (level / 2 > cnt)
+			{
+				angle -= (float)M_PI * (10.0f  * (cnt + 1) / 180.0f);
+			}
+			else if (level / 2 < cnt)
+			{
+				angle += (float)M_PI * (10.0f * (cnt - (level / 2)) / 180.0f);
+			}
+			return angle;
 		}
 		else if (shooter == SHOOTER::PLAYER)
 		{
@@ -172,7 +199,7 @@ float ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, int
 			}
 			return  angle;
 		}
-	}
+	}*/
 	else if (shotType == "Weak")
 	{
 		return -(float)M_PI_2;

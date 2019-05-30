@@ -171,6 +171,9 @@
     <ClCompile Include="Character\Shot\CircleCross.cpp">
       <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Character\Gusokun.cpp">
+      <Filter>キャラクターファイル\ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -301,6 +304,9 @@
     </ClInclude>
     <ClInclude Include="Character\Shot\CircleCross.h">
       <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Gusokun.h">
+      <Filter>キャラクターファイル\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

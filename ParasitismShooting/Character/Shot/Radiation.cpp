@@ -35,10 +35,9 @@ void Radiation::Move()
 	{
 		shotst.angle += range / 180.0f;
 	}
-	if (shotst.shooter == SHOOTER::PLAYER)
-	{
-		shotst.speed = 3;
-	}
+	
+	shotst.speed = 3;
+
 	if (shotst.time > 300)
 	{
 		lifeFlag = false;
