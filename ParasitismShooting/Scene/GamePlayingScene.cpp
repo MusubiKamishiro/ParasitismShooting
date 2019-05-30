@@ -60,7 +60,14 @@ void GamePlayingScene::IdleUpdate(const Peripheral & p)
 	{
 		hresult.reset(new HalfResultScene());
 		
-		updater = &GamePlayingScene::GameUpdate;
+		if (!allClearFlag)
+		{
+			updater = &GamePlayingScene::GameUpdate;
+		}
+		else
+		{
+			updater = &GamePlayingScene::MoveResultUpdate;
+		}
 	}
 }
 
@@ -77,14 +84,17 @@ void GamePlayingScene::ClearUpdate(const Peripheral & p)
 {
 	if (hresult->Update(p))
 	{
-		Init(nowStageNum + 1);
+		if (!allClearFlag)
+		{
+			Init(nowStageNum + 1, difficult);
 
-		player.reset(new Player(player->GetCharaData()));
-		ef.reset(new EnemyFactory(*player));
-		sf.reset(new ShotFactory(*player, *ef));
-
+			player.reset(new Player(player->GetCharaData()));
+			ef.reset(new EnemyFactory(*player));
+			sf.reset(new ShotFactory(*player, *ef));
+		}
+		
 		clearFlag = false;
-
+		
 		updater = &GamePlayingScene::IdleUpdate;
 	}
 }
@@ -105,7 +115,7 @@ void GamePlayingScene::MoveResultUpdate(const Peripheral & p)
 	Game::Instance().ChangeScene(new ResultScene(score.GetNowScore(), score.GetContinueCount()));
 }
 
-void GamePlayingScene::Init(const unsigned int & stagenum)
+void GamePlayingScene::Init(const unsigned int & stagenum, const int& difficult)
 {
 	// ステージ名の作成
 	nowStageNum = stagenum;
@@ -147,6 +157,7 @@ void GamePlayingScene::Init(const unsigned int & stagenum)
 	pauseFlag = false;
 	continueFlag = false;
 	clearFlag = false;
+	allClearFlag = false;
 
 	gs.reset(new GameScreen());
 	hud.reset(new HUD());
@@ -159,9 +170,10 @@ void GamePlayingScene::Init(const unsigned int & stagenum)
 	ssize = Game::Instance().GetScreenSize();
 }
 
-GamePlayingScene::GamePlayingScene(const unsigned int& stagenum)
+GamePlayingScene::GamePlayingScene(const unsigned int& stagenum, const int& diff)
 {
-	Init(stagenum);
+	difficult = diff;
+	Init(stagenum, diff);
 
 	hresult.reset(new HalfResultScene());
 	player.reset(new Player());
@@ -244,13 +256,14 @@ void GamePlayingScene::Update(const Peripheral& p)
 			{
 				if (nowStageNum == 5)
 				{
-					updater = &GamePlayingScene::MoveResultUpdate;
+					//updater = &GamePlayingScene::MoveResultUpdate;
+					allClearFlag = true;
 				}
-				else
+				//else
 				{
 					if (!clearFlag)
 					{
-						Score::Instance().AddClearBonus(nowStageNum, 0, 0);
+						Score::Instance().AddClearBonus(nowStageNum, 0, 0, difficult);
 					}
 					clearFlag = true;
 					
@@ -429,7 +442,10 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 		effect->Draw();
 	}
 
-	hresult->Draw();
+	if((updater == &GamePlayingScene::IdleUpdate) || (updater == &GamePlayingScene::ClearUpdate))
+	{
+		hresult->Draw(allClearFlag);
+	}
 	
 	if (pauseFlag)
 	{

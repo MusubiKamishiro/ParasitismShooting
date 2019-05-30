@@ -7,6 +7,7 @@
 class GameScreen;
 class Peripheral;
 
+
 struct SMALL_BOX
 {
 	Box box;
@@ -29,6 +30,8 @@ private:
 	bool AddBox();
 	bool SubBox();
 
+	int GetStringRightPosx(const std::string& name, const int& rpos);
+
 	bool flag;
 	bool returnFlag;
 
@@ -37,6 +40,6 @@ public:
 	~HalfResultScene();
 
 	bool Update(const Peripheral& p);
-	void Draw();
+	void Draw(const bool& flag);
 };
 

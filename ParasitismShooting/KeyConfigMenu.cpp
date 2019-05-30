@@ -11,12 +11,12 @@ KeyConfigMenu::KeyConfigMenu()
 
 	menu->menuTitle.push_back({ Vector2(0, 0), "Key Config", 0xffffff });
 
-	menu->menudata.push_back({ Vector2(menu->GetStringPosx("Attack"), 100), "Attack", 0xff00ff });
-	menu->menudata.push_back({ Vector2(menu->GetStringPosx("Cancel"), 150), "Cancel", 0xff00ff });
-	menu->menudata.push_back({ Vector2(menu->GetStringPosx("Bomb"), 200), "Bomb", 0xff00ff });
-	menu->menudata.push_back({ Vector2(menu->GetStringPosx("Slow"), 250), "Slow", 0xff00ff });
-	menu->menudata.push_back({ Vector2(menu->GetStringPosx("Pause"), 300), "Pause", 0xff00ff });
-	menu->menudata.push_back({ Vector2(menu->GetStringPosx("Exit"), 400), "Exit", 0xff00ff });
+	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("Attack"), 100), "Attack", 0xff00ff });
+	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("Cancel"), 150), "Cancel", 0xff00ff });
+	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("Bomb"), 200), "Bomb", 0xff00ff });
+	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("Slow"), 250), "Slow", 0xff00ff });
+	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("Pause"), 300), "Pause", 0xff00ff });
+	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("Exit"), 400), "Exit", 0xff00ff });
 }
 
 

@@ -12,8 +12,8 @@ OptionMenu::OptionMenu()
 
 	menu.reset(new Menu());
 
-	menu->menudata.push_back({ Vector2(menu->GetStringPosx("Key Config"), menu->ssize.y / 3 + 100), "Key Config", 0xff00ff });
-	menu->menudata.push_back({ Vector2(menu->GetStringPosx("Back Title"), menu->ssize.y / 3 + 130), "Back Title", 0xff00ff });
+	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("Key Config"), menu->ssize.y / 3 + 100), "Key Config", 0xff00ff });
+	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("Back Title"), menu->ssize.y / 3 + 130), "Back Title", 0xff00ff });
 
 	kcmenu.reset(new KeyConfigMenu());
 }

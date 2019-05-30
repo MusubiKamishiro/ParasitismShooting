@@ -10,6 +10,7 @@ private:
 	std::shared_ptr<SelectMenu> smenu;
 
 	int img;
+	int difficult;
 	void (SelectScene::*updater)(const Peripheral& p);
 
 	void FadeinUpdate(const Peripheral& p);

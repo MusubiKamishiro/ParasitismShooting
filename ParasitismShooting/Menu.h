@@ -22,7 +22,10 @@ public:
 	int selcnt;
 	Vector2 ssize;
 
-	int GetStringPosx(const std::string& name);
+	// ˆø”‚Ì•¶š—ñ‚ğ‰æ–Ê‚Ì’†‰›‚É‘µ‚¦‚éÀ•W‚ğ•Ô‚·
+	int GetStringCenterPosx(const std::string& name);
+	// ˆø”‚Ì•¶š—ñ‚ğ‰E‹l‚ß‚É‚·‚éÀ•W‚ğ•Ô‚·
+	int GetStringRightPosx(const std::string& name, const int& rpos);
 
 public:
 	Menu();

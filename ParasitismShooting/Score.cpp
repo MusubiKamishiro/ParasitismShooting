@@ -13,6 +13,7 @@ Score::Score()
 	parasBonus = 0;
 	bossHpBonus = 0;
 	contBonus = 0;
+	diffBonus = 0.0f;
 	bonusScore = 0;
 }
 
@@ -64,15 +65,16 @@ void Score::AddContinueCount()
 	++cCount;
 }
 
-void Score::AddClearBonus(const unsigned int& stagenum, const unsigned int& parasnum, const int& bosshp)
+void Score::AddClearBonus(const unsigned int& stagenum, const unsigned int& parasnum, const int& bosshp, const int& diff)
 {
 	stageBonus = stagenum * 1000;
 	parasBonus = parasnum * 10;
 	bossHpBonus = bosshp * 100;
 	contBonus = cCount * -1000;
+	diffBonus = 0.5 * (diff + 1);
 
 	bonusScore = stageBonus + parasBonus + bossHpBonus + contBonus;
-	bonusScore *= 1;	// *“ïˆÕ“x;
+	bonusScore *= diffBonus;	// *“ïˆÕ“x;
 
 	if (bonusScore > 0)
 	{

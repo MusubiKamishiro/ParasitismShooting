@@ -31,7 +31,7 @@ public:
 	void AddContinueCount();
 
 	// ステージクリアボーナス
-	void AddClearBonus(const unsigned int& stagenum, const unsigned int& parasnum, const int& bosshp);
+	void AddClearBonus(const unsigned int& stagenum, const unsigned int& parasnum, const int& bosshp, const int& diff);
 	
 	unsigned int GetNowScore()const;
 	unsigned int GetHighScore()const;
@@ -41,6 +41,7 @@ public:
 	unsigned int parasBonus;
 	unsigned int bossHpBonus;
 	int contBonus;
+	float diffBonus;
 	int bonusScore;
 };
 

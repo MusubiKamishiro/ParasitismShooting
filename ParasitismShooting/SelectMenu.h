@@ -15,7 +15,7 @@ public:
 	SelectMenu();
 	~SelectMenu();
 
-	bool Update(const Peripheral& p);
+	bool Update(const Peripheral& p, int& difficult);
 	void Draw();
 };
 

@@ -52,12 +52,13 @@ private:
 	void HitCol(const Peripheral& p);			// 当たり判定まとめ
 	void Draw(const Peripheral& p, const int& time);	// 描画まとめ
 
-	void Init(const unsigned int& stagenum);	// 2つのコンストラクタの共通部分
+	void Init(const unsigned int& stagenum, const int& diff);	// 2つのコンストラクタの共通部分
 
+	int difficult;
 	float time;
 	unsigned int nowStageNum;
 	Vector2 ssize;
-	bool pauseFlag, continueFlag, clearFlag;
+	bool pauseFlag, continueFlag, clearFlag, allClearFlag;
 
 	std::vector<CharacterBank> cBank;
 
@@ -78,7 +79,7 @@ private:
 	Score& score = Score::Instance();
 
 public:
-	GamePlayingScene(const unsigned int& stagenum);
+	GamePlayingScene(const unsigned int& stagenum, const int& diff);
 	~GamePlayingScene();
 
 	void Update(const Peripheral& p);

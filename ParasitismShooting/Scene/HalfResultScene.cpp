@@ -3,9 +3,7 @@
 #include <string>
 #include <random>
 #include "../Peripheral.h"
-#include "../Game.h"
 #include "../GameScreen.h"
-#include "GamePlayingScene.h"
 #include "../KeyConfig.h"
 #include "../Score.h"
 
@@ -65,7 +63,7 @@ bool HalfResultScene::Update(const Peripheral& p)
 	return returnFlag;
 }
 
-void HalfResultScene::Draw()
+void HalfResultScene::Draw(const bool& flag)
 {
 	for (auto& b : sboxes)
 	{
@@ -79,16 +77,46 @@ void HalfResultScene::Draw()
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, (255 / sboxes.size()) * boxCnt);
 	
-	DxLib::DrawString(200, 100, "中間リザルト", 0x00ff00);
-		
-	DxLib::DrawFormatString(200, 200, 0x00ff00, "Stage * 1000 = %d", Score::Instance().stageBonus);
-	DxLib::DrawFormatString(200, 250, 0x00ff00, "ParasCount * 10 = %d", Score::Instance().parasBonus);
-	DxLib::DrawFormatString(200, 300, 0x00ff00, "BossHP * 100 = %d", Score::Instance().bossHpBonus);
-	DxLib::DrawFormatString(200, 350, 0x00ff00, "ContinueCount * -1000 = %d", Score::Instance().contBonus);
-	DxLib::DrawFormatString(200, 400, 0x00ff00, "Difficult * %f", 1.0);
-	DxLib::DrawFormatString(200, 450, 0x00ff00, "TotalBonus = %d", Score::Instance().bonusScore);
-
+	std::string s;
+	if (!flag)
+	{
+		s = "StageClear！";
+	}
+	else
+	{
+		s = "AllStageClear！";
+	}
 	
+	DxLib::DrawString(((gssize.x + gs->outscreen) / 2 - DxLib::GetDrawStringWidth(s.c_str(), std::strlen(s.c_str())) / 2), 100, s.c_str(), 0x00ff00);
+
+	DxLib::DrawString(GetStringRightPosx("Stage",			250), 200, "Stage", 0x00ff00);
+	DxLib::DrawString(GetStringRightPosx("ParasCount",		250), 250, "ParasCount", 0x00ff00);
+	DxLib::DrawString(GetStringRightPosx("BossHP",			250), 300, "BossHP", 0x00ff00);
+	DxLib::DrawString(GetStringRightPosx("ContinueCount",	250), 350, "ContinueCount", 0x00ff00);
+	DxLib::DrawString(GetStringRightPosx("Difficult",		250), 400, "Difficult", 0x00ff00);
+	DxLib::DrawString(GetStringRightPosx("TotalBonus",		250), 450, "TotalBonus", 0x00ff00);
+
+	for (int i = 0; i < 4; ++i)
+	{
+		DxLib::DrawString(270, 200 + i * 50, "*", 0x00ff00);
+		DxLib::DrawString(370, 200 + i * 50, "=", 0x00ff00);
+	}
+
+	DxLib::DrawString(370, 400, "*", 0x00ff00);
+
+	DxLib::DrawString(GetStringRightPosx("1000",	350), 200, "1000", 0x00ff00);
+	DxLib::DrawString(GetStringRightPosx("10",		350), 250, "10", 0x00ff00);
+	DxLib::DrawString(GetStringRightPosx("100",		350), 300, "100", 0x00ff00);
+	DxLib::DrawString(GetStringRightPosx("-1000",	350), 350, "-1000", 0x00ff00);
+
+	DxLib::DrawFormatString(400, 200, 0x00ff00, "%-8d", Score::Instance().stageBonus);
+	DxLib::DrawFormatString(400, 250, 0x00ff00, "%-8d", Score::Instance().parasBonus);
+	DxLib::DrawFormatString(400, 300, 0x00ff00, "%-8d", Score::Instance().bossHpBonus);
+	DxLib::DrawFormatString(400, 350, 0x00ff00, "%-8d", Score::Instance().contBonus);
+	DxLib::DrawFormatString(400, 400, 0x00ff00, "%-.1f", Score::Instance().diffBonus);
+	DxLib::DrawFormatString(400, 450, 0x00ff00, "%-8d", Score::Instance().bonusScore);
+
+
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 }
 
@@ -138,4 +166,9 @@ bool HalfResultScene::SubBox()
 		return true;
 	}
 	return false;
+}
+
+int HalfResultScene::GetStringRightPosx(const std::string & name, const int & rpos)
+{
+	return (rpos - DxLib::GetDrawStringWidth(name.c_str(), std::strlen(name.c_str())));
 }
