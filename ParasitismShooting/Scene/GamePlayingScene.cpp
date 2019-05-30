@@ -242,6 +242,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 					if (p.IsPressing(KeyConfig::Instance().GetNowKey(ATTACK)) && ((int)time % 6 == 1))
 					{
 						sf->Create(player->GetCharaData().shotType, player->GetPos(), 8, 1, player->GetCharaData().shotLevel, SHOOTER::PLAYER);
+						//sf->Create(player->GetCharaData().shotTypeSub, player->GetPos(), 8, 1, player->GetCharaData().shotLevel, SHOOTER::PLAYER);
 					}
 
 					for (auto& enemy : ef->GetLegion())
@@ -369,8 +370,11 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 						{
 							if (shot->GetShotName() != "Weak")
 							{
-								enemy->ShotStop();
 								enemy->Damage();
+								if (enemy->GetCharaData().HP == 0 || enemy->actFlag == false)
+								{
+									enemy->ShotStop();
+								}
 							}
 							else
 							{

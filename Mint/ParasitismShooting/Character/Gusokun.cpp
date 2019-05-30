@@ -140,7 +140,7 @@ void Gusokun::orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int
 			actFlag = true;
 		}
 	}
-	if(cnt < 1800 && charaData.HP >300 && charaData.SP > 100)
+	if(cnt < 1800 && charaData.HP >300 && charaData.SP > 100 && actFlag == true)
 	{
 		switch (cnt)
 		{
@@ -362,11 +362,11 @@ void Gusokun::orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int
 		}
 	}
 
-	else if(charaData.HP < 301 || charaData.SP < 101)
+	else if(charaData.HP < 301 || charaData.SP < 101 && actFlag == true)
 	{
 		switch (cnt)
 		{
-		case 1:
+		case 0:
 			charaData.shotType = "Radiation";
 			break;
 		case 5:
@@ -388,10 +388,6 @@ void Gusokun::orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int
 			charaData.shotLevel = 35;
 			break;
 		default:
-			if (cnt % 8 == 0)
-			{
-				break;
-			}
 			if (cnt % 10 == 0)
 			{
 				charaData.shotReady = true;

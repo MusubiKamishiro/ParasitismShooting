@@ -31,5 +31,6 @@ public:
 	bool GetShotReady()const;
 	unsigned int GetScore()const;
 	bool scoreFlag;
+	bool actFlag;
 };
 

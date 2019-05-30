@@ -51,7 +51,15 @@ void EnemyActionPattern::Wavy(Vector2f &pos, float moveVel, int cnt, int wait)
 
 void EnemyActionPattern::Stun(Vector2f &pos, float moveVel)
 {
-	pos.y += moveVel / 2;
+	pos.y += 1.5f;
+}
+
+void EnemyActionPattern::FadeOut(Vector2f & pos, float moveVel, int cnt, int wait)
+{
+	if (cnt > wait)
+	{
+		pos.y += moveVel;
+	}
 }
 
 EnemyActionPattern::EnemyActionPattern()

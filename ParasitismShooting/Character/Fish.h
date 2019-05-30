@@ -26,8 +26,6 @@ private:
 	void (Fish::*updater)();
 
 	const Player& player;
-
-	bool flag;
 public:
 	~Fish();
 
