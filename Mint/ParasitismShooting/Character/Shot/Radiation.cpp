@@ -35,7 +35,7 @@ void Radiation::Move()
 	{
 		shotst.angle += range / 180.0f;
 	}
-
+	
 	shotst.speed = 3;
 
 	if (shotst.time > 300)

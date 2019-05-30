@@ -53,6 +53,24 @@ void GamePlayingScene::FadeoutUpdate(const Peripheral & p)
 	}
 }
 
+void GamePlayingScene::IdleUpdate(const Peripheral & p)
+{
+	time = 0;
+	if (!hresult->Update(p))
+	{
+		hresult.reset(new HalfResultScene());
+		
+		if (!allClearFlag)
+		{
+			updater = &GamePlayingScene::GameUpdate;
+		}
+		else
+		{
+			updater = &GamePlayingScene::MoveResultUpdate;
+		}
+	}
+}
+
 void GamePlayingScene::GameUpdate(const Peripheral & p)
 {
 	if (player->updater == &Player::Die)
@@ -64,7 +82,21 @@ void GamePlayingScene::GameUpdate(const Peripheral & p)
 
 void GamePlayingScene::ClearUpdate(const Peripheral & p)
 {
-	Game::Instance().ChangeScene(new HalfResultScene(nowStageNum, player->GetCharaData(), player->parasFlag));
+	if (hresult->Update(p))
+	{
+		if (!allClearFlag)
+		{
+			Init(nowStageNum + 1, difficult);
+
+			player.reset(new Player(player->GetCharaData()));
+			ef.reset(new EnemyFactory(*player));
+			sf.reset(new ShotFactory(*player, *ef));
+
+			clearFlag = false;
+		}
+		
+		updater = &GamePlayingScene::IdleUpdate;
+	}
 }
 
 void GamePlayingScene::ContinueUpdate(const Peripheral & p)
@@ -72,7 +104,8 @@ void GamePlayingScene::ContinueUpdate(const Peripheral & p)
 	if (!continueFlag)
 	{
 		score.InitScore();
-		score.AddContinueCount();
+		++cCount;
+		++totalCCount;
 		player->Reborn(p);
 		updater = &GamePlayingScene::GameUpdate;
 	}
@@ -80,10 +113,10 @@ void GamePlayingScene::ContinueUpdate(const Peripheral & p)
 
 void GamePlayingScene::MoveResultUpdate(const Peripheral & p)
 {
-	Game::Instance().ChangeScene(new ResultScene(score.GetNowScore(), score.GetContinueCount()));
+	Game::Instance().ChangeScene(new ResultScene(score.GetNowScore(), totalCCount));
 }
 
-void GamePlayingScene::Init(const unsigned int & stagenum)
+void GamePlayingScene::Init(const unsigned int & stagenum, const int& difficult)
 {
 	// ステージ名の作成
 	nowStageNum = stagenum;
@@ -99,6 +132,7 @@ void GamePlayingScene::Init(const unsigned int & stagenum)
 	int j = 0;
 
 	bankCnt = 3;
+	cBank.resize(0);
 
 	while (std::getline(ifs, str))
 	{
@@ -121,8 +155,12 @@ void GamePlayingScene::Init(const unsigned int & stagenum)
 
 	}
 	time = 0;
+	parasCnt = 0;
+	cCount = 0;
 	pauseFlag = false;
 	continueFlag = false;
+	clearFlag = false;
+	allClearFlag = false;
 
 	gs.reset(new GameScreen());
 	hud.reset(new HUD());
@@ -135,29 +173,23 @@ void GamePlayingScene::Init(const unsigned int & stagenum)
 	ssize = Game::Instance().GetScreenSize();
 }
 
-GamePlayingScene::GamePlayingScene(const unsigned int& stagenum)
+GamePlayingScene::GamePlayingScene(const unsigned int& stagenum, const int& diff)
 {
-	Init(stagenum);
+	difficult = diff;
+	Init(stagenum, diff);
 
+	totalParasCnt = 0;
+	totalCCount = 0;
+
+	DuringParasitism = false;
+
+	hresult.reset(new HalfResultScene());
 	player.reset(new Player());
 	ef.reset(new EnemyFactory(*player));
 	sf.reset(new ShotFactory(*player, *ef));
 
 	updater = &GamePlayingScene::FadeinUpdate;
 }
-
-GamePlayingScene::GamePlayingScene(const unsigned int& stagenum, const CharaData& cdata)
-{
-	Init(stagenum);
-	
-	player.reset(new Player(cdata));
-	ef.reset(new EnemyFactory(*player));
-	sf.reset(new ShotFactory(*player, *ef));
-
-	pal = 255;
-	updater = &GamePlayingScene::GameUpdate;
-}
-	
 
 
 GamePlayingScene::~GamePlayingScene()
@@ -179,66 +211,80 @@ void GamePlayingScene::Update(const Peripheral& p)
 		{
 			if (cBank[bankCnt].time == ((int)time/*%250*/))
 			{
-				if (bankCnt != cBank.size())
+				ef->Create(cBank[bankCnt].enemyname.c_str(), cBank[bankCnt].shotType.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y),
+					cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed, cBank[bankCnt].shotCnt, cBank[bankCnt].shotLevel);
+				if (cBank.size() - 1 > bankCnt)
 				{
-					ef->Create(cBank[bankCnt].enemyname.c_str(), cBank[bankCnt].shotType.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y),
-						cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed, cBank[bankCnt].shotCnt, cBank[bankCnt].shotLevel);
-					if (cBank.size() - 1 > bankCnt)
+					bankCnt++;
+				}
+				/*if (cBank.size() > bankCnt)
+				{
+					bankCnt++;
+					if (bankCnt == cBank.size())
 					{
-						bankCnt++;
+						bankCnt--;
+					}
+				}*/
+				//bankCnt = bankCnt % (cBank.size()-2) + 2;
+			}
+
+			if (!DuringParasitism)
+			{
+				for (auto& shot : sf->GetLegion())
+				{
+					shot->Update();
+				}
+
+				if (!clearFlag)
+				{
+					player->Update(p);
+
+					if (p.IsPressing(KeyConfig::Instance().GetNowKey(ATTACK)) && ((int)time % 6 == 1))
+					{
+						sf->Create(player->GetCharaData().shotType, player->GetPos(), 8, 1, player->GetCharaData().shotLevel, SHOOTER::PLAYER);
+						//sf->Create(player->GetCharaData().shotTypeSub, player->GetPos(), 8, 1, player->GetCharaData().shotLevel, SHOOTER::PLAYER);
+					}
+
+					for (auto& enemy : ef->GetLegion())
+					{
+						if (enemy->GetShotReady())
+						{
+							sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 2, 1, enemy->GetCharaData().shotLevel, SHOOTER::ENEMY);
+						}
+						enemy->Update();
+					}
+
+					HitCol(p);
+
+					for (auto& enemy : ef->GetLegion())
+					{
+						if (enemy->scoreFlag)
+						{
+							score.AddScore(enemy->GetScore());
+						}
 					}
 				}
-				//bankCnt = bankCnt % (cBank.size() - 2) + 2;
-			}
+				hud->Update();
 
-			for (auto& shot : sf->GetLegion())
-			{
-				shot->Update();
-			}
-
-			player->Update(p);
-
-			if (p.IsPressing(KeyConfig::Instance().GetNowKey(ATTACK)) && ((int)time % 6 == 0))
-			{
-				sf->Create(player->GetCharaData().shotType, player->GetPos(), 8, 1, player->GetCharaData().shotLevel, SHOOTER::PLAYER);
-				sf->Create(player->GetCharaData().shotTypeSub, player->GetPos(), 8, 1, player->GetCharaData().shotLevel, SHOOTER::PLAYER);
-			}
-			
-			for (auto& enemy : ef->GetLegion())
-			{
-				if (enemy->GetShotReady())
+				// スコアで次のステージへ(デバックのため一時的なもの)
+				if (score.GetNowScore() > (5000 * nowStageNum))
 				{
-					sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 2, 1, enemy->GetCharaData().shotLevel, SHOOTER::ENEMY);
-					sf->Create(enemy->GetCharaData().shotTypeSub, enemy->GetPos(), 2, 1, enemy->GetCharaData().shotLevel, SHOOTER::ENEMY);
+					if (nowStageNum == 5)
+					{
+						allClearFlag = true;
+					}
+
+					if (!clearFlag)
+					{
+						Score::Instance().AddClearBonus(nowStageNum, parasCnt, 0, cCount, difficult);
+
+						clearFlag = true;
+						updater = &GamePlayingScene::ClearUpdate;
+					}
 				}
-				enemy->Update();
+
+				++time;
 			}
-
-			HitCol(p);
-
-			for (auto& enemy : ef->GetLegion())
-			{
-				if (enemy->scoreFlag)
-				{
-					score.AddScore(enemy->GetScore());
-				}
-			}
-			hud->Update();
-
-			// スコアで次のステージへ(デバックのため一時的なもの)
-			if (score.GetNowScore() > (10000 * nowStageNum))
-			{
-				if (nowStageNum == 5)
-				{
-					updater = &GamePlayingScene::MoveResultUpdate;
-				}
-				else
-				{
-					updater = &GamePlayingScene::ClearUpdate;
-				}
-			}
-
-			++time;
 		}
 		else
 		{
@@ -285,11 +331,11 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 	Draw(p, (int)time);
 	
-	(this->*updater)(p);
-
 	// フェードイン,アウトのための幕
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, ssize.x, ssize.y, 0x000000, true);
+
+	(this->*updater)(p);
 }
 
 void GamePlayingScene::HitCol(const Peripheral& p)
@@ -367,6 +413,9 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 						{
 							// 敵の力を手に入れる
 							player->Parasitic(p, enemy->GetCharaData());
+							++parasCnt;
+							++totalParasCnt;
+							DuringParasitism = true;
 							score.AddScore(enemy->GetScore() * 1.2);
 							enemy->Die();
 						}
@@ -381,7 +430,7 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 {
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
-	hud->Draw(player->GetCharaData().HP, player->parasFlag);
+	hud->Draw(player->GetCharaData().HP, player->parasFlag, parasCnt, cCount);
 
 	// ゲーム画面の描画準備
 	gs->SetAndClearScreen();
@@ -412,6 +461,26 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 		effect->Draw();
 	}
 
+	if (DuringParasitism)
+	{
+		static int t = 0;
+		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 64);
+		DxLib::DrawBox(0, 0, ssize.x + gs->outscreen, ssize.y + gs->outscreen, 0x000000, true);
+		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+		player->ParasDraw(t);
+		
+		++t;
+		if ((t % 60) == 0)
+		{
+			DuringParasitism = false;
+		}
+	}
+
+	if((updater == &GamePlayingScene::IdleUpdate) || (updater == &GamePlayingScene::ClearUpdate))
+	{
+		hresult->Draw(allClearFlag);
+	}
+	
 	if (pauseFlag)
 	{
 		gs->SetGaussFilter();

@@ -24,8 +24,8 @@ void SelectScene::FadeoutUpdate(const Peripheral & p)
 {
 	if (pal <= 0)
 	{
-		Score::Instance().InitScore(true);
-		Game::Instance().ChangeScene(new GamePlayingScene(1));
+		Score::Instance().InitScore();
+		Game::Instance().ChangeScene(new GamePlayingScene(1, difficult));
 	}
 	else
 	{
@@ -52,7 +52,7 @@ void SelectScene::Update(const Peripheral& p)
 	DxLib::DrawExtendGraph(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, img, true);
 	DxLib::DrawString(50, 50, "SelectScene", 0x000000);
 	
-	if (smenu->Update(p))
+	if (smenu->Update(p, difficult))
 	{
 		pal = 255;
 		updater = &SelectScene::FadeoutUpdate;

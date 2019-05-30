@@ -10,7 +10,6 @@ Fish::Fish(const Player& player) : Enemy(player), player(player)
 	ChangeAction("eIdle");
 	SetCharaSize(0.07f);
 	charaData.shotReady = false;
-	//charaData.shotTypeSub = "Shotgun";
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 	score = 200;
 

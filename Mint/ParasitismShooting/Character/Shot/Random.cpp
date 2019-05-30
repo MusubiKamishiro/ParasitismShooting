@@ -6,7 +6,7 @@
 Random::Random(const Player& player, const EnemyFactory& enemyfactory) : Shot(player, enemyfactory),player(player), enemyfactory(enemyfactory)
 {
 	ReadActionFile("action/shot.act");
-	ChangeAction("Shot6");
+	ChangeAction("Shot5");
 	SetCharaSize(0.5f);
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 
@@ -30,15 +30,8 @@ Shot * Random::Clone()
 
 void Random::Move()
 {
-	shotst.speed = 8 / 3;
-	if (shotst.time == 60)
-	{
-		shotst.angle = GetAtan2(shotst.shooter,shotst.angle);
-	}
-	pos.x += cos(shotst.angle) * (float)shotst.speed;
-	pos.y += sin(shotst.angle) * (float)shotst.speed;
-
-	shotst.time++;
+	pos.x += cos(shotst.angle) * shotst.speed;
+	pos.y += sin(shotst.angle) * shotst.speed;
 }
 
 void Random::Delete()

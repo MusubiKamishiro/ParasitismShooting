@@ -9,7 +9,7 @@ class Normal : public Shot
 	friend ShotFactory;
 private:
 	Normal(const Player& player, const EnemyFactory& enemyfactory);
-	Normal(const Normal&);	
+	Normal(const Normal&);
 	void operator=(const Normal&);
 
 	Shot* Clone();

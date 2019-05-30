@@ -11,7 +11,7 @@ Gusokun::Gusokun(const Player& player) : Enemy(player), player(player)
 	SetCharaSize(0.30f);
 	charaData.shotReady = false;
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
-	score = 10000;
+	score = 100000;
 
 	eAction.reset(new EnemyActionPattern());
 
@@ -366,7 +366,7 @@ void Gusokun::orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int
 	{
 		switch (cnt)
 		{
-		case 0:
+		case 1:
 			charaData.shotType = "Radiation";
 			break;
 		case 5:
