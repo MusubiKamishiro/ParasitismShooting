@@ -10,8 +10,9 @@ Menu::Menu()
 	gs.reset(new GameScreen());
 	ssize = gs->GetGSSize();
 
-	menudata.resize(0);
 	menuTitle.resize(0);
+	menudata.resize(0);
+	menuDescription.resize(0);
 	selcnt = 0;
 
 	decideFlag = false;

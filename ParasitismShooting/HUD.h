@@ -18,7 +18,7 @@ public:
 	~HUD();
 
 	void Update();
-	void Draw(const int& life, const bool& flag);
+	void Draw(const int& life, const bool& flag, const int& parascnt, const unsigned int& ccount);
 	
 	const Vector2 GetHUDPos()const;
 };

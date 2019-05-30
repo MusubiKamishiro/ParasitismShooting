@@ -73,7 +73,7 @@ void GameScreen::DrawAndChangeScreen(bool& swingflag)
 
 void GameScreen::SetGaussFilter()
 {
-	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 32);
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 64);
 	DxLib::DrawBox(0, 0, gssize.x, gssize.y, 0x000000, true);
 	DxLib::GraphFilter(screen, DX_GRAPH_FILTER_GAUSS, 16, count = count > countMax ? countMax : ++count);
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);

@@ -91,9 +91,9 @@ void GamePlayingScene::ClearUpdate(const Peripheral & p)
 			player.reset(new Player(player->GetCharaData()));
 			ef.reset(new EnemyFactory(*player));
 			sf.reset(new ShotFactory(*player, *ef));
+
+			clearFlag = false;
 		}
-		
-		clearFlag = false;
 		
 		updater = &GamePlayingScene::IdleUpdate;
 	}
@@ -104,7 +104,8 @@ void GamePlayingScene::ContinueUpdate(const Peripheral & p)
 	if (!continueFlag)
 	{
 		score.InitScore();
-		score.AddContinueCount();
+		++cCount;
+		++totalCCount;
 		player->Reborn(p);
 		updater = &GamePlayingScene::GameUpdate;
 	}
@@ -112,7 +113,7 @@ void GamePlayingScene::ContinueUpdate(const Peripheral & p)
 
 void GamePlayingScene::MoveResultUpdate(const Peripheral & p)
 {
-	Game::Instance().ChangeScene(new ResultScene(score.GetNowScore(), score.GetContinueCount()));
+	Game::Instance().ChangeScene(new ResultScene(score.GetNowScore(), totalCCount));
 }
 
 void GamePlayingScene::Init(const unsigned int & stagenum, const int& difficult)
@@ -154,6 +155,8 @@ void GamePlayingScene::Init(const unsigned int & stagenum, const int& difficult)
 
 	}
 	time = 0;
+	parasCnt = 0;
+	cCount = 0;
 	pauseFlag = false;
 	continueFlag = false;
 	clearFlag = false;
@@ -174,6 +177,9 @@ GamePlayingScene::GamePlayingScene(const unsigned int& stagenum, const int& diff
 {
 	difficult = diff;
 	Init(stagenum, diff);
+
+	totalParasCnt = 0;
+	totalCCount = 0;
 
 	hresult.reset(new HalfResultScene());
 	player.reset(new Player());
@@ -256,17 +262,14 @@ void GamePlayingScene::Update(const Peripheral& p)
 			{
 				if (nowStageNum == 5)
 				{
-					//updater = &GamePlayingScene::MoveResultUpdate;
 					allClearFlag = true;
 				}
-				//else
+				
+				if (!clearFlag)
 				{
-					if (!clearFlag)
-					{
-						Score::Instance().AddClearBonus(nowStageNum, 0, 0, difficult);
-					}
+					Score::Instance().AddClearBonus(nowStageNum, parasCnt, 0, cCount, difficult);
+
 					clearFlag = true;
-					
 					updater = &GamePlayingScene::ClearUpdate;
 				}
 			}
@@ -397,6 +400,8 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 						{
 							// “G‚Ì—Í‚ðŽè‚É“ü‚ê‚é
 							player->Parasitic(p, enemy->GetCharaData());
+							++parasCnt;
+							++totalParasCnt;
 							score.AddScore(enemy->GetScore() * 1.2);
 							enemy->Die();
 						}
@@ -411,7 +416,7 @@ void GamePlayingScene::Draw(const Peripheral& p, const int & time)
 {
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
-	hud->Draw(player->GetCharaData().HP, player->parasFlag);
+	hud->Draw(player->GetCharaData().HP, player->parasFlag, parasCnt, cCount);
 
 	// ƒQ[ƒ€‰æ–Ê‚Ì•`‰æ€”õ
 	gs->SetAndClearScreen();
