@@ -152,8 +152,10 @@ void GamePlayingScene::Init(const unsigned int & stagenum, const int& difficult)
 			});
 		j = 0;
 		i++;
-
 	}
+
+	cBank.push_back({ -1, 5,"weakfishN", "Normal", Vector2f(300, 60), 3, 1, 1, 0, 120, 60, 1 });
+	cBank.push_back({ -1, 5,"weakfishS", "Shotgun", Vector2f(300, 60), 3, 1, 1, 0, 120, 60, 3 });
 	time = 0;
 	parasCnt = 0;
 	cCount = 0;
@@ -247,8 +249,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 					for (auto& enemy : ef->GetLegion())
 					{
-						if (enemy->GetShotReady())
-						{
+						if (enemy->GetShotReady())zx
 							sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 2, 1, enemy->GetCharaData().shotLevel, SHOOTER::ENEMY);
 						}
 						enemy->Update();
@@ -267,19 +268,22 @@ void GamePlayingScene::Update(const Peripheral& p)
 				hud->Update();
 
 				// スコアで次のステージへ(デバックのため一時的なもの)
-				if (score.GetNowScore() > (5000 * nowStageNum))
+				for (auto& enemy : ef->GetLegion())
 				{
-					if (nowStageNum == 5)
+					if (enemy->bossDownFlag)
 					{
-						allClearFlag = true;
-					}
+						if (nowStageNum == 5)
+						{
+							allClearFlag = true;
+						}
 
-					if (!clearFlag)
-					{
-						Score::Instance().AddClearBonus(nowStageNum, parasCnt, 0, cCount, difficult);
+						if (!clearFlag)
+						{
+							Score::Instance().AddClearBonus(nowStageNum, parasCnt, 0, cCount, difficult);
 
-						clearFlag = true;
-						updater = &GamePlayingScene::ClearUpdate;
+							clearFlag = true;
+							updater = &GamePlayingScene::ClearUpdate;
+						}
 					}
 				}
 
@@ -307,7 +311,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 	sf->ShotDelete();
 	//ef->EnemyDelete();
 	
-	for (int i = 0; i < ef->GetLegion().size(); ++i)
+	for (unsigned int i = 0; i < ef->GetLegion().size(); ++i)
 	{
 		auto enemy = *std::next(ef->GetLegion().begin(), i);
 		if (!enemy->GetLifeFlag())
@@ -352,7 +356,7 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 				{
 					if (cd->IsCollision(shot->GetRects(sRect.rc), player->GetRects(pRect.rc), cd->GetRectCombi(sRect.rt, pRect.rt)))
 					{
-						player->Damage(p);
+						//player->Damage(p);
 					}
 				}
 			}

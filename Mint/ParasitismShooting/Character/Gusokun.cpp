@@ -18,6 +18,7 @@ Gusokun::Gusokun(const Player& player) : Enemy(player), player(player)
 	updater = &Gusokun::Move;
 
 	actFlag = true;
+	bossDownFlag = false;
 	basePos = { 310,120 };
 }
 
@@ -53,6 +54,7 @@ void Gusokun::Die()
 {
 	scoreFlag = true;
 	lifeFlag = false;
+	bossDownFlag = true;
 }
 
 void Gusokun::Stunning()
@@ -112,6 +114,10 @@ void Gusokun::Damage()
 	if (actFlag)
 	{
 		charaData.HP -= 1;
+		if (charaData.SP > charaData.HP)
+		{
+			charaData.SP = charaData.HP;
+		}
 	}
 	if (charaData.HP == 300)
 	{

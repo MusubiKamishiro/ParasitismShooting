@@ -16,11 +16,12 @@ Vector2f  EnemyFactory::GetLegionBeginCharPos() const
 		auto itr = *legion.begin();
 		return itr->GetPos();
 	}
+	return { 0.0f,0.0f };
 }
 
 void EnemyFactory::EnemyDelete()
 {
-	for (int i = 0; i < legion.size(); ++i)
+	for (unsigned int i = 0; i < legion.size(); ++i)
 	{
 		auto enemy = *std::next(legion.begin(), i);
 		if (!enemy->GetLifeFlag())
@@ -54,6 +55,8 @@ EnemyFactory::EnemyFactory(const Player& player) : player(player)
 	down = screenSize.y + gscreen.outscreen;
 
 	originalEnemy["fish"] = new Fish(player);
+	originalEnemy["weakfishN"] = new Fish(player);
+	originalEnemy["weakfishS"] = new Fish(player);
 	originalEnemy["gusokun"] = new Gusokun(player);
 }
 

@@ -67,7 +67,7 @@ private:
 
 	std::vector<CharacterBank> cBank;
 
-	int bankCnt;
+	unsigned int bankCnt;
 
 	std::shared_ptr<GameScreen> gs;
 	std::shared_ptr<Player> player;

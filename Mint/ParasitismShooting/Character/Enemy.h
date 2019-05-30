@@ -30,6 +30,8 @@ public:
 
 	bool GetShotReady()const;
 	unsigned int GetScore()const;
+	bool bossDownFlag;
+	bool bossFlag;
 	bool scoreFlag;
 	bool actFlag;
 };
