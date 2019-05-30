@@ -38,8 +38,6 @@ void Score::Draw(const Vector2& pos)
 {
 	DxLib::DrawFormatString(pos.x, pos.y,		0x000000, "最高得点　%012d", nowScore > highScore ? nowScore : highScore);
 	DxLib::DrawFormatString(pos.x, pos.y + 30,	0x000000, "　　得点　%012d", nowScore);
-
-//	DxLib::DrawFormatString(pos.x, pos.y + 200, 0x000000, "コンティニュー回数　%02d", cCount);
 }
 
 void Score::InitScore()
@@ -63,12 +61,13 @@ void Score::AddClearBonus(const unsigned int& stagenum, const unsigned int& para
 	diffBonus = 0.5 * (diff + 1);
 
 	bonusScore = stageBonus + parasBonus + bossHpBonus + contBonus;
-	bonusScore *= diffBonus;	// *難易度;
+	bonusScore *= diffBonus;
 
-	if (bonusScore > 0)
+	if (bonusScore <= 0)
 	{
-		upScore += bonusScore;
+		bonusScore = 0;
 	}
+	upScore += bonusScore;
 }
 
 unsigned int Score::GetNowScore() const
