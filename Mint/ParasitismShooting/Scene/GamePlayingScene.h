@@ -17,6 +17,7 @@ class ContinueMenu;
 class EnemyFactory;
 class CollisionDetector;
 class EffectFactory;
+class HalfResultScene;
 
 typedef struct CSV
 {
@@ -42,6 +43,7 @@ private:
 
 	void FadeinUpdate(const Peripheral& p);
 	void FadeoutUpdate(const Peripheral& p);
+	void IdleUpdate(const Peripheral& p);
 	void GameUpdate(const Peripheral& p);
 	void ClearUpdate(const Peripheral& p);
 	void ContinueUpdate(const Peripheral& p);
@@ -50,12 +52,18 @@ private:
 	void HitCol(const Peripheral& p);			// 当たり判定まとめ
 	void Draw(const Peripheral& p, const int& time);	// 描画まとめ
 
-	void Init(const unsigned int& stagenum);	// 2つのコンストラクタの共通部分
+	void Init(const unsigned int& stagenum, const int& diff);	// 2つのコンストラクタの共通部分
 
-	float time;
-	unsigned int nowStageNum;
+	int difficult;				// 難易度
+	float time;					// 時間
+	unsigned int nowStageNum;	// 現在ステージ
+	int parasCnt;				// 寄生回数
+	int totalParasCnt;			// 累計寄生回数
+	unsigned int cCount;		// コンティニュー回数
+	unsigned int totalCCount;	// 累計コンティニュー回数
 	Vector2 ssize;
-	bool pauseFlag, continueFlag;
+	bool pauseFlag, continueFlag, clearFlag, allClearFlag;
+	bool DuringParasitism;
 
 	std::vector<CharacterBank> cBank;
 
@@ -71,14 +79,12 @@ private:
 	std::shared_ptr<EnemyFactory> ef;
 	std::shared_ptr<CollisionDetector> cd;
 	std::shared_ptr<EffectFactory> eff;
+	std::shared_ptr<HalfResultScene> hresult;
 
 	Score& score = Score::Instance();
 
 public:
-	// セレクトシーンで使うコンストラクタ
-	GamePlayingScene(const unsigned int& stagenum);
-	// 中間リザルトで使うコンストラクタ
-	GamePlayingScene(const unsigned int& stagenum, const CharaData& cdata);
+	GamePlayingScene(const unsigned int& stagenum, const int& diff);
 	~GamePlayingScene();
 
 	void Update(const Peripheral& p);

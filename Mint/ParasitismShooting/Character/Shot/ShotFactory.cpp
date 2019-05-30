@@ -35,7 +35,7 @@ void ShotFactory::ShotDelete()
 
 void ShotFactory::OutofScreen(void)
 {
-	for(auto &shot :legion)
+	for (auto &shot : legion)
 	{
 		if (shot->pos.x < left - shot->rect.Width() / 2 || shot->pos.x > right + shot->rect.Width() / 2 ||
 			shot->pos.y < up - shot->rect.Height() / 2 || shot->pos.y > down + shot->rect.Height() / 2)
@@ -85,7 +85,7 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 			{
 				shot->pos = { pos.x + NormalPosPtnX[j],pos.y };
 			}
-			else if(shotType == "Diamond")
+			else if (shotType == "Diamond")
 			{
 				shot->pos = { pos.x + DiamondlPosPtnX[j],pos.y };
 			}

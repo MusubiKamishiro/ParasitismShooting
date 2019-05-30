@@ -14,63 +14,14 @@ Geometry::~Geometry()
 
 Box::Box(Vector2f invecA, Vector2f invecB)
 {
-	if (invecA.x < invecB.x)
-	{
-		if (invecA.y < invecB.y)
-		{
-			dotA = invecA;
-			dotB = invecB;
-		}
-		else
-		{
-			dotA = Vector2f(invecA.x, invecB.y);
-			dotB = Vector2f(invecB.x, invecA.y);
-		}
-	}
-	else
-	{
-		if (invecA.y < invecB.y)
-		{
-			dotA = Vector2f(invecB.x, invecA.y);
-			dotB = Vector2f(invecA.x, invecB.y);
-		}
-		else
-		{
-			dotA = invecB;
-			dotB = invecA;
-		}
-	}
+	dotA = invecA;
+	dotB = invecB;
 }
 
 Box::Box(int ax, int ay, int bx, int by)
 {
-	if (ax < bx)
-	{
-		if (by < by)
-		{
-			dotA = Vector2f(ax, ay);
-			dotB = Vector2f(bx, by);
-		}
-		else
-		{
-			dotA = Vector2f(ax, by);
-			dotB = Vector2f(bx, ay);
-		}
-	}
-	else
-	{
-		if (by < by)
-		{
-			dotA = Vector2f(bx, ay);
-			dotB = Vector2f(ax, by);
-		}
-		else
-		{
-			dotA = Vector2f(bx, by);
-			dotB = Vector2f(ax, ay);
-		}
-
-	}
+	dotA = Vector2f(ax, ay);
+	dotB = Vector2f(bx, by);
 }
 
 

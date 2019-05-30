@@ -13,10 +13,9 @@ void Player::Init()
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 	charaData.HP = 1;
 	charaData.moveVel = 3.0;
-	charaData.shotLevel = 1;
-	charaData.shotType = "Weak";
-	charaData.shotLevel = 5;
-	//charaData.shotTypeSub = "Tracking";
+	charaData.shotType = "Tracking";
+	charaData.shotTypeSub = "Shotgun";
+	charaData.shotLevel = 7;
 	originData = charaData;
 
 	gs.reset(new GameScreen());
@@ -217,6 +216,22 @@ void Player::Draw(const int& time)
 		{
 			CharacterObject::Draw(charaData.img);
 		}
+	}
+}
+
+void Player::ParasDraw(const int & time)
+{
+	if ((time / 3) % 2)
+	{
+		auto& actInfo = originData.actData.animInfo["Idle"];
+		auto& cut = actInfo.cuts[0];
+		auto& rc = cut.rect;
+
+		DxLib::DrawRectRotaGraph2F(pos.x, pos.y, rc.Left(), rc.Top(), rc.Width(), rc.Height(), cut.center.x, cut.center.y, originData.charaSize, 0.0, originData.img, true, false);
+	}
+	else
+	{
+		CharacterObject::Draw(charaData.img);
 	}
 }
 

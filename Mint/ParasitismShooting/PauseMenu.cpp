@@ -9,10 +9,10 @@ PauseMenu::PauseMenu()
 {
 	menu.reset(new Menu());
 
-	menu->menuTitle.push_back({ Vector2(menu->GetStringPosx("ˆê’â~’†"), (menu->ssize.y) / 3), "ˆê’â~’†", 0xff00ff });
+	menu->menuTitle.push_back({ Vector2(menu->GetStringCenterPosx("ˆê’â~’†"), (menu->ssize.y) / 3), "ˆê’â~’†", 0xff00ff });
 
-	menu->menudata.push_back({ Vector2(menu->GetStringPosx("ƒQ[ƒ€‚ğ‘±‚¯‚é"), (menu->ssize.y) / 3 + 100), "ƒQ[ƒ€‚ğ‘±‚¯‚é", 0xff00ff });
-	menu->menudata.push_back({ Vector2(menu->GetStringPosx("ƒ^ƒCƒgƒ‹‚É–ß‚é"), (menu->ssize.y) / 3 + 130), "ƒ^ƒCƒgƒ‹‚É–ß‚é", 0xff00ff });
+	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("ƒQ[ƒ€‚ğ‘±‚¯‚é"), (menu->ssize.y) / 3 + 100), "ƒQ[ƒ€‚ğ‘±‚¯‚é", 0xff00ff });
+	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("ƒ^ƒCƒgƒ‹‚É–ß‚é"), (menu->ssize.y) / 3 + 130), "ƒ^ƒCƒgƒ‹‚É–ß‚é", 0xff00ff });
 }
 
 
@@ -23,7 +23,7 @@ PauseMenu::~PauseMenu()
 bool PauseMenu::Update(const Peripheral& p, bool& flag)
 {
 	menu->Update(p);
-	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)))
+	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)) && !menu->decideFlag)
 	{
 		if (menu->selcnt == 0)
 		{
@@ -33,6 +33,7 @@ bool PauseMenu::Update(const Peripheral& p, bool& flag)
 		{
 			return true;
 		}
+		menu->decideFlag = true;
 	}
 
 	return false;

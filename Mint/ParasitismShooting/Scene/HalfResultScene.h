@@ -1,28 +1,45 @@
 #pragma once
 #include <memory>
-#include "Scene.h"
+#include <vector>
 #include "../Character/CharacterObject.h"
+#include "../Geometry.h"
 
-class HUD;
+class GameScreen;
+class Peripheral;
 
-class HalfResultScene : public Scene
+
+struct SMALL_BOX
+{
+	Box box;
+	bool drawflag;
+};
+
+class HalfResultScene
 {
 private:
-	void (HalfResultScene::*updater)(const Peripheral& p);
+	std::vector<SMALL_BOX> sboxes;	// è¨î†ÇÃèWÇ‹ÇË, âÊñ ëJà⁄Ç…égÇ§
+	int boxCnt;
+	Vector2 boxlength;
+	Vector2 gssize;
 
-	void FadeinUpdate(const Peripheral& p);
-	void FadeoutUpdate(const Peripheral& p);
+	int img;
+	Vector2 imgSize;
 
-	unsigned int nextstage;
-	CharaData nowstate;
-	bool parasFlag;
+	std::shared_ptr<GameScreen> gs;
 
-	std::shared_ptr<HUD> hud;
+	bool AddBox();
+	bool SubBox();
+
+	int GetStringRightPosx(const std::string& name, const int& rpos);
+
+	bool flag;
+	bool returnFlag;
 
 public:
-	HalfResultScene(const unsigned int& nowstagenum, const CharaData& cdata, const bool& pflag);
+	HalfResultScene();
 	~HalfResultScene();
 
-	void Update(const Peripheral& p);
+	bool Update(const Peripheral& p);
+	void Draw(const bool& flag);
 };
 

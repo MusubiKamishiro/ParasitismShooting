@@ -9,9 +9,9 @@ TitleMenu::TitleMenu()
 {
 	menu.reset(new Menu());
 
-	menu->menudata.push_back({ Vector2(menu->GetStringPosx("Start"), menu->ssize.y / 3 + 100), "Start", 0xff00ff });
-	menu->menudata.push_back({ Vector2(menu->GetStringPosx("Option"), menu->ssize.y / 3 + 130), "Option", 0xff00ff });
-	menu->menudata.push_back({ Vector2(menu->GetStringPosx("Exit"), menu->ssize.y / 3 + 160), "Exit", 0xff00ff });
+	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("Start"), menu->ssize.y / 3 + 100), "Start", 0xff00ff });
+	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("Option"), menu->ssize.y / 3 + 130), "Option", 0xff00ff });
+	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("Exit"), menu->ssize.y / 3 + 160), "Exit", 0xff00ff });
 }
 
 
@@ -22,8 +22,9 @@ TitleMenu::~TitleMenu()
 bool TitleMenu::Update(const Peripheral & p, bool & flag)
 {
 	menu->Update(p);
-	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)))
+	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)) && !menu->decideFlag)
 	{
+		menu->decideFlag = true;
 		if (menu->selcnt == 0)
 		{
 			return true;

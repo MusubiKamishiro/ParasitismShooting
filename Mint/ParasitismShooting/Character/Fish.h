@@ -1,5 +1,4 @@
 #pragma once
-#include <memory>
 #include "Enemy.h"
 #include "CharacterObject.h"
 
@@ -27,8 +26,6 @@ private:
 	void (Fish::*updater)();
 
 	const Player& player;
-
-	bool flag;
 public:
 	~Fish();
 

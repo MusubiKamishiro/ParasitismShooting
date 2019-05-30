@@ -10,9 +10,12 @@ Menu::Menu()
 	gs.reset(new GameScreen());
 	ssize = gs->GetGSSize();
 
-	menudata.resize(0);
 	menuTitle.resize(0);
+	menudata.resize(0);
+	menuDescription.resize(0);
 	selcnt = 0;
+
+	decideFlag = false;
 }
 
 
@@ -67,7 +70,12 @@ void Menu::Draw(const Vector2 & shiftpos)
 	}
 }
 
-int Menu::GetStringPosx(const std::string & name)
+int Menu::GetStringCenterPosx(const std::string & name)
 {
 	return ((ssize.x + gs->outscreen) / 2 - DxLib::GetDrawStringWidth(name.c_str(), std::strlen(name.c_str())) / 2);
+}
+
+int Menu::GetStringRightPosx(const std::string & name, const int& rpos)
+{
+	return (rpos - DxLib::GetDrawStringWidth(name.c_str(), std::strlen(name.c_str())));
 }

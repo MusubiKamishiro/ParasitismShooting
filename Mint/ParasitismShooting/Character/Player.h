@@ -63,5 +63,6 @@ public:
 
 	void Update(const Peripheral &p);
 	void Draw(const int& time);
+	void ParasDraw(const int& time);
 };
 

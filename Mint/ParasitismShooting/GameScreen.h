@@ -1,11 +1,15 @@
 #pragma once
+#include <vector>
 #include "Geometry.h"
+
+
 class GameScreen
 {
 private:
-	Vector2 gssize;
-	int screen;
-	Vector2f swing;
+	Vector2 luPos;		// ƒQ[ƒ€‰æ–Ê‚Ì¶ã‚ÌÀ•W
+	Vector2 gssize;		// ƒQ[ƒ€‰æ–Ê‚ÌƒTƒCƒY
+	int screen;			// ƒQ[ƒ€‰æ–Ê
+	Vector2f swing;		// —h‚ê•
 
 	int count, countMax;
 
@@ -13,7 +17,9 @@ public:
 	GameScreen();
 	~GameScreen();
 
+	// ƒQ[ƒ€‰æ–Ê‚Ì•`‰æ€”õ
 	void SetAndClearScreen();
+	// ƒQ[ƒ€‰æ–Ê‚Ì•`‰æ
 	void DrawAndChangeScreen(bool& swingflag);
 	void SetGaussFilter();
 	const Vector2 GetGSSize()const;
