@@ -60,6 +60,7 @@ void Gusokun::Move()
 void Gusokun::Die()
 {
 	scoreFlag = true;
+	actFlag = false;
 	lifeFlag = false;
 	bossFlag = false;
 	nextStageFlag = true;
@@ -86,6 +87,7 @@ void Gusokun::StunDamage()
 	}
 	if (charaData.SP <= 0)
 	{
+		actFlag = false;
 		charaData.shotType = "Shotgun";
 		charaData.shotLevel = 5;
 		updater = &Gusokun::Stunning;
