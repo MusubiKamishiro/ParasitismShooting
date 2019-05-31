@@ -43,7 +43,7 @@ TitleScene::TitleScene()
 	updater = &TitleScene::FadeinUpdate;
 
 	tmenu.reset(new TitleMenu());
-	Sound::Instance().AddBGM("rinze.mp3");
+	Sound::Instance().AddBGM("joker.mp3");
 }
 
 

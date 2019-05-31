@@ -27,11 +27,11 @@ public:
 	}
 	~Sound();
 
-	void AddBGM(const char* filename);
-	void AddSE(const char* filename);
+	void AddBGM(const std::string& filename);
+	void AddSE(const std::string& filename);
 
 	void PlayBGM(const bool& bossflag);
-	void PlaySE();
+	void PlaySE(const std::string& name);
 
 	void DeleteBGM();
 
