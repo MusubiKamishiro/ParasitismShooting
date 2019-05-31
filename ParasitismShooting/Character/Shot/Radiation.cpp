@@ -7,7 +7,7 @@ Radiation::Radiation(const Player& player, const EnemyFactory& enemyfactory) : S
 {
 	ReadActionFile("action/shot.act");
 	ChangeAction("Shot4");
-	SetCharaSize(0.5f);
+	SetCharaSize(0.3f);
 	range = 5.0f;
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 

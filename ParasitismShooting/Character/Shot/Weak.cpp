@@ -7,7 +7,7 @@ Weak::Weak(const Player& player, const EnemyFactory& enemyfactory) : Shot(player
 {
 	ReadActionFile("action/shot.act");
 	ChangeAction("Shot5");
-	SetCharaSize(0.5f);
+	SetCharaSize(0.3f);
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 
 	updater = &Weak::Move;

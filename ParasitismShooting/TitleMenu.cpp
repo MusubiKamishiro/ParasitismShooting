@@ -3,15 +3,17 @@
 #include "Peripheral.h"
 #include "Menu.h"
 #include "KeyConfig.h"
+#include "Game.h"
+#include "Sound.h"
 
 
 TitleMenu::TitleMenu()
 {
 	menu.reset(new Menu());
 
-	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("Start"), menu->ssize.y / 3 + 100), "Start", 0xff00ff });
-	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("Option"), menu->ssize.y / 3 + 130), "Option", 0xff00ff });
-	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("Exit"), menu->ssize.y / 3 + 160), "Exit", 0xff00ff });
+	menu->menudata.push_back({ Vector2(550, menu->ssize.y / 3 + 100), "Start", 0xff00ff });
+	menu->menudata.push_back({ Vector2(550, menu->ssize.y / 3 + 130), "Option", 0xff00ff });
+	menu->menudata.push_back({ Vector2(550, menu->ssize.y / 3 + 160), "Exit", 0xff00ff });
 }
 
 
@@ -32,10 +34,11 @@ bool TitleMenu::Update(const Peripheral & p, bool & flag)
 		else if (menu->selcnt == 1)
 		{
 			flag = true;
+			return true;
 		}
 		else if (menu->selcnt == 2)
 		{
-			DxLib::DxLib_End();
+			Game::Instance().Terminate();
 		}
 	}
 

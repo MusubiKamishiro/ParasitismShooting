@@ -200,7 +200,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 {
 	if (updater != &GamePlayingScene::ContinueUpdate)
 	{
-		if (p.IsTrigger(KeyConfig::Instance().GetNowKey(PAUSE)))
+		if (p.IsTrigger(KeyConfig::Instance().GetNowKey(PAUSE)) && (updater == &GamePlayingScene::GameUpdate))
 		{
 			pauseFlag = !pauseFlag;
 		}
@@ -332,11 +332,12 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 	Draw(p, (int)time);
 	
+	(this->*updater)(p);
+
 	// フェードイン,アウトのための幕
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, ssize.x, ssize.y, 0x000000, true);
 
-	(this->*updater)(p);
 }
 
 void GamePlayingScene::HitCol(const Peripheral& p)

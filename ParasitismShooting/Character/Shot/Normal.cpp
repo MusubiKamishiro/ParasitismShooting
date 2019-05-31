@@ -7,7 +7,7 @@ Normal::Normal(const Player& player, const EnemyFactory& enemyfactory) : Shot(pl
 {
 	ReadActionFile("action/shot.act");
 	ChangeAction("Shot1");
-	SetCharaSize(0.5f);
+	SetCharaSize(0.3f);
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 
 	updater = &Normal::Move;

@@ -58,7 +58,7 @@ void ResultScene::Update(const Peripheral& p)
 	DxLib::DrawString(100, 100, std::to_string(totalScore).c_str(), 0x000000);
 	DxLib::DrawString(100, 150, std::to_string(continueNum).c_str(), 0x000000);
 
+	(this->*updater)(p);
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, 0x000000, true);
-	(this->*updater)(p);
 }
