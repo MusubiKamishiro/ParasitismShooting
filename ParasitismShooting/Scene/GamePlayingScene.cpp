@@ -46,6 +46,7 @@ void GamePlayingScene::FadeoutUpdate(const Peripheral & p)
 {
 	if (pal <= 0)
 	{
+		Sound::Instance().DeleteBGM();
 		Game::Instance().ChangeScene(new TitleScene());
 	}
 	else
@@ -114,6 +115,7 @@ void GamePlayingScene::ContinueUpdate(const Peripheral & p)
 
 void GamePlayingScene::MoveResultUpdate(const Peripheral & p)
 {
+	Sound::Instance().DeleteBGM();
 	Game::Instance().ChangeScene(new ResultScene(score.GetNowScore(), totalCCount));
 }
 

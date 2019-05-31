@@ -9,10 +9,10 @@ SelectMenu::SelectMenu()
 {
 	menu.reset(new Menu());
 
-	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("easy"), menu->ssize.y / 3 + 100), "easy", 0xff00ff });
-	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("normal"), menu->ssize.y / 3 + 130), "normal", 0xff00ff });
-	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("hard"), menu->ssize.y / 3 + 160), "hard", 0xff00ff });
-	menu->menudata.push_back({ Vector2(menu->GetStringCenterPosx("foolish"), menu->ssize.y / 3 + 190), "foolish", 0xff00ff });
+	menu->menudata.push_back({ Vector2(100, 100), "easy", 0x0000ff });
+	menu->menudata.push_back({ Vector2(150, 150), "normal", 0x0000ff });
+	menu->menudata.push_back({ Vector2(200, 200), "hard", 0x0000ff });
+	menu->menudata.push_back({ Vector2(250, 250), "foolish", 0x0000ff });
 }
 
 
@@ -35,5 +35,7 @@ bool SelectMenu::Update(const Peripheral & p, int& difficult)
 
 void SelectMenu::Draw()
 {
+	DxLib::SetFontSize(48);
 	menu->Draw(Vector2(5, 5));
+	DxLib::SetFontSize(24);
 }
