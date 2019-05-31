@@ -62,12 +62,13 @@ private:
 	unsigned int cCount;		// コンティニュー回数
 	unsigned int totalCCount;	// 累計コンティニュー回数
 	Vector2 ssize;
-	bool pauseFlag, continueFlag, clearFlag, allClearFlag;
+	bool pauseFlag, continueFlag, clearFlag, allClearFlag,nextstageFlag;
 	bool DuringParasitism;
 
 	std::vector<CharacterBank> cBank;
 
-	unsigned int bankCnt;
+	int bankCnt;
+	int moveCnt;
 
 	std::shared_ptr<GameScreen> gs;
 	std::shared_ptr<Player> player;

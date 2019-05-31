@@ -32,6 +32,12 @@ void Score::Update()
 		nowScore += 10;
 		upScore -= 10;
 	}
+
+	if (upScore > 1000)
+	{
+		nowScore += 270;
+		upScore -= 270;
+	}
 }
 
 void Score::Draw(const Vector2& pos)

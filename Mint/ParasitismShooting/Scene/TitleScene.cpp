@@ -5,6 +5,8 @@
 #include "SelectScene.h"
 #include "../TitleMenu.h"
 #include "OptionScene.h"
+#include "../Sound.h"
+
 
 void TitleScene::FadeinUpdate(const Peripheral & p)
 {
@@ -41,6 +43,7 @@ TitleScene::TitleScene()
 	updater = &TitleScene::FadeinUpdate;
 
 	tmenu.reset(new TitleMenu());
+	Sound::Instance().AddBGM("joker.mp3");
 }
 
 
@@ -50,16 +53,14 @@ TitleScene::~TitleScene()
 
 void TitleScene::Update(const Peripheral& p)
 {
+	Sound::Instance().PlayBGM(false);
+
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
 	DxLib::DrawExtendGraph(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, titleImage, true);
 
 	if (tmenu->Update(p, optionflag))
 	{
 		pal = 255;
-		updater = &TitleScene::FadeoutUpdate;
-	}
-	if (optionflag)
-	{
 		updater = &TitleScene::FadeoutUpdate;
 	}
 	

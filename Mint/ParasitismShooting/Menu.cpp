@@ -3,6 +3,7 @@
 #include "GameScreen.h"
 #include "Peripheral.h"
 #include "KeyConfig.h"
+#include "Sound.h"
 
 
 Menu::Menu()
@@ -16,6 +17,9 @@ Menu::Menu()
 	selcnt = 0;
 
 	decideFlag = false;
+
+	Sound::Instance().AddSE("select.mp3");
+	Sound::Instance().AddSE("decide.mp3");
 }
 
 
@@ -27,6 +31,7 @@ void Menu::Update(const Peripheral & p)
 {
 	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(UP)))
 	{
+		Sound::Instance().PlaySE("select");
 		--selcnt;
 		if (selcnt < 0)
 		{
@@ -35,11 +40,16 @@ void Menu::Update(const Peripheral & p)
 	}
 	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(DOWN)))
 	{
+		Sound::Instance().PlaySE("select");
 		++selcnt;
 		if (selcnt > menudata.size() - 1)
 		{
 			selcnt = 0;
 		}
+	}
+	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)))
+	{
+		Sound::Instance().PlaySE("decide");
 	}
 }
 

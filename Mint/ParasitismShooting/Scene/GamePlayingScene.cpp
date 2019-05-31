@@ -26,6 +26,7 @@
 #include "../KeyConfig.h"
 #include "../EffectFactory.h"
 #include "../Effect.h"
+#include "../Sound.h"
 
 
 void GamePlayingScene::FadeinUpdate(const Peripheral & p)
@@ -118,6 +119,8 @@ void GamePlayingScene::MoveResultUpdate(const Peripheral & p)
 
 void GamePlayingScene::Init(const unsigned int & stagenum, const int& difficult)
 {
+	Sound::Instance().AddBGM("stage.mp3");
+
 	// ステージ名の作成
 	nowStageNum = stagenum;
 	std::string s = "stage/stage" + std::to_string(nowStageNum) + ".csv";
@@ -152,8 +155,8 @@ void GamePlayingScene::Init(const unsigned int & stagenum, const int& difficult)
 			});
 		j = 0;
 		i++;
-	}
 
+	}
 	cBank.push_back({ -1, 5,"weakfishN", "WeakNormal", Vector2f(450, 60), 3, 1, 1, 0, 240, 60, 1 });
 	cBank.push_back({ -1, 5,"weakfishS", "WeakShotgun", Vector2f(50, 60), 3, 1, 1, 0, 240, 60, 3 });
 	time = 0;
@@ -173,10 +176,14 @@ void GamePlayingScene::Init(const unsigned int & stagenum, const int& difficult)
 	eff.reset(new EffectFactory());
 
 	ssize = Game::Instance().GetScreenSize();
+
+	moveCnt = 0;
 }
 
 GamePlayingScene::GamePlayingScene(const unsigned int& stagenum, const int& diff)
 {
+	Sound::Instance().AddSE("shot.mp3");
+
 	difficult = diff;
 	Init(stagenum, diff);
 
@@ -200,9 +207,11 @@ GamePlayingScene::~GamePlayingScene()
 
 void GamePlayingScene::Update(const Peripheral& p)
 {
+	Sound::Instance().PlayBGM(false);
+
 	if (updater != &GamePlayingScene::ContinueUpdate)
 	{
-		if (p.IsTrigger(KeyConfig::Instance().GetNowKey(PAUSE)))
+		if (p.IsTrigger(KeyConfig::Instance().GetNowKey(PAUSE)) && (updater == &GamePlayingScene::GameUpdate))
 		{
 			pauseFlag = !pauseFlag;
 		}
@@ -211,8 +220,9 @@ void GamePlayingScene::Update(const Peripheral& p)
 		// アップデート関連
 		if (!pauseFlag)
 		{
-			if (cBank[bankCnt].time == ((int)time/*%250*/))
+			if (cBank[bankCnt].time == ((int)time/*%650*/))
 			{
+
 				ef->Create(cBank[bankCnt].enemyname.c_str(), cBank[bankCnt].shotType.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y),
 					cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed, cBank[bankCnt].shotCnt, cBank[bankCnt].shotLevel);
 				if (cBank.size() - 1 > bankCnt)
@@ -243,6 +253,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 					if (p.IsPressing(KeyConfig::Instance().GetNowKey(ATTACK)) && ((int)time % 6 == 1))
 					{
+						Sound::Instance().PlaySE("shot");
 						sf->Create(player->GetCharaData().shotType, player->GetPos(), 8, 1, player->GetCharaData().shotLevel, SHOOTER::PLAYER);
 						//sf->Create(player->GetCharaData().shotTypeSub, player->GetPos(), 8, 1, player->GetCharaData().shotLevel, SHOOTER::PLAYER);
 					}
@@ -251,18 +262,19 @@ void GamePlayingScene::Update(const Peripheral& p)
 					{
 						if (enemy->GetShotReady())
 						{
-							if (enemy->actFlag == true)
+							if (enemy->actFlag)
 							{
+								Sound::Instance().PlaySE("shot");
 								sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 2, 1, enemy->GetCharaData().shotLevel, (enemy->GetCharaData().shotType == (enemy->GetCharaData().shotType == "WeakNormal" ? "WeakNormal" : "WeakShotgun") ? SHOOTER::PLAYER : SHOOTER::ENEMY));
 							}
 						}
 						enemy->Update();
 
-						if (enemy->bossFlag == true)
+						if (enemy->bossFlag)
 						{
 							if ((int)time % 350 == 0)
 							{
-								ef->Create(cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1:0)].enemyname.c_str(), cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].shotType.c_str(), Vector2f(gs->outscreen + cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].pos.x, gs->outscreen + cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].pos.y),
+								ef->Create(cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].enemyname.c_str(), cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].shotType.c_str(), Vector2f(gs->outscreen + cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].pos.x, gs->outscreen + cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].pos.y),
 									cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].movePtn, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].cnt, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].wait, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].HP, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].SP, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].Speed, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].shotCnt, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].shotLevel);
 								if (cBank[bankCnt].enemyname == "weakfishN")
 								{
@@ -282,6 +294,10 @@ void GamePlayingScene::Update(const Peripheral& p)
 					{
 						if (enemy->scoreFlag)
 						{
+							if (enemy->nextStageFlag)
+							{
+								nextstageFlag = enemy->nextStageFlag;
+							}
 							score.AddScore(enemy->GetScore());
 						}
 					}
@@ -289,25 +305,27 @@ void GamePlayingScene::Update(const Peripheral& p)
 				hud->Update();
 
 				// スコアで次のステージへ(デバックのため一時的なもの)
-				for (auto& enemy : ef->GetLegion())
+				
+				if (nextstageFlag)
 				{
-					if (enemy->nextStageFlag)
+					if (nowStageNum == 5)
 					{
-						if (nowStageNum == 5)
-						{
-							allClearFlag = true;
-						}
+						allClearFlag = true;
+					}
 
+					if (moveCnt > 120)
+					{
 						if (!clearFlag)
 						{
 							Score::Instance().AddClearBonus(nowStageNum, parasCnt, 0, cCount, difficult);
 
 							clearFlag = true;
 							updater = &GamePlayingScene::ClearUpdate;
+							nextstageFlag = false;
 						}
 					}
+					++moveCnt;
 				}
-
 				++time;
 			}
 		}
@@ -332,7 +350,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 	sf->ShotDelete();
 	//ef->EnemyDelete();
 	
-	for (unsigned int i = 0; i < ef->GetLegion().size(); ++i)
+	for (int i = 0; i < ef->GetLegion().size(); ++i)
 	{
 		auto enemy = *std::next(ef->GetLegion().begin(), i);
 		if (!enemy->GetLifeFlag())
@@ -356,11 +374,12 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 	Draw(p, (int)time);
 	
+	(this->*updater)(p);
+
 	// フェードイン,アウトのための幕
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, ssize.x, ssize.y, 0x000000, true);
 
-	(this->*updater)(p);
 }
 
 void GamePlayingScene::HitCol(const Peripheral& p)
@@ -377,7 +396,7 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 				{
 					if (cd->IsCollision(shot->GetRects(sRect.rc), player->GetRects(pRect.rc), cd->GetRectCombi(sRect.rt, pRect.rt)))
 					{
-						//player->Damage(p);
+						player->Damage(p);
 					}
 				}
 			}
@@ -398,7 +417,7 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 								if (shot->GetShotName() != "Weak")
 								{
 									enemy->Damage();
-									if (enemy->GetCharaData().HP == 0)
+									if (enemy->GetCharaData().HP == 0 || enemy->actFlag == false)
 									{
 										enemy->ShotStop();
 									}

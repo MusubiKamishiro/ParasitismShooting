@@ -16,12 +16,11 @@ Vector2f  EnemyFactory::GetLegionBeginCharPos() const
 		auto itr = *legion.begin();
 		return itr->GetPos();
 	}
-	return { 0.0f,0.0f };
 }
 
 void EnemyFactory::EnemyDelete()
 {
-	for (unsigned int i = 0; i < legion.size(); ++i)
+	for (int i = 0; i < legion.size(); ++i)
 	{
 		auto enemy = *std::next(legion.begin(), i);
 		if (!enemy->GetLifeFlag())
@@ -39,6 +38,10 @@ void EnemyFactory::OutofScreen()
 		if (enemy->pos.x < left - enemy->rect.Width() / 2 || enemy->pos.x > right + enemy->rect.Width() / 2 ||
 			enemy->pos.y < up - enemy->rect.Height() / 2 || enemy->pos.y > down + enemy->rect.Height() / 2)
 		{
+			if (enemy->bossFlag)
+			{
+				enemy->nextStageFlag = true;
+			}
 			enemy->lifeFlag = false;
 		}
 	}

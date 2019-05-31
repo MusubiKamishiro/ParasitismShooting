@@ -41,20 +41,17 @@ Enemy * Gusokun::Clone()
 
 void Gusokun::Move()
 {
-	if (bossFlag == false)
+	if (!bossFlag)
 	{
 		bossFlag = true;
 	}
-	if (actFlag == false)
-	{
-		charaData.shotReady = false;
-	}
-	if (charaData.shotReady == true /*|| actFlag == false*/)
+	
+	if (charaData.shotReady == true || actFlag == false)
 	{
 		charaData.shotReady = false;
 	}
 	orginalMove(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.shotReady);
-	if (actFlag == true)
+	if (actFlag)
 	{
 		cnt++;
 	}
@@ -71,17 +68,16 @@ void Gusokun::Die()
 
 void Gusokun::Stunning()
 {
-	if (charaData.shotReady == true)
+	if (charaData.shotReady)
 	{
 		charaData.shotReady = false;
 	}
 	eAction->Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.shotReady);
-	
 }
 
 void Gusokun::StunDamage()
 {
-	if (actFlag == true)
+	if (actFlag)
 	{
 		--charaData.SP;
 	}
@@ -126,13 +122,9 @@ void Gusokun::Draw(int time)
 
 void Gusokun::Damage()
 {
-	if (actFlag == true)
+	if (actFlag)
 	{
 		charaData.HP -= 1;
-		if (charaData.SP > charaData.HP)
-		{
-			charaData.SP = charaData.HP;
-		}
 	}
 	if (charaData.HP == 300)
 	{
@@ -140,12 +132,13 @@ void Gusokun::Damage()
 		{
 			vecAngle = atan2(basePos.y - pos.y, basePos.x - pos.x);
 			actFlag = false;
-		}
-		if (charaData.shotReady == true)
-		{
-			charaData.shotReady = false;
+			if (charaData.shotReady == true)
+			{
+				charaData.shotReady = false;
+			}
 		}
 		cnt = 0;
+		charaData.SP = 100;
 	}
 	if (charaData.HP <= 0)
 	{
@@ -155,11 +148,10 @@ void Gusokun::Damage()
 
 void Gusokun::orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int wait, int shotCnt, int charSP, bool & ShotReady)
 {
-	if (actFlag == false)
+	if (!actFlag)
 	{
 		pos.x += cos(vecAngle) * speed / 4;
 		pos.y += sin(vecAngle) * speed / 4;
-
 		if (basePos.x - pos.x < DELTA)
 		{
 			if (basePos.y - pos.x < DELTA)
@@ -381,7 +373,7 @@ void Gusokun::orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int
 		}
 	}
 
-	else if(charaData.HP < 301 || charaData.SP < 101 && actFlag == true)
+	else if (charaData.HP < 301 || charaData.SP < 101 && actFlag == true)
 	{
 		switch (cnt)
 		{
@@ -428,10 +420,8 @@ void Gusokun::orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int
 			}
 		}
 	}
-
-	if (charaData.HP > 300 && charaData.SP > 100)
+	if ((charaData.HP > 300) && (charaData.SP > 100))
 	{
-		
 		if (cnt < 30)
 		{
 			pos.x += speed;
