@@ -84,6 +84,7 @@ void Gusokun::StunDamage()
 	if (charaData.SP == 100)
 	{
 		cnt = 0;
+		actFlag = false;
 	}
 	if (charaData.SP <= 0)
 	{
@@ -419,7 +420,7 @@ void Gusokun::orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int
 			}
 		}
 	}
-	if (charaData.HP > 300)
+	if ((charaData.HP > 300) && (charaData.SP > 100))
 	{
 		if (cnt < 30)
 		{

@@ -3,6 +3,7 @@
 #include <algorithm>
 #include "../Peripheral.h"
 #include "../GameScreen.h"
+#include "../Sound.h"
 
 void Player::Init()
 {
@@ -35,10 +36,13 @@ void Player::Init()
 
 Player::Player()
 {
+	Sound::Instance().AddSE("parascancel.mp3");
+	Sound::Instance().AddSE("paras.mp3");
+	Sound::Instance().AddSE("damage.mp3");
+
 	Init();
 
 	parasFlag = false;
-
 	updater = &Player::Move;
 }
 
@@ -123,6 +127,7 @@ void Player::Damage(const Peripheral & p)
 {
 	if (updater != &Player::Invincible)
 	{
+		Sound::Instance().PlaySE("damage");
 		--charaData.HP;
 		if (charaData.HP <= 0)
 		{
@@ -173,6 +178,8 @@ void Player::Reborn(const Peripheral & p)
 
 void Player::Parasitic(const Peripheral & p, const CharaData& cdata)
 {
+	Sound::Instance().PlaySE("paras");
+
 	parasFlag = true;
 
 	charaData = cdata;
@@ -190,6 +197,8 @@ void Player::Parasitic(const Peripheral & p, const CharaData& cdata)
 
 void Player::ParasiticCancel(const Peripheral & p)
 {
+	Sound::Instance().PlaySE("parascancel");
+
 	DxLib::StartJoypadVibration(DX_INPUT_PAD1, 1000, 1000);
 	charaData = originData;
 	pinchFlag = true;

@@ -68,6 +68,7 @@ private:
 	std::vector<CharacterBank> cBank;
 
 	int bankCnt;
+	int moveCnt;
 
 	std::shared_ptr<GameScreen> gs;
 	std::shared_ptr<Player> player;

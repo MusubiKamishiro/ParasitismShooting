@@ -119,6 +119,8 @@ void GamePlayingScene::MoveResultUpdate(const Peripheral & p)
 
 void GamePlayingScene::Init(const unsigned int & stagenum, const int& difficult)
 {
+	Sound::Instance().AddBGM("stage.mp3");
+
 	// ステージ名の作成
 	nowStageNum = stagenum;
 	std::string s = "stage/stage" + std::to_string(nowStageNum) + ".csv";
@@ -174,12 +176,13 @@ void GamePlayingScene::Init(const unsigned int & stagenum, const int& difficult)
 	eff.reset(new EffectFactory());
 
 	ssize = Game::Instance().GetScreenSize();
+
+	moveCnt = 0;
 }
 
 GamePlayingScene::GamePlayingScene(const unsigned int& stagenum, const int& diff)
 {
-	Sound& sound = Sound::Instance();
-	sound.AddSE("paras.mp3");
+	Sound::Instance().AddSE("shot.mp3");
 
 	difficult = diff;
 	Init(stagenum, diff);
@@ -204,6 +207,8 @@ GamePlayingScene::~GamePlayingScene()
 
 void GamePlayingScene::Update(const Peripheral& p)
 {
+	Sound::Instance().PlayBGM(false);
+
 	if (updater != &GamePlayingScene::ContinueUpdate)
 	{
 		if (p.IsTrigger(KeyConfig::Instance().GetNowKey(PAUSE)) && (updater == &GamePlayingScene::GameUpdate))
@@ -248,6 +253,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 
 					if (p.IsPressing(KeyConfig::Instance().GetNowKey(ATTACK)) && ((int)time % 6 == 1))
 					{
+						Sound::Instance().PlaySE("shot");
 						sf->Create(player->GetCharaData().shotType, player->GetPos(), 8, 1, player->GetCharaData().shotLevel, SHOOTER::PLAYER);
 						//sf->Create(player->GetCharaData().shotTypeSub, player->GetPos(), 8, 1, player->GetCharaData().shotLevel, SHOOTER::PLAYER);
 					}
@@ -258,6 +264,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 						{
 							if (enemy->actFlag)
 							{
+								Sound::Instance().PlaySE("shot");
 								sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 2, 1, enemy->GetCharaData().shotLevel, (enemy->GetCharaData().shotType == (enemy->GetCharaData().shotType == "WeakNormal" ? "WeakNormal" : "WeakShotgun") ? SHOOTER::PLAYER : SHOOTER::ENEMY));
 							}
 						}
@@ -303,13 +310,17 @@ void GamePlayingScene::Update(const Peripheral& p)
 							allClearFlag = true;
 						}
 
-						if (!clearFlag)
+						if (moveCnt > 120)
 						{
-							Score::Instance().AddClearBonus(nowStageNum, parasCnt, 0, cCount, difficult);
+							if (!clearFlag)
+							{
+								Score::Instance().AddClearBonus(nowStageNum, parasCnt, 0, cCount, difficult);
 
-							clearFlag = true;
-							updater = &GamePlayingScene::ClearUpdate;
+								clearFlag = true;
+								updater = &GamePlayingScene::ClearUpdate;
+							}
 						}
+						++moveCnt;
 					}
 				}
 
@@ -446,7 +457,6 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 						else
 						{
 							// 敵の力を手に入れる
-							Sound::Instance().PlaySE("paras");
 							player->Parasitic(p, enemy->GetCharaData());
 							++parasCnt;
 							++totalParasCnt;
