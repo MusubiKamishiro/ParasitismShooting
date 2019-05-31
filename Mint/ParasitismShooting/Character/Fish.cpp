@@ -13,6 +13,7 @@ Fish::Fish(const Player& player) : Enemy(player), player(player)
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 	score = 200;
 
+	actFlag = true;
 	eAction.reset(new EnemyActionPattern());
 
 	updater = &Fish::Move;
@@ -48,6 +49,7 @@ void Fish::Die()
 {
 	scoreFlag = true;
 	lifeFlag = false;
+	actFlag = false;
 }
 
 void Fish::Stunning()
@@ -64,6 +66,14 @@ void Fish::StunDamage()
 	--charaData.SP;
 	if (charaData.SP <= 0)
 	{
+		if (charaData.shotType == "WeakNormal")
+		{
+			charaData.shotType = "Normal";
+		}
+		else if (charaData.shotType == "WeakShotgun")
+		{
+			charaData.shotType = "Shotgun";
+		}
 		updater = &Fish::Stunning;
 	}
 }

@@ -56,9 +56,11 @@ ShotFactory::ShotFactory(const Player& player, const EnemyFactory& enemyfactory)
 	down = screenSize.y + gscreen.outscreen;
 
 	originalShot["Normal"] = new Normal(player, enemyfactory);
+	originalShot["WeakNormal"] = new Normal(player, enemyfactory);
 	originalShot["Radiation"] = new Radiation(player, enemyfactory);
 	originalShot["Random"] = new Random(player, enemyfactory);
 	originalShot["Shotgun"] = new Shotgun(player, enemyfactory);
+	originalShot["WeakShotgun"] = new Shotgun(player, enemyfactory);
 	originalShot["Tracking"] = new Tracking(player, enemyfactory);
 	originalShot["Weak"] = new Weak(player, enemyfactory);
 	originalShot["CircleCross"] = new CircleCross(player, enemyfactory);
@@ -121,6 +123,23 @@ float ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, int
 		{
 			return -(float)M_PI_2;
 		}
+	}
+	else if (shotType == "WeakNormal")
+	{
+		return M_PI_2;
+	}
+	else if (shotType == "WeakShotgun")
+	{
+		angle = M_PI_2;
+		if (level / 2 > cnt)
+		{
+			angle -= (float)M_PI * (10.0f  * (cnt + 1) / 180.0f);
+		}
+		else if (level / 2 < cnt)
+		{
+			angle += (float)M_PI * (10.0f * (cnt - (level / 2)) / 180.0f);
+		}
+		return angle;
 	}
 	else if (shotType == "Radiation")
 	{

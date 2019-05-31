@@ -3,6 +3,7 @@
 #include <DxLib.h>
 #include "EnemyActionPattern.h"
 
+const float DELTA = 0.001;
 
 Gusokun::Gusokun(const Player& player) : Enemy(player), player(player)
 {
@@ -11,14 +12,15 @@ Gusokun::Gusokun(const Player& player) : Enemy(player), player(player)
 	SetCharaSize(0.30f);
 	charaData.shotReady = false;
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
-	score = 100000;
+	score = 10000;
 
 	eAction.reset(new EnemyActionPattern());
 
 	updater = &Gusokun::Move;
 
 	actFlag = true;
-	bossDownFlag = false;
+	bossFlag = false;
+	nextStageFlag = false;
 	basePos = { 310,120 };
 }
 
@@ -39,12 +41,20 @@ Enemy * Gusokun::Clone()
 
 void Gusokun::Move()
 {
-	if (charaData.shotReady == true)
+	if (bossFlag == false)
+	{
+		bossFlag = true;
+	}
+	if (actFlag == false)
+	{
+		charaData.shotReady = false;
+	}
+	if (charaData.shotReady == true /*|| actFlag == false*/)
 	{
 		charaData.shotReady = false;
 	}
 	orginalMove(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.shotReady);
-	if (actFlag)
+	if (actFlag == true)
 	{
 		cnt++;
 	}
@@ -54,21 +64,23 @@ void Gusokun::Die()
 {
 	scoreFlag = true;
 	lifeFlag = false;
-	bossDownFlag = true;
+	bossFlag = false;
+	nextStageFlag = true;
 }
 
 void Gusokun::Stunning()
 {
-	eAction->Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.shotReady);
 	if (charaData.shotReady == true)
 	{
 		charaData.shotReady = false;
 	}
+	eAction->Update(movePtn, pos, charaData.moveVel, cnt, wait, shotCnt, charaData.SP, charaData.shotReady);
+	
 }
 
 void Gusokun::StunDamage()
 {
-	if (actFlag)
+	if (actFlag == true)
 	{
 		--charaData.SP;
 	}
@@ -111,7 +123,7 @@ void Gusokun::Draw(int time)
 
 void Gusokun::Damage()
 {
-	if (actFlag)
+	if (actFlag == true)
 	{
 		charaData.HP -= 1;
 		if (charaData.SP > charaData.HP)
@@ -126,8 +138,11 @@ void Gusokun::Damage()
 			vecAngle = atan2(basePos.y - pos.y, basePos.x - pos.x);
 			actFlag = false;
 		}
+		if (charaData.shotReady == true)
+		{
+			charaData.shotReady = false;
+		}
 		cnt = 0;
-		charaData.SP = 100;
 	}
 	if (charaData.HP <= 0)
 	{
@@ -137,13 +152,17 @@ void Gusokun::Damage()
 
 void Gusokun::orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int wait, int shotCnt, int charSP, bool & ShotReady)
 {
-	if (!actFlag)
+	if (actFlag == false)
 	{
 		pos.x += cos(vecAngle) * speed / 4;
 		pos.y += sin(vecAngle) * speed / 4;
-		if (Vector2f((int)pos.x, (int)pos.y) == basePos)
+
+		if (basePos.x - pos.x < DELTA)
 		{
-			actFlag = true;
+			if (basePos.y - pos.x < DELTA)
+			{
+				actFlag = true;
+			}
 		}
 	}
 	if(cnt < 1800 && charaData.HP >300 && charaData.SP > 100 && actFlag == true)
@@ -354,15 +373,6 @@ void Gusokun::orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int
 		case 1720:
 			charaData.shotReady = true;
 			break;
-		/*case 1740:
-			charaData.shotReady = true;
-			break;
-		case 1760:
-			charaData.shotReady = true;
-			break;
-		case 1780:
-			charaData.shotReady = true;
-			break;*/
 		default:
 			break;
 		}
@@ -396,8 +406,11 @@ void Gusokun::orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int
 		default:
 			if (cnt % 10 == 0)
 			{
-				charaData.shotReady = true;
-				break;
+				if (cnt % 15 == 0)
+				{
+					charaData.shotReady = true;
+					break;
+				}
 			}
 		}
 	}

@@ -68,6 +68,7 @@ EnemyActionPattern::EnemyActionPattern()
 	movementPtn[MovementPTN::LeftRight] = &EnemyActionPattern::LeftRight;
 	movementPtn[MovementPTN::Rush] = &EnemyActionPattern::Rush;
 	movementPtn[MovementPTN::Wavy] = &EnemyActionPattern::Wavy;
+	movementPtn[MovementPTN::FadeOut] = &EnemyActionPattern::FadeOut;
 }
 
 EnemyActionPattern::~EnemyActionPattern()

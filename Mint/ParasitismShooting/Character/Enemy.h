@@ -30,7 +30,7 @@ public:
 
 	bool GetShotReady()const;
 	unsigned int GetScore()const;
-	bool bossDownFlag;
+	bool nextStageFlag;
 	bool bossFlag;
 	bool scoreFlag;
 	bool actFlag;
