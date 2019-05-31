@@ -10,6 +10,7 @@ enum MovementPTN
 	Rush,
 	Wavy,
 	Stun,
+	FadeOut,
 	MOVEMENT_PTN_MAX
 };
 
@@ -24,6 +25,7 @@ private:
 	void LeftRight(Vector2f &pos, float speed, int cnt, int wait);		// ¶‰E‚É—š‚¯‚é
 	void Rush(Vector2f &pos, float speed, int cnt, int wait);		// ©‹@‚É“ÁU‚ğdŠ|‚¯‚é
 	void Wavy(Vector2f &pos, float speed, int cnt, int wait);		// ”góˆÚ“®
+	void FadeOut(Vector2f &pos, float speed, int cnt, int wait);
 	void Stun(Vector2f &pos, float speed);		// ‹Câó‘Ô
 
 	void(EnemyActionPattern::*movementPtn[MOVEMENT_PTN_MAX])(Vector2f &pos, float speed, int cnt, int wait);

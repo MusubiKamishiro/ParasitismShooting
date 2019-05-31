@@ -154,6 +154,8 @@ void GamePlayingScene::Init(const unsigned int & stagenum, const int& difficult)
 		i++;
 
 	}
+	cBank.push_back({ -1, 5,"weakfishN", "WeakNormal", Vector2f(450, 60), 3, 1, 1, 0, 240, 60, 1 });
+	cBank.push_back({ -1, 5,"weakfishS", "WeakShotgun", Vector2f(50, 60), 3, 1, 1, 0, 240, 60, 3 });
 	time = 0;
 	parasCnt = 0;
 	cCount = 0;
@@ -250,9 +252,29 @@ void GamePlayingScene::Update(const Peripheral& p)
 					{
 						if (enemy->GetShotReady())
 						{
-							sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 2, 1, enemy->GetCharaData().shotLevel, SHOOTER::ENEMY);
+							if (enemy->actFlag)
+							{
+								sf->Create(enemy->GetCharaData().shotType, enemy->GetPos(), 2, 1, enemy->GetCharaData().shotLevel, (enemy->GetCharaData().shotType == (enemy->GetCharaData().shotType == "WeakNormal" ? "WeakNormal" : "WeakShotgun") ? SHOOTER::PLAYER : SHOOTER::ENEMY));
+							}
 						}
 						enemy->Update();
+
+						if (enemy->bossFlag)
+						{
+							if ((int)time % 350 == 0)
+							{
+								ef->Create(cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].enemyname.c_str(), cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].shotType.c_str(), Vector2f(gs->outscreen + cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].pos.x, gs->outscreen + cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].pos.y),
+									cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].movePtn, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].cnt, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].wait, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].HP, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].SP, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].Speed, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].shotCnt, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].shotLevel);
+								if (cBank[bankCnt].enemyname == "weakfishN")
+								{
+									bankCnt++;
+								}
+								else
+								{
+									bankCnt--;
+								}
+							}
+						}
 					}
 
 					HitCol(p);
@@ -268,19 +290,22 @@ void GamePlayingScene::Update(const Peripheral& p)
 				hud->Update();
 
 				// スコアで次のステージへ(デバックのため一時的なもの)
-				if (score.GetNowScore() > (10000 * nowStageNum))
+				for (auto& enemy : ef->GetLegion())
 				{
-					if (nowStageNum == 5)
+					if (enemy->nextStageFlag)
 					{
-						allClearFlag = true;
-					}
+						if (nowStageNum == 5)
+						{
+							allClearFlag = true;
+						}
 
-					if (!clearFlag)
-					{
-						Score::Instance().AddClearBonus(nowStageNum, parasCnt, 0, cCount, difficult);
+						if (!clearFlag)
+						{
+							Score::Instance().AddClearBonus(nowStageNum, parasCnt, 0, cCount, difficult);
 
-						clearFlag = true;
-						updater = &GamePlayingScene::ClearUpdate;
+							clearFlag = true;
+							updater = &GamePlayingScene::ClearUpdate;
+						}
 					}
 				}
 
@@ -370,19 +395,22 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 					{
 						if (cd->IsCollision(shot->GetRects(sRect.rc), enemy->GetRects(eRect.rc), cd->GetRectCombi(sRect.rt, eRect.rt)))
 						{
-							if (shot->GetShotName() != "Weak")
+							if (shot->GetShotName() != "WeakNormal" && shot->GetShotName() != "WeakShotgun")
 							{
-								enemy->Damage();
-								if (enemy->GetCharaData().HP == 0 || enemy->actFlag == false)
+								if (shot->GetShotName() != "Weak")
 								{
-									enemy->ShotStop();
+									enemy->Damage();
+									if (enemy->GetCharaData().HP == 0 || enemy->actFlag == false)
+									{
+										enemy->ShotStop();
+									}
 								}
+								else
+								{
+									enemy->StunDamage();
+								}
+								shot->Delete();
 							}
-							else
-							{
-								enemy->StunDamage();
-							}
-							shot->Delete();
 						}
 					}
 				}

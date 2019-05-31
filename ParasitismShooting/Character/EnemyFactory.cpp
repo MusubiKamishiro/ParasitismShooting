@@ -54,6 +54,8 @@ EnemyFactory::EnemyFactory(const Player& player) : player(player)
 	down = screenSize.y + gscreen.outscreen;
 
 	originalEnemy["fish"] = new Fish(player);
+	originalEnemy["weakfishN"] = new Fish(player);
+	originalEnemy["weakfishS"] = new Fish(player);
 	originalEnemy["gusokun"] = new Gusokun(player);
 }
 

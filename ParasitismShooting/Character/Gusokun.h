@@ -29,8 +29,6 @@ private:
 
 	const Player& player;
 
-	bool actFlag;
-
 	Vector2f basePos;
 	float vecAngle;
 public:
