@@ -38,6 +38,10 @@ void EnemyFactory::OutofScreen()
 		if (enemy->pos.x < left - enemy->rect.Width() / 2 || enemy->pos.x > right + enemy->rect.Width() / 2 ||
 			enemy->pos.y < up - enemy->rect.Height() / 2 || enemy->pos.y > down + enemy->rect.Height() / 2)
 		{
+			if (enemy->bossFlag)
+			{
+				enemy->nextStageFlag = true;
+			}
 			enemy->lifeFlag = false;
 		}
 	}

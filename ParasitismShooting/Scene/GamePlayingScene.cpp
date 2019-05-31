@@ -294,6 +294,10 @@ void GamePlayingScene::Update(const Peripheral& p)
 					{
 						if (enemy->scoreFlag)
 						{
+							if (enemy->nextStageFlag)
+							{
+								nextstageFlag = enemy->nextStageFlag;
+							}
 							score.AddScore(enemy->GetScore());
 						}
 					}
@@ -301,29 +305,27 @@ void GamePlayingScene::Update(const Peripheral& p)
 				hud->Update();
 
 				// スコアで次のステージへ(デバックのため一時的なもの)
-				for (auto& enemy : ef->GetLegion())
+				
+				if (nextstageFlag)
 				{
-					if (enemy->nextStageFlag)
+					if (nowStageNum == 5)
 					{
-						if (nowStageNum == 5)
-						{
-							allClearFlag = true;
-						}
-
-						if (moveCnt > 120)
-						{
-							if (!clearFlag)
-							{
-								Score::Instance().AddClearBonus(nowStageNum, parasCnt, 0, cCount, difficult);
-
-								clearFlag = true;
-								updater = &GamePlayingScene::ClearUpdate;
-							}
-						}
-						++moveCnt;
+						allClearFlag = true;
 					}
-				}
 
+					if (moveCnt > 120)
+					{
+						if (!clearFlag)
+						{
+							Score::Instance().AddClearBonus(nowStageNum, parasCnt, 0, cCount, difficult);
+
+							clearFlag = true;
+							updater = &GamePlayingScene::ClearUpdate;
+							nextstageFlag = false;
+						}
+					}
+					++moveCnt;
+				}
 				++time;
 			}
 		}
