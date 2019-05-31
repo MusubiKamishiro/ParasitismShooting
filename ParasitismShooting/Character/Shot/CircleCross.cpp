@@ -7,7 +7,7 @@ CircleCross::CircleCross(const Player& player, const EnemyFactory& enemyfactory)
 {
 	ReadActionFile("action/shot.act");
 	ChangeAction("Shot6");
-	SetCharaSize(0.5f);
+	SetCharaSize(0.3f);
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 
 	updater = &CircleCross::Move;

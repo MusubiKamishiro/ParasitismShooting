@@ -200,7 +200,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 {
 	if (updater != &GamePlayingScene::ContinueUpdate)
 	{
-		if (p.IsTrigger(KeyConfig::Instance().GetNowKey(PAUSE)))
+		if (p.IsTrigger(KeyConfig::Instance().GetNowKey(PAUSE)) && (updater == &GamePlayingScene::GameUpdate))
 		{
 			pauseFlag = !pauseFlag;
 		}
