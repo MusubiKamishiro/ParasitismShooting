@@ -19,6 +19,7 @@ Menu::Menu()
 	decideFlag = false;
 
 	Sound::Instance().AddSE("select.mp3");
+	Sound::Instance().AddSE("decide.mp3");
 }
 
 
@@ -45,6 +46,10 @@ void Menu::Update(const Peripheral & p)
 		{
 			selcnt = 0;
 		}
+	}
+	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)))
+	{
+		Sound::Instance().PlaySE("decide");
 	}
 }
 

@@ -5,6 +5,8 @@
 #include "../Game.h"
 #include "TitleScene.h"
 #include "../KeyConfig.h"
+#include "../Sound.h"
+
 
 void ResultScene::FadeinUpdate(const Peripheral & p)
 {
@@ -43,6 +45,7 @@ ResultScene::ResultScene(const unsigned int& score, const unsigned int& cnum)
 	continueNum = cnum;
 
 	resultImage = DxLib::LoadGraph("img/tresult.png");
+	Sound::Instance().AddSE("result.mp3");
 }
 
 
