@@ -10,6 +10,7 @@ private:
 	Vector2 gssize;		// ゲーム画面のサイズ
 	int screen;			// ゲーム画面
 	Vector2f swing;		// 揺れ幅
+	int screenBorderWidth;	// ゲーム画面の縁の幅
 
 	int count, countMax;
 

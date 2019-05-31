@@ -3,6 +3,7 @@
 #include "GameScreen.h"
 #include "Peripheral.h"
 #include "KeyConfig.h"
+#include "Sound.h"
 
 
 Menu::Menu()
@@ -27,6 +28,7 @@ void Menu::Update(const Peripheral & p)
 {
 	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(UP)))
 	{
+
 		--selcnt;
 		if (selcnt < 0)
 		{
@@ -35,6 +37,7 @@ void Menu::Update(const Peripheral & p)
 	}
 	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(DOWN)))
 	{
+
 		++selcnt;
 		if (selcnt > menudata.size() - 1)
 		{

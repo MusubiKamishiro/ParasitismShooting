@@ -16,6 +16,7 @@ GameScreen::GameScreen() : outscreen(60)
 	swing = Vector2f(0, 0);
 	count = 0;
 	countMax = 64;
+	screenBorderWidth = 5;
 }
 
 
@@ -57,8 +58,14 @@ void GameScreen::DrawAndChangeScreen(bool& swingflag)
 	{
 		swing = Vector2f(-swing.x, -swing.y);
 	}
+	// ‰æ–Ê‰‚Ì•`‰æ
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 64);
+	DxLib::DrawBox(luPos.x - screenBorderWidth, luPos.y - screenBorderWidth,
+		gssize.x - outscreen * 2 + luPos.x + screenBorderWidth, gssize.y - outscreen * 2 + luPos.x + screenBorderWidth, 0x000000, true);
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 
-	DxLib::DrawRectGraph(luPos.x, luPos.y, outscreen + swing.x, outscreen + swing.y, gssize.x - outscreen * 2, gssize.y - outscreen * 2 , screen, true, false);
+	// ƒQ[ƒ€‰æ–Ê‚Ì•`‰æ
+	DxLib::DrawRectGraph(luPos.x, luPos.y, outscreen + swing.x, outscreen + swing.y, gssize.x - outscreen * 2, gssize.y - outscreen * 2, screen, true, false);
 
 	if (std::abs(swing.x) > 0.5f)
 	{

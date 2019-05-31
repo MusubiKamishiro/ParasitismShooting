@@ -47,8 +47,8 @@ bool CollisionDetector::IsCollision(const Rect& rcA, const Rect& rcB, const Rect
 
 	if (rcombi == RectCombi::circleANDcircle)
 	{
-		auto a = std::abs(rcA.center.x - rcB.center.x);
-		auto b = std::abs(rcA.center.y - rcB.center.y);
+		float a = std::abs(rcA.center.x - rcB.center.x);
+		float b = std::abs(rcA.center.y - rcB.center.y);
 		return ((rcA.Height() / 2 + rcB.Height() / 2) > std::hypot(a, b));
 	}
 	else if (rcombi == RectCombi::circleANDbox)

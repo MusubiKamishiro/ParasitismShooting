@@ -34,13 +34,14 @@ bool OptionMenu::Update(const Peripheral & p)
 		menu->Update(p);
 		if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)) && !menu->decideFlag)
 		{
-			menu->decideFlag = true;
+			
 			if (menu->selcnt == 0)
 			{
 				configflag = true;
 			}
 			else if (menu->selcnt == 1)
 			{
+				menu->decideFlag = true;
 				return true;
 			}
 		}
