@@ -357,6 +357,10 @@ void GamePlayingScene::Update(const Peripheral& p)
 		auto enemy = *std::next(ef->GetLegion().begin(), i);
 		if (!enemy->GetLifeFlag())
 		{
+			if (enemy->nextStageFlag)
+			{
+				nextstageFlag = enemy->nextStageFlag;
+			}
 			ef->GetLegion().erase(std::next(ef->GetLegion().begin(), i));
 			--i;
 

@@ -152,12 +152,9 @@ void Gusokun::orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int
 	{
 		pos.x += cos(vecAngle) * speed / 4;
 		pos.y += sin(vecAngle) * speed / 4;
-		if (basePos.x - pos.x < DELTA)
+		if ((basePos.x - pos.x < DELTA) && (basePos.y - pos.x < DELTA))
 		{
-			if (basePos.y - pos.x < DELTA)
-			{
-				actFlag = true;
-			}
+			actFlag = true;
 		}
 	}
 	if(cnt < 1800 && charaData.HP >300 && charaData.SP > 100 && actFlag == true)
