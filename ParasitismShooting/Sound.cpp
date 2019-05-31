@@ -14,7 +14,7 @@ Sound::~Sound()
 {
 }
 
-void Sound::AddBGM(const char* filename)
+void Sound::AddBGM(const std::string& filename)
 {
 	std::string s = "sound/BGM/";
 	s += filename;
@@ -25,21 +25,24 @@ void Sound::AddBGM(const char* filename)
 	bool same = false;
 
 	// ìØÇ∂Ç‡ÇÃÇ™Ç†Ç¡ÇΩÇÁì«Ç›çûÇ‹Ç»Ç¢
+	int ipos = filename.find_last_of('.');
+	auto soundname = filename.substr(0, ipos);
+
 	for (auto& bgm: bgms)
 	{
-		if (bgm.soundName == filename)
+		if (bgm.soundName == soundname)
 		{
 			same = true;
 		}
 	}
 	if (!same)
 	{
-		bgms.push_back({ h, filename });
+		bgms.push_back({ h, soundname });
 		DxLib::ChangeVolumeSoundMem(100, h);
 	}
 }
 
-void Sound::AddSE(const char* filename)
+void Sound::AddSE(const std::string& filename)
 {
 	std::string s = "sound/SE/";
 	s += filename;
@@ -47,20 +50,23 @@ void Sound::AddSE(const char* filename)
 #ifdef _DEBUG
 	assert(h != -1);
 #endif
-	// ìØÇ∂Ç‡ÇÃÇ™Ç†Ç¡ÇΩÇÁì«Ç›çûÇ‹Ç»Ç¢
 	bool same = false;
+
+	// ìØÇ∂Ç‡ÇÃÇ™Ç†Ç¡ÇΩÇÁì«Ç›çûÇ‹Ç»Ç¢
+	int ipos = filename.find_last_of('.');
+	auto soundname = filename.substr(0, ipos);
 
 	for (auto& se : ses)
 	{
-		if (se.soundName == filename)
+		if (se.soundName == soundname)
 		{
 			same = true;
 		}
 	}
 	if (!same)
 	{
-		ses.push_back({ h, filename });
-		DxLib::ChangeVolumeSoundMem(100, h);
+		ses.push_back({ h, soundname });
+		DxLib::ChangeVolumeSoundMem(150, h);
 	}
 }
 
@@ -69,9 +75,15 @@ void Sound::PlayBGM(const bool& bossflag)
 	DxLib::PlaySoundMem(bgms.at(0).soundHandle, DX_PLAYTYPE_LOOP, false);
 }
 
-void Sound::PlaySE()
+void Sound::PlaySE(const std::string& name)
 {
-	DxLib::PlaySoundMem(ses.at(0).soundHandle, DX_PLAYTYPE_BACK, true);
+	for (auto& se : ses)
+	{
+		if (se.soundName == name)
+		{
+			DxLib::PlaySoundMem(se.soundHandle, DX_PLAYTYPE_BACK, true);
+		}
+	}
 }
 
 void Sound::DeleteBGM()
