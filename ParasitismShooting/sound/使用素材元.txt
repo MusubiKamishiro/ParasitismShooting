@@ -1,0 +1,9 @@
+効果音ラボ
+URL：https://soundeffect-lab.info/
+
+魔王魂
+URL：https://maoudamashii.jokersounds.com/
+
+
+注記
+・効果音ラボ様は利用規約で再配布不可と表記があったため、GitHubにはあげておりません。そのため、一部の音が再生されません。あしからず。
