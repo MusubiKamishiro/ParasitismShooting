@@ -26,6 +26,7 @@
 #include "../KeyConfig.h"
 #include "../EffectFactory.h"
 #include "../Effect.h"
+#include "../Sound.h"
 
 
 void GamePlayingScene::FadeinUpdate(const Peripheral & p)
@@ -177,6 +178,9 @@ void GamePlayingScene::Init(const unsigned int & stagenum, const int& difficult)
 
 GamePlayingScene::GamePlayingScene(const unsigned int& stagenum, const int& diff)
 {
+	Sound& sound = Sound::Instance();
+	sound.AddSE("paras.mp3");
+
 	difficult = diff;
 	Init(stagenum, diff);
 
@@ -442,6 +446,7 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 						else
 						{
 							// “G‚Ì—Í‚ðŽè‚É“ü‚ê‚é
+							Sound::Instance().PlaySE("paras");
 							player->Parasitic(p, enemy->GetCharaData());
 							++parasCnt;
 							++totalParasCnt;
