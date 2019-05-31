@@ -58,8 +58,9 @@ void ResultScene::Update(const Peripheral& p)
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
 	DxLib::DrawExtendGraph(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, resultImage, true);
 	DxLib::DrawString(50, 50, "ResultScene", 0x000000);
-	DxLib::DrawString(100, 100, std::to_string(totalScore).c_str(), 0x000000);
-	DxLib::DrawString(100, 150, std::to_string(continueNum).c_str(), 0x000000);
+	
+	DxLib::DrawFormatString(100, 100, 0x000000, "最終スコア：%d", totalScore);
+	DxLib::DrawFormatString(100, 150, 0x000000, "合計コンティニュー回数：%d", continueNum);
 
 	(this->*updater)(p);
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));

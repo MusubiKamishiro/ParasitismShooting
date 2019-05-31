@@ -7,13 +7,13 @@
 
 void OptionScene::FadeinUpdate(const Peripheral & p)
 {
-	if (pal == 255)
+	if (pal >= 255)
 	{
-		;
+		pal = 255;
 	}
 	else
 	{
-		pal++;
+		pal += 20;
 	}
 }
 
@@ -25,7 +25,6 @@ void OptionScene::FadeoutUpdate(const Peripheral & p)
 	}
 	else
 	{
-		//pal -= 5;
 		pal -= 20;
 	}
 }
