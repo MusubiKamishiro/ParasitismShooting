@@ -109,7 +109,7 @@ Shot * ShotFactory::Create(std::string shotType, Vector2f pos, int Speed, int mo
 	return nullptr;
 }
 
-float ShotFactory::SetAngle(std::string shotType, Vector2f pos, int shooter, int cnt, int level)
+float ShotFactory::SetAngle(const std::string& shotType, const Vector2f& pos, const int& shooter, const int& cnt, const int& level)
 {
 	angle = -(float)M_PI_2;
 	if (shotType == "Normal" || shotType == "Diamond")
