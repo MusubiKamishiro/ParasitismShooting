@@ -76,7 +76,7 @@ void CharacterObject::ReadActionFile(const char * actionPath)
 
 void CharacterObject::ChangeAction(const char * name)
 {
-	flame = 0;
+	frame = 0;
 	nowCutIdx = 0;
 	nowActionName = name;
 }

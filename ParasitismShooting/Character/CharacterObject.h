@@ -73,7 +73,7 @@ protected:
 
 	std::string nowActionName;	// Œ»İÄ¶’†‚Ì±¸¼®İ–¼
 	unsigned int nowCutIdx;		// Œ»İ•\¦’†‚Ì¶¯Ä”Ô†
-	unsigned int flame;			// ‚»‚Ì¶¯Ä”Ô†‚É‚¨‚¯‚éŒo‰ßŠÔ
+	unsigned int frame;			// ‚»‚Ì¶¯Ä”Ô†‚É‚¨‚¯‚éŒo‰ßŠÔ
 
 public:
 	CharacterObject();
