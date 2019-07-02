@@ -15,9 +15,10 @@ private:
 
 	const Vector2 ScreenSize;
 	float time, fps, count, oldcount;
-	int oldEnter, enter;
-	int coinSound;
 	unsigned int fontSize;
+
+	// fps‚Ì•\Ž¦
+	void DrawFps();
 
 public:
 	// ¼Ý¸ÞÙÄÝ²ÝÀ°Ìª°½

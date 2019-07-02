@@ -152,7 +152,6 @@
     <ClCompile Include="Character\Shot\Weak.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="ContinueMenu.cpp" />
-    <ClCompile Include="Credit.cpp" />
     <ClCompile Include="DieEffect.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectFactory.cpp" />
@@ -199,7 +198,6 @@
     <ClInclude Include="Character\Shot\Weak.h" />
     <ClInclude Include="CollisionDetector.h" />
     <ClInclude Include="ContinueMenu.h" />
-    <ClInclude Include="Credit.h" />
     <ClInclude Include="DieEffect.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectFactory.h" />

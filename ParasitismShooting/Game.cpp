@@ -1,7 +1,6 @@
 #include "Game.h"
 #include <DxLib.h>
 #include "Peripheral.h"
-#include "Credit.h"
 #include "Sound.h"
 #include "Scene/TitleScene.h"
 #include "resource.h"
@@ -10,12 +9,25 @@
 Game::Game() : ScreenSize(800, 500)
 {
 	time = fps = count = oldcount = 0.0;
-	oldEnter = enter = 0;
 	fontSize = 24;
 }
 
 void Game::operator=(const Game &)
 {
+}
+
+void Game::DrawFps()
+{
+	count = DxLib::GetNowCount();
+	if ((count - oldcount) > 1000)
+	{
+		fps = ((time * 1000) / (count - oldcount));
+		oldcount = count;
+		time = 0;
+	}
+
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+	DxLib::DrawFormatString(ScreenSize.x - 100, ScreenSize.y - fontSize, 0xff00ff, "%.2f fps", fps);
 }
 
 
@@ -54,8 +66,6 @@ void Game::Initialize()
 	AddFontResourceEx("Ronde-B_square.otf", FR_PRIVATE, nullptr);
 	DxLib::ChangeFont("ロンド B スクエア", DX_CHARSET_DEFAULT);
 	DxLib::SetFontSize(fontSize);
-	
-	coinSound = DxLib::LoadSoundMem("sound/tirin1.mp3");
 
 	ChangeScene(new TitleScene());
 }
@@ -63,7 +73,6 @@ void Game::Initialize()
 void Game::Run()
 {
 	Peripheral peripheral;
-	Credit credit;
 
 	while (DxLib::ProcessMessage() == 0)
 	{
@@ -75,29 +84,11 @@ void Game::Run()
 		{
 			break;
 		}
-		//oldEnter = enter;
-		//enter = DxLib::CheckHitKey(KEY_INPUT_RETURN);
-		//if (enter && !oldEnter)
-		//{
-		//	DxLib::PlaySoundMem(coinSound, DX_PLAYTYPE_BACK);
-		//	credit.AddCredit();
-		//}
-		peripheral.Update();
 
+		peripheral.Update();
 		scene->Update(peripheral);
 
-		count = DxLib::GetNowCount();
-		if ((count - oldcount) > 1000)
-		{
-			fps = ((time * 1000) / (count - oldcount));
-			oldcount = count;
-			time = 0;
-		}
-
-		// fps, クレジット表示
-		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
-		DxLib::DrawFormatString(ScreenSize.x - 100, ScreenSize.y - fontSize, 0xff00ff, "%.2f fps", fps);
-		//credit.Draw();
+		DrawFps();
 		
 		DxLib::ScreenFlip();
 	}
