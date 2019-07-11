@@ -2,6 +2,7 @@
 #include <DxLib.h>
 #include "../Peripheral.h"
 #include "../Game.h"
+#include "SceneManager.h"
 #include "SelectScene.h"
 #include "../TitleMenu.h"
 #include "OptionScene.h"
@@ -24,11 +25,11 @@ void TitleScene::FadeoutUpdate(const Peripheral & p)
 {
 	if (optionflag)
 	{
-		Game::Instance().ChangeScene(new OptionScene());
+		SceneManager::Instance().ChangeScene(std::make_unique<OptionScene>());
 	}
 	else if (pal <= 0)
 	{
-		Game::Instance().ChangeScene(new SelectScene());
+		SceneManager::Instance().ChangeScene(std::make_unique <SelectScene>());
 	}
 	else
 	{
@@ -55,18 +56,23 @@ void TitleScene::Update(const Peripheral& p)
 {
 	Sound::Instance().PlayBGM(false);
 
-	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
-	DxLib::DrawExtendGraph(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, titleImage, true);
-
 	if (tmenu->Update(p, optionflag))
 	{
 		pal = 255;
 		updater = &TitleScene::FadeoutUpdate;
 	}
 	
+	(this->*updater)(p);
+}
+
+void TitleScene::Draw()
+{
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
+	DxLib::DrawExtendGraph(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, titleImage, true);
+
 	tmenu->Draw();
+
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, 0x000000, true);
 
-	(this->*updater)(p);
 }

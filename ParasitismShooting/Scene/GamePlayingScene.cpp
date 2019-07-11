@@ -8,6 +8,7 @@
 
 #include "../Peripheral.h"
 #include "../Game.h"
+#include "SceneManager.h"
 #include "ResultScene.h"
 #include "HalfResultScene.h"
 #include "TitleScene.h"
@@ -47,7 +48,7 @@ void GamePlayingScene::FadeoutUpdate(const Peripheral & p)
 	if (pal <= 0)
 	{
 		Sound::Instance().DeleteBGM();
-		Game::Instance().ChangeScene(new TitleScene());
+		SceneManager::Instance().ChangeScene(std::make_unique<TitleScene>());
 	}
 	else
 	{
@@ -116,7 +117,7 @@ void GamePlayingScene::ContinueUpdate(const Peripheral & p)
 void GamePlayingScene::MoveResultUpdate(const Peripheral & p)
 {
 	Sound::Instance().DeleteBGM();
-	Game::Instance().ChangeScene(new ResultScene(score.GetNowScore(), totalCCount));
+	SceneManager::Instance().ChangeScene(std::make_unique <ResultScene>(score.GetNowScore(), totalCCount));
 }
 
 void GamePlayingScene::Init(const unsigned int & stagenum, const int& difficult)
@@ -378,10 +379,12 @@ void GamePlayingScene::Update(const Peripheral& p)
 	}
 	eff->EffectDelete();
 
-	Draw(p, (int)time);
-	
 	(this->*updater)(p);
+}
 
+void GamePlayingScene::Draw()
+{
+	Draw((int)time);
 	// フェードイン,アウトのための幕
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, ssize.x, ssize.y, 0x000000, true);
@@ -479,7 +482,7 @@ void GamePlayingScene::HitCol(const Peripheral& p)
 	}
 }
 
-void GamePlayingScene::Draw(const Peripheral& p, const int & time)
+void GamePlayingScene::Draw(const int & time)
 {
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 

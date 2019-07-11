@@ -1,8 +1,8 @@
 #include "Game.h"
 #include <DxLib.h>
 #include "Peripheral.h"
+#include "Scene/SceneManager.h"
 #include "Sound.h"
-#include "Scene/TitleScene.h"
 #include "resource.h"
 
 
@@ -66,14 +66,12 @@ void Game::Initialize()
 	AddFontResourceEx("Ronde-B_square.otf", FR_PRIVATE, nullptr);
 	DxLib::ChangeFont("ロンド B スクエア", DX_CHARSET_DEFAULT);
 	DxLib::SetFontSize(fontSize);
-
-	ChangeScene(new TitleScene());
 }
 
 void Game::Run()
 {
 	Peripheral peripheral;
-
+	auto& scenes = SceneManager::Instance();
 	while (DxLib::ProcessMessage() == 0)
 	{
 		++time;
@@ -86,7 +84,8 @@ void Game::Run()
 		}
 
 		peripheral.Update();
-		scene->Update(peripheral);
+		scenes.Update(peripheral);
+		scenes.Draw();
 
 		DrawFps();
 		
@@ -98,11 +97,6 @@ void Game::Terminate()
 {
 	Sound::Instance().DeleteSoundAll();
 	DxLib::DxLib_End();
-}
-
-void Game::ChangeScene(Scene* s)
-{
-	scene.reset(s);
 }
 
 const Vector2& Game::GetScreenSize()const

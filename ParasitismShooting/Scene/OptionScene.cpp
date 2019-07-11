@@ -2,6 +2,7 @@
 #include <DxLib.h>
 #include "../Peripheral.h"
 #include "../Game.h"
+#include "SceneManager.h"
 #include "../OptionMenu.h"
 #include "TitleScene.h"
 
@@ -21,7 +22,7 @@ void OptionScene::FadeoutUpdate(const Peripheral & p)
 {
 	if (pal <= 0)
 	{
-		Game::Instance().ChangeScene(new TitleScene());
+		SceneManager::Instance().ChangeScene(std::make_unique <TitleScene>());
 	}
 	else
 	{
@@ -43,18 +44,22 @@ OptionScene::~OptionScene()
 
 void OptionScene::Update(const Peripheral& p)
 {
-	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
-
 	if (omenu->Update(p))
 	{
 		pal = 255;
 		updater = &OptionScene::FadeoutUpdate;
 	}
 	
+
+	(this->*updater)(p);
+}
+
+void OptionScene::Draw()
+{
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
+
 	omenu->Draw();
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, 0x000000, true);
-
-	(this->*updater)(p);
 }

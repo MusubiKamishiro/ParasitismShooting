@@ -19,5 +19,6 @@ public:
 	~ResultScene();
 
 	void Update(const Peripheral& p);
+	void Draw();
 };
 

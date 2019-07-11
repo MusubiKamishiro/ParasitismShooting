@@ -23,5 +23,6 @@ public:
 	~TitleScene();
 
 	void Update(const Peripheral& p);
+	void Draw();
 };
 
