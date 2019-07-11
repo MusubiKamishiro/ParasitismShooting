@@ -15,6 +15,7 @@ void SelectScene::FadeinUpdate(const Peripheral & p)
 	if (pal >= 255)
 	{
 		pal = 255;
+		updater = &SelectScene::WaitUpdate;
 	}
 	else
 	{
@@ -36,6 +37,15 @@ void SelectScene::FadeoutUpdate(const Peripheral & p)
 	}
 }
 
+void SelectScene::WaitUpdate(const Peripheral & p)
+{
+	if (smenu->Update(p, difficult))
+	{
+		pal = 255;
+		updater = &SelectScene::FadeoutUpdate;
+	}
+}
+
 SelectScene::SelectScene()
 {
 	img = DxLib::LoadGraph("img/bg4.png");
@@ -51,12 +61,6 @@ SelectScene::~SelectScene()
 
 void SelectScene::Update(const Peripheral& p)
 {
-	if (smenu->Update(p, difficult))
-	{
-		pal = 255;
-		updater = &SelectScene::FadeoutUpdate;
-	}
-
 	(this->*updater)(p);
 }
 

@@ -56,6 +56,10 @@ void GamePlayingScene::FadeoutUpdate(const Peripheral & p)
 	}
 }
 
+void GamePlayingScene::WaitUpdate(const Peripheral & p)
+{
+}
+
 void GamePlayingScene::IdleUpdate(const Peripheral & p)
 {
 	time = 0;

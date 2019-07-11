@@ -177,6 +177,12 @@
     <ClCompile Include="Scene\SceneManager.cpp">
       <Filter>シーンファイル\ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Scene\ContinueScene.cpp">
+      <Filter>シーンファイル\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\PauseScene.cpp">
+      <Filter>シーンファイル\ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -312,6 +318,12 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scene\SceneManager.h">
+      <Filter>シーンファイル\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\ContinueScene.h">
+      <Filter>シーンファイル\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PauseScene.h">
       <Filter>シーンファイル\ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>

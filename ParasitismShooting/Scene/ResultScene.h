@@ -8,6 +8,7 @@ private:
 
 	void FadeinUpdate(const Peripheral& p);
 	void FadeoutUpdate(const Peripheral& p);
+	void WaitUpdate(const Peripheral& p);
 
 	unsigned int totalScore;
 	unsigned int continueNum;

@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.h"
-#include <memory>
+
 
 class TitleMenu;
 
@@ -14,6 +14,7 @@ private:
 
 	void FadeinUpdate(const Peripheral& p);
 	void FadeoutUpdate(const Peripheral& p);
+	void WaitUpdate(const Peripheral& p);
 
 	std::shared_ptr<TitleMenu> tmenu;
 	bool optionflag;

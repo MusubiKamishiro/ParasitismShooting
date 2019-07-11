@@ -1,5 +1,4 @@
 #pragma once
-#include <memory>
 #include <vector>
 #include "Scene.h"
 #include "../Geometry.h"
@@ -43,6 +42,9 @@ private:
 
 	void FadeinUpdate(const Peripheral& p);
 	void FadeoutUpdate(const Peripheral& p);
+	void WaitUpdate(const Peripheral& p);
+
+
 	void IdleUpdate(const Peripheral& p);
 	void GameUpdate(const Peripheral& p);
 	void ClearUpdate(const Peripheral& p);

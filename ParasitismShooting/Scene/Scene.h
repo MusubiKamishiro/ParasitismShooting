@@ -24,6 +24,6 @@ public:
 	// フェードアウトの処理を書く
 	virtual void FadeoutUpdate(const Peripheral& p) = 0;
 	// 待機中の処理を書く
-	//virtual void WaitUpdate(const Peripheral& p) = 0;
+	virtual void WaitUpdate(const Peripheral& p) = 0;
 };
 

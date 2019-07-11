@@ -11,6 +11,7 @@ void OptionScene::FadeinUpdate(const Peripheral & p)
 	if (pal >= 255)
 	{
 		pal = 255;
+		updater = &OptionScene::WaitUpdate;
 	}
 	else
 	{
@@ -30,6 +31,15 @@ void OptionScene::FadeoutUpdate(const Peripheral & p)
 	}
 }
 
+void OptionScene::WaitUpdate(const Peripheral & p)
+{
+	if (omenu->Update(p))
+	{
+		pal = 255;
+		updater = &OptionScene::FadeoutUpdate;
+	}
+}
+
 OptionScene::OptionScene()
 {
 	updater = &OptionScene::FadeinUpdate;
@@ -44,13 +54,6 @@ OptionScene::~OptionScene()
 
 void OptionScene::Update(const Peripheral& p)
 {
-	if (omenu->Update(p))
-	{
-		pal = 255;
-		updater = &OptionScene::FadeoutUpdate;
-	}
-	
-
 	(this->*updater)(p);
 }
 

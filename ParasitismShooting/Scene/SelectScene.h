@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.h"
-#include <memory>
+
 
 class SelectMenu;
 
@@ -15,6 +15,7 @@ private:
 
 	void FadeinUpdate(const Peripheral& p);
 	void FadeoutUpdate(const Peripheral& p);
+	void WaitUpdate(const Peripheral& p);
 
 public:
 	SelectScene();

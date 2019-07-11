@@ -14,6 +14,7 @@ void TitleScene::FadeinUpdate(const Peripheral & p)
 	if (pal >= 255)
 	{
 		pal = 255;
+		updater = &TitleScene::WaitUpdate;
 	}
 	else
 	{
@@ -37,6 +38,15 @@ void TitleScene::FadeoutUpdate(const Peripheral & p)
 	}
 }
 
+void TitleScene::WaitUpdate(const Peripheral & p)
+{
+	if (tmenu->Update(p, optionflag))
+	{
+		pal = 255;
+		updater = &TitleScene::FadeoutUpdate;
+	}
+}
+
 TitleScene::TitleScene()
 {
 	titleImage = DxLib::LoadGraph("img/title.png");
@@ -56,12 +66,6 @@ void TitleScene::Update(const Peripheral& p)
 {
 	Sound::Instance().PlayBGM(false);
 
-	if (tmenu->Update(p, optionflag))
-	{
-		pal = 255;
-		updater = &TitleScene::FadeoutUpdate;
-	}
-	
 	(this->*updater)(p);
 }
 

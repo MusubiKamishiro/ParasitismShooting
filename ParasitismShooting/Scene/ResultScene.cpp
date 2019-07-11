@@ -11,15 +11,10 @@
 
 void ResultScene::FadeinUpdate(const Peripheral & p)
 {
-	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)))
-	{
-		pal = 255;
-		updater = &ResultScene::FadeoutUpdate;
-	}
-	
 	if (pal >= 255)
 	{
 		pal = 255;
+		updater = &ResultScene::WaitUpdate;
 	}
 	else
 	{
@@ -36,6 +31,15 @@ void ResultScene::FadeoutUpdate(const Peripheral & p)
 	else
 	{
 		pal -= 20;
+	}
+}
+
+void ResultScene::WaitUpdate(const Peripheral & p)
+{
+	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)))
+	{
+		pal = 255;
+		updater = &ResultScene::FadeoutUpdate;
 	}
 }
 
@@ -56,10 +60,7 @@ ResultScene::~ResultScene()
 
 void ResultScene::Update(const Peripheral& p)
 {
-	
-
 	(this->*updater)(p);
-	
 }
 
 void ResultScene::Draw()
