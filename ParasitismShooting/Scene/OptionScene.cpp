@@ -3,7 +3,7 @@
 #include "../Peripheral.h"
 #include "../Game.h"
 #include "SceneManager.h"
-#include "../OptionMenu.h"
+#include "../Menu/OptionMenu.h"
 #include "TitleScene.h"
 
 void OptionScene::FadeinUpdate(const Peripheral & p)

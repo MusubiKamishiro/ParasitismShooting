@@ -4,7 +4,7 @@
 #include "../Game.h"
 #include "SceneManager.h"
 #include "GamePlayingScene.h"
-#include "../SelectMenu.h"
+#include "../Menu/SelectMenu.h"
 #include "../Character/CharacterObject.h"
 #include "../Score.h"
 #include "../Sound.h"

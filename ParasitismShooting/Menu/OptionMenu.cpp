@@ -1,9 +1,9 @@
 #include "OptionMenu.h"
 #include <DxLib.h>
-#include "Peripheral.h"
+#include "../Peripheral.h"
 #include "Menu.h"
 #include "KeyConfigMenu.h"
-#include "KeyConfig.h"
+#include "../KeyConfig.h"
 
 
 OptionMenu::OptionMenu()

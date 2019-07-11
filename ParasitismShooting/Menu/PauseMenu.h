@@ -1,21 +1,21 @@
 #pragma once
 #include <memory>
-#include "Geometry.h"
+#include "../Geometry.h"
+
 
 class Menu;
 class Peripheral;
 
-
-class SelectMenu
+class PauseMenu
 {
 private:
 	std::shared_ptr<Menu> menu;
 
 public:
-	SelectMenu();
-	~SelectMenu();
+	PauseMenu();
+	~PauseMenu();
 
-	bool Update(const Peripheral& p, int& difficult);
+	bool Update(const Peripheral& p, bool& flag);
 	void Draw();
 };
 

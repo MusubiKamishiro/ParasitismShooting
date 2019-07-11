@@ -1,8 +1,8 @@
 #include "KeyConfigMenu.h"
 #include <DxLib.h>
-#include "Peripheral.h"
+#include "../Peripheral.h"
 #include "Menu.h"
-#include "KeyConfig.h"
+#include "../KeyConfig.h"
 
 
 KeyConfigMenu::KeyConfigMenu()

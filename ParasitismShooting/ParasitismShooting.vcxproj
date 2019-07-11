@@ -151,7 +151,6 @@
     <ClCompile Include="Character\Shot\Tracking.cpp" />
     <ClCompile Include="Character\Shot\Weak.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
-    <ClCompile Include="ContinueMenu.cpp" />
     <ClCompile Include="DieEffect.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectFactory.cpp" />
@@ -160,11 +159,14 @@
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="KeyConfig.cpp" />
-    <ClCompile Include="KeyConfigMenu.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Menu.cpp" />
-    <ClCompile Include="OptionMenu.cpp" />
-    <ClCompile Include="PauseMenu.cpp" />
+    <ClCompile Include="Menu\ContinueMenu.cpp" />
+    <ClCompile Include="Menu\KeyConfigMenu.cpp" />
+    <ClCompile Include="Menu\Menu.cpp" />
+    <ClCompile Include="Menu\OptionMenu.cpp" />
+    <ClCompile Include="Menu\PauseMenu.cpp" />
+    <ClCompile Include="Menu\SelectMenu.cpp" />
+    <ClCompile Include="Menu\TitleMenu.cpp" />
     <ClCompile Include="Peripheral.cpp" />
     <ClCompile Include="Scene\ContinueScene.cpp" />
     <ClCompile Include="Scene\GamePlayingScene.cpp" />
@@ -177,9 +179,7 @@
     <ClCompile Include="Scene\SelectScene.cpp" />
     <ClCompile Include="Scene\TitleScene.cpp" />
     <ClCompile Include="Score.cpp" />
-    <ClCompile Include="SelectMenu.cpp" />
     <ClCompile Include="Sound.cpp" />
-    <ClCompile Include="TitleMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
@@ -200,7 +200,6 @@
     <ClInclude Include="Character\Shot\Tracking.h" />
     <ClInclude Include="Character\Shot\Weak.h" />
     <ClInclude Include="CollisionDetector.h" />
-    <ClInclude Include="ContinueMenu.h" />
     <ClInclude Include="DieEffect.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectFactory.h" />
@@ -209,10 +208,13 @@
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="KeyConfig.h" />
-    <ClInclude Include="KeyConfigMenu.h" />
-    <ClInclude Include="Menu.h" />
-    <ClInclude Include="OptionMenu.h" />
-    <ClInclude Include="PauseMenu.h" />
+    <ClInclude Include="Menu\ContinueMenu.h" />
+    <ClInclude Include="Menu\KeyConfigMenu.h" />
+    <ClInclude Include="Menu\Menu.h" />
+    <ClInclude Include="Menu\OptionMenu.h" />
+    <ClInclude Include="Menu\PauseMenu.h" />
+    <ClInclude Include="Menu\SelectMenu.h" />
+    <ClInclude Include="Menu\TitleMenu.h" />
     <ClInclude Include="Peripheral.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene\ContinueScene.h" />
@@ -226,9 +228,7 @@
     <ClInclude Include="Scene\SelectScene.h" />
     <ClInclude Include="Scene\TitleScene.h" />
     <ClInclude Include="Score.h" />
-    <ClInclude Include="SelectMenu.h" />
     <ClInclude Include="Sound.h" />
-    <ClInclude Include="TitleMenu.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ParasitismShooting.rc" />
