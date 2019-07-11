@@ -49,6 +49,8 @@ void TitleScene::WaitUpdate(const Peripheral & p)
 
 TitleScene::TitleScene()
 {
+	pal = 0;
+
 	titleImage = DxLib::LoadGraph("img/title.png");
 	optionflag = false;
 	updater = &TitleScene::FadeinUpdate;

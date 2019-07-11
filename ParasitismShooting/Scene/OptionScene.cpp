@@ -42,6 +42,7 @@ void OptionScene::WaitUpdate(const Peripheral & p)
 
 OptionScene::OptionScene()
 {
+	pal = 0;
 	updater = &OptionScene::FadeinUpdate;
 
 	omenu.reset(new OptionMenu());

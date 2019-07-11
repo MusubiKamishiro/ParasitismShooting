@@ -48,6 +48,7 @@ void SelectScene::WaitUpdate(const Peripheral & p)
 
 SelectScene::SelectScene()
 {
+	pal = 0;
 	img = DxLib::LoadGraph("img/bg4.png");
 	updater = &SelectScene::FadeinUpdate;
 

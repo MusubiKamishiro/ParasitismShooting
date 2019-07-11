@@ -4,7 +4,7 @@
 
 Scene::Scene()
 {
-	pal = 0;
+	pal = 255;
 }
 
 

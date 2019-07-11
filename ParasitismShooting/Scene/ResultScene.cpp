@@ -45,6 +45,7 @@ void ResultScene::WaitUpdate(const Peripheral & p)
 
 ResultScene::ResultScene(const unsigned int& score, const unsigned int& cnum)
 {
+	pal = 0;
 	updater = &ResultScene::FadeinUpdate;
 	totalScore = score;
 	continueNum = cnum;
