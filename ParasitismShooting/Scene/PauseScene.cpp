@@ -3,7 +3,9 @@
 #include "../Peripheral.h"
 #include "../Game.h"
 #include "SceneManager.h"
+#include "TitleScene.h"
 #include "../PauseMenu.h"
+#include "../KeyConfig.h"
 
 
 void PauseScene::FadeinUpdate(const Peripheral & p)
@@ -14,13 +16,21 @@ void PauseScene::FadeinUpdate(const Peripheral & p)
 
 void PauseScene::FadeoutUpdate(const Peripheral & p)
 {
-	SceneManager::Instance().PopScene();
+	if (flag)
+	{
+		SceneManager::Instance().ChangeScene(std::make_unique<TitleScene>());
+	}
+	else
+	{
+		SceneManager::Instance().PopScene();
+	}
 }
 
 void PauseScene::WaitUpdate(const Peripheral & p)
 {
-	bool pauseFlag = false;
-	if (pmenu->Update(p, pauseFlag))
+	pmenu->Update(p, flag);
+
+	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)))
 	{
 		updater = &PauseScene::FadeoutUpdate;
 	}
@@ -28,6 +38,7 @@ void PauseScene::WaitUpdate(const Peripheral & p)
 
 PauseScene::PauseScene()
 {
+	flag = true;
 	pmenu.reset(new PauseMenu());
 	updater = &PauseScene::FadeinUpdate;
 }
@@ -46,7 +57,6 @@ void PauseScene::Draw()
 {
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
 	
-	//gs->SetGaussFilter();
 	pmenu->Draw();
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));

@@ -11,7 +11,6 @@ class Player;
 class ShotFactory;
 class HUD;
 class BackGround;
-class ContinueMenu;
 class EnemyFactory;
 class CollisionDetector;
 class EffectFactory;
@@ -63,8 +62,9 @@ private:
 	unsigned int cCount;		// コンティニュー回数
 	unsigned int totalCCount;	// 累計コンティニュー回数
 	Vector2 ssize;
-	bool continueFlag, clearFlag, allClearFlag,nextstageFlag;
+	bool clearFlag, allClearFlag, nextstageFlag;
 	bool DuringParasitism;
+	bool filterFlag;		// trueであれば
 
 	std::vector<CharacterBank> cBank;
 
@@ -76,7 +76,6 @@ private:
 	std::shared_ptr<ShotFactory> sf;
 	std::shared_ptr<HUD> hud;
 	std::shared_ptr<BackGround> bg;
-	std::shared_ptr<ContinueMenu> cmenu;
 	std::shared_ptr<EnemyFactory> ef;
 	std::shared_ptr<CollisionDetector> cd;
 	std::shared_ptr<EffectFactory> eff;

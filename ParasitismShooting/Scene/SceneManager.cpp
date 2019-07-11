@@ -16,7 +16,10 @@ SceneManager::~SceneManager()
 
 void SceneManager::ChangeScene(std::unique_ptr<Scene> newScene)
 {
-	scene.pop_front();
+	while (scene.size())
+	{
+		scene.pop_front();
+	}
 	scene.emplace_front(std::move(newScene));
 }
 

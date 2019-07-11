@@ -20,9 +20,15 @@ public:
 
 	// ゲーム画面の描画準備
 	void SetAndClearScreen();
+	
 	// ゲーム画面の描画
 	void DrawAndChangeScreen(bool& swingflag);
+	
+	// 画面にフィルターをかける
 	void SetGaussFilter();
+	
+	// ゲームスクリーンのサイズ取得
+	// 画面のサイズとは違うので注意
 	const Vector2 GetGSSize()const;
 
 	const int outscreen;	// 画面には映らないスクリーンの幅
