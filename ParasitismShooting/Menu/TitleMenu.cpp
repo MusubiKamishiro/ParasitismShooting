@@ -11,9 +11,9 @@ TitleMenu::TitleMenu()
 {
 	menu.reset(new Menu());
 
-	menu->menudata.push_back({ Vector2(550, menu->ssize.y / 3 + 100), "Start", 0xff00ff });
-	menu->menudata.push_back({ Vector2(550, menu->ssize.y / 3 + 130), "Option", 0xff00ff });
-	menu->menudata.push_back({ Vector2(550, menu->ssize.y / 3 + 160), "Exit", 0xff00ff });
+	menu->menudata.push_back({ Vector2(550, menu->ssize.y / 3 + 110), "Start", 0xff00ff });
+	menu->menudata.push_back({ Vector2(550, menu->ssize.y / 3 + 140), "Option", 0xff00ff });
+	menu->menudata.push_back({ Vector2(550, menu->ssize.y / 3 + 170), "Exit", 0xff00ff });
 }
 
 

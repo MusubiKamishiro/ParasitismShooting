@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "../Geometry.h"
 
 
 class TitleMenu;
@@ -9,6 +10,7 @@ class TitleScene : public Scene
 {
 private:
 	int titleImage;	// À²ÄÙ‰æ‘œ
+	int titleNameImage;
 
 	void (TitleScene::*updater)(const Peripheral& p);
 
@@ -18,6 +20,8 @@ private:
 
 	std::shared_ptr<TitleMenu> tmenu;
 	bool optionflag;
+	Vector2 ssize;
+	int time;
 
 public:
 	TitleScene();

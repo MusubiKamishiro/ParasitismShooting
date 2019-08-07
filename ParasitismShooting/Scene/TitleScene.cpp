@@ -52,11 +52,14 @@ TitleScene::TitleScene()
 	pal = 0;
 
 	titleImage = DxLib::LoadGraph("img/title.png");
+	titleNameImage = DxLib::LoadGraph("img/titlename.png");
 	optionflag = false;
 	updater = &TitleScene::FadeinUpdate;
 
 	tmenu.reset(new TitleMenu());
 	Sound::Instance().AddBGM("joker.mp3");
+	ssize = Game::Instance().GetScreenSize();
+	time = 0;
 }
 
 
@@ -67,6 +70,7 @@ TitleScene::~TitleScene()
 void TitleScene::Update(const Peripheral& p)
 {
 	Sound::Instance().PlayBGM(false);
+	++time;
 
 	(this->*updater)(p);
 }
@@ -74,7 +78,18 @@ void TitleScene::Update(const Peripheral& p)
 void TitleScene::Draw()
 {
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
-	DxLib::DrawExtendGraph(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, titleImage, true);
+	DxLib::DrawExtendGraph(0, 0, ssize.x, ssize.y, titleImage, true);
+
+	DxLib::DrawGraph(0, 0, titleNameImage, true);
+
+	/*int a = time % 20;
+	for (int y = 0; y < (ssize.y + 20); y += 20)
+	{
+		for (int x = 0; x < (ssize.x + 20); x += 20)
+		{
+			DxLib::DrawBox(x - a, y - a, x + 20 - a, y + 20 - a, (x+y + a)%256, true);
+		}
+	}*/
 
 	tmenu->Draw();
 

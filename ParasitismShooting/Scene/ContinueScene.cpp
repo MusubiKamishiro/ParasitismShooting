@@ -4,7 +4,7 @@
 #include "../Game.h"
 #include "SceneManager.h"
 #include "ResultScene.h"
-#include "../ContinueMenu.h"
+#include "../Menu/ContinueMenu.h"
 #include "../Score.h"
 #include "../KeyConfig.h"
 
