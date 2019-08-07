@@ -1,10 +1,10 @@
 #include "TitleMenu.h"
 #include <DxLib.h>
-#include "Peripheral.h"
+#include "../Peripheral.h"
 #include "Menu.h"
-#include "KeyConfig.h"
-#include "Game.h"
-#include "Sound.h"
+#include "../KeyConfig.h"
+#include "../Game.h"
+#include "../Sound.h"
 
 
 TitleMenu::TitleMenu()

@@ -1,5 +1,4 @@
 #pragma once
-#include <memory>
 #include <vector>
 #include "Scene.h"
 #include "../Geometry.h"
@@ -12,8 +11,6 @@ class Player;
 class ShotFactory;
 class HUD;
 class BackGround;
-class PauseMenu;
-class ContinueMenu;
 class EnemyFactory;
 class CollisionDetector;
 class EffectFactory;
@@ -43,6 +40,9 @@ private:
 
 	void FadeinUpdate(const Peripheral& p);
 	void FadeoutUpdate(const Peripheral& p);
+	void WaitUpdate(const Peripheral& p);
+
+
 	void IdleUpdate(const Peripheral& p);
 	void GameUpdate(const Peripheral& p);
 	void ClearUpdate(const Peripheral& p);
@@ -50,7 +50,7 @@ private:
 	void MoveResultUpdate(const Peripheral& p);
 
 	void HitCol(const Peripheral& p);			// 当たり判定まとめ
-	void Draw(const Peripheral& p, const int& time);	// 描画まとめ
+	void Draw(const int& time);	// 描画まとめ
 
 	void Init(const unsigned int& stagenum, const int& diff);	// 2つのコンストラクタの共通部分
 
@@ -62,8 +62,9 @@ private:
 	unsigned int cCount;		// コンティニュー回数
 	unsigned int totalCCount;	// 累計コンティニュー回数
 	Vector2 ssize;
-	bool pauseFlag, continueFlag, clearFlag, allClearFlag,nextstageFlag;
+	bool clearFlag, allClearFlag, nextstageFlag;
 	bool DuringParasitism;
+	bool filterFlag;		// trueであれば
 
 	std::vector<CharacterBank> cBank;
 
@@ -75,8 +76,6 @@ private:
 	std::shared_ptr<ShotFactory> sf;
 	std::shared_ptr<HUD> hud;
 	std::shared_ptr<BackGround> bg;
-	std::shared_ptr<PauseMenu> pmenu;
-	std::shared_ptr<ContinueMenu> cmenu;
 	std::shared_ptr<EnemyFactory> ef;
 	std::shared_ptr<CollisionDetector> cd;
 	std::shared_ptr<EffectFactory> eff;
@@ -89,4 +88,5 @@ public:
 	~GamePlayingScene();
 
 	void Update(const Peripheral& p);
+	void Draw();
 };

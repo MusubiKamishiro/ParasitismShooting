@@ -1,9 +1,9 @@
 #include "Menu.h"
 #include <DxLib.h>
-#include "GameScreen.h"
-#include "Peripheral.h"
-#include "KeyConfig.h"
-#include "Sound.h"
+#include "../GameScreen.h"
+#include "../Peripheral.h"
+#include "../KeyConfig.h"
+#include "../Sound.h"
 
 
 Menu::Menu()

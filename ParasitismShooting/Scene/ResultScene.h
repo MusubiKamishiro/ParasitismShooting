@@ -8,6 +8,7 @@ private:
 
 	void FadeinUpdate(const Peripheral& p);
 	void FadeoutUpdate(const Peripheral& p);
+	void WaitUpdate(const Peripheral& p);
 
 	unsigned int totalScore;
 	unsigned int continueNum;
@@ -19,5 +20,6 @@ public:
 	~ResultScene();
 
 	void Update(const Peripheral& p);
+	void Draw();
 };
 

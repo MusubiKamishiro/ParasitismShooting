@@ -1,27 +1,23 @@
 #pragma once
 #include "Scene.h"
 
+class PauseMenu;
 
-class TitleMenu;
-
-
-class TitleScene : public Scene
+class PauseScene : public Scene
 {
 private:
-	int titleImage;	// À²ÄÙ‰æ‘œ
-
-	void (TitleScene::*updater)(const Peripheral& p);
+	void (PauseScene::*updater)(const Peripheral& p);
 
 	void FadeinUpdate(const Peripheral& p);
 	void FadeoutUpdate(const Peripheral& p);
 	void WaitUpdate(const Peripheral& p);
 
-	std::shared_ptr<TitleMenu> tmenu;
-	bool optionflag;
+	std::shared_ptr<PauseMenu> pmenu;
+	bool flag;
 
 public:
-	TitleScene();
-	~TitleScene();
+	PauseScene();
+	~PauseScene();
 
 	void Update(const Peripheral& p);
 	void Draw();

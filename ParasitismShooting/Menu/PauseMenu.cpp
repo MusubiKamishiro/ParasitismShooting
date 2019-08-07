@@ -1,8 +1,8 @@
 #include "PauseMenu.h"
 #include <DxLib.h>
-#include "Peripheral.h"
+#include "../Peripheral.h"
 #include "Menu.h"
-#include "KeyConfig.h"
+#include "../KeyConfig.h"
 
 
 PauseMenu::PauseMenu()
@@ -23,7 +23,7 @@ PauseMenu::~PauseMenu()
 bool PauseMenu::Update(const Peripheral& p, bool& flag)
 {
 	menu->Update(p);
-	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)) && !menu->decideFlag)
+	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)))
 	{
 		if (menu->selcnt == 0)
 		{
@@ -33,7 +33,6 @@ bool PauseMenu::Update(const Peripheral& p, bool& flag)
 		{
 			return true;
 		}
-		menu->decideFlag = true;
 	}
 
 	return false;

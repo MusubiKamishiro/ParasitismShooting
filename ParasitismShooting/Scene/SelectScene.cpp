@@ -2,8 +2,9 @@
 #include <DxLib.h>
 #include "../Peripheral.h"
 #include "../Game.h"
+#include "SceneManager.h"
 #include "GamePlayingScene.h"
-#include "../SelectMenu.h"
+#include "../Menu/SelectMenu.h"
 #include "../Character/CharacterObject.h"
 #include "../Score.h"
 #include "../Sound.h"
@@ -14,6 +15,7 @@ void SelectScene::FadeinUpdate(const Peripheral & p)
 	if (pal >= 255)
 	{
 		pal = 255;
+		updater = &SelectScene::WaitUpdate;
 	}
 	else
 	{
@@ -27,7 +29,7 @@ void SelectScene::FadeoutUpdate(const Peripheral & p)
 	{
 		Sound::Instance().DeleteBGM();
 		Score::Instance().InitScore();
-		Game::Instance().ChangeScene(new GamePlayingScene(1, difficult));
+		SceneManager::Instance().ChangeScene(std::make_unique <GamePlayingScene>(1, difficult));
 	}
 	else
 	{
@@ -35,8 +37,18 @@ void SelectScene::FadeoutUpdate(const Peripheral & p)
 	}
 }
 
+void SelectScene::WaitUpdate(const Peripheral & p)
+{
+	if (smenu->Update(p, difficult))
+	{
+		pal = 255;
+		updater = &SelectScene::FadeoutUpdate;
+	}
+}
+
 SelectScene::SelectScene()
 {
+	pal = 0;
 	img = DxLib::LoadGraph("img/bg4.png");
 	updater = &SelectScene::FadeinUpdate;
 
@@ -50,19 +62,18 @@ SelectScene::~SelectScene()
 
 void SelectScene::Update(const Peripheral& p)
 {
+	(this->*updater)(p);
+}
+
+void SelectScene::Draw()
+{
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
 	DxLib::DrawExtendGraph(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, img, true);
 	DxLib::DrawString(50, 50, "SelectScene", 0x000000);
-	
-	if (smenu->Update(p, difficult))
-	{
-		pal = 255;
-		updater = &SelectScene::FadeoutUpdate;
-	}
+
 	smenu->Draw();
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, 0x000000, true);
 
-	(this->*updater)(p);
 }

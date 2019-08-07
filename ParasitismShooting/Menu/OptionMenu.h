@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-#include "Geometry.h"
+#include "../Geometry.h"
 
 class Menu;
 class KeyConfigMenu;

@@ -13,32 +13,41 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="シーンファイル">
-      <UniqueIdentifier>{d8565e4b-c793-4728-bf80-f0f84fe0df0a}</UniqueIdentifier>
+    <Filter Include="メニュー ファイル">
+      <UniqueIdentifier>{ecc0675f-6e5a-41ba-b680-b698e88f8cd4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="シーンファイル\ヘッダーファイル">
-      <UniqueIdentifier>{c1ebcda8-4b68-4f50-98ce-e8e9d657f32b}</UniqueIdentifier>
+    <Filter Include="メニュー ファイル\ソース ファイル">
+      <UniqueIdentifier>{6538c9a4-f363-49a7-b21d-b504143a2c34}</UniqueIdentifier>
     </Filter>
-    <Filter Include="シーンファイル\ソースファイル">
-      <UniqueIdentifier>{4ffb348c-f93e-4371-9d1f-3ef74c5aeb51}</UniqueIdentifier>
+    <Filter Include="メニュー ファイル\ヘッダー ファイル">
+      <UniqueIdentifier>{77c313f0-3626-475b-b1be-d6d473934723}</UniqueIdentifier>
     </Filter>
-    <Filter Include="キャラクターファイル">
+    <Filter Include="キャラクター ファイル">
       <UniqueIdentifier>{795929b9-281e-4ec6-9749-747242c2a8b1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="キャラクターファイル\ヘッダーファイル">
-      <UniqueIdentifier>{cc181d14-084d-43fb-b12d-d57e29622f1f}</UniqueIdentifier>
+    <Filter Include="シーン ファイル">
+      <UniqueIdentifier>{d8565e4b-c793-4728-bf80-f0f84fe0df0a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="キャラクターファイル\ソースファイル">
-      <UniqueIdentifier>{68bc8330-9bfe-4369-bde5-1dd51bf17602}</UniqueIdentifier>
+    <Filter Include="シーン ファイル\ソース ファイル">
+      <UniqueIdentifier>{4ffb348c-f93e-4371-9d1f-3ef74c5aeb51}</UniqueIdentifier>
     </Filter>
-    <Filter Include="キャラクターファイル\ショットファイル">
+    <Filter Include="シーン ファイル\ヘッダー ファイル">
+      <UniqueIdentifier>{c1ebcda8-4b68-4f50-98ce-e8e9d657f32b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="キャラクター ファイル\ショット ファイル">
       <UniqueIdentifier>{599a31fe-089f-4dc3-b3cf-f8505f8a8e23}</UniqueIdentifier>
     </Filter>
-    <Filter Include="キャラクターファイル\ショットファイル\ヘッダーファイル">
-      <UniqueIdentifier>{791b75f3-327e-4f20-a23e-888cdcee53dc}</UniqueIdentifier>
+    <Filter Include="キャラクター ファイル\ソース ファイル">
+      <UniqueIdentifier>{68bc8330-9bfe-4369-bde5-1dd51bf17602}</UniqueIdentifier>
     </Filter>
-    <Filter Include="キャラクターファイル\ショットファイル\ソースファイル">
+    <Filter Include="キャラクター ファイル\ヘッダー ファイル">
+      <UniqueIdentifier>{cc181d14-084d-43fb-b12d-d57e29622f1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="キャラクター ファイル\ショット ファイル\ソース ファイル">
       <UniqueIdentifier>{a10de708-316c-43e1-9a2c-6a86681a1dba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="キャラクター ファイル\ショット ファイル\ヘッダー ファイル">
+      <UniqueIdentifier>{791b75f3-327e-4f20-a23e-888cdcee53dc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -52,13 +61,13 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scene\GamePlayingScene.cpp">
-      <Filter>シーンファイル\ソースファイル</Filter>
+      <Filter>シーン ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scene\Scene.cpp">
-      <Filter>シーンファイル\ソースファイル</Filter>
+      <Filter>シーン ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scene\TitleScene.cpp">
-      <Filter>シーンファイル\ソースファイル</Filter>
+      <Filter>シーン ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
@@ -73,69 +82,45 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scene\HalfResultScene.cpp">
-      <Filter>シーンファイル\ソースファイル</Filter>
+      <Filter>シーン ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scene\ResultScene.cpp">
-      <Filter>シーンファイル\ソースファイル</Filter>
+      <Filter>シーン ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scene\SelectScene.cpp">
-      <Filter>シーンファイル\ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="PauseMenu.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>シーン ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Character\Player.cpp">
-      <Filter>キャラクターファイル\ソースファイル</Filter>
+      <Filter>キャラクター ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Character\CharacterObject.cpp">
-      <Filter>キャラクターファイル\ソースファイル</Filter>
+      <Filter>キャラクター ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Character\Enemy.cpp">
-      <Filter>キャラクターファイル\ソースファイル</Filter>
+      <Filter>キャラクター ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Character\EnemyFactory.cpp">
-      <Filter>キャラクターファイル\ソースファイル</Filter>
+      <Filter>キャラクター ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Character\Fish.cpp">
-      <Filter>キャラクターファイル\ソースファイル</Filter>
+      <Filter>キャラクター ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="CollisionDetector.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Character\EnemyActionPattern.cpp">
-      <Filter>キャラクターファイル\ソースファイル</Filter>
+      <Filter>キャラクター ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Character\Shot\Shot.cpp">
-      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+      <Filter>キャラクター ファイル\ショット ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Character\Shot\ShotFactory.cpp">
-      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Menu.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ContinueMenu.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Credit.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleMenu.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>キャラクター ファイル\ショット ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scene\OptionScene.cpp">
-      <Filter>シーンファイル\ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="OptionMenu.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>シーン ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="KeyConfig.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SelectMenu.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyConfigMenu.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Score.cpp">
@@ -151,31 +136,61 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Character\Shot\Radiation.cpp">
-      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+      <Filter>キャラクター ファイル\ショット ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Character\Shot\Random.cpp">
-      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+      <Filter>キャラクター ファイル\ショット ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Character\Shot\Shotgun.cpp">
-      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+      <Filter>キャラクター ファイル\ショット ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Character\Shot\Tracking.cpp">
-      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+      <Filter>キャラクター ファイル\ショット ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Character\Shot\Weak.cpp">
-      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+      <Filter>キャラクター ファイル\ショット ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Character\Shot\Normal.cpp">
-      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+      <Filter>キャラクター ファイル\ショット ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Character\Shot\CircleCross.cpp">
-      <Filter>キャラクターファイル\ショットファイル\ソースファイル</Filter>
+      <Filter>キャラクター ファイル\ショット ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Character\Gusokun.cpp">
-      <Filter>キャラクターファイル\ソースファイル</Filter>
+      <Filter>キャラクター ファイル\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Sound.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneManager.cpp">
+      <Filter>シーン ファイル\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ContinueScene.cpp">
+      <Filter>シーン ファイル\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\PauseScene.cpp">
+      <Filter>シーン ファイル\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu\PauseMenu.cpp">
+      <Filter>メニュー ファイル\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu\SelectMenu.cpp">
+      <Filter>メニュー ファイル\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu\TitleMenu.cpp">
+      <Filter>メニュー ファイル\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu\ContinueMenu.cpp">
+      <Filter>メニュー ファイル\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu\KeyConfigMenu.cpp">
+      <Filter>メニュー ファイル\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu\Menu.cpp">
+      <Filter>メニュー ファイル\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu\OptionMenu.cpp">
+      <Filter>メニュー ファイル\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -189,13 +204,13 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scene\GamePlayingScene.h">
-      <Filter>シーンファイル\ヘッダーファイル</Filter>
+      <Filter>シーン ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scene\Scene.h">
-      <Filter>シーンファイル\ヘッダーファイル</Filter>
+      <Filter>シーン ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scene\TitleScene.h">
-      <Filter>シーンファイル\ヘッダーファイル</Filter>
+      <Filter>シーン ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="HUD.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -207,72 +222,48 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scene\HalfResultScene.h">
-      <Filter>シーンファイル\ヘッダーファイル</Filter>
+      <Filter>シーン ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scene\SelectScene.h">
-      <Filter>シーンファイル\ヘッダーファイル</Filter>
+      <Filter>シーン ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scene\ResultScene.h">
-      <Filter>シーンファイル\ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="PauseMenu.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>シーン ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\Player.h">
-      <Filter>キャラクターファイル\ヘッダーファイル</Filter>
+      <Filter>キャラクター ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\CharacterObject.h">
-      <Filter>キャラクターファイル\ヘッダーファイル</Filter>
+      <Filter>キャラクター ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\Enemy.h">
-      <Filter>キャラクターファイル\ヘッダーファイル</Filter>
+      <Filter>キャラクター ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\EnemyFactory.h">
-      <Filter>キャラクターファイル\ヘッダーファイル</Filter>
+      <Filter>キャラクター ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\Fish.h">
-      <Filter>キャラクターファイル\ヘッダーファイル</Filter>
+      <Filter>キャラクター ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="CollisionDetector.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\EnemyActionPattern.h">
-      <Filter>キャラクターファイル\ヘッダーファイル</Filter>
+      <Filter>キャラクター ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\Shot\Shot.h">
-      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+      <Filter>キャラクター ファイル\ショット ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\Shot\ShotFactory.h">
-      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Menu.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ContinueMenu.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Credit.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleMenu.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>キャラクター ファイル\ショット ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scene\OptionScene.h">
-      <Filter>シーンファイル\ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="OptionMenu.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>シーン ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="KeyConfig.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SelectMenu.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyConfigMenu.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Score.h">
@@ -288,31 +279,61 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\Shot\Normal.h">
-      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+      <Filter>キャラクター ファイル\ショット ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\Shot\Radiation.h">
-      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+      <Filter>キャラクター ファイル\ショット ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\Shot\Random.h">
-      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+      <Filter>キャラクター ファイル\ショット ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\Shot\Shotgun.h">
-      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+      <Filter>キャラクター ファイル\ショット ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\Shot\Weak.h">
-      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+      <Filter>キャラクター ファイル\ショット ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\Shot\Tracking.h">
-      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+      <Filter>キャラクター ファイル\ショット ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\Shot\CircleCross.h">
-      <Filter>キャラクターファイル\ショットファイル\ヘッダーファイル</Filter>
+      <Filter>キャラクター ファイル\ショット ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Character\Gusokun.h">
-      <Filter>キャラクターファイル\ヘッダーファイル</Filter>
+      <Filter>キャラクター ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Sound.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneManager.h">
+      <Filter>シーン ファイル\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\ContinueScene.h">
+      <Filter>シーン ファイル\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\PauseScene.h">
+      <Filter>シーン ファイル\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\TitleMenu.h">
+      <Filter>メニュー ファイル\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\SelectMenu.h">
+      <Filter>メニュー ファイル\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\PauseMenu.h">
+      <Filter>メニュー ファイル\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\OptionMenu.h">
+      <Filter>メニュー ファイル\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\Menu.h">
+      <Filter>メニュー ファイル\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\KeyConfigMenu.h">
+      <Filter>メニュー ファイル\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu\ContinueMenu.h">
+      <Filter>メニュー ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

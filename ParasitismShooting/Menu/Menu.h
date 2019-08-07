@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "Geometry.h"
+#include "../Geometry.h"
 
 class GameScreen;
 class Peripheral;

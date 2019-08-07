@@ -15,9 +15,10 @@ private:
 
 	const Vector2 ScreenSize;
 	float time, fps, count, oldcount;
-	int oldEnter, enter;
-	int coinSound;
 	unsigned int fontSize;
+
+	// fps‚Ì•\¦
+	void DrawFps();
 
 public:
 	// ¼İ¸ŞÙÄİ²İÀ°Ìª°½
@@ -40,13 +41,6 @@ public:
 	// ×²ÌŞ×Ø‚ÌŒãˆ—‚â
 	void Terminate();
 
-	// Œ»İÀs’†‚Ì¼°İ‚ÌŠÇ—
-	std::shared_ptr<Scene> scene;
-
-	// ¼°İ“ü‚ê‘Ö‚¦
-	void ChangeScene(Scene* s);
-
 	const Vector2& GetScreenSize()const;
-
 };
 
