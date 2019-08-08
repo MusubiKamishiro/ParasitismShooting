@@ -27,7 +27,7 @@ public:
 
 	// “G‚ğì‚é
 	// enemyname...“G‚Ì–¼‘O
-	Enemy* Create(const char * enemyname, const char * shotType, Vector2f pos, int movePtn, int cnt, int wait, int hp, int sp, float speed, int shotCnt, int shotLevel);
+	Enemy* Create(const char * enemyname, const char * shotType, Vector2f pos, int movePtn, int cnt, int wait, int hp, int sp, float speed, int shotCnt, int shotLevel,const int & stageNum);
 
 	// “G‚ÌW‡‘Ì‚ğ•Ô‚·
 	ELegion& GetLegion();

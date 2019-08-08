@@ -378,8 +378,16 @@ void Gusokun::orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int
 	{
 		switch (cnt)
 		{
+			
 		case 1:
-			charaData.shotType = "Shotgun";
+			if (stageNum == 1)
+			{
+				charaData.shotType = "Shotgun";
+			}
+			else
+			{
+				charaData.shotType = "Radiation";
+			}
 			break;
 		case 5:
 		case 125:
@@ -388,7 +396,7 @@ void Gusokun::orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int
 		case 495:
 		case 615:
 		case 725:
-			charaData.shotLevel = 7;//25
+			(charaData.shotType == "Shotgun" ? charaData.shotLevel = 7 : charaData.shotLevel = 25);
 			break;
 		case 65:
 		case 185:
@@ -397,7 +405,7 @@ void Gusokun::orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int
 		case 555:
 		case 675:
 		case 795:
-			charaData.shotLevel = 15;//35
+			(charaData.shotType == "Shotgun" ? charaData.shotLevel = 15 : charaData.shotLevel = 35);
 			break;
 		default:
 			if (cnt % 10 == 0)

@@ -226,7 +226,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 	{
 
 		ef->Create(cBank[bankCnt].enemyname.c_str(), cBank[bankCnt].shotType.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y),
-			cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed, cBank[bankCnt].shotCnt, cBank[bankCnt].shotLevel);
+			cBank[bankCnt].movePtn, cBank[bankCnt].cnt, cBank[bankCnt].wait, cBank[bankCnt].HP, cBank[bankCnt].SP, cBank[bankCnt].Speed, cBank[bankCnt].shotCnt, cBank[bankCnt].shotLevel,GetNowStageNum());
 		if (cBank.size() - 1 > bankCnt)
 		{
 			bankCnt++;
@@ -277,7 +277,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 					if ((int)time % 350 == 0)
 					{
 						ef->Create(cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].enemyname.c_str(), cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].shotType.c_str(), Vector2f(gs->outscreen + cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].pos.x, gs->outscreen + cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].pos.y),
-							cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].movePtn, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].cnt, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].wait, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].HP, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].SP, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].Speed, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].shotCnt, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].shotLevel);
+							cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].movePtn, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].cnt, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].wait, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].HP, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].SP, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].Speed, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].shotCnt, cBank[bankCnt + (cBank[bankCnt - 1].shotType.c_str() == "WeakNormal" ? 1 : 0)].shotLevel,GetNowStageNum());
 						if (cBank[bankCnt].enemyname == "weakfishN")
 						{
 							bankCnt++;

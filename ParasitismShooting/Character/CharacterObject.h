@@ -66,6 +66,7 @@ protected:
 	int shotCnt;	// 敵キャラクターがショットを打つタイミング
 
 	bool lifeFlag;	// 生きてるか死んでるか
+	unsigned int stageNum;
 
 	Vector2f pos;	// 座標
 	Vector2f vel;	// 移動速度
