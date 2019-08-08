@@ -16,8 +16,8 @@ TitleMenu::TitleMenu()
 
 	menu->menudata.push_back({ Vector2(550, menu->ssize.y / 3 + 110), "Start", 0xff00ff });
 	menu->menudata.push_back({ Vector2(550, menu->ssize.y / 3 + 140), "Option", 0xff00ff });
-	//menu->menudata.push_back({ Vector2(550, menu->ssize.y / 3 + 170), "Help", 0xff00ff });
-	menu->menudata.push_back({ Vector2(550, menu->ssize.y / 3 + 170), "Exit", 0xff00ff });
+	menu->menudata.push_back({ Vector2(550, menu->ssize.y / 3 + 170), "Help", 0xff00ff });
+	menu->menudata.push_back({ Vector2(550, menu->ssize.y / 3 + 200), "Exit", 0xff00ff });
 }
 
 
@@ -30,7 +30,7 @@ bool TitleMenu::Update(const Peripheral & p, bool & flag)
 	menu->Update(p);
 	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)) && !menu->decideFlag)
 	{
-		menu->decideFlag = true;
+		//menu->decideFlag = true;
 		if (menu->selcnt == 0)
 		{
 			return true;
@@ -40,18 +40,18 @@ bool TitleMenu::Update(const Peripheral & p, bool & flag)
 			flag = true;
 			return true;
 		}
-		/*else if (menu->selcnt == 2)
+		else if (menu->selcnt == 2)
 		{
 			SceneManager::Instance().PushScene(std::make_unique<DescriptionScene>());
 		}
 		else if (menu->selcnt == 3)
 		{
 			Game::Instance().Terminate();
-		}*/
-		else if (menu->selcnt == 2)
+		}
+		/*else if (menu->selcnt == 2)
 		{
 			Game::Instance().Terminate();
-		}
+		}*/
 	}
 
 	return false;

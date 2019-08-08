@@ -2,6 +2,7 @@
 #include <DxLib.h>
 #include "SceneManager.h"
 #include "../Peripheral.h"
+#include "../Game.h"
 
 
 void DescriptionScene::FadeinUpdate(const Peripheral & p)
@@ -40,6 +41,8 @@ void DescriptionScene::WaitUpdate(const Peripheral & p)
 
 DescriptionScene::DescriptionScene()
 {
+	pal = 0;
+
 	img = DxLib::LoadGraph("img/description.png");
 	updater = &DescriptionScene::FadeinUpdate;
 }
@@ -56,5 +59,10 @@ void DescriptionScene::Update(const Peripheral & p)
 
 void DescriptionScene::Draw()
 {
-	DxLib::DrawGraph(0, 0, img, true);
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
+
+	DxLib::DrawExtendGraph(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y,  img, true);
+
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
+	DxLib::DrawBox(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, 0x000000, true);
 }
