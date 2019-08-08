@@ -89,7 +89,7 @@ void HalfResultScene::Draw(const bool& flag)
 	
 	DxLib::DrawString(((gssize.x + gs->outscreen) / 2 - DxLib::GetDrawStringWidth(s.c_str(), std::strlen(s.c_str())) / 2), 100, s.c_str(), 0x00ff00);
 
-	// íºílç’ÇË, ÉAÉzéÄÇÀ
+	
 	DxLib::DrawString(GetStringRightPosx("Stage",			250), 200, "Stage",			0x00ff00);
 	DxLib::DrawString(GetStringRightPosx("ParasCount",		250), 240, "ParasCount",	0x00ff00);
 	DxLib::DrawString(GetStringRightPosx("BossHP",			250), 280, "BossHP",		0x00ff00);

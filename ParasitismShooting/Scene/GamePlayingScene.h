@@ -89,4 +89,6 @@ public:
 
 	void Update(const Peripheral& p);
 	void Draw();
+
+	unsigned int GetNowStageNum();
 };

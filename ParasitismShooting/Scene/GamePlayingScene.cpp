@@ -372,6 +372,11 @@ void GamePlayingScene::Draw()
 
 }
 
+unsigned int GamePlayingScene::GetNowStageNum()
+{
+	return nowStageNum;
+}
+
 void GamePlayingScene::HitCol(const Peripheral& p)
 {
 	// キャラクターと弾
