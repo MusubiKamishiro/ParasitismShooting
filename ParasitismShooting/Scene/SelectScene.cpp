@@ -66,6 +66,7 @@ SelectScene::~SelectScene()
 
 void SelectScene::Update(const Peripheral& p)
 {
+	++time;
 	(this->*updater)(p);
 }
 
@@ -77,6 +78,11 @@ void SelectScene::Draw()
 
 	//smenu->Draw();
 	DxLib::DrawExtendGraph(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, helpImg, true);
+	if (time / 60 % 2 == 0)
+	{
+		DxLib::DrawString(550, 400, "Attackボタンで", 0x000000);
+		DxLib::DrawString(550, 430, "ゲームスタート!!!", 0x000000);
+	}
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, 0x000000, true);
