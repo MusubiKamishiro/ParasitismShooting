@@ -33,7 +33,7 @@ void DescriptionScene::FadeoutUpdate(const Peripheral & p)
 
 void DescriptionScene::WaitUpdate(const Peripheral & p)
 {
-	if (p.IsTrigger(key.GetNowKey(CANCEL)))
+	if (p.IsTrigger(key.GetNowKey(BOMB)))
 	{
 		updater = &DescriptionScene::FadeoutUpdate;
 	}

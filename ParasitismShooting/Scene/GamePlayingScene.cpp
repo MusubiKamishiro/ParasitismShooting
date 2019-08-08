@@ -310,7 +310,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 				
 		if (nextstageFlag)
 		{
-			if (nowStageNum == 5)
+			if (nowStageNum == 3)
 			{
 				allClearFlag = true;
 			}
