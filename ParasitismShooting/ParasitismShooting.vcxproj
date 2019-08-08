@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{AACF4A40-4E7D-41BD-BE40-309F994A0214}</ProjectGuid>
     <RootNamespace>ParasitismShooting</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -171,6 +171,7 @@
     <ClCompile Include="Menu\TitleMenu.cpp" />
     <ClCompile Include="Peripheral.cpp" />
     <ClCompile Include="Scene\ContinueScene.cpp" />
+    <ClCompile Include="Scene\DescriptionScene.cpp" />
     <ClCompile Include="Scene\GamePlayingScene.cpp" />
     <ClCompile Include="Scene\HalfResultScene.cpp" />
     <ClCompile Include="Scene\OptionScene.cpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="Peripheral.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene\ContinueScene.h" />
+    <ClInclude Include="Scene\DescriptionScene.h" />
     <ClInclude Include="Scene\GamePlayingScene.h" />
     <ClInclude Include="Scene\HalfResultScene.h" />
     <ClInclude Include="Scene\OptionScene.h" />

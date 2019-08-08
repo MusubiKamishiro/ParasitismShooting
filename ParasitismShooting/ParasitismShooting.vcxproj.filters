@@ -198,6 +198,9 @@
     <ClCompile Include="Character\Ika.cpp">
       <Filter>キャラクター ファイル\ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Scene\DescriptionScene.cpp">
+      <Filter>シーン ファイル\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -346,6 +349,9 @@
     </ClInclude>
     <ClInclude Include="Character\Ika.h">
       <Filter>キャラクター ファイル\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\DescriptionScene.h">
+      <Filter>シーン ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
