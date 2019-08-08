@@ -6,8 +6,8 @@
 
 Ika::Ika(const Player& player) : Enemy(player), player(player)
 {
-	ReadActionFile("action/fish.act");
-	ChangeAction("eIdle");
+	ReadActionFile("action/squid.act");
+	ChangeAction("Idle");
 	SetCharaSize(0.07f);
 	charaData.shotReady = false;
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());

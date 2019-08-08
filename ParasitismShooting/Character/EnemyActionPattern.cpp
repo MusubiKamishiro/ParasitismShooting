@@ -78,7 +78,7 @@ EnemyActionPattern::~EnemyActionPattern()
 void EnemyActionPattern::Update(int movePtn, Vector2f & pos, float speed, int cnt, int wait, int shotCnt, int charSP, bool& ShotReady)
 {
 	//if (cnt == shotCnt)
-	if ((cnt % 60) == 1)
+	if ((cnt % 240) == 1)
 	{
 		ShotReady = true;
 	}

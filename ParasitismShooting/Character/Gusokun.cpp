@@ -2,6 +2,7 @@
 #include "../Game.h"
 #include <DxLib.h>
 #include "EnemyActionPattern.h"
+#include "../Scene/GamePlayingScene.h"
 
 const float DELTA = 0.001;
 
@@ -378,7 +379,7 @@ void Gusokun::orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int
 		switch (cnt)
 		{
 		case 1:
-			charaData.shotType = "Radiation";
+			charaData.shotType = "Shotgun";
 			break;
 		case 5:
 		case 125:
@@ -387,7 +388,7 @@ void Gusokun::orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int
 		case 495:
 		case 615:
 		case 725:
-			charaData.shotLevel = 25;
+			charaData.shotLevel = 7;//25
 			break;
 		case 65:
 		case 185:
@@ -396,7 +397,7 @@ void Gusokun::orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int
 		case 555:
 		case 675:
 		case 795:
-			charaData.shotLevel = 35;
+			charaData.shotLevel = 15;//35
 			break;
 		default:
 			if (cnt % 10 == 0)

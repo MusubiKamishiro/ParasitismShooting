@@ -7,7 +7,7 @@
 Ebi::Ebi(const Player& player) : Enemy(player), player(player)
 {
 	ReadActionFile("action/shrimp.act");
-	ChangeAction("eIdle");
+	ChangeAction("Idle");
 	SetCharaSize(0.07f);
 	charaData.shotReady = false;
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());

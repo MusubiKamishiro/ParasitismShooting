@@ -1,6 +1,8 @@
 #include "EnemyFactory.h"
 #include "Fish.h"
 #include "Gusokun.h"
+#include "Ebi.h"
+#include "Ika.h"
 #include "../GameScreen.h"
 
 
@@ -61,6 +63,8 @@ EnemyFactory::EnemyFactory(const Player& player) : player(player)
 	originalEnemy["weakfishN"] = new Fish(player);
 	originalEnemy["weakfishS"] = new Fish(player);
 	originalEnemy["gusokun"] = new Gusokun(player);
+	originalEnemy["ika"] = new Ika(player);
+	originalEnemy["ebi"] = new Ebi(player);
 }
 
 
