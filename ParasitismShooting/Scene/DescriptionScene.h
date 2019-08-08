@@ -14,6 +14,7 @@ private:
 	void WaitUpdate(const Peripheral& p);
 
 	int img;
+	int time = 0;
 	KeyConfig& key = KeyConfig::Instance();
 
 public:

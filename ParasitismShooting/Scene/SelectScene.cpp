@@ -39,7 +39,8 @@ void SelectScene::FadeoutUpdate(const Peripheral & p)
 
 void SelectScene::WaitUpdate(const Peripheral & p)
 {
-	if (smenu->Update(p, difficult))
+	//if (smenu->Update(p, difficult))
+	if (p.IsTrigger(key.GetNowKey(ATTACK)))
 	{
 		pal = 255;
 		updater = &SelectScene::FadeoutUpdate;
@@ -48,8 +49,11 @@ void SelectScene::WaitUpdate(const Peripheral & p)
 
 SelectScene::SelectScene()
 {
+	difficult = 1;
+
 	pal = 0;
 	img = DxLib::LoadGraph("img/bg4.png");
+	helpImg = DxLib::LoadGraph("img/description.png");
 	updater = &SelectScene::FadeinUpdate;
 
 	smenu.reset(new SelectMenu());
@@ -68,10 +72,11 @@ void SelectScene::Update(const Peripheral& p)
 void SelectScene::Draw()
 {
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
-	DxLib::DrawExtendGraph(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, img, true);
-	DxLib::DrawString(50, 50, "SelectScene", 0x000000);
+	//DxLib::DrawExtendGraph(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, img, true);
+	//DxLib::DrawString(50, 50, "SelectScene", 0x000000);
 
-	smenu->Draw();
+	//smenu->Draw();
+	DxLib::DrawExtendGraph(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, helpImg, true);
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, 0x000000, true);

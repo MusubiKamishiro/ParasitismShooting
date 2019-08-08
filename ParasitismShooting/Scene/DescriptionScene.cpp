@@ -54,6 +54,7 @@ DescriptionScene::~DescriptionScene()
 
 void DescriptionScene::Update(const Peripheral & p)
 {
+	++time;
 	(this->*updater)(p);
 }
 
@@ -62,6 +63,11 @@ void DescriptionScene::Draw()
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, pal);
 
 	DxLib::DrawExtendGraph(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y,  img, true);
+
+	if (time / 60 % 2 == 0)
+	{
+		DxLib::DrawString(550, 400, "Cancelƒ{ƒ^ƒ“‚Å–ß‚é", 0x000000);
+	}
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, 0x000000, true);

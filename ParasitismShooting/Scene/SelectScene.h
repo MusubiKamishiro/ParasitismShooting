@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.h"
-
+#include "../KeyConfig.h"
 
 class SelectMenu;
 
@@ -10,12 +10,15 @@ private:
 	std::shared_ptr<SelectMenu> smenu;
 
 	int img;
+	int helpImg;
 	int difficult;
 	void (SelectScene::*updater)(const Peripheral& p);
 
 	void FadeinUpdate(const Peripheral& p);
 	void FadeoutUpdate(const Peripheral& p);
 	void WaitUpdate(const Peripheral& p);
+
+	KeyConfig& key = KeyConfig::Instance();
 
 public:
 	SelectScene();
