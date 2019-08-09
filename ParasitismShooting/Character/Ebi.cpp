@@ -11,7 +11,7 @@ Ebi::Ebi(const Player& player) : Enemy(player), player(player)
 	SetCharaSize(0.09f);
 	charaData.shotReady = false;
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
-	score = 200;
+	score = 500;
 
 	actFlag = true;
 	eAction.reset(new EnemyActionPattern());
