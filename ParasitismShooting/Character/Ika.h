@@ -23,6 +23,10 @@ private:
 	void StunDamage();
 	void Damage();
 	
+	Vector2f basePos;
+	float vecAngle;
+
+	void orginalMove(int movePtn, Vector2f & pos, float speed, int cnt, int wait, int shotCnt, int charSP, bool& ShotReady);
 	void (Ika::*updater)();
 
 	const Player& player;

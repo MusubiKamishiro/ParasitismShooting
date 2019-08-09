@@ -66,7 +66,7 @@ void Player::Update(const Peripheral &p)
 	if (p.IsPressing(key.GetNowKey(CANCEL)))
 	{
 		++ccount;
-		if (ccount > 120)
+		if (ccount > 60)
 		{
 			if (parasFlag)
 			{
