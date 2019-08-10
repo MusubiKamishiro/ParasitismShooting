@@ -4,6 +4,7 @@
 #include "Scene/SceneManager.h"
 #include "Sound.h"
 #include "resource.h"
+#include "FrameFixity.h"
 
 
 Game::Game() : ScreenSize(800, 500)
@@ -72,25 +73,39 @@ void Game::Run()
 {
 	Peripheral peripheral;
 	auto& scenes = SceneManager::Instance();
+	FrameFixity& ff = FrameFixity::Instance();
+	ff.FFInitialize();
+
 	while (DxLib::ProcessMessage() == 0)
 	{
-		++time;
-		DxLib::ClearDrawScreen();
-
-		// エスケープキーで終了
-		if (DxLib::CheckHitKey(KEY_INPUT_ESCAPE))
-		{
-			break;
+		if (ff.CheckReceiveMessage()) {
+			if (ff.GetReceiveMessage().message == WM_QUIT) {
+				break;
+			}
 		}
+		else {
+			ff.AdjustmentFrameLate();
 
-		peripheral.Update();
-		scenes.Update(peripheral);
-		scenes.Draw();
+			++time;
+			DxLib::ClearDrawScreen();
 
-		DrawFps();
-		
-		DxLib::ScreenFlip();
+			// エスケープキーで終了
+			if (DxLib::CheckHitKey(KEY_INPUT_ESCAPE))
+			{
+				break;
+			}
+
+			peripheral.Update();
+			scenes.Update(peripheral);
+			scenes.Draw();
+
+			DrawFps();
+
+			DxLib::ScreenFlip();
+		}
 	}
+
+	ff.Terminate();
 }
 
 void Game::Terminate()

@@ -156,6 +156,7 @@
     <ClCompile Include="DieEffect.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectFactory.cpp" />
+    <ClCompile Include="FrameFixity.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="Geometry.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="DieEffect.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectFactory.h" />
+    <ClInclude Include="FrameFixity.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="Geometry.h" />
