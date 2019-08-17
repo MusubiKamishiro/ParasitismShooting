@@ -13,7 +13,7 @@ void Player::Init()
 	SetCharaSize(0.1f);
 	charaData.img = DxLib::LoadGraph(charaData.actData.imgFilePath.c_str());
 	charaData.HP = 1;
-	charaData.moveVel = 3.0;
+	charaData.moveVel = 4.0;
 	charaData.shotType = "Weak";
 	//charaData.shotTypeSub = "Shotgun";
 	charaData.shotLevel = 30;
