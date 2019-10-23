@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Geometry.h"
 #include <list>
+#include <string>
 #include <map>
 
 class Shot;
