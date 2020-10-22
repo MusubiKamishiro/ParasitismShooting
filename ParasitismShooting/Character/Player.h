@@ -65,4 +65,3 @@ public:
 	void Draw(const int& time);
 	void ParasDraw(const int& time);
 };
-

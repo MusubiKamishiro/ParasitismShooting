@@ -38,4 +38,3 @@ public:
 	void EnemyDelete();
 	void OutofScreen();
 };
-

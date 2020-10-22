@@ -18,4 +18,3 @@ public:
 	bool Update(const Peripheral& p, int& difficult);
 	void Draw();
 };
-

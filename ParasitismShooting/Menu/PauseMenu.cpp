@@ -42,5 +42,3 @@ void PauseMenu::Draw()
 {
 	menu->Draw(Vector2(5, 5));
 }
-
-

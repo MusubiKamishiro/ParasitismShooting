@@ -15,7 +15,6 @@ void Player::Init()
 	charaData.HP = 1;
 	charaData.moveVel = 4.0;
 	charaData.shotType = "Weak";
-	//charaData.shotTypeSub = "Shotgun";
 	charaData.shotLevel = 30;
 	originData = charaData;
 

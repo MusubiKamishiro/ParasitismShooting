@@ -69,27 +69,6 @@ void FrameFixity::Terminate()
 	ReleaseDC(hWnd, hdc);
 }
 
-// ウィンドウから投げられてくるメッセージをキャッチして処理する
-// キー、マウス、描画などの様々なメッセージがここに投げられる
-// messageにキャッチしたメッセージが入っている
-// WM_DESTROYはウィンドウを画面から消すときに呼ばれる
-//LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
-//{
-//	switch (message)
-//	{
-//	case WM_DESTROY:
-//		// メインウィンドウを閉じられた時や、アプリケーションを終了するときに
-//		// この関数を呼んで終了処理をする
-//		PostQuitMessage(0);
-//		break;
-//	default:
-//		// システムに処理を任せる時はこの関数を返す
-//		// 自分で処理をしたときは0を返す
-//		return DefWindowProc(hwnd, message, wParam, lParam);
-//	}
-//	return 0L;
-//}
-
 long long FrameFixity::GetCTime()
 {
 	// 現在の時間をSystemClockから取得し、microsecondsに変換してその値を返す

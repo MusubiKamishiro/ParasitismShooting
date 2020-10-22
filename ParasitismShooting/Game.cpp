@@ -118,5 +118,3 @@ const Vector2& Game::GetScreenSize()const
 {
 	return ScreenSize;
 }
-
-

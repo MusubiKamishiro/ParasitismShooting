@@ -2,6 +2,7 @@
 #include "Geometry.h"
 #include <list>
 #include <map>
+#include <string>
 
 class Effect;
 
@@ -23,4 +24,3 @@ public:
 	EffLegion& GetLegion();
 	void EffectDelete();
 };
-

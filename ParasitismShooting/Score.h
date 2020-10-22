@@ -42,4 +42,3 @@ public:
 	float diffBonus;
 	int bonusScore;
 };
-

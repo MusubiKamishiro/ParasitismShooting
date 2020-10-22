@@ -48,7 +48,6 @@ private:
 
 
 public:
-	// ¼Ý¸ÞÙÄÝ²ÝÀ°Ìª°½
 	static KeyConfig& Instance()
 	{
 		static KeyConfig instance;

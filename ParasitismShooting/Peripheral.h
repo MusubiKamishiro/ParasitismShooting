@@ -21,4 +21,3 @@ public:
 	// Œ»İ‚ÌÄØ¶Ş°ó‘Ô(‰Ÿ‚µ‚½uŠÔ)‚ÌŒŸo
 	bool IsTrigger(int keyid)const;
 };
-

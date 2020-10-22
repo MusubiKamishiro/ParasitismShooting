@@ -107,8 +107,6 @@ void CharacterObject::Draw(int img)
 
 
 #ifdef _DEBUG
-	//DxLib::DrawBox(pos.x - 2, pos.y - 2, pos.x + 2, pos.y + 2, 0x0000ff, true);
-
 	for (auto& actrect : cut.actrects)
 	{
 		DebugDraw(actrect);
@@ -163,4 +161,3 @@ bool CharacterObject::GetLifeFlag() const
 {
 	return lifeFlag;
 }
-

@@ -85,4 +85,3 @@ unsigned int Score::GetHighScore() const
 {
 	return highScore;
 }
-

@@ -82,18 +82,8 @@ void TitleScene::Draw()
 
 	DxLib::DrawGraph(0, 0, titleNameImage, true);
 
-	/*int a = time % 20;
-	for (int y = 0; y < (ssize.y + 20); y += 20)
-	{
-		for (int x = 0; x < (ssize.x + 20); x += 20)
-		{
-			DxLib::DrawBox(x - a, y - a, x + 20 - a, y + 20 - a, (x+y + a)%256, true);
-		}
-	}*/
-
 	tmenu->Draw();
 
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, std::abs(pal - 255));
 	DxLib::DrawBox(0, 0, Game::Instance().GetScreenSize().x, Game::Instance().GetScreenSize().y, 0x000000, true);
-
 }

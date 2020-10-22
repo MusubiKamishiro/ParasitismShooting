@@ -24,4 +24,3 @@ public:
 	void Update(const Peripheral& p);
 	void Draw();
 };
-

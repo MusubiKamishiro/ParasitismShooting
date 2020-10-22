@@ -30,7 +30,6 @@ bool TitleMenu::Update(const Peripheral & p, bool & flag)
 	menu->Update(p);
 	if (p.IsTrigger(KeyConfig::Instance().GetNowKey(ATTACK)) && !menu->decideFlag)
 	{
-		//menu->decideFlag = true;
 		if (menu->selcnt == 0)
 		{
 			return true;
@@ -48,10 +47,6 @@ bool TitleMenu::Update(const Peripheral & p, bool & flag)
 		{
 			Game::Instance().Terminate();
 		}
-		/*else if (menu->selcnt == 2)
-		{
-			Game::Instance().Terminate();
-		}*/
 	}
 
 	return false;

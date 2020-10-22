@@ -222,7 +222,7 @@ void GamePlayingScene::Update(const Peripheral& p)
 	}
 
 	// アップデート関連
-	if (cBank[bankCnt].time == ((int)time/*%650*/))
+	if (cBank[bankCnt].time == ((int)time))
 	{
 
 		ef->Create(cBank[bankCnt].enemyname.c_str(), cBank[bankCnt].shotType.c_str(), Vector2f(gs->outscreen + cBank[bankCnt].pos.x, gs->outscreen + cBank[bankCnt].pos.y),
@@ -231,15 +231,6 @@ void GamePlayingScene::Update(const Peripheral& p)
 		{
 			bankCnt++;
 		}
-		/*if (cBank.size() > bankCnt)
-		{
-			bankCnt++;
-			if (bankCnt == cBank.size())
-			{
-				bankCnt--;
-			}
-		}*/
-		//bankCnt = bankCnt % (cBank.size()-2) + 2;
 	}
 
 	if (!DuringParasitism)
@@ -257,7 +248,6 @@ void GamePlayingScene::Update(const Peripheral& p)
 			{
 				Sound::Instance().PlaySE("shot");
 				sf->Create(player->GetCharaData().shotType, player->GetPos(), 8, 1, player->GetCharaData().shotLevel, SHOOTER::PLAYER);
-				//sf->Create(player->GetCharaData().shotTypeSub, player->GetPos(), 8, 1, player->GetCharaData().shotLevel, SHOOTER::PLAYER);
 			}
 
 			for (auto& enemy : ef->GetLegion())
@@ -306,8 +296,6 @@ void GamePlayingScene::Update(const Peripheral& p)
 		}
 		hud->Update();
 
-		// スコアで次のステージへ(デバックのため一時的なもの)
-				
 		if (nextstageFlag)
 		{
 			if (nowStageNum == 3)
@@ -334,7 +322,6 @@ void GamePlayingScene::Update(const Peripheral& p)
 	sf->OutofScreen();
 	ef->OutofScreen();
 	sf->ShotDelete();
-	//ef->EnemyDelete();
 	
 	for (int i = 0; i < ef->GetLegion().size(); ++i)
 	{
@@ -368,8 +355,6 @@ void GamePlayingScene::Update(const Peripheral& p)
 void GamePlayingScene::Draw()
 {
 	Draw((int)time);
-
-
 }
 
 unsigned int GamePlayingScene::GetNowStageNum()

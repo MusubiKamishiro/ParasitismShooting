@@ -17,4 +17,3 @@ public:
 	bool Update(const Peripheral& p, bool& flag);
 	void Draw();
 };
-

@@ -102,8 +102,6 @@ Gusokun::~Gusokun()
 
 void Gusokun::Update()
 {
-	//ProceedAnimationFile();
-
 	(this->*updater)();
 }
 

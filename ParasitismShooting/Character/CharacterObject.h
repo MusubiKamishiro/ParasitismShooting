@@ -94,4 +94,3 @@ public:
 	Vector2f GetPos()const;
 	bool GetLifeFlag()const;
 };
-

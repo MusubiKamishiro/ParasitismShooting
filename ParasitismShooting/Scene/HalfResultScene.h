@@ -42,4 +42,3 @@ public:
 	bool Update(const Peripheral& p);
 	void Draw(const bool& flag);
 };
-

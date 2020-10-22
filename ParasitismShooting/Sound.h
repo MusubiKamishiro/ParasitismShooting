@@ -12,14 +12,13 @@ class Sound
 {
 private:
 	Sound();						// ¶¬‹Ö~
-	Sound(const Sound&);			// ºËß°‹Ö~
+	Sound(const Sound&);			// ƒRƒs[‹Ö~
 	void operator=(const Sound&);	// ‘ã“ü‹Ö~
 
 	std::vector<SoundData> bgms;
 	std::vector<SoundData> ses;
 
 public:
-	// ¼İ¸ŞÙÄİ²İÀ°Ìª°½
 	static Sound& Instance()
 	{
 		static Sound instance;
@@ -37,4 +36,3 @@ public:
 
 	void DeleteSoundAll();
 };
-

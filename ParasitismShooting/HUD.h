@@ -22,4 +22,3 @@ public:
 	
 	const Vector2 GetHUDPos()const;
 };
-

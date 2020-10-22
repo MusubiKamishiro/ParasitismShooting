@@ -9,7 +9,7 @@ class TitleMenu;
 class TitleScene : public Scene
 {
 private:
-	int titleImage;	// À²ÄÙ‰æ‘œ
+	int titleImage;
 	int titleNameImage;
 
 	void (TitleScene::*updater)(const Peripheral& p);
@@ -30,4 +30,3 @@ public:
 	void Update(const Peripheral& p);
 	void Draw();
 };
-

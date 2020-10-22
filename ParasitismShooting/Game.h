@@ -4,11 +4,9 @@
 #include "Geometry.h"
 
 
-// ¹Ş°Ñ‘S‘Ì‚ğ§Œä‚·‚é¸×½
 class Game
 {
 private:
-	// ¼İ¸ŞÙÄİ‚ÌŒˆ‚Ü‚è
 	Game();							// ¶¬‹Ö~
 	Game(const Game&);				// ºËß°‹Ö~
 	void operator=(const Game&);	// ‘ã“ü‹Ö~
@@ -43,4 +41,3 @@ public:
 
 	const Vector2& GetScreenSize()const;
 };
-

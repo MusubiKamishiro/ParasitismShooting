@@ -35,4 +35,3 @@ public:
 	bool scoreFlag;
 	bool actFlag;
 };
-

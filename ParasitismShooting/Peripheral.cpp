@@ -27,5 +27,3 @@ bool Peripheral::IsTrigger(int keyid) const
 {
 	return (!(lastPadState & keyid) && (padState & keyid));
 }
-
-

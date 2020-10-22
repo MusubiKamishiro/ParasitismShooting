@@ -10,9 +10,8 @@ class Gusokun : public Enemy
 {
 	friend EnemyFactory;
 private:
-	// ¼İ¸ŞÙÄİ‚ÌŒˆ‚Ü‚è
-	Gusokun(const Player& player);		// ¶¬‹Ö~
-	Gusokun(const Gusokun&);				// ºËß°‹Ö~
+	Gusokun(const Player& player);	// ¶¬‹Ö~
+	Gusokun(const Gusokun&);		// ºËß°‹Ö~
 	void operator=(const Gusokun&);	// ‘ã“ü‹Ö~
 
 	Enemy* Clone();

@@ -103,8 +103,6 @@ Ika::~Ika()
 
 void Ika::Update()
 {
-	//ProceedAnimationFile();
-
 	(this->*updater)();
 }
 

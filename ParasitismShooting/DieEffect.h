@@ -21,4 +21,3 @@ public:
 	void Update(const int& t);
 	void Draw();
 };
-

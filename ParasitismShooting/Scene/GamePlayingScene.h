@@ -49,7 +49,7 @@ private:
 	void ContinueUpdate(const Peripheral& p);
 	void MoveResultUpdate(const Peripheral& p);
 
-	void HitCol(const Peripheral& p);			// 当たり判定まとめ
+	void HitCol(const Peripheral& p);		// 当たり判定まとめ
 	void Draw(const int& time);	// 描画まとめ
 
 	void Init(const unsigned int& stagenum, const int& diff);	// 2つのコンストラクタの共通部分

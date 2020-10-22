@@ -10,9 +10,8 @@ class Ika : public Enemy
 {
 	friend EnemyFactory;
 private:
-	// ¼İ¸ŞÙÄİ‚ÌŒˆ‚Ü‚è
-	Ika(const Player& player);		// ¶¬‹Ö~
-	Ika(const Ika&);				// ºËß°‹Ö~
+	Ika(const Player& player);	// ¶¬‹Ö~
+	Ika(const Ika&);			// ºËß°‹Ö~
 	void operator=(const Ika&);	// ‘ã“ü‹Ö~
 
 	Enemy* Clone();

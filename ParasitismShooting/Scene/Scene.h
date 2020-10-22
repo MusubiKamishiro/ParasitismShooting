@@ -3,7 +3,6 @@
 
 class Peripheral;
 
-// (純粋仮想ｸﾗｽ)
 class Scene
 {
 protected:
@@ -14,7 +13,7 @@ public:
 	Scene();
 	virtual ~Scene();
 
-	// ｼｰﾝの更新を行う
+	// シーンの更新を行う
 	virtual void Update(const Peripheral& p) = 0;
 	// シーンの描画
 	virtual void Draw() = 0;
@@ -26,4 +25,3 @@ public:
 	// 待機中の処理を書く
 	virtual void WaitUpdate(const Peripheral& p) = 0;
 };
-

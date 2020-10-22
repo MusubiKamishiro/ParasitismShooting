@@ -39,4 +39,3 @@ public:
 
 	bool decideFlag;
 };
-

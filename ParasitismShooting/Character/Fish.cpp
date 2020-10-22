@@ -84,8 +84,6 @@ Fish::~Fish()
 
 void Fish::Update()
 {
-	//ProceedAnimationFile();
-
 	(this->*updater)();
 }
 

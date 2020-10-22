@@ -84,8 +84,6 @@ Ebi::~Ebi()
 
 void Ebi::Update()
 {
-	//ProceedAnimationFile();
-
 	(this->*updater)();
 }
 

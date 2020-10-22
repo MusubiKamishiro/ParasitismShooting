@@ -33,4 +33,3 @@ public:
 
 	const int outscreen;	// ‰æ–Ê‚É‚Í‰f‚ç‚È‚¢ƒXƒNƒŠ[ƒ“‚Ì•
 };
-

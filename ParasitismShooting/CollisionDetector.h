@@ -23,4 +23,3 @@ public:
 	// “–‚½‚è”»’è
 	bool IsCollision(const Rect& rcA ,const Rect& rcB, const RectCombi& rcombi);
 };
-

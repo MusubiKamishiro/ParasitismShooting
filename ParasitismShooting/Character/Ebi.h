@@ -10,7 +10,6 @@ class Ebi : public Enemy
 {
 	friend EnemyFactory;
 private:
-	// ¼İ¸ŞÙÄİ‚ÌŒˆ‚Ü‚è
 	Ebi(const Player& player);		// ¶¬‹Ö~
 	Ebi(const Ebi&);				// ºËß°‹Ö~
 	void operator=(const Ebi&);	// ‘ã“ü‹Ö~

@@ -47,9 +47,7 @@ void Sound::AddSE(const std::string& filename)
 	std::string s = "sound/SE/";
 	s += filename;
 	int h = DxLib::LoadSoundMem(s.c_str());
-#ifdef _DEBUG
-	//assert(h != -1);
-#endif
+
 	bool same = false;
 
 	// “¯‚¶‚à‚Ì‚ª‚ ‚Á‚½‚ç“Ç‚İ‚Ü‚È‚¢
