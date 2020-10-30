@@ -4,6 +4,8 @@
 class EnemyFactory;
 class ShotFactory;
 
+// 通常弾
+// まっすぐ進み、当たればダメージを与える
 class Normal : public Shot
 {
 	friend ShotFactory;

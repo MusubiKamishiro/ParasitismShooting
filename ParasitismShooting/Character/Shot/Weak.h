@@ -4,6 +4,8 @@
 class EnemyFactory;
 class ShotFactory;
 
+// 弱化弾
+// プレイヤーのデフォルト弾
 class Weak : public Shot
 {
 	friend ShotFactory;

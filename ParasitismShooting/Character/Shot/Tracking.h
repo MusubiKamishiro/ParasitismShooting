@@ -4,6 +4,8 @@
 class EnemyFactory;
 class ShotFactory;
 
+// ’Ç”ö’e
+// ”z—ñ‚Ìæ“ª‚ğ‘_‚¤
 class Tracking : public Shot
 {
 	friend ShotFactory;

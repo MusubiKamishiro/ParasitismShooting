@@ -4,6 +4,8 @@
 class EnemyFactory;
 class ShotFactory;
 
+
+// —”‚É‚æ‚è•ûŒü‚ªŒˆ’è‚·‚é’e
 class Random : public Shot
 {
 	friend ShotFactory;

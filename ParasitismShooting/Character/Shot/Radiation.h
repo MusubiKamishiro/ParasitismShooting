@@ -4,6 +4,8 @@
 class EnemyFactory;
 class ShotFactory;
 
+// ‰ñ“]’e
+// “r’†‚ÅUŒ‚Œü‚«‚ª•ÏX‚³‚ê‚é
 class Radiation : public Shot
 {
 	friend ShotFactory;
